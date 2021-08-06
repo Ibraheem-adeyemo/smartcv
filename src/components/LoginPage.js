@@ -1,4 +1,4 @@
-import "../css/loginPage.css";
+import "../css/common.css";
 import Login from "./common/Login";
 import MissionStatement from "./common/MissionStatement";
 
