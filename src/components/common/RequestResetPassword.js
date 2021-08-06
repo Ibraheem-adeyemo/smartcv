@@ -17,7 +17,7 @@ const RequestResetPassword = (props) => {
 
       <div className="frame3">
         <div className="button">
-          <p className="buttonText">Login</p>
+          <p className="buttonText">Proceed</p>
         </div>
         <Link to="/">Back to Login</Link>
       </div>
