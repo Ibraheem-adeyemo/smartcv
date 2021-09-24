@@ -1,6 +1,6 @@
 .formcontainer {
   width: 580px;
-  height: 452px;
+  height: 250px;
   margin-top: 100px;
   margin-bottom: 100px;
   border-radius: 6px;
@@ -22,6 +22,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   width: 506px;
   height: 48px;
@@ -36,6 +37,13 @@
   flex: none;
   order: 0;
   flex-grow: 0;
+
+  color: #ffffff;
+  font-family: Averta;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .buttonText {

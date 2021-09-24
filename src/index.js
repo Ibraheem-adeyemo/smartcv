@@ -4,11 +4,21 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { SWRConfig } from "swr";
+import axios from "axios";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <SWRConfig
+        value={{
+          refreshInterval: 3000,
+          fetcher: (resource, init) =>
+            axios(resource, init).then((resp) => resp.data),
+        }}
+      >
+        <App />
+      </SWRConfig>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
