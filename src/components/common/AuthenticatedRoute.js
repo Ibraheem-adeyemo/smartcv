@@ -2,7 +2,13 @@ import { Route, Redirect } from "react-router-dom";
 import React from "react";
 
 const AuthenticatedRoute = ({ component, ...rest }) => {
-  const loggedIn = false;
+  let loggedIn = false;
+  let token = window.localStorage.getItem("user_token");
+
+  if(token !== undefined && token !== null)
+  {
+    loggedIn = true;
+  }
   return (
     <Route
       {...rest}
