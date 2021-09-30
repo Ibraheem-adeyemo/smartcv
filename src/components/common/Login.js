@@ -14,35 +14,52 @@ const Login = (props) => {
   const search = useLocation().search;
   const code = new URLSearchParams(search).get("code");
 
+  let locationState = null;
+
+  if (props.location && props.location.state) {
+    const locationState = props.location.state.from.pathname;
+    window.localStorage.setItem("redirect_path", locationState);
+  }
+
   useEffect(() => {
-    if (code !== undefined && code !== null ) {
+   
+    if (code !== undefined && code !== null) {
       AuthenticationService.loginWithPassport(code)
         .then((resp) => {
           let data = resp.data;
           if (data !== undefined && data != null) {
             setToken(data.access_token);
-            setRefreshToken(data.refresh_token);            
+            setRefreshToken(data.refresh_token);
           }
         })
         .catch((error) => {
           setError("error login in");
         });
     }
-  }, []);
+  }, [code]);
 
-  useEffect(()=>
-  {
+  useEffect(() => {
     window.localStorage.setItem("user_token", token);
-  },[token]);
+  }, [token]);
 
-  useEffect(()=>
-  {
+  useEffect(() => {
     window.localStorage.setItem("user_refresh_token", refreshToken);
-  },[refreshToken]);
+  }, [refreshToken]);
 
-
-  if (token !== undefined && token !== null && refreshToken !== undefined && refreshToken !== null) {
-    return <Redirect to="/paas/dashboard"></Redirect>;
+  const redirectPath = () => {
+    const path = window.localStorage.getItem("redirect_path");
+    if (path) {
+      return path || "/paas/dashboard";
+    }
+    return "/paas/dashboard";
+  };
+  if (
+    token !== undefined &&
+    token !== null &&
+    refreshToken !== undefined &&
+    refreshToken !== null
+  ) {
+    return <Redirect to={redirectPath()}></Redirect>;
   }
 
   return (

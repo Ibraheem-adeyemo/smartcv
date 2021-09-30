@@ -1,6 +1,6 @@
 
 import './App.css';
-import {BrowserRouter,Switch,Route} from 'react-router-dom';
+import {Switch,Route} from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import RequestResetPasswordPage from './components/RequestResetPasswordPage';
 import DashboardLinks from './components/common/DashboardLinks';
@@ -12,6 +12,7 @@ function App() {
     <Switch>
        <Route path="/" exact component={LoginPage}></Route>
        <AuthenticatedRoute path="/paas/dashboard" component={DashboardLinks}></AuthenticatedRoute>
+       <AuthenticatedRoute path="/paas/request" component={RequestResetPasswordPage}></AuthenticatedRoute>
     </Switch>
   );
 }

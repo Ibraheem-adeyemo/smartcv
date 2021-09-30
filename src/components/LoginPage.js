@@ -2,11 +2,11 @@ import "../css/common.css";
 import Login from "./common/Login";
 import MissionStatement from "./common/MissionStatement";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   return (
     <div className="container">
       <MissionStatement></MissionStatement>
-      <Login></Login>
+      <Login location={props.location}></Login>
     </div>
   );
 };
