@@ -68,10 +68,6 @@ const Login = (props) => {
         <a className="button" href={AuthenticationService.PASSPORT_URL}>
           Already onboarded on PAAS, Login with passport
         </a>
-
-        <a className="button" href={AuthenticationService.PASSPORT_URL}>
-          Not onboarded on PAAS, click here to register
-        </a>
         <p style={{ color: "red" }}>{error}</p>
       </div>
     </form>
