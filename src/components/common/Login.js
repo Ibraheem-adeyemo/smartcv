@@ -1,7 +1,8 @@
 import "../../css/login.css";
+import handShake from "../../images/handshake.png";
 
 import { useEffect, useState } from "react";
-import { Redirect, useLocation } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 
 import * as AuthenticationService from "../../service/AuthenticationService";
 
@@ -22,7 +23,6 @@ const Login = (props) => {
   }
 
   useEffect(() => {
-   
     if (code !== undefined && code !== null) {
       AuthenticationService.loginWithPassport(code)
         .then((resp) => {
@@ -64,12 +64,16 @@ const Login = (props) => {
 
   return (
     <form className="formcontainer">
-      <div className="frame3">
-        <a className="button" href={AuthenticationService.PASSPORT_URL}>
-          Already onboarded on PAAS, Login with passport
-        </a>
-        <p style={{ color: "red" }}>{error}</p>
-      </div>
+      <p className="welcome">Welcome</p>
+      <img src={handShake} width="110px" height="110px" alt="hand shake" />
+      <a className="button" href={AuthenticationService.PASSPORT_URL}>
+        Already on boarded? Login
+      </a>
+      <p className="error">{error}</p>
+      <p className="notRegistered">
+        Not on boarded yet?{" "}
+        <Link to="/paas/register/organization">Register</Link>
+      </p>
     </form>
   );
 };

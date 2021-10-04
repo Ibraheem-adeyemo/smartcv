@@ -1,13 +1,13 @@
 .formcontainer {
   width: 580px;
-  height: 250px;
-  margin-top: 100px;
+  height: 350px;
+  margin-top: 160px;
   margin-bottom: 100px;
   border-radius: 6px;
 
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 36px 37px;
 
   background: #ffffff;
@@ -15,6 +15,27 @@
   box-sizing: border-box;
   box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.06);
   border-radius: 6px;
+  text-align: center;
+}
+
+.welcome {
+  width: 137px;
+  height: 32px;
+
+  /* header / h4 */
+  font-family: Averta;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 32px;
+
+  /* identical to box height, or 160% */
+  text-align: center;
+
+  /* Neutrals & Text/neutral900 */
+  color: #353f50;
+
+  transform: rotate(-0.3deg);
 }
 
 .button {
@@ -46,29 +67,43 @@
   line-height: 24px;
 }
 
-.buttonText {
-  width: 43px;
-  height: 24px;
-
-  /* header / h3 */
+.error {
+  /* body / medium */
   font-family: Averta;
   font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
 
-  /* identical to box height, or 150% */
-  display: flex;
-  align-items: center;
 
-  /* whiteDust */
-  color: #ffffff;
+  /* Primary Reds/primaryRed400 */
+  color: #dc4437;
 
   /* Inside Auto Layout */
   flex: none;
-  order: 0;
+  order: 1;
   flex-grow: 0;
-  margin: 0px 8px;
+  margin: 0px 4px;
+}
+
+.notRegistered {
+  width: 505.86px;
+  height: 22px;
+  margin-top: 15px;
+
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+
+  /* identical to box height */
+  text-align: center;
+
+  color: #354052;
+
+  transform: rotate(-0.3deg);
 }
 
 .frame3 {
@@ -120,7 +155,6 @@
 }
 
 label {
-  
   left: 0%;
   right: 0%;
   top: 0%;
@@ -143,7 +177,6 @@ label {
   flex: none;
   order: 0;
   flex-grow: 0;
-
 }
 
 input {
@@ -218,20 +251,19 @@ form a {
   margin: 10px 0px;
 }
 
-.passwordEye
-{
+.passwordEye {
   position: relative;
-  display:flex;
+  display: flex;
   justify-content: content-position;
 }
 
 i {
-  position:absolute;
-  margin-top:2%;
+  position: absolute;
+  margin-top: 2%;
   margin-left: 95%;
   color: #7889a3;
 }
 
-i:hover{
+i:hover {
   color: #354052;
 }
