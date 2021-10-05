@@ -5,6 +5,7 @@ import LoginPage from './components/LoginPage';
 import OrganizationIdPage from './components/OrganizationIdPage';
 import AuthenticatedRoute from './components/common/AuthenticatedRoute';
 import DashboardPage from './components/DashboardPage';
+import CreateBankPage from './components/CreateBankPage';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <Switch>
        <Route path="/" exact component={LoginPage}></Route>
        <Route path="/paas/register/organization" component={OrganizationIdPage}></Route>
+       <Route path="/paas/register/createbank" component={CreateBankPage}></Route>
        <AuthenticatedRoute path="/paas/dashboard" component={DashboardPage}></AuthenticatedRoute>
        
     </Switch>
