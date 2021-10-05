@@ -7,8 +7,8 @@ import { Link, Redirect, useLocation } from "react-router-dom";
 import * as AuthenticationService from "../../service/AuthenticationService";
 
 const Login = (props) => {
-  const [token, setToken] = useState();
-  const [refreshToken, setRefreshToken] = useState();
+  const [token, setToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
 
   const [error, setError] = useState();
 
@@ -23,7 +23,7 @@ const Login = (props) => {
   }
 
   useEffect(() => {
-    if (code !== undefined && code !== null) {
+    if (code !== null) {
       AuthenticationService.loginWithPassport(code)
         .then((resp) => {
           let data = resp.data;
@@ -39,15 +39,20 @@ const Login = (props) => {
   }, [code]);
 
   useEffect(() => {
-    window.localStorage.setItem("user_token", token);
+    if (token !== null || token !== "null") {
+      window.localStorage.setItem("user_token", token);
+    }
   }, [token]);
 
   useEffect(() => {
-    window.localStorage.setItem("user_refresh_token", refreshToken);
+    if (refreshToken !== null && refreshToken !== "null") {
+      window.localStorage.setItem("user_refresh_token", refreshToken);
+    }
   }, [refreshToken]);
 
   const redirectPath = () => {
     const path = window.localStorage.getItem("redirect_path");
+
     if (path) {
       return path || "/paas/dashboard";
     }

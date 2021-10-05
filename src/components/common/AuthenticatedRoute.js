@@ -3,9 +3,9 @@ import React from "react";
 
 const AuthenticatedRoute = ({ component, ...rest }) => {
   let loggedIn = false;
-  const token = window.localStorage.getItem("user_token");
+  let token = window.localStorage.getItem("user_token");
  
-  if(!token)
+  if(token !== undefined && token !== null && token !== "null")
   {
     loggedIn = true;
   }

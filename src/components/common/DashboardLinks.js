@@ -1,8 +1,7 @@
-import "../../css/dashboardLinks.css";
 
 const DashboardLinks = () => {
   return (<div>
-     <h2>Dashboard</h2>
+     <h2>Dashboard link</h2>
   </div>);
 };
 

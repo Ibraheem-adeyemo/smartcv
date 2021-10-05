@@ -3,8 +3,8 @@ import './App.css';
 import {Switch,Route} from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import OrganizationIdPage from './components/OrganizationIdPage';
-import DashboardLinks from './components/common/DashboardLinks';
 import AuthenticatedRoute from './components/common/AuthenticatedRoute';
+import DashboardPage from './components/DashboardPage';
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     <Switch>
        <Route path="/" exact component={LoginPage}></Route>
        <Route path="/paas/register/organization" component={OrganizationIdPage}></Route>
-       <AuthenticatedRoute path="/paas/dashboard" component={DashboardLinks}></AuthenticatedRoute>
+       <AuthenticatedRoute path="/paas/dashboard" component={DashboardPage}></AuthenticatedRoute>
        
     </Switch>
   );
