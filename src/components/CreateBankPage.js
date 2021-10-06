@@ -1,6 +1,7 @@
 import "../css/createBank.css";
 import RegisterThumbNails from "./common/RegisterThumbNails";
 import TopHeader from "./common/TopHeader";
+import CreateBankForm from "./common/CreateBankForm";
 const CreateBankPage = () => {
   return (
     <div className="mainbody">
@@ -15,9 +16,7 @@ const CreateBankPage = () => {
         lines="hidden"
       ></RegisterThumbNails>
 
-      <form className="formBank">
-        <h3>Create bank</h3>
-      </form>
+      <CreateBankForm></CreateBankForm>
     </div>
   );
 };

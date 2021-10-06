@@ -11,7 +11,7 @@ const CreateSuperAdminPage = () => {
         headerOne="tnHeaderActive"
         two="tnCircleFocus"
         headerTwo="tnHeaderFocus"
-        three="tnHeaderNoFocus"
+        three="tnCircleNoFocus"
         headerThree="tnHeaderNoFocus"
       ></RegisterThumbNails>
     </div>

@@ -33,19 +33,23 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 40px 250px;
+  margin: 10px 250px;
   align-items: center;
 }
 
 .formBank {
   background-color: #fff;
-  margin: 40px 250px;
-  height: 400px;
-  padding: 15px 15px;
+  margin: 10px 250px;
+  height: 530px;
+  padding: 5px 25px;
+}
+
+.formBank div {
+  margin: 10px 0px;
 }
 
 .flow div {
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -79,14 +83,13 @@
   font-size: 14px;
   line-height: 150.2%;
 
-  color: #096DD9;
+  color: #096dd9;
 }
 
-.line
-{
+.line {
   background-color: rgb(201, 194, 194);
-  height:1px;
-  width:250px
+  height: 1px;
+  width: 250px;
 }
 
 .tnText {
@@ -117,7 +120,7 @@
 .tnCircleNoFocus {
   width: 30px;
   height: 30px;
-  background: #4B4B4B;
+  background: #4b4b4b;
   border-radius: 50%;
   color: #fff;
   padding: auto;
@@ -128,9 +131,8 @@
   line-height: 27px;
 }
 
-.tnCircleActive
-{
-  background: #096DD9;
+.tnCircleActive {
+  background: #096dd9;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -141,4 +143,200 @@
   font-weight: 800;
   font-size: 20px;
   line-height: 27px;
+}
+
+.formHeader {
+  font-family: Averta;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 26px;
+
+  color: #364657;
+}
+
+.formBankText {
+  font-family: Cera Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+
+  color: #7f91a8;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.formSingleSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.formSingleSection label {
+  font-family: Averta;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #353f50;
+}
+
+.formSingleSection input[type="text"] {
+  font-family: Averta;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  /* identical to box height, or 150% */
+  display: flex;
+  align-items: center;
+
+  /* Neutrals & Text/neutral600 */
+  color: #848f9f;
+}
+
+.fileZone {
+  width: 357px;
+  height: 64px;
+
+  background: #ffffff;
+  border: 1px dashed #7f91a8;
+  box-sizing: border-box;
+  border-radius: 4px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 2px 50px;
+}
+
+.fileInput {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.fileInput + label {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+
+  color: #7f91a8;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.fileFormat {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 8px;
+  line-height: 11px;
+
+  /* identical to box height */
+  text-align: center;
+  margin: 5px auto;
+  color: #7f91a8;
+}
+
+.fileHeader {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #364657;
+
+  /* Inside Auto Layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 11px 0px;
+}
+
+.buttonZone {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.cancelButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+
+  height: 40px;
+  width: 143px;
+
+  /* Active Blues/activeBlue100 */
+  background: #ebf8fe;
+  border-radius: 40px;
+
+  /* Inside Auto Layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 20px;
+
+  font-family: Averta;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #0275d8;
+  margin:0px 20px;
+  cursor: pointer;
+}
+
+.nextButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+
+  width: 262px;
+  height: 40px;
+
+  /* Active Blues/activeBlue400 */
+  background: #0275d8;
+  border-radius: 40px;
+
+  /* Inside Auto Layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 20px;
+
+  font-family: Averta;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+
+  /* identical to box height, or 171% */
+  display: flex;
+  align-items: center;
+
+  /* whiteDust */
+  color: #ffffff;
+  margin:0px 20px;
+  cursor: pointer;
 }
