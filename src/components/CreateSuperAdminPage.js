@@ -1,25 +1,21 @@
+import TopHeader from "./common/TopHeader";
 import "../css/createBank.css";
 import RegisterThumbNails from "./common/RegisterThumbNails";
-import TopHeader from "./common/TopHeader";
-const CreateBankPage = () => {
+
+const CreateSuperAdminPage = () => {
   return (
     <div className="mainbody">
       <TopHeader></TopHeader>
       <RegisterThumbNails
         one="tnCircleActive"
         headerOne="tnHeaderActive"
-        two="tnCircleNoFocus"
-        headerTwo="tnHeaderNoFocus"
-        three="tnCircleNoFocus"
+        two="tnCircleFocus"
+        headerTwo="tnHeaderFocus"
+        three="tnHeaderNoFocus"
         headerThree="tnHeaderNoFocus"
-        lines="hidden"
       ></RegisterThumbNails>
-
-      <form className="formBank">
-        <h3>Create bank</h3>
-      </form>
     </div>
   );
 };
 
-export default CreateBankPage;
+export default CreateSuperAdminPage;

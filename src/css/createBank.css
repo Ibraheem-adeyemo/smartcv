@@ -29,19 +29,116 @@
   color: #000000;
 }
 
-.flow
-{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 40px 250px;
-    align-items: center;
+.flow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 40px 250px;
+  align-items: center;
 }
 
-.formBank
+.formBank {
+  background-color: #fff;
+  margin: 40px 250px;
+  height: 400px;
+  padding: 15px 15px;
+}
+
+.flow div {
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.tnHeaderFocus {
+  font-family: Averta;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 150.2%;
+
+  color: #6eb4e0;
+}
+
+.tnHeaderNoFocus {
+  font-family: Averta;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 150.2%;
+
+  color: #4b4b4b;
+}
+
+.tnHeaderActive {
+  font-family: Averta;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 150.2%;
+
+  color: #096DD9;
+}
+
+.line
 {
-    background-color: #fff;
-    margin: 40px 250px;
-    height:400px;
-    padding:15px 15px
+  background-color: rgb(201, 194, 194);
+  height:1px;
+  width:250px
+}
+
+.tnText {
+  font-family: Averta;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 150.2%;
+  text-align: center;
+
+  color: #4e5a6c;
+}
+
+.tnCircleFocus {
+  width: 30px;
+  height: 30px;
+  background: #6eb4e0;
+  border-radius: 50%;
+  color: #fff;
+  padding: auto;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 27px;
+}
+
+.tnCircleNoFocus {
+  width: 30px;
+  height: 30px;
+  background: #4B4B4B;
+  border-radius: 50%;
+  color: #fff;
+  padding: auto;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 27px;
+}
+
+.tnCircleActive
+{
+  background: #096DD9;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #fff;
+  padding: auto;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 27px;
 }
