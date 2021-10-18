@@ -4,6 +4,7 @@ import ImageBackground from "./components/image-background";
 import ISWLogo from "./components/isw-logo";
 import LoginForm from "./components/login-form";
 import MissionStatement from "./components/mission-statement";
+import StatCard from "./components/stat-card";
 
 import colors from "./foundations/colors";
 import styles from "./style";
@@ -16,7 +17,8 @@ const overrides = {
         LoginForm,
         ImageBackground,
         AuthenticatedLayout,
-        ISWLogo
+        ISWLogo,
+        StatCard
     }
 }
 

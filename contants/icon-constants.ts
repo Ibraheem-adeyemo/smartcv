@@ -5,4 +5,5 @@ export enum Icons {
     systemSettings="/icons/system-settings.svg",
     terminals="/icons/terminals.svg",
     userManagement="/icons/user-management.svg",
+    statUpGreen="/icons/stat-up-green.svg"
 }

@@ -7,7 +7,8 @@ const styles = {
             height: "100%",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            backgroundSize: "cover"
+            backgroundSize: "cover",
+            background: "#E5E5E5;"
         }
     }
 }

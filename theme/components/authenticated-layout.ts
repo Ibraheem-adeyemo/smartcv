@@ -1,22 +1,24 @@
 const AuthenticatedLayout = {
-    parts: ["parent", "horinzontalMenu", "userBox", "userFirstName", "userAvatar", "sideBar", "sidebarLogoArea", "sidebarMenus", "sidebarMenu", "sidebarMenuIcon", "sidebarMenuName", "main"],
+    parts: ["parent", "horinzontalMenu", "userBox", "userFirstName", "userAvatar", "pageHeader", "sideBar", "sidebarLogoArea", "sidebarMenus", "sidebarMenu", "sidebarMenuIcon", "sidebarMenuName", "main"],
     // Styles for the base style
     baseStyle: {
         parent: {
             height:"100vh",
             display: "grid",
-            gridTemplateRows: "[row1-start] 89px [row1-end row2-start] auto [row2-end]",
+            gridTemplateRows: "[row1-start] 89px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
             gridTemplateColumns: "274px auto",
             gridTemplateAreas: `
             "sidebar header" 
-            "sidebar main"`
+            "sidebar pageHeader" 
+            "sidebar main"`,
         },
         horinzontalMenu: {
             gridArea: "header",
             borderBottom: "0.5px solid #7F91A8",
             display:"flex",
             justifyContent:"right",
-            alignItems:"center"
+            alignItems:"center",
+            background: "white"
 
         },
         userBox:{
@@ -36,9 +38,14 @@ const AuthenticatedLayout = {
             padding: "3%"
 
         },
+        pageHeader: {
+            gridArea:"pageHeader",
+            background: "white"
+        },
         sidebar: {
             gridArea: "sidebar",
-            boxShadow: "1px 0px 0px rgba(0, 0, 0, 0.15)"
+            boxShadow: "1px 0px 0px rgba(0, 0, 0, 0.15)",
+            background: "white"
         },
         sidebarLogoArea: {
             borderBottom: "0.5px solid #7F91A8",
@@ -80,7 +87,9 @@ const AuthenticatedLayout = {
 
         },
         main: {
-            gridArea: "main"
+            gridArea: "main",
+            marginX: "50px",
+            marginY:"30px"
         }
     },
     // Styles for the size variations

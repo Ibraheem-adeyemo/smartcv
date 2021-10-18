@@ -1,10 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/client"
+import { useCallback } from "react"
+import { StatCard, TerminalsPerformance } from "../../component"
 import { AuthenticatedLayout } from "../../component/layouts"
 
 const Dashboard = () => {
-    return <AuthenticatedLayout>
-      Welcome to Dashboard
+    return <AuthenticatedLayout pageHeader="User Dashboard">
+      <TerminalsPerformance />
     </AuthenticatedLayout>
 }
 

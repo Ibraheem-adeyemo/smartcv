@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/layout";
 import { useSession } from "next-auth/client";
 import { useMemo } from "react";
 import { Icons } from "../../contants/icon-constants";
-import { AuthenticatedLayout as AL, Header, InterswitchLogo, MainPage, Sidebar, SidebarLogoArea, SidebarMenu, SidebarMenuIcon, SidebarMenuName, SidebarMenus, UserAvatar, Userbox, UserFirstName } from "../custom-component";
+import { AuthenticatedLayout as AL, Header, InterswitchLogo, MainPage, PageHeader, Sidebar, SidebarLogoArea, SidebarMenu, SidebarMenuIcon, SidebarMenuName, SidebarMenus, UserAvatar, Userbox, UserFirstName } from "../custom-component";
 
 export default function AuthenticatedLayout (props:any) {
     const menuList = useMemo(() => ([{
@@ -55,6 +55,7 @@ export default function AuthenticatedLayout (props:any) {
                 }
             </SidebarMenus>
         </Sidebar>
+        <PageHeader>{props.pageHeader}</PageHeader>
         <MainPage>
                 {props.children}
         </MainPage>

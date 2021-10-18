@@ -44,6 +44,15 @@ export function UserAvatar(props:any) {
     )
 }
 
+export function PageHeader(props:any) {
+    const {children, ...rest} = props 
+    const styles = useStyles()
+
+    return (
+        <Box __css={styles.pageHeader} {...rest}>{children}</Box>
+    )
+}
+
 export function Sidebar (props:any) {
     const {children, ...rest} = props
     const styles = useStyles()
