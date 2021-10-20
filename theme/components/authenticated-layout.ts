@@ -88,7 +88,8 @@ const AuthenticatedLayout = {
         },
         main: {
             gridArea: "main",
-            marginX: "50px",
+            marginLeft: "50px",
+            marginRight: "55px",
             marginY:"30px"
         }
     },
