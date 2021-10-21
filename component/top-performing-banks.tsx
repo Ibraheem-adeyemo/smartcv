@@ -37,5 +37,5 @@ export default function TopPerforminBanks(props: any) {
             }
         ]
     }, [])
-    return <StatCard<StatsC[]> getStats={getStats} statsComponent={GroupedBarchart} topic="What are the top performing 5 banks" />
+    return <StatCard<StatsC> getStats={getStats} statsComponent={GroupedBarchart} topic="What are the top performing 5 banks" />
 }

@@ -5,6 +5,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useEffect } from 'react'
+import { links } from '../contants/links'
 
 
 const Home: NextPage = () => {
@@ -23,9 +24,9 @@ export async function getServerSideProps({req, res}:{req:NextApiRequest, res:Nex
   const session = await getSession({ req })
 
   if(!session){
-    res.setHeader("location",'/login')
+    res.setHeader("location",links.login)
   } else if(session) {
-    res.setHeader("location",'/pass/dashboard')
+    res.setHeader("location",links.dasboard)
   }    res.statusCode = 302;
   res.end();
   

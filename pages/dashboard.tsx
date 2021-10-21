@@ -1,9 +1,10 @@
 import { Grid, GridItem } from "@chakra-ui/layout"
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/client"
-import React, { useCallback } from "react"
-import { ServiceStatus, StatCard, SuccessRate, TerminalsPerformance, TerminalsUnderWatch } from "../../component"
-import { AuthenticatedLayout } from "../../component/layouts"
+import React from "react"
+import { ServiceStatus, SuccessRate, TerminalsPerformance, TerminalsUnderWatch } from "../component"
+import { AuthenticatedLayout } from "../component/layouts"
+import { links } from "../contants/links"
 
 const Dashboard = () => {
   return (
@@ -32,7 +33,7 @@ export async function getServerSideProps({ req, res }: { req: NextApiRequest, re
   const session = await getSession({ req })
 
   if (!session) {
-    res.setHeader("location", '/login')
+    res.setHeader("location", links.login)
     res.statusCode = 302;
     res.end();
   }

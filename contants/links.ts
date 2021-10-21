@@ -1,3 +1,5 @@
 export enum links {
-    registerOrganization = "/pass/register/organization"
+    registerOrganization = "/register/organization",
+    dasboard="/dashboard",
+    login="/login"
 }

@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import { getCsrfToken } from "next-auth/client"
 import Providers from "next-auth/providers"
 import { SCOPE, CLIENT_ID, REDIRECT_URI, RESPONSE_TYPE, SECRET, GRANT_TYPE, PASSPORT_TOKEN_URL, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL } from "../../../contants/env-constants"
+import { links } from "../../../contants/links"
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
@@ -96,7 +97,7 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    signIn: '/login',  // Displays signin buttons
+    signIn: links.login,  // Displays signin buttons
     // signOut: '/auth/signout', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page

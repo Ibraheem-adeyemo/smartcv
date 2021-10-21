@@ -1,7 +1,7 @@
 import Icon from "@chakra-ui/icon";
 import { Flex, Text } from "@chakra-ui/layout";
 import React, { useCallback } from "react"
-import { Stat, StatCard } from "."
+import { Stat, StatCard } from "./stats"
 import { StatsA } from "../models/stats-models";
 import { BsArrowUpCircle } from "react-icons/bs";
 
