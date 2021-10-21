@@ -1,15 +1,10 @@
 import { Box } from "@chakra-ui/layout";
 import { useRef, useImperativeHandle, forwardRef, useLayoutEffect, RefObject, useMemo, useEffect } from "react";
 import { Chart, registerables } from 'chart.js';
+import { DonutChartProps } from "../../models";
 
-interface DonutChartProps {
-    labels: string[],
-    chartTitle: string,
-    data:number[],
-    backgroundColor: string[],
-}
 
-export default function DonutChart (props:DonutChartProps & {width?:string, height?:string}) {
+export default function DonutChart (props:DonutChartProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     
     
@@ -39,9 +34,11 @@ export default function DonutChart (props:DonutChartProps & {width?:string, heig
            maintainAspectRatio:false
          }
      })   
-
+     return () => {
+       chart.destroy()
+     }
     //  chart.options.plugins?.legend?.position = "right"
     })
 
-    return <Box w={props?.width} h={props?.height}><canvas id="my-chart" ref={canvasRef}></canvas></Box>
+    return <Box w={props?.width} h={props?.height}  mt="17px"><canvas id="my-chart" ref={canvasRef}></canvas></Box>
 }

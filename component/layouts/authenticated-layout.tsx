@@ -1,63 +1,110 @@
-import { Box } from "@chakra-ui/layout";
+import Icon from "@chakra-ui/icon";
+import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/layout";
 import { useSession } from "next-auth/client";
-import { useMemo } from "react";
-import { Icons } from "../../contants/icon-constants";
-import { AuthenticatedLayout as AL, Header, InterswitchLogo, MainPage, PageHeader, Sidebar, SidebarLogoArea, SidebarMenu, SidebarMenuIcon, SidebarMenuName, SidebarMenus, UserAvatar, Userbox, UserFirstName } from "../custom-component";
+import React, { useMemo } from "react";
+import { dashboardIcon, terminalsIcon, reportingIcon, userManagementIcon, auditIcon, systemSettingsIcon } from "../../contants/icon-constants";
+import { InterswitchLogo } from "../custom-component";
 
-export default function AuthenticatedLayout (props:any) {
+export default function AuthenticatedLayout(props: any) {
     const menuList = useMemo(() => ([{
-        icon:Icons.dashboard,
-        name:"Dashboard"
-    },{
-        icon:Icons.terminals,
-        name:"Terminals"
-    },{
-        icon:Icons.reporting,
-        name:"Reporting"
-    },{
-        icon:Icons.userManagement,
-        name:"user Management"
-    },{
-        icon:Icons.audit,
-        name:"Audit"
-    },{
-        icon:Icons.systemSettings,
-        name:"System Settings"
-    } ]), [])
+        icon: dashboardIcon,
+        name: "Dashboard"
+    }, {
+        icon: terminalsIcon,
+        name: "Terminals"
+    }, {
+        icon: reportingIcon,
+        name: "Reporting"
+    }, {
+        icon: userManagementIcon,
+        name: "user Management"
+    }, {
+        icon: auditIcon,
+        name: "Audit"
+    }, {
+        icon: systemSettingsIcon,
+        name: "System Settings"
+    }]), [])
 
     const [session, loading] = useSession()
-    console.log({session})
-    return(<AL>
-        <Header>
-            <Userbox>
-                <UserFirstName>
+    console.log({ session })
+    return (<Grid
+        h={"100vh"}
+        templateRows={"[row1-start] 89px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] "}
+        templateColumns={["274px auto", "274px auto", "274px auto", "274px auto", "274px auto", "374px auto"]}
+        templateAreas={`
+            "sidebar header" 
+            "sidebar pageHeader" 
+            "sidebar main"`
+        }
+        backgroundColor="white"
+        >
+        <GridItem
+            gridArea="header"
+            borderBottom="0.5px solid #7F91A8"
+        >
+            <Flex>
+                <Text>
                     Hello, {session?.user?.name}
-                </UserFirstName>
-                <UserAvatar>
-                    AM
-                </UserAvatar>
-            </Userbox>
-            </Header>
-        <Sidebar>
-            <SidebarLogoArea>
+                </Text>
+            </Flex>
+        </GridItem>
+        <GridItem
+            gridArea="sidebar"
+            boxShadow="1px 0px 0px rgba(0, 0, 0, 0.15)"
+        >
+            <Flex
+                borderBottom="0.5px solid #7F91A8"
+                h="89px">
                 <InterswitchLogo variant="sidbar-logo" />
-            </SidebarLogoArea>
-            <SidebarMenus>
+            </Flex>
+            <Flex flexDir="column"
+                ml="40px"
+                mt="48px"
+                
+                >
                 {
-                    menuList.map((x,i) => 
-                    <SidebarMenu key={i} role="group"> 
-                        <SidebarMenuIcon bgImage={`url('${x.icon}')`} _groupHover={{
-                backgroundImage:"none",
-                backgroundColor: "blue",
-                maskImage: `url(${x.icon})`}}  />
-                        <SidebarMenuName>{x.name}</SidebarMenuName>
-                    </SidebarMenu>)
+                    menuList.map((x, i) =>
+                        <Flex key={i} role="group"
+                        display="flex" 
+                        pl="13.9px"
+                        pr="13px"
+                        py="7.9px"
+                        w="fit-content"
+                        alignItems="center"
+                        borderRadius="4px"
+                        __css={{
+                            ":not(:last-child)":{
+                                mb:"27px"
+                            }
+                        }}
+                        _hover = {{
+                            background: "#EAF4FE",
+                            cursor:"pointer"
+                        }}
+                            fontSize={["16px", "16px", "16px", "16px", "16px", "20px"]}
+                        >
+                            <Icon as={x.icon} _groupHover={{
+                                color:"#EAF4FE"
+                            }}
+                                h="23px"
+                                w="23px"
+                            />
+                            <Text px="20px" color="brand.muted">{x.name}</Text>
+                        </Flex>)
                 }
-            </SidebarMenus>
-        </Sidebar>
-        <PageHeader>{props.pageHeader}</PageHeader>
-        <MainPage>
-                {props.children}
-        </MainPage>
-    </AL>)
+            </Flex>
+        </GridItem>
+        <GridItem>{props.pageHeader}</GridItem>
+        <GridItem 
+            gridArea = "main"
+            pl="50px"
+            pr="55px"
+            py="30px"
+            bgColor="brand.main_page"
+            overflow="auto"
+            >
+            {props.children}
+        </GridItem>
+    </Grid>)
 }

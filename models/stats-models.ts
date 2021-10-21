@@ -13,3 +13,13 @@ export interface StatsB {
     backgroundColor: string[];
     chartTitle: string;
 }
+
+export interface StatsC {
+    label: string;
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+    borderWidth: number;
+    borderRadius: number;
+    borderSkipped: boolean;
+}

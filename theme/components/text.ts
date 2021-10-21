@@ -9,10 +9,10 @@ const Text = {
     // Styles for the size variations
     sizes: {
       "card-header": {
-        fontSize: "16px"
+        fontSize: ["16px", "16px", "16px", "16px", "16px", "20px"]
       },
       "stat-header":{
-        fontsize:"16px"
+        fontSize: ["16px", "16px", "16px", "16px", "16px", "20px"]
       },
       "page-header": {
         fontSize:"23px"
@@ -21,8 +21,7 @@ const Text = {
     // Styles for the visual style variations
     variants: {
         "card-header":{
-          fontWeight:800,
-          marginBottom:"16px"
+          fontWeight:800
         },
         "page-header": {
           color: "brand.page_header",

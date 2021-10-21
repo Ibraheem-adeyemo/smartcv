@@ -8,17 +8,17 @@ import { AuthenticatedLayout } from "../../component/layouts"
 const Dashboard = () => {
   return (
     <AuthenticatedLayout pageHeader="User Dashboard">
-      <Grid rowGap="27px" columnGap="15px" autoFlow="column" >
-        <GridItem>
+      <Grid rowGap="27px" columnGap="15px" templateColumns={"1fr 1fr 1fr 1fr 1fr"} autoFlow="row dense" >
+        <GridItem gridColumn={["1/5","1/5","1/5","1/5","1/5","1/5",]}>
           <TerminalsPerformance />
         </GridItem>
-        <GridItem>
+        <GridItem gridColumn={["5","5","5","5","5","5"]}>
           <SuccessRate />
         </GridItem>
-        <GridItem>
+        <GridItem gridColumn={["1/3","1/3","1/3","1/3","1/3","1/3",]}>
           <ServiceStatus />
         </GridItem>
-        <GridItem>
+        <GridItem gridColumn={["3/6","3/6","3/6","3/6","3/6","3/6"]}>
           <TerminalsUnderWatch />
         </GridItem>
       </Grid>
