@@ -1,9 +1,11 @@
 import donutChart from "./donutchart";
 import statCard from "./stat-card";
 import stat from "./stat";
-import groupedBarchart from "./grouped-barchart";
+import barchart from "./barchart";
+import canvas from "./canvas";
 
 export const DonutChart = donutChart
 export const StatCard = statCard
 export const Stat = stat
-export const GroupedBarchart = groupedBarchart
+export const Barchart = barchart
+export const Canvas = canvas

@@ -1,6 +1,6 @@
 import { Box, Image } from "@chakra-ui/react"
 import React from "react"
-import { Images } from "../contants/image-constants"
+import { Images } from "../constants"
 import { BulletContainer, BulletHeader, BulletMessage, LogoContainer, MessageContainer, MissionStatement as MS, TextContainer, TopBanner } from "./custom-component"
 
 const MissionStatement = () => {

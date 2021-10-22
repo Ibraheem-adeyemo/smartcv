@@ -15,11 +15,18 @@ export interface StatsB {
 }
 
 export interface StatsC {
-    label: string;
-    data: number[];
-    borderColor: string;
-    backgroundColor: string;
-    borderWidth: number;
-    borderRadius: number;
-    borderSkipped: boolean;
+    label: string,
+    data: number[],
+    borderColor: string,
+    backgroundColor: string| string[],
+    borderWidth: number,
+    borderRadius: number,
+    borderSkipped: any
+}
+
+export interface StatsCMore {
+    labels: string[],
+    data: StatsC[],
+    width?: string[] | string,
+    height?: string[] | string
 }

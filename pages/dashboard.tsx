@@ -2,9 +2,10 @@ import { Grid, GridItem } from "@chakra-ui/layout"
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/client"
 import React from "react"
-import { ServiceStatus, SuccessRate, TerminalsPerformance, TerminalsUnderWatch } from "../component"
+import { ServiceStatus, SuccessRate, TerminalsPerformance, TerminalsUnderWatch, TopPerforminBanks, TopTransactionMetric } from "../component"
 import { AuthenticatedLayout } from "../component/layouts"
-import { links } from "../contants/links"
+import { links } from "../constants"
+import { AuthGuard } from "../lib"
 
 const Dashboard = () => {
   return (
@@ -22,6 +23,12 @@ const Dashboard = () => {
         <GridItem gridColumn={["3/6","3/6","3/6","3/6","3/6","3/6"]}>
           <TerminalsUnderWatch />
         </GridItem>
+        <GridItem gridColumn={["1/4","1/4","1/4","1/4","1/4","1/4"]}>
+          <TopPerforminBanks />
+        </GridItem>
+        <GridItem gridColumn={["5/6","5/6","5/6","5/6","4/6","4/6"]}>
+          <TopTransactionMetric />
+        </GridItem>
       </Grid>
     </AuthenticatedLayout>
   )
@@ -29,16 +36,7 @@ const Dashboard = () => {
 
 // checks for exixsting coookie session to redirect to the correct page
 export async function getServerSideProps({ req, res }: { req: NextApiRequest, res: NextApiResponse }) {
-
-  const session = await getSession({ req })
-
-  if (!session) {
-    res.setHeader("location", links.login)
-    res.statusCode = 302;
-    res.end();
-  }
-
-  return { props: {} }
+  return AuthGuard({ req, res })
 
 }
 export default Dashboard

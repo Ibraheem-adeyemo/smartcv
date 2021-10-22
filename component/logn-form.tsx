@@ -3,8 +3,7 @@ import { VisuallyHiddenInput, Image } from "@chakra-ui/react";
 import { signIn } from "next-auth/client";
 import { AppProps } from "next/app";
 import React, { ComponentProps, ComponentPropsWithoutRef, useMemo } from "react";
-import { Images } from "../contants/image-constants";
-import { links } from "../contants/links";
+import { Images, links } from "../constants";
 import { ActionButton, FormContainer, FormError, NotRegistered, Welcome } from "./custom-component";
 
 

@@ -9,8 +9,8 @@ export default function Stat(props: StatProps) {
       ":last-child": {
         marginX: 0
       },
-    }} mr="17px" mt="17px">
-      <Flex mt="13px" ml="19px" mb="18px" mr="65.36" flexDir="column" >
+    }} mr="40px" mt="17px">
+      <Flex mt="13px" ml="19px" mb="18px" mr="65.36" flexDir="column" h="89%" >
         <Text variant="stat-header" size="stat-header" >
           {props.headerName}
         </Text>
@@ -33,7 +33,6 @@ export default function Stat(props: StatProps) {
             </Text>
             <Icon as={BsArrowUpCircle} fill={"green"} />
           </Flex>
-
         </Flex>
       </Flex>
     </Flex>

@@ -1,19 +1,18 @@
 import React, { useCallback } from "react";
-import { StatsC } from "../models";
-import { GroupedBarchart, StatCard } from "./stats";
+import { StatsC, StatsCMore } from "../models";
+import { Barchart, StatCard } from "./stats";
 
 export default function TopPerforminBanks(props: any) {
 
     const getStats = useCallback(() => {
 
         const boxSize = {
-            width: ["224px", "224px", "224px", "224px", "224px", "222px"],
-            height: ["159px", "159px", "159px", "159px", "159px", "189px"]
+            width: ["224px", "224px", "224px", "224px", "224px", "900px"]
         }
         return [
             {
                 ...boxSize,
-                laels: ['Zenith', "FCMB", "First", "GTCO", "Access"],
+                labels: ['Zenith', "FCMB", "First", "GTCO", "Access"],
                 data: [
                     {
                         label: 'Value',
@@ -37,5 +36,5 @@ export default function TopPerforminBanks(props: any) {
             }
         ]
     }, [])
-    return <StatCard<StatsC> getStats={getStats} statsComponent={GroupedBarchart} topic="What are the top performing 5 banks" />
+    return <StatCard<StatsCMore> getStats={getStats} statsComponent={Barchart} topic="What are the top performing 5 banks" />
 }

@@ -16,7 +16,7 @@ export default function SuccessRate(props: any) {
             ...boxSize,
             data: [11, 89],
             labels: ["failed", "success"],
-            backgroundColor: ["#FF5257", "#00B97F"],
+            backgroundColor: ["#096DD9", "#00B97F"],
             chartTitle: "Success rate"
         }]
     }, [])

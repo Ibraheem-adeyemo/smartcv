@@ -11,7 +11,7 @@ export default function TerminalsPerformance(props: any) {
 
   const getStats = useCallback(() => {
     const boxSize = {
-      width: ["224px", "224px", "224px", "224px", "224px", "300px"],
+      width: ["224px", "224px", "224px", "224px", "229px", "229px"],
       height: ["159px", "159px", "159px", "159px", "159px", "189px"]
     }
     return [{

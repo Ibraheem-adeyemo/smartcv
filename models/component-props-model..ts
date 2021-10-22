@@ -1,10 +1,7 @@
-import { StatsA, StatsB, StatsC } from ".";
+import { StatsA, StatsB, StatsC, StatsCMore } from ".";
 
-export interface GroupedBarChartProps {
-    labels:string[]
-    data: StatsC[]
-    width?: string[] | string,
-    height?: string[] | string
+export interface GroupedBarChartProps extends StatsCMore {
+
 }
 
 export interface DonutChartProps extends StatsB {

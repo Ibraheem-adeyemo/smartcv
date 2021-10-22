@@ -2,7 +2,7 @@ import Icon from "@chakra-ui/icon";
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/layout";
 import { useSession } from "next-auth/client";
 import React, { useMemo } from "react";
-import { dashboardIcon, terminalsIcon, reportingIcon, userManagementIcon, auditIcon, systemSettingsIcon } from "../../contants/icon-constants";
+import { dashboardIcon, terminalsIcon, reportingIcon, userManagementIcon, auditIcon, systemSettingsIcon } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 
 export default function AuthenticatedLayout(props: any) {
@@ -33,7 +33,7 @@ export default function AuthenticatedLayout(props: any) {
         templateRows={"[row1-start] 89px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] "}
         templateColumns={["274px auto", "274px auto", "274px auto", "274px auto", "274px auto", "374px auto"]}
         templateAreas={`
-            "sidebar header" 
+            "header header" 
             "sidebar pageHeader" 
             "sidebar main"`
         }
@@ -42,7 +42,16 @@ export default function AuthenticatedLayout(props: any) {
         <GridItem
             gridArea="header"
             borderBottom="0.5px solid #7F91A8"
+            display="flex"
+            justifyContent="space-between"
         >
+
+            
+            <Flex
+                borderBottom="0.5px solid #7F91A8"
+                h="89px">
+                <InterswitchLogo variant="sidbar-logo" />
+            </Flex>
             <Flex>
                 <Text>
                     Hello, {session?.user?.name}
@@ -52,17 +61,12 @@ export default function AuthenticatedLayout(props: any) {
         <GridItem
             gridArea="sidebar"
             boxShadow="1px 0px 0px rgba(0, 0, 0, 0.15)"
-        >
-            <Flex
-                borderBottom="0.5px solid #7F91A8"
-                h="89px">
-                <InterswitchLogo variant="sidbar-logo" />
-            </Flex>
-            <Flex flexDir="column"
+            display="flex"
+            flexDir="column"
                 ml="40px"
-                mt="48px"
-                
-                >
+                overflowX="auto"
+        >
+                    
                 {
                     menuList.map((x, i) =>
                         <Flex key={i} role="group"
@@ -93,7 +97,6 @@ export default function AuthenticatedLayout(props: any) {
                             <Text px="20px" color="brand.muted">{x.name}</Text>
                         </Flex>)
                 }
-            </Flex>
         </GridItem>
         <GridItem>{props.pageHeader}</GridItem>
         <GridItem 

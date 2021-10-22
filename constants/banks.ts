@@ -1,0 +1,1 @@
+export default ["First Bank", "UBA", "GTCO", "Heritage Bank", "Access Banks", "Wema Bank"]

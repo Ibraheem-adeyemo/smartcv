@@ -1,15 +1,12 @@
-import { Button, Link, Image, Input, VisuallyHiddenInput, Box, Text } from "@chakra-ui/react"
 import { NextApiRequest, NextApiResponse } from "next"
 import { Session } from "next-auth"
-import { getCsrfToken, getSession, signIn } from "next-auth/client"
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { getCsrfToken, getSession } from "next-auth/client"
+import React, {  } from "react"
 import { LoginForm } from "../component"
 import Container from "../component/container"
 import { ImageBackground } from "../component/layouts"
 import MissionStatement from "../component/mission-statement"
-import { LOGIN_URL, REDIRECT_URI } from "../contants/env-constants"
-import { Images } from "../contants/image-constants"
-import { links } from "../contants/links"
+import { REDIRECT_URI } from "../constants"
 
 
 const Login = ({ session, csrf }: { session: Session | null, csrf: string }) => {
