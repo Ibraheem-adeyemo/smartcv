@@ -1,14 +1,15 @@
 import Icon from "@chakra-ui/icon";
-import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/layout";
+import { Box, Flex, Grid, GridItem, Link as ChakraLink, Text } from "@chakra-ui/layout";
 import { useSession } from "next-auth/client";
 import React, { useMemo } from "react";
-import { dashboardIcon, terminalsIcon, reportingIcon, userManagementIcon, auditIcon, systemSettingsIcon } from "../../constants";
+import { dashboardIcon, terminalsIcon, reportingIcon, userManagementIcon, auditIcon, systemSettingsIcon, links } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
-
+import NextLink from 'next/link'
 export default function AuthenticatedLayout(props: any) {
     const menuList = useMemo(() => ([{
         icon: dashboardIcon,
-        name: "Dashboard"
+        name: "Dashboard",
+        link: links.dasboard
     }, {
         icon: terminalsIcon,
         name: "Terminals"
@@ -17,7 +18,8 @@ export default function AuthenticatedLayout(props: any) {
         name: "Reporting"
     }, {
         icon: userManagementIcon,
-        name: "user Management"
+        name: "user Management",
+        link: links.userManagement
     }, {
         icon: auditIcon,
         name: "Audit"
@@ -69,11 +71,13 @@ export default function AuthenticatedLayout(props: any) {
                     
                 {
                     menuList.map((x, i) =>
-                        <Flex key={i} role="group"
+                    <NextLink href={x.link?x.link:"/"}>
+                        <ChakraLink  href={x.link?x.link:"/"} key={i} role="group"
                         display="flex" 
                         pl="13.9px"
                         pr="13px"
-                        py="7.9px"
+                        py="8px"
+                        my="10px"
                         w="fit-content"
                         alignItems="center"
                         borderRadius="4px"
@@ -95,7 +99,7 @@ export default function AuthenticatedLayout(props: any) {
                                 w="23px"
                             />
                             <Text px="20px" color="brand.muted">{x.name}</Text>
-                        </Flex>)
+                        </ChakraLink></NextLink>)
                 }
         </GridItem>
         <GridItem>{props.pageHeader}</GridItem>

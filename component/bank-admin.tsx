@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { AppTable } from ".";
+import { Banks } from "../constants";
+import { getRandomInt } from "../lib";
 
 export default function BankAdmin() {
 
@@ -61,15 +63,13 @@ export default function BankAdmin() {
             const data = []
             for (let i = 0; i < 38; i++) {
                 data.push({
-                    bankName: "",
+                    bankName: Banks[getRandomInt(Banks.length - 1)],
                     bankLogo: "",
-                    bankId: "",
-                    addrress: "",
-                    dateCreated: "",
+                    bankId: "7638GFTJ876",
+                    addrress: "Bank Address",
+                    dateCreated: (new Date()).getDate().toString(),
                     babnkSuperAdmin: "",
-                    status: "",
-                    activeUsers: 0,
-                    inActiveUser: 0
+                    status: ""
                 })
             }
             return data

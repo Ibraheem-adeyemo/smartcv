@@ -1,5 +1,6 @@
 export enum links {
     registerOrganization = "/register/organization",
     dasboard="/dashboard",
-    login="/login"
+    login="/login",
+    userManagement="/user-management"
 }
