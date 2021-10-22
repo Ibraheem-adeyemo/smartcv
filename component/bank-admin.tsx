@@ -37,7 +37,7 @@ export default function BankAdmin() {
                     use: true
                 },
                 method: () => {
-                    alert("done")
+                    alert("Edit")
                 }
             },
             {
@@ -46,7 +46,7 @@ export default function BankAdmin() {
                     use: true,
                 },
                 method: () => {
-                    alert("done")
+                    alert("Delete")
                 }
             },
             {
@@ -55,7 +55,7 @@ export default function BankAdmin() {
                     use: true
                 },
                 method: () => {
-                    alert("done")
+                    alert("View")
                 }
             },
         ],
@@ -68,8 +68,8 @@ export default function BankAdmin() {
                     bankId: "7638GFTJ876",
                     addrress: "Bank Address",
                     dateCreated: (new Date()).getDate().toString(),
-                    babnkSuperAdmin: "",
-                    status: ""
+                    babnkSuperAdmin: "John Wick",
+                    status: "John wick"
                 })
             }
             return data

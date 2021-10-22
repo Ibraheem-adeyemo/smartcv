@@ -1,4 +1,4 @@
-import { Icon, Menu, MenuButton, MenuItem, MenuList, Thead } from "@chakra-ui/react";
+import { Icon, Menu, MenuButton, MenuItem, MenuList, Tfoot, Thead, Button } from "@chakra-ui/react";
 import { Table, Tbody, Td, Tr } from "@chakra-ui/table";
 import React, { useMemo } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
@@ -30,7 +30,7 @@ export default function AppTable(props: ApptableProps) {
                 </Tr>
             </Thead>
             <Tbody>
-                {props.rows.map((x, i) => <Tr>
+                {props.rows.map((x, i) => <Tr key={i}>
 
                     {
                         props.columns.map((y, j) => <Td key={j}>
@@ -42,11 +42,13 @@ export default function AppTable(props: ApptableProps) {
 
                         props.actions.length > 1 && <Td>
                             <Menu>
-                                <MenuButton as={IoEllipsisVerticalOutline} />
+                                <MenuButton as={Button}>
+                                    <Icon as={ IoEllipsisVerticalOutline} />
+                                </MenuButton>
                                 <MenuList>
 
                                     {
-                                        props.actions.map((z, k) => <MenuItem key={k}>{z.name}</MenuItem>)
+                                        props.actions.map((z, k) => <MenuItem key={k} onClick={z.method}>{z.name}</MenuItem>)
                                     }
                                 </MenuList>
                             </Menu>
@@ -59,5 +61,12 @@ export default function AppTable(props: ApptableProps) {
 
                 </Tr>)}
             </Tbody>
+            <Tfoot>
+                <Tr>
+                    <Td colSpan={props.columns.length}>
+
+                    </Td>
+                </Tr>
+            </Tfoot>
         </Table>)
 }

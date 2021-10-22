@@ -8,6 +8,7 @@ import terminalsUnderWatch from "./terminals-under-watch";
 import appTable from "./app-table";
 import topPerforminBanks from "./top-performing-banks";
 import topTransactionMetric from "./top-transaction-metric";
+import bankAdmin from './bank-admin'
 
 export const Container = container
 export const MissionStatement = missionStatement
@@ -19,3 +20,4 @@ export const TerminalsUnderWatch = terminalsUnderWatch
 export const AppTable = appTable
 export const TopPerforminBanks = topPerforminBanks
 export const TopTransactionMetric = topTransactionMetric
+export const BankAdmin = bankAdmin

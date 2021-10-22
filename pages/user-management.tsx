@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next"
+import { BankAdmin } from "../component"
 import { AuthenticatedLayout } from "../component/layouts"
 import { AuthGuard } from "../lib"
 
 export default function UserManagement(props:any) {
 
-    return (<AuthenticatedLayout>
-        
+    return (<AuthenticatedLayout pageHeader="User Management">
+        <BankAdmin />
     </AuthenticatedLayout>)
 }
 

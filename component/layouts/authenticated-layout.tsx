@@ -1,11 +1,17 @@
 import Icon from "@chakra-ui/icon";
 import { Box, Flex, Grid, GridItem, Link as ChakraLink, Text } from "@chakra-ui/layout";
 import { useSession } from "next-auth/client";
-import React, { useMemo } from "react";
+import React, { ComponentProps, ReactNode, useMemo } from "react";
 import { dashboardIcon, terminalsIcon, reportingIcon, userManagementIcon, auditIcon, systemSettingsIcon, links } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 import NextLink from 'next/link'
-export default function AuthenticatedLayout(props: any) {
+import { AppProps } from "next/app";
+
+interface AuthenticatedLayout  {
+    pageHeader: string | JSX.Element,
+    children?: ReactNode
+}
+export default function AuthenticatedLayout(props: AuthenticatedLayout) {
     const menuList = useMemo(() => ([{
         icon: dashboardIcon,
         name: "Dashboard",
