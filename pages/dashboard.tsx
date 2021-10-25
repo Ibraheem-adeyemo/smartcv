@@ -1,35 +1,48 @@
-import { Grid, GridItem } from "@chakra-ui/layout"
+import { Flex, Text } from "@chakra-ui/layout"
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/client"
 import React from "react"
-import { ServiceStatus, SuccessRate, TerminalsPerformance, TerminalsUnderWatch, TopPerforminBanks, TopTransactionMetric } from "../component"
+import { DropdownSearchFilter, ServiceStatus, SuccessRate, TerminalsPerformance, TerminalsUnderWatch, TopPerforminBanks, TopTransactionMetric } from "../component"
 import { AuthenticatedLayout } from "../component/layouts"
-import { links } from "../constants"
+import { Banks, links } from "../constants"
 import { AuthGuard } from "../lib"
 
 const Dashboard = () => {
   return (
-    <AuthenticatedLayout pageHeader="User Dashboard">
-      <Grid rowGap="27px" columnGap="15px" templateColumns={"1fr 1fr 1fr 1fr 1fr"} autoFlow="row dense" >
-        <GridItem gridColumn={["1/5","1/5","1/5","1/5","1/5","1/5",]}>
+    <AuthenticatedLayout pageHeader={ 
+      <Flex w="100%" flexWrap="wrap" justifyContent="space-between" px="50px" alignItems="center">
+        <Text variant="page-header" size="page-header">User Dashboard</Text>
+        <Flex alignItems="center">
+        <DropdownSearchFilter data={
+
+          [
+            { label: "All", value: "All", selected: true },
+            ...Banks.map((x, i) => ({ label: x, value: x, selected: false }))
+          ]
+        } />
+      </Flex>
+      </Flex>
+    }>
+      <Flex gridGap="30px" flexWrap="wrap">
+        <Flex flexGrow={3}>
           <TerminalsPerformance />
-        </GridItem>
-        <GridItem gridColumn={["5","5","5","5","5","5"]}>
+        </Flex>
+        <Flex flexGrow={1} w="25%">
           <SuccessRate />
-        </GridItem>
-        <GridItem gridColumn={["1/3","1/3","1/3","1/3","1/3","1/3",]}>
+        </Flex>
+        <Flex>
           <ServiceStatus />
-        </GridItem>
-        <GridItem gridColumn={["3/6","3/6","3/6","3/6","3/6","3/6"]}>
+        </Flex>
+        <Flex flexGrow={3}>
           <TerminalsUnderWatch />
-        </GridItem>
-        <GridItem gridColumn={["1/4","1/4","1/4","1/4","1/4","1/4"]}>
+        </Flex>
+        <Flex flexGrow={4} width6="70%">
           <TopPerforminBanks />
-        </GridItem>
-        <GridItem gridColumn={["5/6","5/6","5/6","5/6","4/6","4/6"]}>
+        </Flex>
+        <Flex flexGrow={1} width="25%">
           <TopTransactionMetric />
-        </GridItem>
-      </Grid>
+        </Flex>
+      </Flex>
     </AuthenticatedLayout>
   )
 }

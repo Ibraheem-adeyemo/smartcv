@@ -77,8 +77,8 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
                     
                 {
                     menuList.map((x, i) =>
-                    <NextLink href={x.link?x.link:"/"}>
-                        <ChakraLink  href={x.link?x.link:"/"} key={i} role="group"
+                    <NextLink key={i} href={x.link?x.link:"/"}>
+                        <ChakraLink  href={x.link?x.link:"/"} role="group"
                         display="flex" 
                         pl="13.9px"
                         pr="13px"
@@ -108,14 +108,14 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
                         </ChakraLink></NextLink>)
                 }
         </GridItem>
-        <GridItem>{props.pageHeader}</GridItem>
+        <GridItem d="flex" w="100%" alignItems="center">{props.pageHeader}</GridItem>
         <GridItem 
             gridArea = "main"
             pl="50px"
             pr="55px"
             py="30px"
             bgColor="brand.main_page"
-            overflow="auto"
+            overflowY="auto"
             >
             {props.children}
         </GridItem>

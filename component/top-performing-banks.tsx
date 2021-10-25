@@ -7,7 +7,7 @@ export default function TopPerforminBanks(props: any) {
     const getStats = useCallback(() => {
 
         const boxSize = {
-            width: ["224px", "224px", "224px", "224px", "224px", "900px"]
+            width: ["224px", "224px", "224px", "100%", "100%", "100%"]
         }
         return [
             {
@@ -20,7 +20,7 @@ export default function TopPerforminBanks(props: any) {
                         borderColor: "#62C6A6",
                         backgroundColor: "#096DD9",
                         borderWidth: 2,
-                        borderRadius: Number.MAX_VALUE,
+                        borderRadius: 0,
                         borderSkipped: false,
                     },
                     {
@@ -29,7 +29,7 @@ export default function TopPerforminBanks(props: any) {
                         borderColor: "#62C6A6",
                         backgroundColor: "#62C6A6",
                         borderWidth: 2,
-                        borderRadius: Number.MAX_VALUE,
+                        borderRadius: 0,
                         borderSkipped: false,
                     }
                 ],

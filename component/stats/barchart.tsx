@@ -48,6 +48,7 @@ export default function GroupedBarchart(props: GroupedBarChartProps) {
             type: "bar",
             data,
             options: {
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         min: minMax?.min,
@@ -63,7 +64,7 @@ export default function GroupedBarchart(props: GroupedBarChartProps) {
                     }
 
                 },
-                responsive: true,
+                responsive: false,
                 plugins: {
                     legend: {
                         position: 'top',
@@ -79,6 +80,6 @@ export default function GroupedBarchart(props: GroupedBarChartProps) {
             chart.destroy()
         }
         //  chart.options.plugins?.legend?.position = "right"
-    })
+    }, [])
     return <Canvas ref={canvasRef} w={props?.width} h={props?.height} as="canvas" mt="17px" />
 }

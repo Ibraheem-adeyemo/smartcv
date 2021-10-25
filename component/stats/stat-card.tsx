@@ -16,9 +16,9 @@ export default function StatCard<T>(props: StatCardProps<T>) {
         ...props.getStats()
     ]), [props.getStats])
     return (
-        <Flex flexDir="column" bg="brand.white" px="19px" py="15px">
+        <Flex flexDir="column" bg="brand.white" px="19px" py="15px" w="100%">
             <Text variant="card-header" size="card-header">{props.topic}</Text>
-            <Flex wrap="wrap">
+            <Flex >
                 {stats.map((x, i) =>
                         <props.statsComponent key={i} {...x} />
                 )}

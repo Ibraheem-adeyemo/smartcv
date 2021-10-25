@@ -39,7 +39,7 @@ export default function DonutChart(props: DonutChartProps) {
       chart.destroy()
     }
     //  chart.options.plugins?.legend?.position = "right"
-  })
+  }, [])
 
   return <Canvas ref={canvasRef} w={props?.width} h={props?.height} as="canvas" mt="17px" />
 }

@@ -7,11 +7,10 @@ export default function TopTransactionMetric(props: any) {
     const getStats = useCallback(() => {
 
         const boxSize = {
-            width: ["400px", "400px", "400px", "400px", "400px", "400px"]
+            width: ["400px", "400px", "400px", "100%", "100%", "100%"]
         }
         return [
             {
-                ...boxSize,
                 labels: ["Value", "Volume"],
                 data: [
                     {
