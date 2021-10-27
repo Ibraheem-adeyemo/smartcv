@@ -1,37 +1,32 @@
-import type { NextApiRequest, NextApiResponse, NextPage } from 'next'
+import { Flex } from '@chakra-ui/layout'
+import { CircularProgress } from '@chakra-ui/react'
+import { m } from 'framer-motion'
+import type { NextPage } from 'next'
 import { getSession, useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import { useEffect } from 'react'
+import React, { useMemo, useState } from 'react'
 import { links } from '../constants'
 
 
 const Home: NextPage = () => {
-  const [session, loading] = useSession()
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
-  
+  useMemo(() => {
+    getSession().then(val => {
+      if(val === null) {
+        router.push(links.login)
+      } else {
+        router.push(links.dasboard)
+      }
+      // setLoading(false)
+    })
+  }, [])  
 
   return (
-    <></>
+    <Flex height="100vh">
+      {loading && <CircularProgress isIndeterminate color="blue" m="auto" size="120px" /> }
+    </Flex>
   )
-}
-
-// checks for exixsting coookie session to redirect to the correct page
-export async function getServerSideProps({req, res}:{req:NextApiRequest, res:NextApiResponse}) {
-  
-  const session = await getSession({ req })
-
-  if(!session){
-    res.setHeader("location",links.login)
-  } else if(session) {
-    res.setHeader("location",links.dasboard)
-  }    res.statusCode = 302;
-  res.end();
-  
-  return { props: {} }
-
 }
 
 export default Home

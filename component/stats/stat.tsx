@@ -5,12 +5,8 @@ import { StatProps } from "../../models";
 
 export default function Stat(props: StatProps) {
   return (
-    <Flex w={props.width} h={props.height} bgColor="brand.stat_card" __css={{
-      ":last-child": {
-        marginX: 0
-      },
-    }} mr="40px" mt="17px">
-      <Flex mt="13px" ml="19px" mb="18px" mr="65.36" flexDir="column" h="89%" >
+    <Flex flexGrow={1} h={props.height} bgColor="brand.stat_card">
+      <Flex mt="13px" ml="19px" mb="18px" mr="65.36" gridGap="16px" flexDir="column" h="89%" >
         <Text variant="stat-header" size="stat-header" >
           {props.headerName}
         </Text>
@@ -23,15 +19,14 @@ export default function Stat(props: StatProps) {
               {props.totalNumber}
             </Text>
           </Flex>
-          <Flex w="100%" justifyContent="space-between">
-            <Icon as={BsArrowUpCircle} fill={props.status} />
-            <Text fontSize="13px">
+          <Flex w="100%" justifyContent="flex-start" gridGap="6.4px" >
+            <Icon as={BsArrowUpCircle} fill={props.status} flexGrow={1} />
+            <Text fontSize="13px" flexGrow={2}>
               {props.percentage}
             </Text>
-            <Text fontSize="11px" color="brand.muted">
+            <Text fontSize="11px" color="brand.muted" flexGrow={3}>
               {props.days}
             </Text>
-            <Icon as={BsArrowUpCircle} fill={"green"} />
           </Flex>
         </Flex>
       </Flex>

@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { Session } from "next-auth"
 import { getCsrfToken, getSession } from "next-auth/client"
 import React, { } from "react"
-import { LoginForm } from "../component"
+import { LoginForm, RegisterForm } from "../component"
 import Container from "../component/container"
 import { InterswitchLogo } from "../component/custom-component"
 import { NonAuthenticated } from "../component/layouts"
@@ -12,7 +12,7 @@ import MissionStatement from "../component/mission-statement"
 import { Images, REDIRECT_URI } from "../constants"
 
 
-const Login = (props: any) => {
+const Register = (props: any) => {
 
 
 
@@ -25,13 +25,11 @@ const Login = (props: any) => {
                 </Flex>
                 <Flex gridGap="45px">
                     <MissionStatement />
-                    <LoginForm loginDetails={{
-                        redirectUri: REDIRECT_URI
-                    }} />
+                    <RegisterForm />
                 </Flex>
             </Flex>
         </NonAuthenticated>)
 
 }
 
-export default Login
+export default Register

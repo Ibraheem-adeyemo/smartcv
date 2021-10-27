@@ -1,62 +1,39 @@
-import { Box, Image } from "@chakra-ui/react"
-import React from "react"
-import { Images } from "../constants"
-import { BulletContainer, BulletHeader, BulletMessage, LogoContainer, MessageContainer, MissionStatement as MS, TextContainer, TopBanner } from "./custom-component"
+import { Box, Flex, Image, Text, List, ListItem, Avatar } from "@chakra-ui/react"
+import React, { useMemo } from "react"
+import { Images, TickIcon } from "../constants"
 
 const MissionStatement = () => {
+    const missionStatement = useMemo(() => [{
+        missionHead: "ATM & Transaction monitoring",
+        missionText: `Set-up new terminals,send downloads to disconnected terminals, realtime transaction monitoring, monitor online/offline/supervisor mode terminals`
+    }, {
+        missionHead: "Card operation",
+        missionText: `Set-up new terminals,send downloads to disconnected terminals, realtime transaction monitoring, monitor online/offline/supervisor mode terminals`
+    }, {
+        missionHead: "Best in class support",
+        missionText: "We are positioned as an industry expert with a dedicated request for all your needs and support"
+    }], [])
     return (
-        <MS>
-            <LogoContainer>
-                <Image src={Images.iswLogo} alt="Interswitch logo" />
-            </LogoContainer>
-            <TextContainer>
-                <TopBanner>
-                    Built to help you enhance your <br />
-                    service delivery in the following
-                    <br />
-                    areas
-                </TopBanner>
+        <Flex flexDir="column" gridGap="26px">
+            <Text fontSize="30px" variant="card-header" color="white">
+                Built to help you enhance your service delivery in the following areas
+            </Text>
 
-                <BulletContainer>
-                    <Image src={Images.bullet} alt="good sign" />
+            <List gridGap="54px" d="flex" flexDir="column">
+                {missionStatement.map((x, i) =>
+                    <ListItem key={i} display="flex" gridGap="21px">
+                        <Avatar bgColor="white" icon={<TickIcon boxSize="19.8px"  color="#4B4B4B" />} />
+                       
 
-                    <MessageContainer>
-                        <BulletHeader>ATM & Transaction monitoring</BulletHeader>
-                        <BulletMessage>
-                            Set-up new terminals,send downloads to disconnected <br />
-                            terminals, realtime transaction monitoring, monitor <br />
-                            online/offline/supervisor mode terminals
-                        </BulletMessage>
-                    </MessageContainer>
-                </BulletContainer>
+                        <Flex flexDir="column"  color="white" gridGap="18px">
+                            <Text color="white" variant="card-header" size="page-header">{x.missionHead}</Text>
+                            <Text color="brand.inverted-muted">{x.missionText}</Text>
+                        </Flex>
+                    </ListItem>
+                )}
 
-                <BulletContainer>
-                    <Image src={Images.bullet} alt="good sign" />
-
-                    <MessageContainer>
-                        <BulletHeader>Card operation</BulletHeader>
-                        <BulletMessage>
-                            Card production, card management functions like
-                            <br />
-                            Block/Unblock card, PIN reset, card limits, card and <br />
-                            account info
-                        </BulletMessage>
-                    </MessageContainer>
-                </BulletContainer>
-
-                <BulletContainer>
-                    <Image src={Images.bullet} alt="good sign" />
-
-                    <MessageContainer>
-                        <BulletHeader>Best in class support</BulletHeader>
-                        <BulletMessage>
-                            We are positioned as an industry expert with a<br />
-                            dedicated request for all your needs and support <br />
-                        </BulletMessage>
-                    </MessageContainer>
-                </BulletContainer>
-            </TextContainer>
-        </MS>
+            </List>
+        </Flex>
     )
 }
 

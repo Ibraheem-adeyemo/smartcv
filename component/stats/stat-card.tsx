@@ -1,27 +1,21 @@
 import { Box, Flex, Text } from "@chakra-ui/layout";
-import React, { useMemo } from "react";
+import { Props } from "framer-motion/types/types";
+import React, { useMemo, useState } from "react";
 
 
-type getStatsFunc<T> = () => T[]
-type statsComponent<T> = (props: T) => JSX.Element
+type getStatsFunc = () => unknown[]
+type statsComponent = (props: any) => JSX.Element
 
-interface StatCardProps<T> {
-    getStats: getStatsFunc<T & {width?: string|string[], height?:string|string[]}>,
-    topic: string,
-    statsComponent: statsComponent<T>
+interface StatCardProps extends Props {
+    topic: string|JSX.Element
 }
 
-export default function StatCard<T>(props: StatCardProps<T>) {
-    const stats = useMemo(() => ([
-        ...props.getStats()
-    ]), [props.getStats])
+export default function StatCard(props: StatCardProps) {
     return (
         <Flex flexDir="column" bg="brand.white" px="19px" py="15px" w="100%">
-            <Text variant="card-header" size="card-header">{props.topic}</Text>
-            <Flex >
-                {stats.map((x, i) =>
-                        <props.statsComponent key={i} {...x} />
-                )}
+            <Box w="100%">{props.topic}</Box>
+            <Flex gridGap="19px">
+                {props.children}
             </Flex>
         </Flex>)
 }

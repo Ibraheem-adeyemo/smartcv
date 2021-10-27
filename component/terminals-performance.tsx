@@ -1,12 +1,12 @@
-import Icon from "@chakra-ui/icon";
-import { Flex, Text } from "@chakra-ui/layout";
-import React, { useCallback } from "react"
+import { Text } from "@chakra-ui/layout";
+import React, { useCallback, useMemo, useState } from "react"
 import { Stat, StatCard } from "./stats"
 import { StatsA } from "../models/stats-models";
-import { BsArrowUpCircle } from "react-icons/bs";
-
+import { SkeletonLoader } from ".";
 
 export default function TerminalsPerformance(props: any) {
+  const [loading, setLoading] = useState(true)
+  const [stats, setStats] = useState<StatsA[]>()
 
 
   const getStats = useCallback(() => {
@@ -14,6 +14,9 @@ export default function TerminalsPerformance(props: any) {
       width: ["224px", "224px", "224px", "224px", "229px", "229px"],
       height: ["159px", "159px", "159px", "159px", "159px", "189px"]
     }
+    console.log("done waiting")
+
+    setLoading(prev => !prev)
     return [{
       ...boxSize,
       headerName: "ATM Count",
@@ -37,8 +40,22 @@ export default function TerminalsPerformance(props: any) {
       percentage: "6.0%",
       days: "Last 7 days"
     },]
-  }
-    , [])
+  }, [])
 
-  return (<StatCard<StatsA> getStats={getStats} topic="How are terminals performance" statsComponent={Stat} />)
+  useMemo(() => {
+    console.log("waiting")
+    setTimeout(() => {
+      setStats(getStats())
+
+    }, 10000);
+  }, [getStats])
+  const Skeleton = useCallback( () => <SkeletonLoader skeletonRange={[0, 3]} itemRange={[0, 3]} width="200px" height="50px" />,[])
+  return (
+    <StatCard topic={<Text variant="card-header" size="card-header">How are terminals performance</Text>} >  
+        {!loading ? stats?.map((x, i) =>
+          <Stat key={i} {...x} />
+        ) :
+        <Skeleton />
+        }
+    </StatCard>)
 }

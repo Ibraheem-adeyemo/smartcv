@@ -56,8 +56,8 @@ export default function GroupedBarchart(props: GroupedBarChartProps) {
                         ticks: {
                             callback: (val, index) => {
                                 const newLabel = shortenNumber(+val).fractionAmount !== Number.MAX_VALUE ? shortenNumber(+val) : { fractionAmount: val, abbrev: "" }
-                                return raw.indexOf(+val) > -1 ? newLabel.fractionAmount + newLabel.abbrev : ""
-                                // return newLabel.fractionAmount+newLabel.abbrev
+                                // return raw.indexOf(+val) > -1 ? newLabel.fractionAmount + newLabel.abbrev : ""
+                                return newLabel.fractionAmount+newLabel.abbrev
                             },
                         }
 

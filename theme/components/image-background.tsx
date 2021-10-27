@@ -4,7 +4,8 @@ const ImageBackground = {
         backgroundImage: "url(\"/images/Rectangle\ 1619.png\"),url(\"/images/francis-odeyemi-NfL07rKmJbU-unsplash\ 1.png\")",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "100vh"
+        height: "100vh",
+        overflowY: "auto"
 
     },
     // Styles for the size variations

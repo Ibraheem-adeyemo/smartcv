@@ -3,7 +3,9 @@ import { Images } from "../../constants"
 const ISWLogo = {
     // Styles for the base style
     baseStyle: {
-        backgroundImage: `url('${Images.iswBlueLogo}')`
+        backgroundImage: `url('${Images.iswBlueLogo}')`,
+        widdth:"156px",
+        height:"42px"
     },
     // Styles for the size variations
     sizes: {},
@@ -14,6 +16,9 @@ const ISWLogo = {
             width:"156px",
             marginY:"auto",
             marginLeft:"45px"
+        },
+        "inverted": {
+            backgroundImage: `url('${Images.iswLogo}')`,
         }
     },
     // The default `size` or `variant` values
