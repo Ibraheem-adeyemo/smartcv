@@ -19,8 +19,16 @@ const Button = {
             borderRadius: "48px",
             py: "5.5px",
             px: "22.5px",
-            bgColor: "brand.primary-button",
+            bgColor: "brand.primary-blue",
             color: "white"
+        },
+        "muted-primary-button": {
+
+            borderRadius: "48px",
+            py: "5.5px",
+            px: "22.5px",
+            bgColor: "brand.muted-blue",
+            color: "brand.primary-blue"
         }
     },
     // The default `size` or `variant` values

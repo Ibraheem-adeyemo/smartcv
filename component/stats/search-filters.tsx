@@ -1,11 +1,10 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text } from "@chakra-ui/layout";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
-import { HiChevronDown } from 'react-icons/hi'
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Input } from "@chakra-ui/input";
 import { debounce } from 'lodash';
-import { DropdownIcon } from "../constants";
+import { DropdownIcon } from "../../constants";
 
 
 const debouncedFetchData = debounce((query: string, cb: ResultFromSearch, data: DropdownContent[]) => {

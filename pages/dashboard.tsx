@@ -3,16 +3,16 @@ import { Tag } from "@chakra-ui/react"
 import { NextApiRequest, NextApiResponse } from "next"
 import dynamic from 'next/dynamic'
 import React, { useMemo } from "react"
-import { CustomFilter, DropdownSearchFilter, } from "../component"
+import { CustomFilter, DropdownSearchFilter, } from "../component/stats"
 import { Authenticated } from "../component/layouts"
 import { Banks, ChannelsEnum } from "../constants"
 import { AuthGuard } from "../lib"
-const TerminalsPerformance = dynamic(() => import('../component/terminals-performance'))
-const SuccessRate = dynamic(() => import('../component/success-rate'))
-const ServiceStatus = dynamic(() => import('../component/service-status'))
-const TerminalsUnderWatch = dynamic(() => import('../component/terminals-under-watch'))
-const TopPerforminBanks = dynamic(() => import('../component/top-performing-banks'))
-const TopTransactionMetric = dynamic(() => import('../component/top-transaction-metric'))
+const TerminalsPerformance = dynamic(() => import('../component/stats/terminals-performance'))
+const SuccessRate = dynamic(() => import('../component/stats/success-rate'))
+const ServiceStatus = dynamic(() => import('../component/stats/service-status'))
+const TerminalsUnderWatch = dynamic(() => import('../component/stats/terminals-under-watch'))
+const TopPerforminBanks = dynamic(() => import('../component/stats/top-performing-banks'))
+const TopTransactionMetric = dynamic(() => import('../component/stats/top-transaction-metric'))
 
 const Dashboard = () => {
   const Filter = useMemo(() => DropdownSearchFilter, [])

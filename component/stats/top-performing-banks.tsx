@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { StatsC, StatsCMore } from "../models";
-import { Barchart, StatCard } from "./stats";
+import { StatsC, StatsCMore } from "../../models";
+import { Barchart, StatCard } from ".";
 import { Flex, Text } from "@chakra-ui/layout";
 import { Tag } from "@chakra-ui/tag";
-import { DropdownIcon } from "../constants";
-import { SkeletonLoader } from ".";
+import { DropdownIcon } from "../../constants";
+import { SkeletonLoader } from "..";
 
 export default function TopPerforminBanks(props: any) {
     const [loading, setLoading] = useState(true)

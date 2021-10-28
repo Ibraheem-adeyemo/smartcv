@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 
   return (
     <Flex height="100vh">
-      {loading && <CircularProgress isIndeterminate color="blue" m="auto" size="120px" /> }
+      {loading && <CircularProgress isIndeterminate color="brand.primary-blue" m="auto" size="120px" /> }
     </Flex>
   )
 }

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { AppTable } from ".";
-import { Banks } from "../constants";
-import { getRandomInt } from "../lib";
+import { AppTable } from "..";
+import { Banks } from "../../constants";
+import { getRandomInt } from "../../lib";
 
 export default function BankAdmin() {
 

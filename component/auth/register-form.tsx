@@ -2,7 +2,7 @@ import { Flex, Link } from "@chakra-ui/layout";
 import { Text, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, {  } from "react";
-import { links } from "../constants";
+import { links } from "../../constants";
 import NextLink from 'next/link'
 
 export default function RegisterForm(props: any) {
@@ -23,7 +23,7 @@ export default function RegisterForm(props: any) {
                     <Button type="submit" variant="primary-button" w="100%" py="12px">
                         Submit
                     </Button>
-                    <Link href={links.login} color="brand.primary" ><NextLink href={links.login}>Back to Login</NextLink></Link>
+                    <Link href={links.login} color="brand.primary-blue" ><NextLink href={links.login}>Back to Login</NextLink></Link>
                 </Flex>
             </Flex>
         </form>)

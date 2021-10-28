@@ -26,7 +26,7 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
     }, {
         icon: terminalsIcon,
         name: "Terminals",
-        link:"/"
+        link: "/"
     }, {
         icon: reportingIcon,
         name: "Reporting",
@@ -38,41 +38,44 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
     }, {
         icon: auditIcon,
         name: "Audit",
-        link:""
+        link: ""
     }, {
         icon: systemSettingsIcon,
         name: "System Settings",
-        link:""
+        link: ""
     }]), [])
 
     const [session, loadingSession] = useSession()
     const [loading, setLoading] = useState(true)
     // console.log({ session })
-    
-    const MenuLists = useCallback(() => <>
-    { !loading?menuList.map((x, i) => <NextLink key={i} href={x.link ? x.link : "/"}>
-    <ChakraLink href={x.link ? x.link : "/"} d="flex" gridGap="20px" role="group"
-        display="flex"
-        pl="13.9px"
-        pr="13px"
-        py="8px"
-        w="fit-content"
-        alignItems="center"
-        borderRadius="4px"
-        _hover={{
-            background: "#EAF4FE",
-            cursor: "pointer"
-        }}
-        fontSize={["16px", "16px", "16px", "16px", "16px", "20px"]}
-    >
-        <Icon as={x.icon} _groupHover={{
-            color: "#EAF4FE"
-        }}
-            h="23px"
-            w="23px"
-        />
-        <Text color="brand.muted">{x.name}</Text>
-    </ChakraLink></NextLink>): <SkeletonLoader itemRange={[0,1]} skeletonRange={[0,5]} height="50px" width="60%" gridGap="40px" />}</>, [loading])
+
+    const MenuLists = useCallback(() => {
+        return <>
+            {!loading ? menuList.map((x, i) => <NextLink key={i} href={x.link ? x.link : "/"}>
+                <ChakraLink href={x.link ? x.link : "/"} d="flex" gridGap="20px" role="group"
+                    display="flex"
+                    pl="13.9px"
+                    pr="13px"
+                    py="8px"
+                    w="fit-content"
+                    alignItems="center"
+                    borderRadius="4px"
+                    _hover={{
+                        background: "brand.muted-blue",
+                        cursor: "pointer"
+                    }}
+                    fontSize={["16px", "16px", "16px", "16px", "16px", "20px"]}
+                >
+                    <Icon as={x.icon} _groupHover={{
+                        color: "#EAF4FE"
+                    }}
+                        h="23px"
+                        w="23px"
+                    />
+                    <Text color="brand.muted">{x.name}</Text>
+                </ChakraLink></NextLink>) : <SkeletonLoader itemRange={[0, 1]} skeletonRange={[0, 5]} height="50px" width="60%" gridGap="40px" />}
+        </>
+    }, [loading])
 
     useMemo(() => {
         setTimeout(() => {
@@ -109,28 +112,28 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
                     <MenuButton as={Button} variant="just-text">
                         <Flex gridGap="42px" alignItems="center">
                             <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {session?.user?.name}</Text>
-                            
-                            <Avatar name={session?.user?.name === null?"":session?.user?.name} src="" />
+
+                            <Avatar name={session?.user?.name === null ? "" : session?.user?.name} src="" />
                         </Flex>
                     </MenuButton>
                     <MenuList d="flex" gridGap="1px" flexDir="column" px="18px" pt="22px">
                         <MenuItem as={Flex} gridGap="11px" alignItems="center">
-                        <Avatar name={session?.user?.name === null?"":session?.user?.name} src="" />
-                        <Flex flexDir="column" gridGap="1px">
-                            <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {session?.user?.name}</Text>
-                            <Text  variant="small-uted-tex"> {session?.user?.email}</Text>
+                            <Avatar name={session?.user?.name === null ? "" : session?.user?.name} src="" />
+                            <Flex flexDir="column" gridGap="1px">
+                                <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {session?.user?.name}</Text>
+                                <Text variant="small-uted-tex"> {session?.user?.email}</Text>
 
                             </Flex>
                         </MenuItem>
-                        <MenuDivider/>
+                        <MenuDivider />
                         <MenuItem>
                             <Text size="dropdown-tes">Prifle and Oreferences</Text>
                         </MenuItem>
-                        <MenuDivider/>
-                        <MenuItem onClick={() => signOut() }>
+                        <MenuDivider />
+                        <MenuItem onClick={() => signOut()}>
                             <Text size="dropdown-tes">Signout</Text>
                         </MenuItem>
-                        <MenuDivider/>
+                        <MenuDivider />
                     </MenuList>
                 </Menu>
             </Flex>

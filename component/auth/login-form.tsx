@@ -6,7 +6,7 @@ import { getCsrfToken, getSession, session, signIn, signOut, useSession } from "
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import React, { ComponentProps, ComponentPropsWithoutRef, useMemo, useState } from "react";
-import { Images, links } from "../constants";
+import { Images, links } from "../../constants";
 
 
 interface LoginFormProps extends ComponentPropsWithoutRef<any> {

@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { StatsC, StatsCMore } from "../models";
-import { Barchart, StatCard } from "./stats";
+import { StatsC, StatsCMore } from "../../models";
+import { Barchart, StatCard } from ".";
 import { Flex, Text } from "@chakra-ui/layout";
 import DropdownSearchFilter from "./search-filters";
-import { Months } from "../constants";
-import { SkeletonLoader } from ".";
+import { Months } from "../../constants";
+import { SkeletonLoader } from "..";
 
 export default function TopTransactionMetric(props: any) {
     const Filter = useMemo(() => DropdownSearchFilter, [])

@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { DonutChart, StatCard } from "./stats";
-import { StatsB, StatsA } from "../models/stats-models";
+import { DonutChart, StatCard } from ".";
+import { StatsB, StatsA } from "../../models/stats-models";
 import { Text } from '@chakra-ui/react'
-import { SkeletonLoader } from ".";
+import { SkeletonLoader } from "..";
 export default function SuccessRate(props: any) {
     const [stats, setStats] = useState<StatsB[]>()
     const [loading, setLoading] = useState(true)

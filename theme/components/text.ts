@@ -22,6 +22,9 @@ const Text = {
       },
       "tag-text": {
         fontSize:"12px"
+      },
+      "tiny-text": {
+        fontSize:"8px"
       }
     },
     // Styles for the visual style variations

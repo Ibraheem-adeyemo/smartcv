@@ -1,4 +1,3 @@
-import { Box, BoxProps, ChakraComponent, forwardRef } from "@chakra-ui/react";
 import { Chart, registerables } from "chart.js";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { GroupedBarChartProps } from "../../models";

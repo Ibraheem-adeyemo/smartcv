@@ -1,5 +1,4 @@
-import { Box } from "@chakra-ui/layout";
-import React, { useImperativeHandle, forwardRef, useLayoutEffect, RefObject, useMemo, useEffect, useRef } from "react";
+import React, { useMemo, useEffect, useRef } from "react";
 import { Chart, registerables } from 'chart.js';
 import { DonutChartProps } from "../../models";
 import { Canvas } from ".";

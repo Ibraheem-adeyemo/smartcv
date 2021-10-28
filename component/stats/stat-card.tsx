@@ -1,10 +1,6 @@
-import { Box, Flex, Text } from "@chakra-ui/layout";
+import { Box, Flex } from "@chakra-ui/layout";
 import { Props } from "framer-motion/types/types";
-import React, { useMemo, useState } from "react";
-
-
-type getStatsFunc = () => unknown[]
-type statsComponent = (props: any) => JSX.Element
+import React, {  } from "react";
 
 interface StatCardProps extends Props {
     topic: string|JSX.Element
