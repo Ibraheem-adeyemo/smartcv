@@ -17,7 +17,7 @@ export default function Step1(props: any) {
     const [stepNumber, setStepNumber] = useState<number>()
     // debugger
     useEffect(() => {
-        debugger
+        // debbuger
         if (typeof steps !== "undefined" && typeof step !== "undefined") {
             const index = steps.findIndex((x, i) => x.url === `/onboarding/${step}`)
             if (index < 0) {

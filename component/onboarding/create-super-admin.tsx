@@ -25,10 +25,11 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
     const [accordionindex, setAccordionindex] = useState<number>()
     const [openModal, setOpenModal] = useState<boolean>()
     const setUserAuthority =(user: SuperAdminInfo) => {
+        debugger
         setAuthenticatedUser(user)
     }
     const onCloseModal = () => {
-        debugger
+        // debbuger
         setOpenModal(false)
     }
     useEffect(() => {

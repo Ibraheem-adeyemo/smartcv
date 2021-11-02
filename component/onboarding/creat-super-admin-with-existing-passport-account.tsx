@@ -25,6 +25,7 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
 
     useEffect(() => {
         if(typeof  props.authenticatedUser !== "undefined") {
+            debugger
            typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
                 ...prev as Onboarding,
                 superAdminInfo: {

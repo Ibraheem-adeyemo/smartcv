@@ -18,6 +18,12 @@ const initialLogin: PassportLoginCredentials = {
     email: "",
     password: ""
 }
+interface RequestBody {
+    grant_type: string,
+    username: string,
+    password:string,
+    scope:string
+}
 export default function SigninWithPassport(props: SigninWithPassportProps) {
     const { form, setForm } = useForm<PassportLoginCredentials>(initialLogin)
     const { validation, setData, setField } = useValidator<PassportLoginCredentials>()
@@ -32,12 +38,16 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
         } as Loading)
         try {
             if (form?.completed) {
-                const body = {
+                const body:RequestBody = {
                     grant_type: "password",
                     username: form.email,
                     password: form.password,
                     scope: SCOPE
                 }
+                const urlencoded = new URLSearchParams();
+                Object.keys(body).forEach((x) => {
+                    urlencoded.append(x, body[x as keyof RequestBody])
+                })
                 // export const PASSPORT_URL = "".concat(
                 //     PASSPORT_AUTHORIZE_URL,
                 //     "?",
@@ -52,13 +62,14 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                 //   );
 
                 // const report = await fetch(PASSPORT_AUTHORIZE_URL)
+                
                 const response = await fetch(form?.postUrl as string, {
                     method: "post",
                     headers: {
-                        Authorixation: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
-                        contentType: "application/json"
+                        Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
+                        "Content-Type":"application/x-www-form-urlencoded"
                     },
-                    body: JSON.stringify(body)
+                    body: urlencoded
                 })
                 const data = (await response.json()) as SuperAdminInfo
                 if (response.ok || response.status === 200 || response.status === 201) {
@@ -76,9 +87,11 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                 isLoading: false
             } as Loading)
         } catch (error: any) {
+            // debugger
+            console.log({error})
             if (typeof error.data !== "undefined") {
                 toast({
-                    title: error.error_description,
+                    title: error.data.error_description,
                     variant: "left-accent",
                     isClosable: true,
                     status: "error"
@@ -109,7 +122,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
     useEffect(() => {
         if (typeof canNotSubmit !== "undefined") {
             if (!canNotSubmit) {
-                debugger
+                // debbuger
                 console.log({ PASSPORT_TOKEN_URL })
                 setForm(prev => ({
                     ...prev as PassportLoginCredentials,
@@ -171,7 +184,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                             <FormErrorMessage>{validation?.errors.email}</FormErrorMessage>
                         </FormControl>
                         <FormControl isRequired id="password" width="100%" isInvalid={validation?.errors?.password !== "" && validation?.touched.password === "touched"}>
-                            <FormLabel>Last name</FormLabel>
+                            <FormLabel>Password</FormLabel>
                             <Input placeholder="Enter your password" type="password" borderRadius="4px" value={form?.password} onChange={addData} />
                             <FormErrorMessage>{validation?.errors.password}</FormErrorMessage>
 
