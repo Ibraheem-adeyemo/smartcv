@@ -1,8 +1,10 @@
+import _ from "lodash";
+
 export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
 }
-export function shortenNumber(amount:number) {
-    let t = { fractionAmount: Number.MAX_VALUE, abbrev:""}
+export function shortenNumber(amount: number) {
+    let t = { fractionAmount: Number.MAX_VALUE, abbrev: "" }
     const g = [{ abbrev: "T", value: 1000000000000 }, { abbrev: "B", value: 1000000000 }, { abbrev: "M", value: 1000000 }, { abbrev: "K", value: 1000 }]
     if (!isNaN(amount)) {
         const length = String(amount).length
@@ -16,8 +18,12 @@ export function shortenNumber(amount:number) {
                 return { ...curr, fractionAmount }
             }
             return prev
-        }, { fractionAmount: Number.MAX_VALUE, abbrev:"" })
+        }, { fractionAmount: Number.MAX_VALUE, abbrev: "" })
 
     }
     return t
+}
+
+export function isEmptyObject<T>(obj: Record<keyof T, string | boolean >[]) {
+    return _.flow(_.values, _.compact, _.isEmpty)(obj)
 }
