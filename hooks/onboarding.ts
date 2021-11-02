@@ -33,8 +33,8 @@ const initialData = {state:0, bankInfo: {
 superAdminInfo: {
     firstName:"",
     lastName:"",
-    emailAddress:"",
-    phoneNumber:"",
+    email:"",
+    mobileNo:"",
     password:"",
     completed: false
 },

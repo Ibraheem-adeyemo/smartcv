@@ -1,6 +1,6 @@
-import { Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/accordion";
-import { Box, Flex, Text } from "@chakra-ui/layout";
-import { Avatar, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel } from "@chakra-ui/accordion";
+import { Flex, Text } from "@chakra-ui/layout";
+import { Avatar, useToast } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
@@ -19,18 +19,27 @@ const SigninWithPassport = dynamic(() => import('./signin-with-passport'))
 
 
 export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
-    const { steps, onboarding, changeOnboarding, changeIsRefresh } = useContext(OnboardingContext)
+    const { steps, onboarding, changeOnboarding } = useContext(OnboardingContext)
     const router = useRouter()
     const [authenticatedUser, setAuthenticatedUser] = useState<SuperAdminInfo>()
     const [accordionindex, setAccordionindex] = useState<number>()
     const [openModal, setOpenModal] = useState<boolean>()
+    const toast = useToast()
     const setUserAuthority =(user: SuperAdminInfo) => {
-        debugger
+        // debugger
         setAuthenticatedUser(user)
+        onCloseModal()
+        toast({
+            title: "Your account has been verified",
+            status:"success",
+            variant:"left-accent",
+            isClosable:true
+        })
     }
     const onCloseModal = () => {
         // debbuger
         setOpenModal(false)
+
     }
     useEffect(() => {
         if (typeof onboarding !== "undefined" && typeof steps !== "undefined" && typeof props.step !== "undefined") {
@@ -69,7 +78,7 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
                 <AccordionItem w="100%" bgColor="white">
                     {({ isExpanded }) => {
                         return <>
-                            <AccordionButton onClick={() => setOpenModal(prev => isExpanded?false:true)}>
+                            <AccordionButton onClick={() => setOpenModal(() => isExpanded?false:true)}>
                                 <Flex gridGap="17px" alignItems="center" justifyContent="flex-start" w="100%">
                                     {isExpanded ? (
                                         <Avatar bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>

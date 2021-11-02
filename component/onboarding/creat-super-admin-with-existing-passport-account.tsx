@@ -21,16 +21,27 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
     const [loading, setLoading] = useState<Loading>()
     const toast = useToast()
     const router = useRouter()
-    const { validation, setData, setField } = useValidator<SuperAdminInfo>()
 
     useEffect(() => {
-        if(typeof  props.authenticatedUser !== "undefined") {
-            debugger
+        if(typeof  props.authenticatedUser === "undefined") {
            typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
                 ...prev as Onboarding,
                 superAdminInfo: {
-                    ...props.authenticatedUser,
+                    firstName:"",
+                    lastName:"",
+                    email:"",
+                    mobileNo:"",
+                    password:"",
                     completed: true
+                }
+            }))
+        } else {
+            debugger
+            typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
+                ...prev as Onboarding,
+                superAdminInfo: {
+                    ...props.authenticatedUser,
+                    completed: false
                 }
             }))
         }
@@ -47,6 +58,7 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
                 completed: false
             }
         })) : ""
+        setCanNotSubmit(false)
     }, [])
 
     const createSuperAdmin = useCallback((e) => {
@@ -63,28 +75,27 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
     return (<OnboardingCard cardTitle="" cardFooter={cardFooter}>
 
         <Flex gridColumnGap="21px" gridRowGap="32px" flexWrap="wrap" >
-            <FormControl isRequired id="firtstName" flexGrow={1} width="35%" isInvalid={validation?.errors?.firstName !== "" && validation?.touched.firstName === "touched"}>
+            <FormControl isRequired flexGrow={1} width="35%">
                 <FormLabel>First Name</FormLabel>
 
                 <Input placeholder="Jane" borderRadius="4px" value={onboarding?.superAdminInfo?.firstName}  disabled={true} />
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-                <FormErrorMessage>{validation?.errors.firstName}</FormErrorMessage>
             </FormControl>
-            <FormControl isRequired id="lastName" flexGrow={1} width="35%" >
+            <FormControl isRequired flexGrow={1} width="35%" >
                 <FormLabel>Last name</FormLabel>
                 <Input placeholder="Doe" borderRadius="4px" value={onboarding?.superAdminInfo?.lastName} disabled={true} />
 
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
-            <FormControl isRequired id="emailAddress" flexGrow={1} width="35%">
+            <FormControl isRequired flexGrow={1} width="35%">
                 <FormLabel>Email Address</FormLabel>
 
-                <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.superAdminInfo?.emailAddress} disabled={true} />
+                <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.superAdminInfo?.email} disabled={true} />
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
-            <FormControl isRequired id="phoneNumber" flexGrow={1} width="35%" >
+            <FormControl isRequired flexGrow={1} width="35%" >
                 <FormLabel>Phone Number</FormLabel>
-                <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.superAdminInfo?.phoneNumber} disabled={true} />
+                <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.superAdminInfo?.mobileNo} disabled={true} />
 
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>

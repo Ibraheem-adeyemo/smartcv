@@ -15,9 +15,10 @@ export  interface InstitutionColorInfo{
 export  interface SuperAdminInfo {
     firstName: string,
     lastName: string,
-    emailAddress:string,
-    phoneNumber:string,
+    email:string,
+    mobileNo:string,
     password:string,
+    accesstoken?:""
     completed:boolean
 }
 

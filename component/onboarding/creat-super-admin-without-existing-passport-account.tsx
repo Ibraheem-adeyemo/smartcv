@@ -179,17 +179,17 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
 
                     {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
-                <FormControl isRequired id="emailAddress" flexGrow={1} width="35%" isInvalid={validation?.errors?.emailAddress !== "" && validation?.touched.emailAddress === "touched"}>
+                <FormControl isRequired id="emailAddress" flexGrow={1} width="35%" isInvalid={validation?.errors?.email !== "" && validation?.touched.email === "touched"}>
                     <FormLabel>Email Address</FormLabel>
 
-                    <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.superAdminInfo?.emailAddress} onChange={addData} />
-                    <FormErrorMessage>{validation?.errors.emailAddress}</FormErrorMessage>
+                    <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.superAdminInfo?.email} onChange={addData} />
+                    <FormErrorMessage>{validation?.errors.email}</FormErrorMessage>
                     {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
-                <FormControl isRequired id="phoneNumber" flexGrow={1} width="35%" isInvalid={validation?.errors?.phoneNumber !== "" && validation?.touched.phoneNumber === "touched"}>
+                <FormControl isRequired id="phoneNumber" flexGrow={1} width="35%" isInvalid={validation?.errors?.mobileNo !== "" && validation?.touched.mobileNo === "touched"}>
                     <FormLabel>Phone Number</FormLabel>
-                    <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.superAdminInfo?.phoneNumber} onChange={addData} />
-                    <FormErrorMessage>{validation?.errors.phoneNumber}</FormErrorMessage>
+                    <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.superAdminInfo?.mobileNo} onChange={addData} />
+                    <FormErrorMessage>{validation?.errors.mobileNo}</FormErrorMessage>
 
                     {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
