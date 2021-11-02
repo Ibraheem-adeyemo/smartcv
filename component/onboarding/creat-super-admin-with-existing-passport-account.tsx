@@ -23,15 +23,15 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
     const router = useRouter()
 
     useEffect(() => {
-        if(typeof  props.authenticatedUser === "undefined") {
-           typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
+        if (typeof props.authenticatedUser === "undefined") {
+            typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
                 ...prev as Onboarding,
                 superAdminInfo: {
-                    firstName:"",
-                    lastName:"",
-                    email:"",
-                    mobileNo:"",
-                    password:"",
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    mobileNo: "",
+                    password: "",
                     completed: true
                 }
             }))
@@ -63,8 +63,10 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
 
     const createSuperAdmin = useCallback((e) => {
         // debugger
-        if (typeof onboarding?.superAdminInfo !== "undefined" && typeof canNotSubmit !== "undefined") {
-            
+        if (typeof onboarding?.superAdminInfo !== "undefined" && typeof canNotSubmit !== "undefined" && typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
+            if (steps.length !== (onboarding.state + 1)) {
+                router.push(steps[onboarding.state + 1]?.url)
+            }
         }
     }, [canNotSubmit, onboarding, steps])
 
@@ -78,7 +80,7 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
             <FormControl isRequired flexGrow={1} width="35%">
                 <FormLabel>First Name</FormLabel>
 
-                <Input placeholder="Jane" borderRadius="4px" value={onboarding?.superAdminInfo?.firstName}  disabled={true} />
+                <Input placeholder="Jane" borderRadius="4px" value={onboarding?.superAdminInfo?.firstName} disabled={true} />
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%" >
