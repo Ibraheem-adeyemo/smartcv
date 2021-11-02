@@ -1,6 +1,6 @@
 import { Modal, ModalOverlay, ModalContent, ModalBody, ModalHeader, ModalCloseButton, Button, ModalFooter, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, toast, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
-import { CLIENT_ID, PASSPORT_TOKEN_URL, SCOPE, SECRET } from "../../constants";
+import { CLIENT_ID, PASSPORT_AUTHORIZE_URL, PASSPORT_TOKEN_URL, SCOPE, SECRET } from "../../constants";
 import { useForm, useValidator } from "../../hooks";
 import { Loading, PassportLoginCredentials, SuperAdminInfo } from "../../models";
 
@@ -28,7 +28,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
     const confirmUser = async () => {
         setSpin({
             text: "Authentitcating",
-            isLoading:true
+            isLoading: true
         } as Loading)
         try {
             if (form?.completed) {
@@ -38,16 +38,30 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                     password: form.password,
                     scope: SCOPE
                 }
-               const response = await fetch(form?.postUrl as string, {
+                // export const PASSPORT_URL = "".concat(
+                //     PASSPORT_AUTHORIZE_URL,
+                //     "?",
+                //     "client_id=",
+                //     CLIENT_ID,
+                //     "&redirect_uri=",
+                //     REDIRECT_URI,
+                //     "&scope=",
+                //     SCOPE,
+                //     "&response_type=",
+                //     RESPONSE_TYPE
+                //   );
+
+                // const report = await fetch(PASSPORT_AUTHORIZE_URL)
+                const response = await fetch(form?.postUrl as string, {
                     method: "post",
                     headers: {
-                        Authorixation: `Basic ${btoa(CLIENT_ID+':'+SECRET)}`,
+                        Authorixation: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
                         contentType: "application/json"
                     },
                     body: JSON.stringify(body)
                 })
                 const data = (await response.json()) as SuperAdminInfo
-                if(response.ok || response.status === 200 || response.status === 201) {
+                if (response.ok || response.status === 200 || response.status === 201) {
                     props.setUserAuthority(data)
                 } else {
                     throw {
@@ -59,17 +73,17 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
             }
             setSpin({
                 text: "",
-                isLoading:false
+                isLoading: false
             } as Loading)
         } catch (error: any) {
-            if(typeof error.data !== "undefined") {
+            if (typeof error.data !== "undefined") {
                 toast({
                     title: error.error_description,
                     variant: "left-accent",
                     isClosable: true,
                     status: "error"
                 })
-            } else if(typeof error.message !== "undefined") {
+            } else if (typeof error.message !== "undefined") {
                 toast({
                     title: error.message,
                     variant: "left-accent",
@@ -86,7 +100,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
             }
             setSpin({
                 text: "",
-                isLoading:false
+                isLoading: false
             } as Loading)
         }
 
@@ -96,7 +110,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
         if (typeof canNotSubmit !== "undefined") {
             if (!canNotSubmit) {
                 debugger
-                console.log({PASSPORT_TOKEN_URL})
+                console.log({ PASSPORT_TOKEN_URL })
                 setForm(prev => ({
                     ...prev as PassportLoginCredentials,
                     postUrl: PASSPORT_TOKEN_URL,
@@ -168,7 +182,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
 
                 <ModalFooter d="flex" w="100%" justifyContent="right" gridGap="20px" >
                     <Button variant="muted-primary-button" px="45px" py="8px" onClick={typeof props.onCloseModal !== "undefined" ? props.onCloseModal : voidfunc} >Cancel</Button>
-                    <Button variant="primary-button" px="75px" py="8px" disabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} isLoading={spin?.isLoading} loadingText={typeof spin?.text === "undefined"?"loading": spin.text} onClick={confirmUser}>Next</Button>
+                    <Button variant="primary-button" px="75px" py="8px" disabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} isLoading={spin?.isLoading} loadingText={typeof spin?.text === "undefined" ? "loading" : spin.text} onClick={confirmUser}>Next</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
