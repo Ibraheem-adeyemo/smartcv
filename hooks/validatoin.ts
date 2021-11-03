@@ -13,6 +13,16 @@ export default function useValidator<T>() {
         // debugger
         if (typeof field !== "undefined") {
             if (field !== "" && typeof data !== "undefined") {
+                setValidation((prev) => {
+                    const s = _.clone(prev) as Validation<T>
+                    if (typeof s !== "undefined") {
+                        s.errors[field as keyof T] = "" as any
+                        s.touched[field as keyof T] = "touched" as any
+                    }
+
+                    return s
+
+                })
                 if (String(data[field as keyof T]) as string === "") {
                     setValidation((prev) => {
                         // debugger
@@ -34,19 +44,6 @@ export default function useValidator<T>() {
                             } as Validation<T>
                         }
                     })
-                } else if (String(data[field as keyof T]) as string !== "") {
-                    setValidation((prev) => {
-                        const s = _.clone(prev) as Validation<T>
-                        if (typeof s !== "undefined") {
-                            s.errors[field as keyof T] = "" as any
-                            s.touched[field as keyof T] = "touched" as any
-                        }
-
-                        return s
-
-                    })
-                    // setData(undefined)
-                    // setField(undefined)
                 }
             }
         }

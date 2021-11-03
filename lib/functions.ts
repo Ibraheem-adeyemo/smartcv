@@ -27,3 +27,24 @@ export function shortenNumber(amount: number) {
 export function isEmptyObject<T>(obj: Record<keyof T, string | boolean >[]) {
     return _.flow(_.values, _.compact, _.isEmpty)(obj)
 }
+
+export function validateUppercase(str:string) {
+  return  /[A-Z]/.test(str)
+}
+
+export function validateLowercase(str:string) {
+    return /[a-z]/.test(str)
+}
+
+export function validateNumber(str:string) {
+    return /[0-9]/.test(str)
+}
+
+export function validateEmail(email:string) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+export function comparePassword(pass1: string, pass2:string) {
+    return pass1 === pass2
+}

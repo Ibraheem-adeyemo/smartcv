@@ -14,7 +14,10 @@ const colors = {
         stat_card:"#F2F5F8",
         main_page:"#E5E5E5",
         "primary-blue":"#0275D8",
-        "muted-blue":"#EBF8FE"
+        "light-blue":"#EBF8FE",
+        "muted-blue": "#6EB4E0",
+        "muted-background":"#F3F5F6",
+        success:"#11B01A"
     }
 }
 

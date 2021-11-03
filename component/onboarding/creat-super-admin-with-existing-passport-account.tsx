@@ -12,7 +12,7 @@ import { OnboardingContext } from "../layouts";
 import createBank from "./create-bank";
 
 interface CreateSuperAdminWithExistingSuperAdminAccountProps {
-    authenticatedUser: SuperAdminInfo
+    // authenticatedUser: SuperAdminInfo
 }
 
 export default function CreateSuperAdminWithExistingSuperAdminAccount(props: CreateSuperAdminWithExistingSuperAdminAccountProps) {
@@ -23,55 +23,83 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
     const router = useRouter()
 
     useEffect(() => {
-        if (typeof props.authenticatedUser === "undefined") {
-            typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
-                ...prev as Onboarding,
-                superAdminInfo: {
-                    firstName: "",
-                    lastName: "",
-                    email: "",
-                    mobileNo: "",
-                    password: "",
-                    completed: true
-                }
-            }))
+        // if(typeof onboarding?.superAdminInfo !== "undefined") {
+        if (onboarding?.superAdminInfo?.access_token !== "") {
+
+            setCanNotSubmit(false)
         } else {
-            debugger
-            typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
-                ...prev as Onboarding,
-                superAdminInfo: {
-                    ...props.authenticatedUser,
-                    completed: false
-                }
-            }))
+            setCanNotSubmit(true)
         }
-    }, [props.authenticatedUser])
+        // }
+
+    }, [onboarding?.superAdminInfo])
 
     // useEffect(() => console.log({ canNotSubmit }), [canNotSubmit])
 
-    useEffect(() => {
-        typeof changeOnboarding !== "undefined" ? changeOnboarding(prev => ({
-            ...prev,
-            state: 1,
-            superAdminInfo: {
-                ...prev.superAdminInfo as SuperAdminInfo,
-                completed: false
-            }
-        })) : ""
-        setCanNotSubmit(false)
-    }, [])
+    // useEffect(() => {
+    //     typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
+    //         ...prev,
+    //         state: 1,
+    //         superAdminInfo: {
+    //             ...prev.superAdminInfo as SuperAdminInfo,
+    //             completed: false
+    //         }
+    //     }))
+    //     setCanNotSubmit(true)
+    // }, [])
 
     const createSuperAdmin = useCallback((e) => {
         // debugger
         if (typeof onboarding?.superAdminInfo !== "undefined" && typeof canNotSubmit !== "undefined" && typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
             if (steps.length !== (onboarding.state + 1)) {
+                typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
+                    ...prev,
+                    state: prev.state as number + 1,
+                    superAdminInfo: {
+                        ...prev.superAdminInfo as SuperAdminInfo,
+                        completed:true
+                    }
+                }))
+                toast({
+                    title: "Super Admin Creation successful",
+                    variant: "left-accent",
+                    isClosable: true,
+                    status: "success"
+                })
                 router.push(steps[onboarding.state + 1]?.url)
+            } else {
+                toast({
+                    title: "Can't move on to the next form",
+                    variant: "left-accent",
+                    isClosable: true,
+                    status: "error"
+                })
             }
+        } else {
+            toast({
+                title: "Can't move on to the next form",
+                variant: "left-accent",
+                isClosable: true,
+                status: "error"
+            })
         }
-    }, [canNotSubmit, onboarding, steps])
+    }, [canNotSubmit, onboarding?.state, onboarding?.superAdminInfo, steps])
 
     const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
-        <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => typeof changeIsRefresh !== "undefined" && changeIsRefresh((_prev) => true)}>Cancel</Button>
+        <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
+            if (typeof onboarding !== "undefined" && typeof steps !== "undefined") {
+                // debugger
+                let step = steps[onboarding.state as number]
+                if (onboarding.state as number - 1 > -1) {
+                    step = steps[onboarding.state as number - 1]
+                }
+                typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
+                    ...prev,
+                    state: (prev.state as number) - 1
+                }))
+                router.push(step.url)
+            }
+        }}>Previous</Button>
         <Button variant="primary-button" px="115px" py="8px" isDisabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} onClick={createSuperAdmin}>Next</Button>
     </Flex>
     return (<OnboardingCard cardTitle="" cardFooter={cardFooter}>

@@ -61,7 +61,7 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
                     alignItems="center"
                     borderRadius="4px"
                     _hover={{
-                        background: "brand.muted-blue",
+                        background: "brand.light-blue",
                         cursor: "pointer"
                     }}
                     fontSize={["16px", "16px", "16px", "16px", "16px", "20px"]}

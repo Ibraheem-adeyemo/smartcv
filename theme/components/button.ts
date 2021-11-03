@@ -27,7 +27,7 @@ const Button = {
             borderRadius: "48px",
             py: "5.5px",
             px: "22.5px",
-            bgColor: "brand.muted-blue",
+            bgColor: "brand.light-blue",
             color: "brand.primary-blue"
         }
     },

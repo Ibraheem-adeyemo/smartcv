@@ -18,7 +18,8 @@ export  interface SuperAdminInfo {
     email:string,
     mobileNo:string,
     password:string,
-    accesstoken?:""
+    confirmPassword: string,
+    access_token:string,
     completed:boolean
 }
 

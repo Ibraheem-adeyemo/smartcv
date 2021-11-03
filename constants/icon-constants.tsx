@@ -5,7 +5,7 @@ import {HiOutlineClipboardList, HiChevronDown} from 'react-icons/hi'
 import {AiOutlineAudit} from 'react-icons/ai'
 import {FaRegCalendarAlt} from 'react-icons/fa'
 import {TiTick} from 'react-icons/ti'
-
+import {MdOutlineInvertColors} from 'react-icons/md'
 import {BsGear} from 'react-icons/bs'
 import { forwardRef } from "@chakra-ui/system"
 
@@ -28,3 +28,5 @@ export const DropdownIcon = forwardRef((props, ref) => <Icon as={HiChevronDown} 
 export const CalendarIcon = forwardRef((props, ref) => <Icon as={FaRegCalendarAlt} {...props} ref={ref} />)
 
 export const TickIcon =  forwardRef((props, ref) => <Icon as={TiTick} {...props} ref={ref} />)
+
+export const PickerIcon =  forwardRef((props, ref) => <Icon as={MdOutlineInvertColors} {...props} ref={ref} />)

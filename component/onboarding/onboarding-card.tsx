@@ -12,7 +12,7 @@ interface OnboardingCardProps{
 export default function OnboardingCard(props:OnboardingCardProps) {
     const cardTitle = useMemo(() =>  props.cardTitle,[])
     return(
-         <Flex px="49px" py="30px" gridGap="25px" bgColor="white" flexDir="column" >
+         <Flex px="49px" py="30px" gridGap="25px" bgColor="white" flexDir="column" w="100%" >
              <Flex>{cardTitle}</Flex>
              {props.children}
              <Flex>{props.cardFooter}</Flex>

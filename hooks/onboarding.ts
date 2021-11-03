@@ -36,9 +36,14 @@ superAdminInfo: {
     email:"",
     mobileNo:"",
     password:"",
+    confirmPassword:"",
+    access_token:"",
     completed: false
 },
 institutionColorInfo: {
+    headerColor:"",
+    sidebarColor:"",
+    buttonColor:"",
     completed: false
 },
 url:""

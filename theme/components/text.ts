@@ -9,7 +9,7 @@ const Text = {
     // Styles for the size variations
     sizes: {
       "card-header": {
-        fontSize: ["16px", "16px", "16px", "16px", "16px", "20px"]
+        fontSize: "18px",
       },
       "stat-header":{
         fontSize: ["16px", "16px", "16px", "16px", "16px", "20px"]

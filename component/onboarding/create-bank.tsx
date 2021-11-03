@@ -136,7 +136,7 @@ export default function CreateBank(props: CreateBankProps) {
         if (typeof onboarding?.bankInfo !== "undefined" && typeof canNotSubmit !=="undefined") {
             if (!Object.values(onboarding.bankInfo).some((val) => val as string === "") && !canNotSubmit) {
                 toast({
-                    title: "Bank Creattion successful",
+                    title: "Bank Creation successful",
                     variant: "left-accent",
                     isClosable: true,
                     status: "success"

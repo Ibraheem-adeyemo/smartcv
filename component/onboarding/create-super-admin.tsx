@@ -25,30 +25,54 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
     const [accordionindex, setAccordionindex] = useState<number>()
     const [openModal, setOpenModal] = useState<boolean>()
     const toast = useToast()
-    const setUserAuthority =(user: SuperAdminInfo) => {
+    const setUserAuthority = (user: SuperAdminInfo) => {
         // debugger
-        setAuthenticatedUser(user)
+        // setAuthenticatedUser(user)
         onCloseModal()
+        typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
+            ...prev as Onboarding,
+            superAdminInfo: user
+        }))
         toast({
             title: "Your account has been verified",
-            status:"success",
-            variant:"left-accent",
-            isClosable:true
+            status: "success",
+            variant: "left-accent",
+            isClosable: true
         })
     }
     const onCloseModal = () => {
         // debbuger
         setOpenModal(false)
-
     }
+
+    useEffect(() => {
+        typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
+            ...prev,
+            state: 1,
+            superAdminInfo: {
+                ...prev.superAdminInfo as SuperAdminInfo,
+                completed: false
+            }
+        }))
+    }, [])
+    useEffect(() => {
+        if (typeof onboarding?.superAdminInfo !== "undefined") {
+            if (onboarding.superAdminInfo.access_token !== "") {
+                setAccordionindex(0)
+            } else if(onboarding.superAdminInfo.confirmPassword !== "") {
+                setAccordionindex(1)
+            }
+        } else {
+
+            setAccordionindex(-1)
+        }
+    }, [onboarding?.superAdminInfo])
     useEffect(() => {
         if (typeof onboarding !== "undefined" && typeof steps !== "undefined" && typeof props.step !== "undefined") {
             // debugger
-            let step
+            let step = steps[props.step]
             if (props.step - 1 > -1) {
                 step = steps[props.step - 1]
-            } else {
-                step = steps[props.step]
             }
             if ((onboarding[step.key as keyof Onboarding] as BankInfo).completed === false) {
                 typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
@@ -61,12 +85,12 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
     }, [steps])
 
     useEffect(() => {
-        if(typeof authenticatedUser !== "undefined") {
-            if(!openModal && Object.values(authenticatedUser).length === 0) {
+        if (typeof authenticatedUser !== "undefined") {
+            if (!openModal && Object.values(authenticatedUser).length === 0) {
                 setAccordionindex(-1)
             }
         } else {
-            if(!openModal) {
+            if (!openModal) {
                 setAccordionindex(-1)
             }
         }
@@ -78,12 +102,12 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
                 <AccordionItem w="100%" bgColor="white">
                     {({ isExpanded }) => {
                         return <>
-                            <AccordionButton onClick={() => setOpenModal(() => isExpanded?false:true)}>
+                            <AccordionButton onClick={() => setOpenModal(() => isExpanded ? false : true)}>
                                 <Flex gridGap="17px" alignItems="center" justifyContent="flex-start" w="100%">
                                     {isExpanded ? (
-                                        <Avatar bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
+                                        <Avatar boxSize="26px" bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
                                     ) : (
-                                        <Avatar showBorder borderColor="var(--chakra-colors-brand-muted)" name=" " bgColor="white"></Avatar>
+                                        <Avatar boxSize="26px" showBorder borderColor="var(--chakra-colors-brand-muted)" name=" " bgColor="white"></Avatar>
                                     )}
                                     <Text textAlign="right" variant="card-header">
                                         Create super admin with an exisiting Interswitch Passport account
@@ -91,7 +115,8 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
                                 </Flex>
                             </AccordionButton>
                             <AccordionPanel>
-                                <CreateSuperAdminWithExistingSuperAdminAccount authenticatedUser={authenticatedUser as SuperAdminInfo}  />
+                                {accordionindex === 0 && <CreateSuperAdminWithExistingSuperAdminAccount />}
+                                {accordionindex === 1 && <></>}
                             </AccordionPanel>
                         </>
                     }}
@@ -103,9 +128,9 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
                             <AccordionButton w="100%">
                                 <Flex gridGap="17px" alignItems="center" justifyContent="flex-start" w="100%">
                                     {isExpanded ? (
-                                        <Avatar bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
+                                        <Avatar boxSize="26px" bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
                                     ) : (
-                                        <Avatar showBorder borderColor="var(--chakra-colors-brand-muted)" name=" " bgColor="white"></Avatar>
+                                        <Avatar boxSize="26px" showBorder borderColor="var(--chakra-colors-brand-muted)" name=" " bgColor="white"></Avatar>
                                     )}
                                     <Text textAlign="right" variant="card-header">
                                         Create super admin with a new account
@@ -114,13 +139,14 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
                             </AccordionButton>
                             <AccordionPanel>
 
-                                <CreateSuperAdminWithoutExistingSuperAdminAccount />
+                                {accordionindex === 1 && <CreateSuperAdminWithoutExistingSuperAdminAccount />}
+                                {accordionindex === 0 && <></>}
                             </AccordionPanel>
                         </>
                     )}
                 </AccordionItem>
             </Accordion>
-            <SigninWithPassport openModal={openModal as boolean} onCloseModal={onCloseModal} setUserAuthority={setUserAuthority} />
+            { openModal && <SigninWithPassport openModal={openModal as boolean} onCloseModal={onCloseModal} setUserAuthority={setUserAuthority} />}
         </>
     )
 }
