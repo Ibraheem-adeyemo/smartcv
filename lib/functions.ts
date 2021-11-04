@@ -48,3 +48,51 @@ export function validateEmail(email:string) {
 export function comparePassword(pass1: string, pass2:string) {
     return pass1 === pass2
 }
+
+export function validateexColor(color:string) {
+   return  /^#[0-9A-F]{6}$/i.test(color) || /^#([0-9A-F]{3}){1,2}$/i.test(color)
+}
+
+export function APICatch(error:any, res:any) {
+    // debugger
+    if (typeof error.data !== "undefined") {
+        if (typeof error.data.error_description !== "undefined") {
+            error.message = error.data.error_description
+        } else {
+            error.message = error.data.message
+        }
+        return res.status(error.response.status).json(error)
+    }
+    return res.status(400).json(error)
+}
+
+export async function fetchJson<T extends Record<keyof T, K>, K> (input: RequestInfo, init?: RequestInit):Promise<T> {  
+        try {
+            // console.log({init});
+            // debugger
+            const response = await fetch(input, init);
+            const data = await response.json()
+            // debugger
+            if(response.ok) {
+                return data as T;
+            }
+            else if(typeof data !== "undefined") {
+
+              return data
+            }
+            else { throw {
+                response
+              };
+            
+            }
+    
+        } catch (error:any) {
+            console.error({fetchJsonError: error})
+            // debugger
+            if(typeof error.data !== "undefined") {
+                error = error.data
+            }
+            return error;
+        }
+    
+}

@@ -19,20 +19,19 @@ const SigninWithPassport = dynamic(() => import('./signin-with-passport'))
 
 
 export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
-    const { steps, onboarding, changeOnboarding } = useContext(OnboardingContext)
+    
+    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState } = useContext(OnboardingContext)
     const router = useRouter()
     const [authenticatedUser, setAuthenticatedUser] = useState<SuperAdminInfo>()
     const [accordionindex, setAccordionindex] = useState<number>()
     const [openModal, setOpenModal] = useState<boolean>()
     const toast = useToast()
+    
     const setUserAuthority = (user: SuperAdminInfo) => {
         // debugger
         // setAuthenticatedUser(user)
         onCloseModal()
-        typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
-            ...prev as Onboarding,
-            superAdminInfo: user
-        }))
+        resetForm("superAdminInfo", user)
         toast({
             title: "Your account has been verified",
             status: "success",
@@ -46,14 +45,7 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
     }
 
     useEffect(() => {
-        typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
-            ...prev,
-            state: 1,
-            superAdminInfo: {
-                ...prev.superAdminInfo as SuperAdminInfo,
-                completed: false
-            }
-        }))
+        refresh("superAdminInfo", 1)
     }, [])
     useEffect(() => {
         if (typeof onboarding?.superAdminInfo !== "undefined") {
@@ -75,10 +67,7 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
                 step = steps[props.step - 1]
             }
             if ((onboarding[step.key as keyof Onboarding] as BankInfo).completed === false) {
-                typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
-                    ...prev,
-                    state: (prev.state as number) - 1
-                }))
+                previousState()
                 router.push(step.url)
             }
         }

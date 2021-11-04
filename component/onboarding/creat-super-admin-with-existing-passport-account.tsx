@@ -16,7 +16,7 @@ interface CreateSuperAdminWithExistingSuperAdminAccountProps {
 }
 
 export default function CreateSuperAdminWithExistingSuperAdminAccount(props: CreateSuperAdminWithExistingSuperAdminAccountProps) {
-    const { steps, onboarding, changeOnboarding, changeIsRefresh } = useContext(OnboardingContext)
+    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
     const [loading, setLoading] = useState<Loading>()
     const toast = useToast()
@@ -34,32 +34,11 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
 
     }, [onboarding?.superAdminInfo])
 
-    // useEffect(() => console.log({ canNotSubmit }), [canNotSubmit])
-
-    // useEffect(() => {
-    //     typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
-    //         ...prev,
-    //         state: 1,
-    //         superAdminInfo: {
-    //             ...prev.superAdminInfo as SuperAdminInfo,
-    //             completed: false
-    //         }
-    //     }))
-    //     setCanNotSubmit(true)
-    // }, [])
-
     const createSuperAdmin = useCallback((e) => {
         // debugger
         if (typeof onboarding?.superAdminInfo !== "undefined" && typeof canNotSubmit !== "undefined" && typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
             if (steps.length !== (onboarding.state + 1)) {
-                typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
-                    ...prev,
-                    state: prev.state as number + 1,
-                    superAdminInfo: {
-                        ...prev.superAdminInfo as SuperAdminInfo,
-                        completed:true
-                    }
-                }))
+                completeForm("superAdminInfo")
                 toast({
                     title: "Super Admin Creation successful",
                     variant: "left-accent",
@@ -93,10 +72,7 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
                 if (onboarding.state as number - 1 > -1) {
                     step = steps[onboarding.state as number - 1]
                 }
-                typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
-                    ...prev,
-                    state: (prev.state as number) - 1
-                }))
+                previousState()
                 router.push(step.url)
             }
         }}>Previous</Button>

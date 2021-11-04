@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/layout"
-import React, { } from "react"
+import React, { useEffect } from "react"
 import { RegisterForm } from "../component/auth"
 import { InterswitchLogo } from "../component/custom-component"
 import { NonAuthenticated } from "../component/layouts"
@@ -8,6 +8,9 @@ import MissionStatement from "../component/mission-statement"
 
 const Register = (props: any) => {
 
+    useEffect(() => {
+        sessionStorage.removeItem('onboarding')
+    }, [])
 
 
     return (

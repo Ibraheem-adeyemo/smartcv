@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { BankAdmin } from "../component"
+import { BankAdmin } from "../component/user-management"
 import { Authenticated } from "../component/layouts"
 import { AuthGuard } from "../lib"
 

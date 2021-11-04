@@ -6,7 +6,7 @@ import { OnboardingCard } from ".";
 import { Images } from "../../constants";
 import { useOnboarding } from "../../hooks";
 import _ from 'lodash'
-import { BankInfo, Loading, Onboarding, stepsProps } from "../../models";
+import { BankInfo, InstitutionColorInfo, Loading, Onboarding, stepsProps, SuperAdminInfo } from "../../models";
 import useValidator from "../../hooks/validatoin";
 import { useRouter } from "next/router";
 import { OnboardingContext } from "../layouts";
@@ -17,7 +17,7 @@ interface CreateBankProps extends stepsProps {
 
 export default function CreateBank(props: CreateBankProps) {
     const fileRef = useRef<HTMLInputElement>(null)
-    const { steps, onboarding, changeOnboarding, changeIsRefresh } = useContext(OnboardingContext)
+    const { steps, onboarding, addInfo, refresh, completeForm, changeIsRefresh } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
     const [loading, setLoading] = useState<Loading>()
     const toast = useToast()
@@ -26,12 +26,10 @@ export default function CreateBank(props: CreateBankProps) {
     // useMemo(() => {
 
     // }, [steps])
-
     const { validation, setData, setField } = useValidator<BankInfo>()
-
-
-
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Event) => {
+        // debugger
+        if(typeof e.stopPropagation !== "undefined")
         e.stopPropagation()
         // debugger
         const ele = (e.target as HTMLInputElement | HTMLSelectElement)
@@ -49,70 +47,29 @@ export default function CreateBank(props: CreateBankProps) {
                 reader.onload = () => {
                     // debugger
                     value = reader.result?.toString() as string
-                    typeof changeOnboarding !== "undefined" && changeOnboarding(prev => {
-
-                        const data: Onboarding = _.clone(prev)
-                        const returnedData: Onboarding = {
-                            ...data,
-                            bankInfo: {
-                                ...data.bankInfo,
-                                [ele.id]: value
-                            } as BankInfo
-                        }
-                        return returnedData
-                    })
+                    setField(ele.id as keyof BankInfo)
+                    addInfo("bankInfo", ele.id as keyof BankInfo, value)
                 }
-            } else {
-                typeof changeOnboarding !== "undefined" && changeOnboarding(prev => {
-
-                    const data: Onboarding = _.clone(prev)
-                    const returnedData: Onboarding = {
-                        ...data,
-                        bankInfo: {
-                            ...data.bankInfo,
-                            [ele.id]: value
-                        } as BankInfo
-                    }
-                    return returnedData
-                })
             }
         } else {
             value = ele.value.toString()
-            typeof changeOnboarding !== "undefined" && changeOnboarding(prev => {
-
-                const data: Onboarding = _.clone(prev)
-                const returnedData: Onboarding = {
-                    ...data,
-                    bankInfo: {
-                        ...data.bankInfo,
-                        [ele.id]: value
-                    } as BankInfo
-                }
-                return returnedData
-            })
         }
+        addInfo("bankInfo", ele.id as keyof BankInfo, value)
     }, [onboarding?.bankInfo])
 
     // useEffect(() => console.log({ canNotSubmit }), [canNotSubmit])
 
     useEffect(() => {
-        typeof changeOnboarding !== "undefined" ? changeOnboarding(prev => ({
-            ...prev,
-            state: 0,
-            bankInfo: {
-                ...prev.bankInfo as BankInfo,
-                completed: false
-            }
-        })) : ""
+        refresh("bankInfo", 0)
     }, [])
 
     useEffect(() => {
         // debugger
-        setData( (prev) => onboarding?.bankInfo as BankInfo)
+        setData((prev) => onboarding?.bankInfo as BankInfo)
 
         if (typeof onboarding?.bankInfo !== "undefined") {
             // debugger
-            if (Object.values(onboarding.bankInfo).some((val) => val as string === "" )) {
+            if (Object.values(onboarding.bankInfo).some((val) => val as string === "")) {
                 setCanNotSubmit(true)
             } else {
 
@@ -128,12 +85,12 @@ export default function CreateBank(props: CreateBankProps) {
             //     setData( () => undefined)
             // }
         }
-        
+
     }, [onboarding?.bankInfo])
 
     const createBank = useCallback((e) => {
         // debugger
-        if (typeof onboarding?.bankInfo !== "undefined" && typeof canNotSubmit !=="undefined") {
+        if (typeof onboarding?.bankInfo !== "undefined" && typeof canNotSubmit !== "undefined") {
             if (!Object.values(onboarding.bankInfo).some((val) => val as string === "") && !canNotSubmit) {
                 toast({
                     title: "Bank Creation successful",
@@ -141,19 +98,11 @@ export default function CreateBank(props: CreateBankProps) {
                     isClosable: true,
                     status: "success"
                 })
-                typeof changeOnboarding !== "undefined" && changeOnboarding(prev => (
-                    {
-                        ...prev,
-                        state: (prev.state as number) + 1,
-                        bankInfo: {
-                            ...prev.bankInfo as BankInfo,
-                            completed: true
-                        }
-                    }))
-                    if(typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
-                        if(steps.length !== (onboarding.state + 1))
-                        router.push(steps[onboarding.state+1]?.url)
-                    }
+                completeForm('bankInfo')
+                if (typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
+                    if (steps.length !== (onboarding.state + 1))
+                        router.push(steps[onboarding.state + 1]?.url)
+                }
                 // set
             } else {
                 toast({

@@ -7,7 +7,7 @@ import { InterswitchLogo } from "../custom-component";
 import NextLink from 'next/link'
 import { useRouter } from "next/router";
 import { CreateBank } from "../onboarding";
-import { BankInfo, InstitutionColorInfo, Onboarding as OnboardingModel, Step, SuperAdminInfo } from "../../models";
+import { BankInfo, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Onboarding as OnboardingModel, Step, SuperAdminInfo } from "../../models";
 interface OnboardingProps {
     children: JSX.Element
 }
@@ -20,22 +20,29 @@ const OnboardingLink = forwardRef((props, ref) => {
 })
 
 type OnboardingContext = ReturnType<typeof useOnboarding>
-export const onboardingContext = createContext<OnboardingContext>({ steps })
+export const onboardingContext = createContext<OnboardingContext>(
+    { steps, 
+    changeIsRefresh:() => (""),
+    addInfo:() => (""),
+    refresh:() => (""),
+    completeForm: () => (""),
+    resetForm:  () => (""),
+    previousState:  () => ("")
+     })
 export default function Onboarding(props: OnboardingProps) {
-    const { steps, onboarding, changeOnboarding, changeIsRefresh } = useOnboarding()
+    const { steps, onboarding, changeIsRefresh, addInfo, refresh, completeForm, resetForm, previousState  } = useOnboarding()
     // useEffect(() => console.log({ c: onboarding }))
     const router = useRouter()
-    console.log({ router })
+    // console.log({ router })
     const { step } = router.query
     const { Provider } = onboardingContext
     const LoadAvatar = useCallback(({ i, x }: { i: number, x: Step }) => {
-        let loadTab;
+        // let loadTab;
         // debugger
         if (typeof window !== "undefined" && typeof onboarding !== "undefined") {
             // debugger
             if (i === onboarding?.state) {
                 return <Avatar name={`${i + 1}`} bgColor="brand.muted-blue"></Avatar>
-
             } else{
                 const tab = onboarding[x.key as keyof OnboardingModel] as BankInfo | SuperAdminInfo | InstitutionColorInfo
                 // debugger
@@ -47,7 +54,7 @@ export default function Onboarding(props: OnboardingProps) {
         return <Avatar name={`${i + 1}`} bgColor={"brand.page-header"}></Avatar>
     }, [steps, step, onboarding?.state])
 
-    const LoadTextHeader = useCallback(({ i, x }: { i: number, x: Step }) => {
+    const LoadTextHeader =  useCallback(({ i, x }: { i: number, x: Step }) => {
         if (i < (onboarding?.state as number)) {
             return <Text color={`brand.primary-blue`}>{x.name}</Text>
         }
@@ -67,11 +74,12 @@ export default function Onboarding(props: OnboardingProps) {
     }, [onboarding?.state])
 
     return (
-        <Provider value={{ steps, onboarding, changeOnboarding, changeIsRefresh }}>
+        <Provider value={{ onboarding, steps, changeIsRefresh, addInfo, refresh, completeForm, resetForm, previousState }}>
             <Flex h="100vh" flexDir="column" gridGap="59px" >
                 <Flex justifyContent="space-between" h="89px" w="100%" bg="white" pl="42px" pt="26.67" pb="23.67" pos="relative">
-                    
-                    <InterswitchLogo />
+                    <Link href="/">
+                        <InterswitchLogo />
+                    </Link>
                 </Flex>
                 <Flex mx="306px" gridGap="33px" flexDirection="column" h="100%">
                     <form action={""} method="post" >

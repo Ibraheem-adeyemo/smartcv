@@ -1,7 +1,7 @@
 import { Modal, ModalOverlay, ModalContent, ModalBody, ModalHeader, ModalCloseButton, Button, ModalFooter, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, toast, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { CLIENT_ID, PASSPORT_AUTHORIZE_URL, PASSPORT_TOKEN_URL, SCOPE, SECRET } from "../../constants";
-import { useForm, useValidator } from "../../hooks";
+import { useForm, useLoading, useValidator } from "../../hooks";
 import { Loading, PassportLoginCredentials, SuperAdminInfo } from "../../models";
 
 type onClose = () => void
@@ -28,14 +28,13 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
     const { form, setForm } = useForm<PassportLoginCredentials>(initialLogin)
     const { validation, setData, setField } = useValidator<PassportLoginCredentials>()
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
-    const [spin, setSpin] = useState<Loading>()
     const toast = useToast()
-
+    const [spin, setSpin] = useLoading()
     const confirmUser = async () => {
         setSpin({
             text: "Authentitcating",
             isLoading: true
-        } as Loading)
+        })
         try {
             if (form?.completed) {
                 const body:RequestBody = {
@@ -85,7 +84,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
             setSpin({
                 text: "",
                 isLoading: false
-            } as Loading)
+            })
         } catch (error: any) {
             // debugger
             console.log({error})
@@ -114,7 +113,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
             setSpin({
                 text: "",
                 isLoading: false
-            } as Loading)
+            })
         }
 
     }

@@ -1,13 +1,13 @@
 import { Button } from "@chakra-ui/button";
 import { Flex } from "@chakra-ui/layout";
-import { FormControl, FormLabel, Input, FormErrorMessage, Popover, PopoverArrow, PopoverBody, Text, PopoverContent, PopoverHeader, PopoverTrigger, forwardRef, Avatar, FormHelperText } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, FormErrorMessage, Popover, PopoverArrow, PopoverBody, Text, PopoverContent, PopoverHeader, PopoverTrigger, forwardRef, Avatar } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/toast";
 import _ from "lodash";
 import { useRouter } from "next/router";
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
 import useValidator from "../../hooks/validatoin";
-import { SuperAdminInfo, Loading, Onboarding } from "../../models";
+import { SuperAdminInfo, Onboarding } from "../../models";
 import { OnboardingContext } from "../layouts";
 import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
@@ -21,25 +21,124 @@ const MobleNoInput = forwardRef((props, ref) => {
 export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props: any) {
     const numberRef = useRef<HTMLInputElement>(null)
     const passRef = useRef<HTMLInputElement>(null)
-    const { steps, onboarding, changeOnboarding, changeIsRefresh } = useContext(OnboardingContext)
+    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
-    const [loading, setLoading] = useState<Loading>()
     const toast = useToast()
     const router = useRouter()
     const [isOpenPopOver, setIsOpenPopOver] = useState(false)
     const openPopOver = () => setIsOpenPopOver(true)
     const closePopOver = () => setIsOpenPopOver(false)
 
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>()
-
     const { validation, setData, setField } = useValidator<SuperAdminInfo>()
 
     const [passC, setPassC] = useState<PasswordChecker[]>()
     const [otherValidations, setOtherValidations] = useState<boolean>()
+    
+    const checkFieldValidityOnLoad = (passwordConditions: PasswordChecker[] ) => {
+        
+        if(typeof onboarding?.superAdminInfo !== "undefined") {
+            // debugger
+            if(onboarding.superAdminInfo.password !== "") {
+               const b = passwordConditions.map((x) => {
+                switch (x.checker) {
+                    case "uppercase":
+                        return {
+                            ...x,
+                            status: validateUppercase(onboarding.superAdminInfo?.password as string)
+                        }
+
+                    case "lowercase":
+                        return {
+                            ...x,
+                            status: validateLowercase(onboarding.superAdminInfo?.password as string)
+                        }
+                    case "number":
+                        return {
+                            ...x,
+                            status: validateNumber(onboarding.superAdminInfo?.password as string)
+                        }
+                    case "eightminimum":
+                        return {
+                            ...x,
+                            status: (onboarding.superAdminInfo?.password as string).length > 7
+                        }
+                        default:
+                        return x
+                }
+               }) 
+               
+               setPassC(b)
+            }else {
+                // debugger
+                setPassC(passwordConditions)
+            }
+        } else {
+            setPassC(passwordConditions)
+        }
+    }
+
+    const resetSuperAdmininfo = () => {
+        resetForm("superAdminInfo", 
+            {
+                firstName:"",
+                lastName:"",
+                access_token:"",
+                mobileNo:"",
+                email:"",
+                password:"",
+                confirmPassword:"",
+                completed: false
+            } as SuperAdminInfo,
+            1
+        )
+    }
+
+    const enterSuperAdminMobile =(val: string) => {
+        // debugger
+        setField("mobileNo" as keyof SuperAdminInfo)
+        addInfo("superAdminInfo", "mobileNo", val)
+    }
+
+    const checkPassworValidity = (e:React.FormEvent<HTMLInputElement>) => {
+        e.stopPropagation()
+        openPopOver()
+        passC?.forEach((x) => {
+            switch (x.checker) {
+                case "uppercase":
+                    setPassC(prev => prev?.map((y) => y.checker === "uppercase" ? ({
+                        ...y,
+                        status: validateUppercase((e.target as HTMLInputElement).value)
+                    }) : y))
+
+                    break;
+                case "lowercase":
+                    setPassC(prev => prev?.map((y) => y.checker === "lowercase" ? ({
+                        ...y,
+                        status: validateLowercase((e.target as HTMLInputElement).value)
+                    }) : y))
+                    break
+                case "number":
+                    setPassC(prev => prev?.map((y) => y.checker === "number" ? ({
+                        ...y,
+                        status: validateNumber((e.target as HTMLInputElement).value)
+                    }) : y))
+                    break
+                case "eightminimum":
+                    setPassC(prev => prev?.map((y) => y.checker === "eightminimum" ? ({
+                        ...y,
+                        status: (e.target as HTMLInputElement).value.length > 7
+                    }) : y))
+                    break;
+            }
+        })
+        addData(e)
+        // openPopOver()
+        // var passwordOk = rules.every(function (r) { return r.test(password) });
+    }
 
     useEffect(() => {
         if (typeof passC === "undefined") {
-            const a = [
+            const passwordConditions = [
                 {
                     checker: "uppercase",
                     status: false,
@@ -58,46 +157,8 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                     text: "Minimum of 8 characters"
                 }
             ]
-            if(typeof onboarding?.superAdminInfo !== "undefined") {
-                debugger
-                if(onboarding.superAdminInfo.password !== "") {
-                   const b = a.map((x, i) => {
-                    switch (x.checker) {
-                        case "uppercase":
-                            return {
-                                ...x,
-                                status: validateUppercase(onboarding.superAdminInfo?.password as string)
-                            }
-
-                        case "lowercase":
-                            return {
-                                ...x,
-                                status: validateLowercase(onboarding.superAdminInfo?.password as string)
-                            }
-                        case "number":
-                            return {
-                                ...x,
-                                status: validateNumber(onboarding.superAdminInfo?.password as string)
-                            }
-                        case "eightminimum":
-                            return {
-                                ...x,
-                                status: (onboarding.superAdminInfo?.password as string).length > 7
-                            }
-                            default:
-                            return x
-                    }
-                   }) 
-                   
-                   setPassC(b)
-                }else {
-                    debugger
-                    setPassC(a)
-                }
-            } else {
-                setPassC(a)
-            }
-        } 
+            checkFieldValidityOnLoad(passwordConditions) 
+        }
     }, [passC])
 
 
@@ -113,41 +174,23 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
             // debugger
             // ele.focus()
         }
-        typeof changeOnboarding !== "undefined" && changeOnboarding(prev => {
-            // debugger
-            const data: Onboarding = _.clone(prev)
-            const returnedData: Onboarding = {
-                ...data,
-                superAdminInfo: {
-                    ...data.superAdminInfo,
-                    [ele.name]: value
-                } as SuperAdminInfo
-            }
-            return returnedData
-        })
+        addInfo("superAdminInfo", ele.name as keyof SuperAdminInfo, value)
 
     }, [onboarding?.superAdminInfo])
 
     // useEffect(() => console.log({ canNotSubmit }), [canNotSubmit])
 
     useEffect(() => {
-        typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
-            ...prev,
-            state: 1,
-            superAdminInfo: {
-                ...prev.superAdminInfo as SuperAdminInfo,
-                completed: false
-            }
-        }))
-    }, [])
+        refresh("superAdminInfo", 1)
+    }, [ ])
 
     useEffect(() => {
         // debugger
-        setData((prev) => onboarding?.superAdminInfo as SuperAdminInfo)
+        setData(() => onboarding?.superAdminInfo as SuperAdminInfo)
         if (typeof onboarding?.superAdminInfo !== "undefined") {
-            debugger
-            setOtherValidations(prev => {
-                debugger
+            // debugger
+            setOtherValidations(() => {
+                // debugger
                 const pWordCharacterValidations = ((passC as PasswordChecker[])?.filter(x => !(x?.status as boolean)).length) > 0
                 const emailValidation = !validateEmail(onboarding?.superAdminInfo?.email as string)
                 const mobileNoValidation = !isValidPhoneNumber(onboarding?.superAdminInfo?.mobileNo as string)
@@ -156,20 +199,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 return pWordCharacterValidations || emailValidation || mobileNoValidation || pwordCompare || isEmpty
             })
             if(onboarding.superAdminInfo.access_token !== "") {
-                typeof changeOnboarding !== "undefined" && changeOnboarding(prev => ({
-                    ...prev,
-                    state: 1,
-                    superAdminInfo: {
-                        firstName:"",
-                        lastName:"",
-                        access_token:"",
-                        mobileNo:"",
-                        email:"",
-                        password:"",
-                        confirmPassword:"",
-                        completed: false
-                    }
-                }))
+                resetSuperAdmininfo()
             }
         }
         return () => {
@@ -181,7 +211,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
 
     }, [onboarding?.superAdminInfo])
     useEffect(() => {
-        debugger
+        // debugger
         if (typeof otherValidations !== "undefined") {
             // debugger
             if (otherValidations) {
@@ -194,7 +224,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
             setCanNotSubmit(true)
         }
     }, [otherValidations])
-    const createSuperAdmin = useCallback((e) => {
+    const createSuperAdmin = useCallback(() => {
         // debugger
         if (typeof otherValidations !== "undefined" && typeof canNotSubmit !== "undefined") {
             if (!otherValidations && !canNotSubmit) {
@@ -204,15 +234,8 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                     isClosable: true,
                     status: "success"
                 })
-                typeof changeOnboarding !== "undefined" && changeOnboarding(prev => (
-                    {
-                        ...prev,
-                        state: (prev.state as number) + 1,
-                        superAdminInfo: {
-                            ...prev.superAdminInfo as SuperAdminInfo,
-                            completed: true
-                        }
-                    }))
+                
+                completeForm("superAdminInfo")
                 if (typeof onboarding?.state !== "undefined" && typeof steps !== "undefined") {
                     if (steps.length !== (onboarding.state + 1))
                         router.push(steps[onboarding.state + 1]?.url)
@@ -237,10 +260,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 if (onboarding.state as number - 1 > -1) {
                     step = steps[onboarding.state as number - 1]
                 }
-                typeof changeOnboarding !== "undefined" && changeOnboarding((prev) => ({
-                    ...prev,
-                    state: (prev.state as number) - 1
-                }))
+                previousState()
                 router.push(step.url)
             }
 
@@ -274,23 +294,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
             </FormControl>
             <FormControl isRequired id="mobileNo" flexGrow={1} width="35%" isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(onboarding?.superAdminInfo?.mobileNo as string)) && validation?.touched.mobileNo === "touched"}>
                 <FormLabel>Phone Number</FormLabel>
-                <MobleNoInput placeholder="Enter Phone no" name="mobileNo" borderRadius="4px" value={onboarding?.superAdminInfo?.mobileNo} ref={numberRef} onChange={(val: string) => {
-                    debugger
-                    setField("mobileNo" as keyof SuperAdminInfo)
-
-                    typeof changeOnboarding !== "undefined" && changeOnboarding(prev => {
-                        // debugger
-                        const data: Onboarding = _.clone(prev)
-                        const returnedData: Onboarding = {
-                            ...data,
-                            superAdminInfo: {
-                                ...data.superAdminInfo,
-                                ["mobileNo"]: typeof val === "undefined" ? "" : val
-                            } as SuperAdminInfo
-                        }
-                        return returnedData
-                    })
-                }} />
+                <MobleNoInput placeholder="Enter Phone no" name="mobileNo" borderRadius="4px" value={onboarding?.superAdminInfo?.mobileNo} ref={numberRef} onChange={enterSuperAdminMobile} />
                 <FormErrorMessage>{validation?.errors.mobileNo}</FormErrorMessage>
                 <FormErrorMessage>{!isValidPhoneNumber(onboarding?.superAdminInfo?.mobileNo as string) ? "Invalid number" : ""}</FormErrorMessage>
 
@@ -310,43 +314,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                         <FormLabel>Password</FormLabel>
                         <Input placeholder="Enter Password" type="password" name="password" ref={passRef} borderRadius="4px" value={onboarding?.superAdminInfo?.password}
                             onBlur={() => closePopOver()}
-                            onInput={(e) => {
-                                e.stopPropagation()
-                                openPopOver()
-                                const rules = [/[0-9]/, /[A-Z]/, /[a-z]/]
-                                passC?.forEach((x, i) => {
-                                    switch (x.checker) {
-                                        case "uppercase":
-                                            setPassC(prev => prev?.map((y, j) => y.checker === "uppercase" ? ({
-                                                ...y,
-                                                status: validateUppercase((e.target as HTMLInputElement).value)
-                                            }) : y))
-
-                                            break;
-                                        case "lowercase":
-                                            setPassC(prev => prev?.map((y, j) => y.checker === "lowercase" ? ({
-                                                ...y,
-                                                status: validateLowercase((e.target as HTMLInputElement).value)
-                                            }) : y))
-                                            break
-                                        case "number":
-                                            setPassC(prev => prev?.map((y, j) => y.checker === "number" ? ({
-                                                ...y,
-                                                status: validateNumber((e.target as HTMLInputElement).value)
-                                            }) : y))
-                                            break
-                                        case "eightminimum":
-                                            setPassC(prev => prev?.map((y, j) => y.checker === "eightminimum" ? ({
-                                                ...y,
-                                                status: (e.target as HTMLInputElement).value.length > 7
-                                            }) : y))
-                                            break;
-                                    }
-                                })
-                                addData(e)
-                                // openPopOver()
-                                // var passwordOk = rules.every(function (r) { return r.test(password) });
-                            }} />
+                            onInput={checkPassworValidity} />
                         <FormErrorMessage>{validation?.errors.password}</FormErrorMessage>
 
                         <FormErrorMessage> {((passC as PasswordChecker[])?.filter(x => !(x?.status as boolean)).length) > 0 ? ("Your password must be " + passC?.map(x => x.text).join(", ")) : ""}</FormErrorMessage>
@@ -373,6 +341,5 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
         </Flex>
-
     </OnboardingCard>)
 }

@@ -17,11 +17,13 @@
     "lodash": "^4.17.21",
     "next": "^12.0.1",
     "next-auth": "latest",
+    "next-iron-session": "^4.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "react-phone-number-input": "^3.1.37",
-    "react-table": "^7.7.0"
+    "react-table": "^7.7.0",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "@types/react": "17.0.27",

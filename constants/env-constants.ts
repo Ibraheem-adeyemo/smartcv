@@ -8,3 +8,6 @@ export const PASSPORT_AUTHORIZE_URL = typeof process.env.NEXT_PUBLIC_PASSPORT_AU
 export const SCOPE = typeof process.env.NEXT_PUBLIC_SCOPE !== "undefined"? process.env.NEXT_PUBLIC_SCOPE : "";
 export const RESPONSE_TYPE = typeof process.env.NEXT_PUBLIC_RESPONSE_TYPE !== "undefined" ? process.env.NEXT_PUBLIC_RESPONSE_TYPE : "";
 export const LOGIN_URL = typeof process.env.NEXT_PUBLIC_LOGIN_URL !== "undefined" ? process.env.NEXT_PUBLIC_LOGIN_URL : ""
+export const API_BASE_URL = typeof process.env.API_BASE_URL !== "undefined" ? process.env.API_BASE_URL : ""
+export const CURRENT_API_VERSION = typeof process.env.NEXT_PUBLIC_CURRENT_API_VERSION !== "undefined" ? process.env.NEXT_PUBLIC_CURRENT_API_VERSION : ""
+export const COOKIE_PASSWORD = typeof process.env.COOKIE_PASSWORD !== "undefined"? process.env.COOKIE_PASSWORD:""

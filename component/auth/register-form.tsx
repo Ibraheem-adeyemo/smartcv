@@ -1,26 +1,70 @@
 import { Flex, Link } from "@chakra-ui/layout";
-import { Text, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { Text, Button, FormControl, FormLabel, Input, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, {  } from "react";
-import { links } from "../../constants";
+import React, { useState } from "react";
+import { CURRENT_API_VERSION, links } from "../../constants";
 import NextLink from 'next/link'
+import { fetchJson } from "../../lib";
+import { InterchangeResponse, Loading } from "../../models";
+import useLoading from "../../hooks/loading";
 
 export default function RegisterForm(props: any) {
     const router = useRouter()
+    const [interChangeId, setInterChangeId] = useState<string>()
+    const toast = useToast()
+    const [loading, setLoading] = useLoading()
+    const getInterChangebyInterchangeId = async () => {
+        try {
+            // debugger
+            setLoading({isLoading:true, text:"Confirming"})
+            const data = await fetchJson<InterchangeResponse, string >(`/api/${CURRENT_API_VERSION}/interchange/${interChangeId}`, {
+                method: "post"
+            })
+            if(typeof data.statusCondition !== "undefined" && +data.statusCondition === 1) {
+                // debugger
+                toast({
+                    status: "success",
+                    title: "Login successful",
+                    isClosable:true,
+                    variant:"left-accent"
+                })
+                router.push('/onboarding')
+                return
+            }else if(typeof data.statusCondition !== "undefined") {
+                throw {
+                    data
+                }
+            } else {
+                throw new Error("An error occured")
+            }
+        } catch (error:any) {
+            console.error({getInterChangebyInterchangeIdError: error})
+            toast({
+                status: "error",
+                title: error.message,
+                isClosable:true,
+                variant:"left-accent"
+            })
+            setLoading({isLoading:false, text:""})
+        }
+    }
     return (
-        <form method="POST" onSubmit={((e: React.FormEvent<HTMLFormElement>) => (
-            e.preventDefault(),
-            router.push('/onboarding')
-        ))}>
+        <form method="POST" onSubmit={((e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault(), getInterChangebyInterchangeId()
+        })}>
             <Flex flexDir="column" gridGap="36px" px="66px" bg="white" borderRadius="6px" alignItems="center" w="633px" py="36px">
                 <Text variant="card-header" size="page-header" >Register</Text>
                 <FormControl id="organizationId">
                     <FormLabel>Organization ID</FormLabel>
-                    <Input placeholder="XYZ1278IO" borderRadius="4px" />
+                    <Input placeholder="XYZ1278IO" borderRadius="4px" onInput={(e) => {
+                        e.stopPropagation()
+                        const ele = e.target as HTMLInputElement
+                        setInterChangeId(ele.value)
+                    }} />
                     {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
                 <Flex flexDir="column" gridGap="15px" w="100%" alignItems="center">
-                    <Button type="submit" variant="primary-button" w="100%" py="12px">
+                    <Button isLoading={loading.isLoading} loadingText={loading.text} type="submit" variant="primary-button" w="100%" py="12px">
                         Submit
                     </Button>
                     <Link href={links.login} color="brand.primary-blue" ><NextLink href={links.login}>Back to Login</NextLink></Link>
