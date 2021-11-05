@@ -72,6 +72,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                 })
                 const data = (await response.json()) as BankAdmin
                 if (response.ok || response.status === 200 || response.status === 201) {
+                    debugger
                     props.setUserAuthority(data)
                 } else {
                     throw {

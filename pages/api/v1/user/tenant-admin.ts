@@ -6,25 +6,36 @@ import { Onboarding } from "../../../../models";
 
 export default withSession<NextironHandler>(async function Tenant(req, res) {
 
-    // debugger
+    debugger
     try {
         const interchangeId = req.session.get("pass-interchange")
         if (typeof interchangeId !== "undefined" && interchangeId !== null) {
             const body = req.body as Onboarding
 
             const requestBody = JSON.stringify({
-                name: body.tenant?.name,
-                code: "",
-                domain: "",
-                slogan: "",
-                color: body.institutionColorInfo?.headerColor,
-                bannkAdmin: {
-                    firstName:body.bankAdmin.firstName,
-                    lastName:body.bankAdmin.lastName,
-                    email:body.bankAdmin.email,
-                    password:body.bankAdmin.password,
+                tenant: {
+                    name: body.tenant?.name,
+                    code: "",
+                    domain: "",
+                    slogan: "",
+                    logo: body.tenant.bankLogo,
+                    address:body.tenant.bankAddress,
+                    location:body.tenant.bankLocation,
+                    branch:body.tenant.bankBranch,
+                    color: {
+                        headerColor: body.institutionColorInfo.headerColor,
+                        sidebarColour: body.institutionColorInfo.sidebarColor,
+                        buttonColor: body.institutionColorInfo.buttonColor
+                    }
+                },
+                tenantAdmin: {
+                    firstName: body.bankAdmin.firstName,
+                    lastName: body.bankAdmin.lastName,
+                    email: body.bankAdmin.email,
+                    password: body.bankAdmin.password,
                     mobileNo: body.bankAdmin.mobileNo,
-                    tenantCode: body.tenant?.bankId
+                    tenantCode: body.tenant?.bankId,
+                    username: body.bankAdmin.email
                 }
                 // ...body.institutionColorInfo,
             })
@@ -41,8 +52,8 @@ export default withSession<NextironHandler>(async function Tenant(req, res) {
             // })
             const response = {
                 ok: true,
-                status:200,
-                json: async() => JSON.parse(requestBody)
+                status: 200,
+                json: async () => JSON.parse(requestBody)
             }
             const data = await response.json()
             if (response.ok || response.status === 200) {
