@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { API_BASE_URL, CURRENT_API_VERSION } from "../../../../constants";
+import { API_BASE_URL, API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION } from "../../../../constants";
 import { APICatch } from "../../../../lib";
 import withSession, { NextironHandler } from "../../../../lib/session";
 import { APIResponse, ErrorResponse, InterchangeResponse } from "../../../../models";
@@ -8,7 +8,7 @@ export default withSession<NextironHandler>(async function Interchange(req, res)
     try {
         // debugger
         const {interchangeid} = req.query
-        const url = `${API_BASE_URL}/${CURRENT_API_VERSION}/interchange/${interchangeid}`
+        const url = `${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/interchange/${interchangeid}`
         const response = await fetch(url)
         const data = await response.json() as APIResponse<InterchangeResponse>
         if(response.ok || response.status === 200) {

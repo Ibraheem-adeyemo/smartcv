@@ -25,6 +25,9 @@ const Text = {
       },
       "tiny-text": {
         fontSize:"8px"
+      },
+      "extra-large-text": {
+        fontSize:"34px"
       }
     },
     // Styles for the visual style variations

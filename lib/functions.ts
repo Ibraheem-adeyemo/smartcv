@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { notificationMesage } from "../constants";
 
 export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
@@ -24,36 +25,36 @@ export function shortenNumber(amount: number) {
     return t
 }
 
-export function isEmptyObject<T>(obj: Record<keyof T, string | boolean >[]) {
+export function isEmptyObject<T>(obj: Record<keyof T, string | boolean>[]) {
     return _.flow(_.values, _.compact, _.isEmpty)(obj)
 }
 
-export function validateUppercase(str:string) {
-  return  /[A-Z]/.test(str)
+export function validateUppercase(str: string) {
+    return /[A-Z]/.test(str)
 }
 
-export function validateLowercase(str:string) {
+export function validateLowercase(str: string) {
     return /[a-z]/.test(str)
 }
 
-export function validateNumber(str:string) {
+export function validateNumber(str: string) {
     return /[0-9]/.test(str)
 }
 
-export function validateEmail(email:string) {
+export function validateEmail(email: string) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
 
-export function comparePassword(pass1: string, pass2:string) {
+export function comparePassword(pass1: string, pass2: string) {
     return pass1 === pass2
 }
 
-export function validateexColor(color:string) {
-   return  /^#[0-9A-F]{6}$/i.test(color) || /^#([0-9A-F]{3}){1,2}$/i.test(color)
+export function validateexColor(color: string) {
+    return /^#[0-9A-F]{6}$/i.test(color) || /^#([0-9A-F]{3}){1,2}$/i.test(color)
 }
 
-export function APICatch(error:any, res:any) {
+export function APICatch(error: any, res: any) {
     // debugger
     if (typeof error.data !== "undefined") {
         if (typeof error.data.error_description !== "undefined") {
@@ -66,33 +67,28 @@ export function APICatch(error:any, res:any) {
     return res.status(400).json(error)
 }
 
-export async function fetchJson<T extends Record<keyof T, K>, K> (input: RequestInfo, init?: RequestInit):Promise<T> {  
-        try {
-            // console.log({init});
-            // debugger
-            const response = await fetch(input, init);
-            const data = await response.json()
-            // debugger
-            if(response.ok) {
-                return data as T;
-            }
-            else if(typeof data !== "undefined") {
-
-              return data
-            }
-            else { throw {
-                response
-              };
-            
-            }
+export async function fetchJson<T extends Record<keyof T, K>, K>(input: RequestInfo, init?: RequestInit): Promise<T> {
     
-        } catch (error:any) {
-            console.error({fetchJsonError: error})
-            // debugger
-            if(typeof error.data !== "undefined") {
-                error = error.data
-            }
-            return error;
+    try {
+        // console.log({init});
+        // debugger
+        const response = await fetch(input, init);
+        const data = await response.json()
+        // debugger
+        if (response.ok) {
+            return data as T;
         }
-    
+        else if (typeof data !== "undefined") {
+            throw data.message
+        }
+        else {
+            throw notificationMesage.AnErrorOccurred
+
+        }
+
+    } catch (error: any) {
+        // debugger
+        throw error
+    }
+
 }

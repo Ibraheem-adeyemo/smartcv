@@ -2,7 +2,7 @@ import { Flex, Link } from "@chakra-ui/layout";
 import { Text, Button, FormControl, FormLabel, Input, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { CURRENT_API_VERSION, links } from "../../constants";
+import { CURRENT_API_VERSION, links, notificationMesage } from "../../constants";
 import NextLink from 'next/link'
 import { fetchJson } from "../../lib";
 import { InterchangeResponse, Loading } from "../../models";
@@ -24,11 +24,11 @@ export default function RegisterForm(props: any) {
                 // debugger
                 toast({
                     status: "success",
-                    title: "Login successful",
+                    title: notificationMesage.SuccessfulLogin,
                     isClosable:true,
                     variant:"left-accent"
                 })
-                router.push('/onboarding')
+                router.push(links.onboarding)
                 return
             }else if(typeof data.statusCondition !== "undefined") {
                 throw {
@@ -41,7 +41,7 @@ export default function RegisterForm(props: any) {
             console.error({getInterChangebyInterchangeIdError: error})
             toast({
                 status: "error",
-                title: error.message,
+                title: error,
                 isClosable:true,
                 variant:"left-accent"
             })

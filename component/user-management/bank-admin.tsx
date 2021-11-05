@@ -12,7 +12,7 @@ export default function BankAdmin() {
                 key: "bankLogo"
             }, {
                 name: "Bank name",
-                key: "bankName"
+                key: "name"
             }, {
                 name: "Bank ID",
                 key: "bankID"
@@ -63,7 +63,7 @@ export default function BankAdmin() {
             const data = []
             for (let i = 0; i < 38; i++) {
                 data.push({
-                    bankName: Banks[getRandomInt(Banks.length - 1)],
+                    name: Banks[getRandomInt(Banks.length - 1)],
                     bankLogo: "",
                     bankId: "7638GFTJ876",
                     addrress: "Bank Address",

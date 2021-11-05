@@ -1,13 +1,15 @@
 import { Divider, Flex, Link } from "@chakra-ui/layout";
-import { Avatar, forwardRef, Image, Text } from "@chakra-ui/react";
+import { Avatar, forwardRef, Image, Text, useToast } from "@chakra-ui/react";
 import React, { createContext, Fragment, useCallback, useEffect } from "react";
-import { Images, links, TickIcon } from "../../constants";
-import { steps, useOnboarding } from "../../hooks";
+import { Images, links, notificationMesage, TickIcon } from "../../constants";
+import { initialOnboardingData, steps, useOnboarding } from "../../hooks";
 import { InterswitchLogo } from "../custom-component";
 import NextLink from 'next/link'
 import { useRouter } from "next/router";
 import { CreateBank } from "../onboarding";
-import { BankInfo, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Onboarding as OnboardingModel, Step, SuperAdminInfo } from "../../models";
+import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Onboarding as OnboardingModel, Step, BankAdmin } from "../../models";
+import { createAccountAsync } from "../../services/v1";
+import { OnboardingNav } from '.'
 interface OnboardingProps {
     children: JSX.Element
 }
@@ -21,21 +23,26 @@ const OnboardingLink = forwardRef((props, ref) => {
 
 type OnboardingContext = ReturnType<typeof useOnboarding>
 export const onboardingContext = createContext<OnboardingContext>(
-    { steps, 
-    changeIsRefresh:() => (""),
-    addInfo:() => (""),
-    refresh:() => (""),
-    completeForm: () => (""),
-    resetForm:  () => (""),
-    previousState:  () => ("")
-     })
+    {
+        steps,
+        changeIsRefresh: () => (""),
+        addInfo: () => (""),
+        refresh: () => (""),
+        completeForm: () => (""),
+        resetForm: () => (""),
+        previousState: () => (""),
+        loading: {isLoading:false, text:""},
+        startLoading: () => (""),
+        stopLoading: () => ("")
+    })
 export default function Onboarding(props: OnboardingProps) {
-    const { steps, onboarding, changeIsRefresh, addInfo, refresh, completeForm, resetForm, previousState  } = useOnboarding()
+    const { steps, onboarding, changeIsRefresh, addInfo, refresh, completeForm, resetForm, previousState, loading, startLoading, stopLoading } = useOnboarding()
     // useEffect(() => console.log({ c: onboarding }))
     const router = useRouter()
     // console.log({ router })
     const { step } = router.query
     const { Provider } = onboardingContext
+    const toast = useToast()
     const LoadAvatar = useCallback(({ i, x }: { i: number, x: Step }) => {
         // let loadTab;
         // debugger
@@ -43,8 +50,8 @@ export default function Onboarding(props: OnboardingProps) {
             // debugger
             if (i === onboarding?.state) {
                 return <Avatar name={`${i + 1}`} bgColor="brand.muted-blue"></Avatar>
-            } else{
-                const tab = onboarding[x.key as keyof OnboardingModel] as BankInfo | SuperAdminInfo | InstitutionColorInfo
+            } else {
+                const tab = onboarding[x.key as keyof OnboardingModel] as Tenant | BankAdmin | InstitutionColorInfo
                 // debugger
                 if (tab.completed) {
                     return <Avatar bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
@@ -54,7 +61,7 @@ export default function Onboarding(props: OnboardingProps) {
         return <Avatar name={`${i + 1}`} bgColor={"brand.page-header"}></Avatar>
     }, [steps, step, onboarding?.state])
 
-    const LoadTextHeader =  useCallback(({ i, x }: { i: number, x: Step }) => {
+    const LoadTextHeader = useCallback(({ i, x }: { i: number, x: Step }) => {
         if (i < (onboarding?.state as number)) {
             return <Text color={`brand.primary-blue`}>{x.name}</Text>
         }
@@ -73,16 +80,47 @@ export default function Onboarding(props: OnboardingProps) {
         return <></>
     }, [onboarding?.state])
 
+    const createAccount = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        // debugger
+        startLoading()
+        try {
+            if (typeof onboarding !== "undefined") {
+                await createAccountAsync(onboarding as OnboardingModel)
+                toast({
+                    status: "success",
+                    title: notificationMesage.SuccessfulAccountCreation,
+                    isClosable: true,
+                    variant: "left-accent"
+                })
+                router.push(links.onboardingSuccessPage)
+            } else {
+                toast({
+                    status: "error",
+                    title: notificationMesage.CantSubmitForm,
+                    isClosable: true,
+                    variant: "left-accent"
+                })
+            }
+            stopLoading()
+        } catch (error: any) {
+            // debugger
+            toast({
+                status: "error",
+                title: error,
+                isClosable: true,
+                variant: "left-accent"
+            })
+            console.error({ createAccountError: error })
+            stopLoading()
+        }
+    }, [onboarding, onboarding])
     return (
-        <Provider value={{ onboarding, steps, changeIsRefresh, addInfo, refresh, completeForm, resetForm, previousState }}>
+        <Provider value={{ onboarding, steps, changeIsRefresh, addInfo, refresh, completeForm, resetForm, previousState, loading, startLoading, stopLoading }}>
             <Flex h="100vh" flexDir="column" gridGap="59px" >
-                <Flex justifyContent="space-between" h="89px" w="100%" bg="white" pl="42px" pt="26.67" pb="23.67" pos="relative">
-                    <Link href="/">
-                        <InterswitchLogo />
-                    </Link>
-                </Flex>
+                <OnboardingNav />
                 <Flex mx="306px" gridGap="33px" flexDirection="column" h="100%">
-                    <form action={""} method="post" >
+                    <form method="post" onSubmit={createAccount} >
 
                         <Flex gridGap="33px" flexDirection="column">
                             <Flex gridGap={onboarding?.state as number > 0 ? `13px` : `100px`} alignItems="center" justifyContent="space-around">

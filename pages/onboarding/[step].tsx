@@ -22,7 +22,7 @@ export default function Step1(props: any) {
             const index = steps.findIndex((x, i) => x.url === `/onboarding/${step}`)
             if (index < 0) {
                 if (typeof window !== "undefined") {
-                    router.push('./404')
+                    router.push(links.notFound)
                 }
             } else {
                 setStepNumber(index)

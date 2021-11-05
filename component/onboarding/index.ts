@@ -4,6 +4,8 @@ import createSuperAdminWithExistingSuperAdminAccount from "./creat-super-admin-w
 import createSuperAdminWithoutExistingSuperAdminAccount from "./creat-super-admin-without-existing-passport-account";
 import signinWithPassport from "./signin-with-passport";
 import createSuperAdmin  from "./create-super-admin";
+import successCard from "./success-card";
+
 
 export const CreateBank =  createBank 
 export const OnboardingCard = onboardingCard
@@ -11,3 +13,4 @@ export const CreateSuperAdminWithExistingSuperAdminAccount = createSuperAdminWit
 export const CceateSuperAdminWithoutExistingSuperAdminAccount = createSuperAdminWithoutExistingSuperAdminAccount
 export const SigninWithPassport = signinWithPassport
 export const CreateSuperAdmin = createSuperAdmin
+export const SuccessCard = successCard

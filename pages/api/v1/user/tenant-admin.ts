@@ -6,35 +6,48 @@ import { Onboarding } from "../../../../models";
 
 export default withSession<NextironHandler>(async function Tenant(req, res) {
 
-
+    // debugger
     try {
         const interchangeId = req.session.get("pass-interchange")
         if (typeof interchangeId !== "undefined" && interchangeId !== null) {
             const body = req.body as Onboarding
 
-            const requestBody = {
-                name: body.bankInfo?.bankName,
+            const requestBody = JSON.stringify({
+                name: body.tenant?.name,
                 code: "",
                 domain: "",
                 slogan: "",
                 color: body.institutionColorInfo?.headerColor,
                 bannkAdmin: {
-                    ...body.superAdminInfo,
-                    tenantcoe: body.bankInfo?.bankId
+                    firstName:body.bankAdmin.firstName,
+                    lastName:body.bankAdmin.lastName,
+                    email:body.bankAdmin.email,
+                    password:body.bankAdmin.password,
+                    mobileNo: body.bankAdmin.mobileNo,
+                    tenantCode: body.tenant?.bankId
                 }
                 // ...body.institutionColorInfo,
-            }
-            const url = `${API_BASE_URL}/${CURRENT_API_VERSION}/tenant`
-            const response = await fetch(url, {
-                method: "post",
-                headers: {
-                    Authorization: `bearer ${body.superAdminInfo?.access_token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(requestBody)
             })
+            const url = `${API_BASE_URL}/${CURRENT_API_VERSION}/user/tenant-admin`
+            // const response = await fetch(url, {
+            //     method: "post",
+            //     headers: body.bankAdmin?.access_token !==""?{
+            //         Authorization: `bearer ${body.bankAdmin?.access_token}`,
+            //         "Content-Type": "application/json"
+            //     }:{
+            //         "Content-Type": "application/json"
+            //     },
+            //     body: requestBody
+            // })
+            const response = {
+                ok: true,
+                status:200,
+                json: async() => JSON.parse(requestBody)
+            }
             const data = await response.json()
             if (response.ok || response.status === 200) {
+                req.session.set("created-account", "account created")
+                await req.session.save()
                 return res.status(200).json({
                     message: "saved successfully"
                 })

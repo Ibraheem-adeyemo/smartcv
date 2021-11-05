@@ -6,25 +6,25 @@ import _ from "lodash";
 import { useRouter } from "next/router";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { OnboardingCard } from ".";
+import { notificationMesage } from "../../constants";
 import useValidator from "../../hooks/validatoin";
-import { SuperAdminInfo, Loading, Onboarding } from "../../models";
+import { BankAdmin, Loading, Onboarding } from "../../models";
 import { OnboardingContext } from "../layouts";
 import createBank from "./create-bank";
 
 interface CreateSuperAdminWithExistingSuperAdminAccountProps {
-    // authenticatedUser: SuperAdminInfo
+    // authenticatedUser: BankAdmin
 }
 
 export default function CreateSuperAdminWithExistingSuperAdminAccount(props: CreateSuperAdminWithExistingSuperAdminAccountProps) {
-    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState } = useContext(OnboardingContext)
+    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState, loading} = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
-    const [loading, setLoading] = useState<Loading>()
     const toast = useToast()
     const router = useRouter()
 
     useEffect(() => {
-        // if(typeof onboarding?.superAdminInfo !== "undefined") {
-        if (onboarding?.superAdminInfo?.access_token !== "") {
+        // if(typeof onboarding?.bankAdmin !== "undefined") {
+        if (onboarding?.bankAdmin?.access_token !== "") {
 
             setCanNotSubmit(false)
         } else {
@@ -32,15 +32,15 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
         }
         // }
 
-    }, [onboarding?.superAdminInfo])
+    }, [onboarding?.bankAdmin])
 
     const createSuperAdmin = useCallback((e) => {
         // debugger
-        if (typeof onboarding?.superAdminInfo !== "undefined" && typeof canNotSubmit !== "undefined" && typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
+        if (typeof onboarding?.bankAdmin !== "undefined" && typeof canNotSubmit !== "undefined" && typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
             if (steps.length !== (onboarding.state + 1)) {
-                completeForm("superAdminInfo")
+                completeForm("bankAdmin")
                 toast({
-                    title: "Super Admin Creation successful",
+                    title: notificationMesage.SuccessfulSuperAdminCreation,
                     variant: "left-accent",
                     isClosable: true,
                     status: "success"
@@ -48,7 +48,7 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
                 router.push(steps[onboarding.state + 1]?.url)
             } else {
                 toast({
-                    title: "Can't move on to the next form",
+                    title: notificationMesage.CantmoveToNextForm,
                     variant: "left-accent",
                     isClosable: true,
                     status: "error"
@@ -56,13 +56,13 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
             }
         } else {
             toast({
-                title: "Can't move on to the next form",
+                title: notificationMesage.CantmoveToNextForm,
                 variant: "left-accent",
                 isClosable: true,
                 status: "error"
             })
         }
-    }, [canNotSubmit, onboarding?.state, onboarding?.superAdminInfo, steps])
+    }, [canNotSubmit, onboarding?.state, onboarding?.bankAdmin, steps])
 
     const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
@@ -76,7 +76,7 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
                 router.push(step.url)
             }
         }}>Previous</Button>
-        <Button variant="primary-button" px="115px" py="8px" isDisabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} onClick={createSuperAdmin}>Next</Button>
+        <Button variant="primary-button" px="115px" py="8px" isLoading={loading.isLoading} loadingText={loading.text} isDisabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} onClick={createSuperAdmin}>Next</Button>
     </Flex>
     return (<OnboardingCard cardTitle="" cardFooter={cardFooter}>
 
@@ -84,24 +84,24 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
             <FormControl isRequired flexGrow={1} width="35%">
                 <FormLabel>First Name</FormLabel>
 
-                <Input placeholder="Jane" borderRadius="4px" value={onboarding?.superAdminInfo?.firstName} disabled={true} />
+                <Input placeholder="Jane" borderRadius="4px" value={onboarding?.bankAdmin?.firstName} disabled={true} />
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%" >
                 <FormLabel>Last name</FormLabel>
-                <Input placeholder="Doe" borderRadius="4px" value={onboarding?.superAdminInfo?.lastName} disabled={true} />
+                <Input placeholder="Doe" borderRadius="4px" value={onboarding?.bankAdmin?.lastName} disabled={true} />
 
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%">
                 <FormLabel>Email Address</FormLabel>
 
-                <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.superAdminInfo?.email} disabled={true} />
+                <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.bankAdmin?.email} disabled={true} />
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%" >
                 <FormLabel>Phone Number</FormLabel>
-                <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.superAdminInfo?.mobileNo} disabled={true} />
+                <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.bankAdmin?.mobileNo} disabled={true} />
 
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>

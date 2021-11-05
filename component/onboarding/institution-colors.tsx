@@ -5,14 +5,14 @@ import { range } from "lodash";
 import router from "next/router";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
-import { PickerIcon } from "../../constants";
-import { validateexColor } from "../../lib";
-import { Onboarding, BankInfo, SuperAdminInfo, InstitutionColorInfo } from "../../models";
+import { CURRENT_API_VERSION, PickerIcon } from "../../constants";
+import { fetchJson, validateexColor } from "../../lib";
+import { Onboarding, Tenant, BankAdmin, InstitutionColorInfo } from "../../models";
 import { OnboardingContext } from "../layouts";
 
 export default function InstitutionCOlors(props: any) {
     
-    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState } = useContext(OnboardingContext)
+    const { steps, onboarding, addInfo, resetForm, previousState, loading } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
     const headerColorRef = useRef<HTMLInputElement>(null)
     const sidbarColorRef = useRef<HTMLInputElement>(null)
@@ -53,7 +53,7 @@ export default function InstitutionCOlors(props: any) {
             if (props.step - 1 > -1) {
                 step = steps[props.step - 1]
             }
-            if ((onboarding[step.key as keyof Onboarding] as SuperAdminInfo).completed === false) {
+            if ((onboarding[step.key as keyof Onboarding] as BankAdmin).completed === false) {
                 previousState()
                 router.push(step.url)
             }
@@ -90,10 +90,6 @@ export default function InstitutionCOlors(props: any) {
         addInstitutionColorInfo(ele, value)
     }, [onboarding?.institutionColorInfo])
 
-    const createInstitutionCOlor = useCallback((e) => {
-
-    }, [])
-
     const cardTitle = <Flex flexDir="column" gridGap="5px">
         <Text variant="card-header" size="page-header" >Institution Colors</Text>
         <Text color="muted-text">Select the colour scheme for the institution’s dashboard. Choose a colour for the header, CTAs and accents.</Text>
@@ -110,7 +106,7 @@ export default function InstitutionCOlors(props: any) {
                 router.push(step.url)
             }
         }}>Previous</Button>
-        <Button variant="primary-button" px="115px" py="8px" isDisabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} onClick={createInstitutionCOlor}>Next</Button>
+        <Button type="submit" variant="primary-button" px="115px" py="8px" isDisabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} isLoading={loading.isLoading} loadingText={loading.text}>Create Account</Button>
     </Flex>
     return (
         <OnboardingCard cardTitle={cardTitle} cardFooter={cardFooter}>

@@ -4,8 +4,8 @@ import { Avatar, useToast } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import { TickIcon } from "../../constants";
-import { BankInfo, Onboarding, stepsProps, SuperAdminInfo } from "../../models";
+import { notificationMesage, TickIcon } from "../../constants";
+import { Tenant, Onboarding, stepsProps, BankAdmin } from "../../models";
 import { OnboardingContext } from "../layouts";
 
 interface CreateSuperAdminProps extends stepsProps {
@@ -22,18 +22,18 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
     
     const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState } = useContext(OnboardingContext)
     const router = useRouter()
-    const [authenticatedUser, setAuthenticatedUser] = useState<SuperAdminInfo>()
+    const [authenticatedUser, setAuthenticatedUser] = useState<BankAdmin>()
     const [accordionindex, setAccordionindex] = useState<number>()
     const [openModal, setOpenModal] = useState<boolean>()
     const toast = useToast()
     
-    const setUserAuthority = (user: SuperAdminInfo) => {
+    const setUserAuthority = (user: BankAdmin) => {
         // debugger
         // setAuthenticatedUser(user)
         onCloseModal()
-        resetForm("superAdminInfo", user)
+        resetForm("bankAdmin", user)
         toast({
-            title: "Your account has been verified",
+            title: notificationMesage.AccountVerified,
             status: "success",
             variant: "left-accent",
             isClosable: true
@@ -45,20 +45,20 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
     }
 
     useEffect(() => {
-        refresh("superAdminInfo", 1)
+        refresh("bankAdmin", 1)
     }, [])
     useEffect(() => {
-        if (typeof onboarding?.superAdminInfo !== "undefined") {
-            if (onboarding.superAdminInfo.access_token !== "") {
+        if (typeof onboarding?.bankAdmin !== "undefined") {
+            if (onboarding.bankAdmin.access_token !== "") {
                 setAccordionindex(0)
-            } else if(onboarding.superAdminInfo.confirmPassword !== "") {
+            } else if(onboarding.bankAdmin.confirmPassword !== "") {
                 setAccordionindex(1)
             }
         } else {
 
             setAccordionindex(-1)
         }
-    }, [onboarding?.superAdminInfo])
+    }, [onboarding?.bankAdmin])
     useEffect(() => {
         if (typeof onboarding !== "undefined" && typeof steps !== "undefined" && typeof props.step !== "undefined") {
             // debugger
@@ -66,7 +66,7 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
             if (props.step - 1 > -1) {
                 step = steps[props.step - 1]
             }
-            if ((onboarding[step.key as keyof Onboarding] as BankInfo).completed === false) {
+            if ((onboarding[step.key as keyof Onboarding] as Tenant).completed === false) {
                 previousState()
                 router.push(step.url)
             }

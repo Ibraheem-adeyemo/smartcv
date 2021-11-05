@@ -2,13 +2,13 @@ import { Modal, ModalOverlay, ModalContent, ModalBody, ModalHeader, ModalCloseBu
 import React, { useCallback, useEffect, useState } from "react";
 import { CLIENT_ID, PASSPORT_AUTHORIZE_URL, PASSPORT_TOKEN_URL, SCOPE, SECRET } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
-import { Loading, PassportLoginCredentials, SuperAdminInfo } from "../../models";
+import { Loading, PassportLoginCredentials, BankAdmin } from "../../models";
 
 type onClose = () => void
 const voidfunc = () => {
 
 }
-type SetUserAuthority = (superAdmin: SuperAdminInfo) => void
+type SetUserAuthority = (superAdmin: BankAdmin) => void
 interface SigninWithPassportProps {
     openModal: boolean,
     onCloseModal: onClose,
@@ -70,7 +70,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                     },
                     body: urlencoded
                 })
-                const data = (await response.json()) as SuperAdminInfo
+                const data = (await response.json()) as BankAdmin
                 if (response.ok || response.status === 200 || response.status === 201) {
                     props.setUserAuthority(data)
                 } else {

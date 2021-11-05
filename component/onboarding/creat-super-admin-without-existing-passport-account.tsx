@@ -7,11 +7,11 @@ import { useRouter } from "next/router";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
 import useValidator from "../../hooks/validatoin";
-import { SuperAdminInfo, Onboarding } from "../../models";
+import { BankAdmin, Onboarding } from "../../models";
 import { OnboardingContext } from "../layouts";
 import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
-import { TickIcon } from "../../constants";
+import { notificationMesage, TickIcon } from "../../constants";
 import { comparePassword, validateEmail, validateLowercase, validateNumber, validateUppercase } from "../../lib";
 
 interface PasswordChecker { checker: string, status: boolean, text: string }
@@ -21,7 +21,7 @@ const MobleNoInput = forwardRef((props, ref) => {
 export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props: any) {
     const numberRef = useRef<HTMLInputElement>(null)
     const passRef = useRef<HTMLInputElement>(null)
-    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState } = useContext(OnboardingContext)
+    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState, loading } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
     const toast = useToast()
     const router = useRouter()
@@ -29,38 +29,38 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
     const openPopOver = () => setIsOpenPopOver(true)
     const closePopOver = () => setIsOpenPopOver(false)
 
-    const { validation, setData, setField } = useValidator<SuperAdminInfo>()
+    const { validation, setData, setField } = useValidator<BankAdmin>()
 
     const [passC, setPassC] = useState<PasswordChecker[]>()
     const [otherValidations, setOtherValidations] = useState<boolean>()
     
     const checkFieldValidityOnLoad = (passwordConditions: PasswordChecker[] ) => {
         
-        if(typeof onboarding?.superAdminInfo !== "undefined") {
+        if(typeof onboarding?.bankAdmin !== "undefined") {
             // debugger
-            if(onboarding.superAdminInfo.password !== "") {
+            if( typeof onboarding.bankAdmin.password !== "undefined" && onboarding.bankAdmin.password !== "") {
                const b = passwordConditions.map((x) => {
                 switch (x.checker) {
                     case "uppercase":
                         return {
                             ...x,
-                            status: validateUppercase(onboarding.superAdminInfo?.password as string)
+                            status: validateUppercase(onboarding.bankAdmin?.password as string)
                         }
 
                     case "lowercase":
                         return {
                             ...x,
-                            status: validateLowercase(onboarding.superAdminInfo?.password as string)
+                            status: validateLowercase(onboarding.bankAdmin?.password as string)
                         }
                     case "number":
                         return {
                             ...x,
-                            status: validateNumber(onboarding.superAdminInfo?.password as string)
+                            status: validateNumber(onboarding.bankAdmin?.password as string)
                         }
                     case "eightminimum":
                         return {
                             ...x,
-                            status: (onboarding.superAdminInfo?.password as string).length > 7
+                            status: (onboarding.bankAdmin?.password as string).length > 7
                         }
                         default:
                         return x
@@ -78,7 +78,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
     }
 
     const resetSuperAdmininfo = () => {
-        resetForm("superAdminInfo", 
+        resetForm("bankAdmin", 
             {
                 firstName:"",
                 lastName:"",
@@ -88,15 +88,15 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 password:"",
                 confirmPassword:"",
                 completed: false
-            } as SuperAdminInfo,
+            } as BankAdmin,
             1
         )
     }
 
     const enterSuperAdminMobile =(val: string) => {
         // debugger
-        setField("mobileNo" as keyof SuperAdminInfo)
-        addInfo("superAdminInfo", "mobileNo", val)
+        setField("mobileNo" as keyof BankAdmin)
+        addInfo("bankAdmin", "mobileNo", val)
     }
 
     const checkPassworValidity = (e:React.FormEvent<HTMLInputElement>) => {
@@ -167,49 +167,49 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
             e.stopPropagation()
         // debugger
         const ele = (e.target as HTMLInputElement | HTMLSelectElement)
-        setField(ele.name as keyof SuperAdminInfo)
+        setField(ele.name as keyof BankAdmin)
         const value = ele.value.toString()
         // debugger
         if (ele.name === "password") {
             // debugger
             // ele.focus()
         }
-        addInfo("superAdminInfo", ele.name as keyof SuperAdminInfo, value)
+        addInfo("bankAdmin", ele.name as keyof BankAdmin, value)
 
-    }, [onboarding?.superAdminInfo])
+    }, [onboarding?.bankAdmin])
 
     // useEffect(() => console.log({ canNotSubmit }), [canNotSubmit])
 
     useEffect(() => {
-        refresh("superAdminInfo", 1)
+        refresh("bankAdmin", 1)
     }, [ ])
 
     useEffect(() => {
         // debugger
-        setData(() => onboarding?.superAdminInfo as SuperAdminInfo)
-        if (typeof onboarding?.superAdminInfo !== "undefined") {
+        setData(() => onboarding?.bankAdmin as BankAdmin)
+        if (typeof onboarding?.bankAdmin !== "undefined") {
             // debugger
             setOtherValidations(() => {
                 // debugger
                 const pWordCharacterValidations = ((passC as PasswordChecker[])?.filter(x => !(x?.status as boolean)).length) > 0
-                const emailValidation = !validateEmail(onboarding?.superAdminInfo?.email as string)
-                const mobileNoValidation = !isValidPhoneNumber(onboarding?.superAdminInfo?.mobileNo as string)
-                const pwordCompare = !comparePassword(onboarding?.superAdminInfo?.confirmPassword as string, onboarding?.superAdminInfo?.password as string)
-                const isEmpty = ["firstName", "lastName", "mobileNo", "password", "email", "confrimPassword"].filter((val) => (onboarding?.superAdminInfo as SuperAdminInfo)[val as keyof SuperAdminInfo] === "").length > 0
+                const emailValidation = !validateEmail(onboarding?.bankAdmin?.email as string)
+                const mobileNoValidation = !isValidPhoneNumber(onboarding?.bankAdmin?.mobileNo as string)
+                const pwordCompare = !comparePassword(onboarding?.bankAdmin?.confirmPassword as string, onboarding?.bankAdmin?.password as string)
+                const isEmpty = ["firstName", "lastName", "mobileNo", "password", "email", "confrimPassword"].filter((val) => (onboarding?.bankAdmin as BankAdmin)[val as keyof BankAdmin] === "").length > 0
                 return pWordCharacterValidations || emailValidation || mobileNoValidation || pwordCompare || isEmpty
             })
-            if(onboarding.superAdminInfo.access_token !== "") {
+            if(onboarding.bankAdmin.access_token !== "") {
                 resetSuperAdmininfo()
             }
         }
         return () => {
             // debugger
-            // if(typeof onboarding?.superAdminInfo !== "undefined") {
+            // if(typeof onboarding?.bankAdmin !== "undefined") {
             //     setData( () => undefined)
             // }
         }
 
-    }, [onboarding?.superAdminInfo])
+    }, [onboarding?.bankAdmin])
     useEffect(() => {
         // debugger
         if (typeof otherValidations !== "undefined") {
@@ -229,13 +229,13 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
         if (typeof otherValidations !== "undefined" && typeof canNotSubmit !== "undefined") {
             if (!otherValidations && !canNotSubmit) {
                 toast({
-                    title: "Super Admin Creation successful",
+                    title: notificationMesage.SuccessfulSuperAdminCreation,
                     variant: "left-accent",
                     isClosable: true,
                     status: "success"
                 })
                 
-                completeForm("superAdminInfo")
+                completeForm("bankAdmin")
                 if (typeof onboarding?.state !== "undefined" && typeof steps !== "undefined") {
                     if (steps.length !== (onboarding.state + 1))
                         router.push(steps[onboarding.state + 1]?.url)
@@ -243,14 +243,14 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 // set
             } else {
                 toast({
-                    title: "Can't move on to the next form",
+                    title: notificationMesage.CantmoveToNextForm,
                     variant: "left-accent",
                     isClosable: true,
                     status: "error"
                 })
             }
         }
-    }, [canNotSubmit, onboarding?.state, onboarding?.superAdminInfo, steps])
+    }, [canNotSubmit, onboarding?.state, onboarding?.bankAdmin, steps])
 
     const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
@@ -265,7 +265,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
             }
 
         }}>Previous</Button>
-        <Button variant="primary-button" px="115px" py="8px" isDisabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} onClick={createSuperAdmin}>Next</Button>
+        <Button variant="primary-button" px="115px" py="8px" isDisabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} onClick={createSuperAdmin}  isLoading={loading.isLoading} loadingText={loading.text}>Next</Button>
     </Flex>
     return (<OnboardingCard cardTitle="" cardFooter={cardFooter}>
 
@@ -273,30 +273,30 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
             <FormControl isRequired id="firstName" flexGrow={1} width="35%" isInvalid={validation?.errors?.firstName !== "" && validation?.touched.firstName === "touched"}>
                 <FormLabel>First Name</FormLabel>
 
-                <Input placeholder="Jane" name="firstName" borderRadius="4px" value={onboarding?.superAdminInfo?.firstName} onInput={addData} />
+                <Input placeholder="Jane" name="firstName" borderRadius="4px" value={onboarding?.bankAdmin?.firstName} onInput={addData} />
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 <FormErrorMessage>{validation?.errors.firstName}</FormErrorMessage>
             </FormControl>
             <FormControl isRequired id="lastName" flexGrow={1} width="35%" isInvalid={validation?.errors?.lastName !== "" && validation?.touched.lastName === "touched"}>
                 <FormLabel>Last name</FormLabel>
-                <Input placeholder="Doe" name="lastName" borderRadius="4px" value={onboarding?.superAdminInfo?.lastName} onInput={addData} />
+                <Input placeholder="Doe" name="lastName" borderRadius="4px" value={onboarding?.bankAdmin?.lastName} onInput={addData} />
                 <FormErrorMessage>{validation?.errors.lastName}</FormErrorMessage>
 
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
-            <FormControl isRequired id="email" flexGrow={1} width="35%" isInvalid={(!validateEmail(onboarding?.superAdminInfo?.email as string) || validation?.errors?.email !== "") && validation?.touched.email === "touched"}>
+            <FormControl isRequired id="email" flexGrow={1} width="35%" isInvalid={(!validateEmail(onboarding?.bankAdmin?.email as string) || validation?.errors?.email !== "") && validation?.touched.email === "touched"}>
                 <FormLabel>Email Address</FormLabel>
 
-                <Input placeholder="janedoe@gmail.com" name="email" type="email" borderRadius="4px" value={onboarding?.superAdminInfo?.email} onInput={addData} />
+                <Input placeholder="janedoe@gmail.com" name="email" type="email" borderRadius="4px" value={onboarding?.bankAdmin?.email} onInput={addData} />
                 <FormErrorMessage>{validation?.errors.email}</FormErrorMessage>
-                <FormErrorMessage>{!validateEmail(onboarding?.superAdminInfo?.email as string) ? "Invalid email" : ""}</FormErrorMessage>
+                <FormErrorMessage>{!validateEmail(onboarding?.bankAdmin?.email as string) ? "Invalid email" : ""}</FormErrorMessage>
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
-            <FormControl isRequired id="mobileNo" flexGrow={1} width="35%" isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(onboarding?.superAdminInfo?.mobileNo as string)) && validation?.touched.mobileNo === "touched"}>
+            <FormControl isRequired id="mobileNo" flexGrow={1} width="35%" isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(onboarding?.bankAdmin?.mobileNo as string)) && validation?.touched.mobileNo === "touched"}>
                 <FormLabel>Phone Number</FormLabel>
-                <MobleNoInput placeholder="Enter Phone no" name="mobileNo" borderRadius="4px" value={onboarding?.superAdminInfo?.mobileNo} ref={numberRef} onChange={enterSuperAdminMobile} />
+                <MobleNoInput placeholder="Enter Phone no" name="mobileNo" borderRadius="4px" value={onboarding?.bankAdmin?.mobileNo} ref={numberRef} onChange={enterSuperAdminMobile} />
                 <FormErrorMessage>{validation?.errors.mobileNo}</FormErrorMessage>
-                <FormErrorMessage>{!isValidPhoneNumber(onboarding?.superAdminInfo?.mobileNo as string) ? "Invalid number" : ""}</FormErrorMessage>
+                <FormErrorMessage>{!isValidPhoneNumber(onboarding?.bankAdmin?.mobileNo as string) ? "Invalid number" : ""}</FormErrorMessage>
 
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
@@ -312,7 +312,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
 
                     <FormControl isRequired id="password" flexGrow={1} width="35%" isInvalid={(((passC as PasswordChecker[])?.filter(x => !(x?.status as boolean)).length > 0) || validation?.errors?.password !== "") && validation?.touched.password === "touched"}>
                         <FormLabel>Password</FormLabel>
-                        <Input placeholder="Enter Password" type="password" name="password" ref={passRef} borderRadius="4px" value={onboarding?.superAdminInfo?.password}
+                        <Input placeholder="Enter Password" type="password" name="password" ref={passRef} borderRadius="4px" value={onboarding?.bankAdmin?.password}
                             onBlur={() => closePopOver()}
                             onInput={checkPassworValidity} />
                         <FormErrorMessage>{validation?.errors.password}</FormErrorMessage>
@@ -332,11 +332,11 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                     </PopoverBody>
                 </PopoverContent>
             </Popover>
-            <FormControl isRequired id="confirmPassword" flexGrow={1} width="35%" isInvalid={(!comparePassword(onboarding?.superAdminInfo?.confirmPassword as string, onboarding?.superAdminInfo?.password as string) || validation?.errors.confirmPassword !== "") && validation?.touched.confirmPassword === "touched"}>
+            <FormControl isRequired id="confirmPassword" flexGrow={1} width="35%" isInvalid={(!comparePassword(onboarding?.bankAdmin?.confirmPassword as string, onboarding?.bankAdmin?.password as string) || validation?.errors.confirmPassword !== "") && validation?.touched.confirmPassword === "touched"}>
                 <FormLabel>Confirm Password</FormLabel>
-                <Input type="password" placeholder="Confirm Password" name="confirmPassword" borderRadius="4px" value={onboarding?.superAdminInfo?.confirmPassword} onInput={addData} />
+                <Input type="password" placeholder="Confirm Password" name="confirmPassword" borderRadius="4px" value={onboarding?.bankAdmin?.confirmPassword} onInput={addData} />
                 <FormErrorMessage>{validation?.errors.confirmPassword}</FormErrorMessage>
-                <FormErrorMessage>{!comparePassword(onboarding?.superAdminInfo?.confirmPassword as string, onboarding?.superAdminInfo?.password as string) ? "Confirm password does not match with password" : ""}</FormErrorMessage>
+                <FormErrorMessage>{!comparePassword(onboarding?.bankAdmin?.confirmPassword as string, onboarding?.bankAdmin?.password as string) ? "Confirm password does not match with password" : ""}</FormErrorMessage>
 
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>

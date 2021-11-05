@@ -1,5 +1,5 @@
-export interface BankInfo {
-    bankName: string,
+export interface Tenant {
+    name: string,
     bankId: string,
     bankBranch: string,
     bankLocation: string,
@@ -15,7 +15,7 @@ export interface InstitutionColorInfo {
     completed: boolean,
 }
 
-export interface SuperAdminInfo {
+export interface BankAdmin {
     firstName: string,
     lastName: string,
     email: string,
@@ -28,10 +28,10 @@ export interface SuperAdminInfo {
 
 
 export interface Onboarding {
-    state?: number,
-    bankInfo?: BankInfo,
-    superAdminInfo?: SuperAdminInfo,
-    institutionColorInfo?: InstitutionColorInfo,
+    state: number,
+    tenant: Tenant,
+    bankAdmin: BankAdmin,
+    institutionColorInfo: InstitutionColorInfo,
     url: string
 
 }
