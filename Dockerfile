@@ -3,7 +3,7 @@ FROM node:lts-alpine AS deps
 
 WORKDIR /opt/app
 COPY package.json package-lock.json ./
-RUN nom install --frozen-lockfile
+RUN npm install --frozen-lockfile
 
 # Rebuild the source code only when needed
 # This is where because may be the case that you would try
