@@ -40,21 +40,21 @@ export default withSession<NextironHandler>(async function Tenant(req, res) {
                 // ...body.institutionColorInfo,
             })
             const url = `${API_BASE_URL}/${CURRENT_API_VERSION}/user/tenant-admin`
-            // const response = await fetch(url, {
-            //     method: "post",
-            //     headers: body.bankAdmin?.access_token !==""?{
-            //         Authorization: `bearer ${body.bankAdmin?.access_token}`,
-            //         "Content-Type": "application/json"
-            //     }:{
-            //         "Content-Type": "application/json"
-            //     },
-            //     body: requestBody
-            // })
-            const response = {
-                ok: true,
-                status: 200,
-                json: async () => JSON.parse(requestBody)
-            }
+            const response = await fetch(url, {
+                method: "post",
+                headers: body.bankAdmin?.access_token !==""?{
+                    Authorization: `bearer ${body.bankAdmin?.access_token}`,
+                    "Content-Type": "application/json"
+                }:{
+                    "Content-Type": "application/json"
+                },
+                body: requestBody
+            })
+            // const response = {
+            //     ok: true,
+            //     status: 200,
+            //     json: async () => JSON.parse(requestBody)
+            // }
             const data = await response.json()
             if (response.ok || response.status === 200) {
                 req.session.set("created-account", "account created")
