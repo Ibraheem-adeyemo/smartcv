@@ -3,6 +3,8 @@ FROM node:lts-alpine AS deps
 
 WORKDIR /opt/app
 COPY package.json package-lock.json ./
+ARG HTTP_PROXY
+RUN npm config set proxy ${HTTP_PROXY}
 RUN npm install --frozen-lockfile
 
 # Rebuild the source code only when needed

@@ -85,25 +85,21 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
                 <FormLabel>First Name</FormLabel>
 
                 <Input placeholder="Jane" borderRadius="4px" value={onboarding?.bankAdmin?.firstName} disabled={true} />
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%" >
                 <FormLabel>Last name</FormLabel>
                 <Input placeholder="Doe" borderRadius="4px" value={onboarding?.bankAdmin?.lastName} disabled={true} />
 
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%">
                 <FormLabel>Email Address</FormLabel>
 
                 <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.bankAdmin?.email} disabled={true} />
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%" >
                 <FormLabel>Phone Number</FormLabel>
                 <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.bankAdmin?.mobileNo} disabled={true} />
 
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
         </Flex>
 

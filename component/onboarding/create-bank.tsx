@@ -126,36 +126,28 @@ export default function CreateBank(props: CreateBankProps) {
                     <FormLabel>Bank Name</FormLabel>
 
                     <Input placeholder="Enter Bank Name" borderRadius="4px" value={onboarding?.tenant?.name} onChange={addData} />
-                    {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                     <FormErrorMessage>{validation?.errors.name}</FormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="bankId" flexGrow={1} width="35%" isInvalid={validation?.errors?.bankId !== "" && validation?.touched.bankId === "touched"}>
                     <FormLabel>Bank ID</FormLabel>
                     <Input placeholder="Enter Bank ID" borderRadius="4px" value={onboarding?.tenant?.bankId} onChange={addData} />
                     <FormErrorMessage>{validation?.errors.bankId}</FormErrorMessage>
-
-                    {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
                 <FormControl isRequired id="bankBranch" flexGrow={1} width="35%" isInvalid={validation?.errors?.bankBranch !== "" && validation?.touched.bankBranch === "touched"}>
                     <FormLabel>Bank Branch</FormLabel>
 
                     <Input placeholder="Enter Bank Branch" borderRadius="4px" value={onboarding?.tenant?.bankBranch} onChange={addData} />
                     <FormErrorMessage>{validation?.errors.bankBranch}</FormErrorMessage>
-                    {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
                 <FormControl isRequired id="bankLocation" flexGrow={1} width="35%" isInvalid={validation?.errors?.bankLocation !== "" && validation?.touched.bankLocation === "touched"}>
                     <FormLabel>Bank Locatoin</FormLabel>
                     <Input placeholder="Enter Bank Location" borderRadius="4px" value={onboarding?.tenant?.bankLocation} onChange={addData} />
                     <FormErrorMessage>{validation?.errors.bankLocation}</FormErrorMessage>
-
-                    {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
                 <FormControl isRequired id="bankAddress" flexGrow={2} width="100%" isInvalid={validation?.errors?.bankAddress !== "" && validation?.touched.bankAddress === "touched"}>
                     <FormLabel>Bank Address</FormLabel>
                     <Input placeholder="Enter Bank Address" borderRadius="4px" value={onboarding?.tenant?.bankAddress} onChange={addData} />
                     <FormErrorMessage>{validation?.errors.bankAddress}</FormErrorMessage>
-
-                    {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
                 <FormControl isRequired id="bankLogo" width="15%" flexGrow={1} isInvalid={validation?.errors?.bankLogo !== "" && validation?.touched.bankLogo === "touched"}>
                     <FormLabel>Upload a Bank Logo</FormLabel>
@@ -174,8 +166,6 @@ export default function CreateBank(props: CreateBankProps) {
                         </Flex>
                     </Button>
                     <FormErrorMessage>{validation?.errors.bankLogo}</FormErrorMessage>
-
-                    {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
                 <FormControl id="bankLogo" w="25%" flexGrow={1} >
                     <Box w="fit-content">

@@ -180,7 +180,6 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                             <FormLabel>email</FormLabel>
 
                             <Input placeholder="janedoe@gmail.com" type="email" borderRadius="4px" value={form?.email} onChange={addData} />
-                            {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                             <FormErrorMessage>{validation?.errors.email}</FormErrorMessage>
                         </FormControl>
                         <FormControl isRequired id="password" width="100%" isInvalid={validation?.errors?.password !== "" && validation?.touched.password === "touched"}>
@@ -188,7 +187,6 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                             <Input placeholder="Enter your password" type="password" borderRadius="4px" value={form?.password} onChange={addData} />
                             <FormErrorMessage>{validation?.errors.password}</FormErrorMessage>
 
-                            {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                         </FormControl>
                     </Flex>
                 </ModalBody>

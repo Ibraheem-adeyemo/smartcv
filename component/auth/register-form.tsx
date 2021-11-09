@@ -61,7 +61,6 @@ export default function RegisterForm(props: any) {
                         const ele = e.target as HTMLInputElement
                         setInterChangeId(ele.value)
                     }} />
-                    {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 </FormControl>
                 <Flex flexDir="column" gridGap="15px" w="100%" alignItems="center">
                     <Button isLoading={loading.isLoading} loadingText={loading.text} type="submit" variant="primary-button" w="100%" py="12px">

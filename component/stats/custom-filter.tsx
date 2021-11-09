@@ -28,7 +28,6 @@ export default function CustomFilter(props: any) {
                                 <Input placeholder="DD/MM/YYYY" borderRadius="8px" ref={startDateRef} onClick={(e) =>  {e.stopPropagation(), startDateRef.current?.focus()}} />
                                 <InputRightElement children={<CalendarIcon />} />
                             </InputGroup>
-                            {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                         </FormControl>
                         <FormControl id="endDate">
                             <FormLabel>End Date</FormLabel>
@@ -36,7 +35,6 @@ export default function CustomFilter(props: any) {
                                 <Input placeholder="DD/MM/YYYY" borderRadius="8px" ref={endDateRef} onClick={(e) =>  {e.stopPropagation(), endDateRef.current?.focus()}} />
                                 <InputRightElement children={<CalendarIcon />} />
                             </InputGroup>
-                            {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                         </FormControl>
                     </Flex>
                     <Flex gridGap="34px" mt="6px" mb="5px">

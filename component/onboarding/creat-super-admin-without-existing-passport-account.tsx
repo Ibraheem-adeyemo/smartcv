@@ -274,7 +274,6 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 <FormLabel>First Name</FormLabel>
 
                 <Input placeholder="Jane" name="firstName" borderRadius="4px" value={onboarding?.bankAdmin?.firstName} onInput={addData} />
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 <FormErrorMessage>{validation?.errors.firstName}</FormErrorMessage>
             </FormControl>
             <FormControl isRequired id="lastName" flexGrow={1} width="35%" isInvalid={validation?.errors?.lastName !== "" && validation?.touched.lastName === "touched"}>
@@ -282,7 +281,6 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 <Input placeholder="Doe" name="lastName" borderRadius="4px" value={onboarding?.bankAdmin?.lastName} onInput={addData} />
                 <FormErrorMessage>{validation?.errors.lastName}</FormErrorMessage>
 
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl isRequired id="email" flexGrow={1} width="35%" isInvalid={(!validateEmail(onboarding?.bankAdmin?.email as string) || validation?.errors?.email !== "") && validation?.touched.email === "touched"}>
                 <FormLabel>Email Address</FormLabel>
@@ -290,7 +288,6 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 <Input placeholder="janedoe@gmail.com" name="email" type="email" borderRadius="4px" value={onboarding?.bankAdmin?.email} onInput={addData} />
                 <FormErrorMessage>{validation?.errors.email}</FormErrorMessage>
                 <FormErrorMessage>{!validateEmail(onboarding?.bankAdmin?.email as string) ? "Invalid email" : ""}</FormErrorMessage>
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl isRequired id="mobileNo" flexGrow={1} width="35%" isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(onboarding?.bankAdmin?.mobileNo as string)) && validation?.touched.mobileNo === "touched"}>
                 <FormLabel>Phone Number</FormLabel>
@@ -298,7 +295,6 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 <FormErrorMessage>{validation?.errors.mobileNo}</FormErrorMessage>
                 <FormErrorMessage>{!isValidPhoneNumber(onboarding?.bankAdmin?.mobileNo as string) ? "Invalid number" : ""}</FormErrorMessage>
 
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <Popover
                 returnFocusOnClose={false}
@@ -338,7 +334,6 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 <FormErrorMessage>{validation?.errors.confirmPassword}</FormErrorMessage>
                 <FormErrorMessage>{!comparePassword(onboarding?.bankAdmin?.confirmPassword as string, onboarding?.bankAdmin?.password as string) ? "Confirm password does not match with password" : ""}</FormErrorMessage>
 
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
         </Flex>
     </OnboardingCard>)
