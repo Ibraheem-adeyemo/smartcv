@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "cypress:open": "cypress open",
-    "test": "start-server-and-test dev 3000 cypress:open"
+    "test": "npm run dev && npm run cypress:open"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.9",
@@ -30,13 +30,16 @@
   "devDependencies": {
     "@cypress/react": "^5.10.3",
     "@cypress/webpack-dev-server": "^1.7.0",
+    "@testing-library/cypress": "^8.0.1",
     "@types/react": "17.0.27",
     "cypress": "^8.7.0",
+    "cypress-social-logins": "^1.11.3",
     "eslint": "^7.32.0",
     "eslint-config-next": "11.1.2",
     "html-webpack-plugin": "^5.5.0",
+    "start-server-and-test": "^1.14.0",
     "typescript": "4.4.3",
-    "webpack": "^5.62.1",
+    "webpack": "^5.63.0",
     "webpack-dev-server": "^3.11.3"
   }
 }

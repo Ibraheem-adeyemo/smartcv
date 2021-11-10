@@ -38,7 +38,7 @@ export default function LoginForm(props: LoginFormProps) {
         })
         // debugger
         setRedirectUri(props.loginDetails.redirectUri)
-    }, [props.loginDetails])
+    }, [props.loginDetails.redirectUri])
 
     return (
         <form method="POST" onSubmit={((e: React.FormEvent<HTMLFormElement>) => (

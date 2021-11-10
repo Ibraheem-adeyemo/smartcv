@@ -1,4 +1,4 @@
 {
-  "testFiles": "*_/_.spec.{js,jsx}",
-  "componentFolder": "cypress/pages"
+  "chromeWebSecurity": false,
+  "baseUrl": "http://localhost:3000"
 }
