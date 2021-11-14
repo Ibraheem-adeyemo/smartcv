@@ -1,21 +1,23 @@
 import { Button } from "@chakra-ui/button";
 import { Badge, Box, Flex, Text } from "@chakra-ui/layout";
-import { FormControl, FormLabel, Input, Image, FormErrorMessage, AvatarBadge, CloseButton, useToast, useTheme } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Image, FormErrorMessage, AvatarBadge, CloseButton, useToast, useTheme, Select } from "@chakra-ui/react";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
-import { Images, notificationMesage } from "../../constants";
+import { CURRENT_API_VERSION, Images, notificationMesage } from "../../constants";
 import { useOnboarding } from "../../hooks";
 import _ from 'lodash'
-import { Tenant, InstitutionColorInfo, Loading, Onboarding, stepsProps, BankAdmin } from "../../models";
+import { Tenant, InstitutionColorInfo, Loading, Onboarding, stepsProps, BankAdmin, State } from "../../models";
 import useValidator from "../../hooks/validatoin";
 import { useRouter } from "next/router";
 import { OnboardingContext } from "../layouts";
+import useSWR from "swr";
 
 interface CreateBankProps extends stepsProps {
 
 }
 
 export default function CreateBank(props: CreateBankProps) {
+    const {data:states, error} = useSWR<State[]>(`/api/${CURRENT_API_VERSION}/location/states`)
     const fileRef = useRef<HTMLInputElement>(null)
     const { steps, onboarding, addInfo, refresh, completeForm, changeIsRefresh, loading } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
@@ -61,6 +63,10 @@ export default function CreateBank(props: CreateBankProps) {
     useEffect(() => {
         refresh("tenant", 0)
     }, [])
+
+    useEffect(() => {
+        console.error({stateError: error})
+    }, [error])
 
     useEffect(() => {
         // debugger
@@ -141,7 +147,9 @@ export default function CreateBank(props: CreateBankProps) {
                 </FormControl>
                 <FormControl isRequired id="bankLocation" flexGrow={1} width="35%" isInvalid={validation?.errors?.bankLocation !== "" && validation?.touched.bankLocation === "touched"}>
                     <FormLabel>Bank Locatoin</FormLabel>
-                    <Input placeholder="Enter Bank Location" borderRadius="4px" value={onboarding?.tenant?.bankLocation} onChange={addData} />
+                    <Select borderRadius="4px" value={onboarding?.tenant?.bankLocation} onChange={addData} placeholder="Select a state">
+                        {states?.map((x, i) =><option key={i} value={x.id}>{x.name}</option>)}
+                    </Select>
                     <FormErrorMessage>{validation?.errors.bankLocation}</FormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="bankAddress" flexGrow={2} width="100%" isInvalid={validation?.errors?.bankAddress !== "" && validation?.touched.bankAddress === "touched"}>

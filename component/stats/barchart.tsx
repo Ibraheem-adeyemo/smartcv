@@ -40,7 +40,7 @@ export default function GroupedBarchart(props: GroupedBarChartProps) {
     }, [props.data, props.labels])
 
     useEffect(() => {
-        console.log({ minMax })
+        // console.log({ minMax })
         Chart.register(...registerables);
         const cv = canvasRef.current?.getContext('2d')
         const chart = new Chart(cv, {

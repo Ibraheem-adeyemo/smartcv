@@ -1,0 +1,1 @@
+export const Roles = ["Super Admin", "Admin", "user"]

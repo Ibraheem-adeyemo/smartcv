@@ -1,0 +1,81 @@
+{
+	"info": {
+		"_postman_id": "3357c3e8-a742-49f9-ab0a-1ed8250ef02a",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://passport.interswitchng.com/passport/oauth/token",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "secret",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "IKIAF2A377004CD8FED611092E788B1E2E73ECD6E22A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "johnwick@mailinator.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "djsjsk",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "profile",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "IKIAF2A377004CD8FED611092E788B1E2E73ECD6E22A",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://passport.interswitchng.com/passport/oauth/token",
+					"protocol": "https",
+					"host": [
+						"passport",
+						"interswitchng",
+						"com"
+					],
+					"path": [
+						"passport",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

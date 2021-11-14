@@ -1,1 +1,1 @@
-export default ["First Bank", "UBA", "GTCO", "Heritage Bank", "Access Banks", "Wema Bank"]
+export const Banks = ["First Bank", "UBA", "GTCO", "Heritage Bank", "Access Banks", "Wema Bank"]

@@ -12,7 +12,7 @@ export default function withSession <T  extends NextironHandler | ServerSideHand
         password: COOKIE_PASSWORD,
         cookieName: typeof cookieName === "undefined"?"PAAS":cookieName,
         cookieOptions: {
-            secure: process.env.NODE_ENV === "production",
+            secure: process.env.NEXT_PUBLIC_NODE_ENV === "production",
             maxAge: typeof maxAge === "undefined"? 60*60:maxAge
         }
     })

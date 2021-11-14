@@ -1,5 +1,8 @@
 import _ from "lodash";
+import { NextApiResponse } from "next";
+import { getCookie } from ".";
 import { notificationMesage } from "../constants";
+import { APIResponse } from "../models";
 
 export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
@@ -54,40 +57,40 @@ export function validateexColor(color: string) {
     return /^#[0-9A-F]{6}$/i.test(color) || /^#([0-9A-F]{3}){1,2}$/i.test(color)
 }
 
-export function APICatch(error: any, res: any) {
-    // debugger
-    if (typeof error.data !== "undefined") {
-        if (typeof error.data.error_description !== "undefined") {
-            error.message = error.data.error_description
-        } else {
-            error.message = error.data.message
-        }
-        return res.status(error.response.status).json(error)
-    }
-    return res.status(400).json(error)
-}
 
 export async function fetchJson<T extends Record<keyof T, K>, K>(input: RequestInfo, init?: RequestInit): Promise<T> {
-    
+
     try {
         // console.log({init});
         // debugger
-        const response = await fetch(input, init);
-        const data = await response.json()
+        let token = window ? getCookie("token") : ""
+        const response = token !== "" ? await fetch(input, typeof init === "undefined" ? {
+            method: "GET",
+            headers: {
+                Authorization: `bearer ${token}`
+            }
+        } : init) : await fetch(input, init);
+        const data = await response.json() as APIResponse<T>
         // debugger
         if (response.ok) {
-            return data as T;
+            if (typeof data.data !== "undefined") {
+                return data.data as T;
+            } else {
+                return data as unknown as T
+            }
         }
         else if (typeof data !== "undefined") {
-            throw data.message
+            if (typeof data.message !== "undefined") {
+                throw data.message
+            } else {
+                throw (data as unknown as any).error_description
+            }
         }
         else {
             throw notificationMesage.AnErrorOccurred
-
         }
 
     } catch (error: any) {
-        // debugger
         throw error
     }
 

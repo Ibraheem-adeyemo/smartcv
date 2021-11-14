@@ -47,18 +47,6 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                 Object.keys(body).forEach((x) => {
                     urlencoded.append(x, body[x as keyof RequestBody])
                 })
-                // export const PASSPORT_URL = "".concat(
-                //     PASSPORT_AUTHORIZE_URL,
-                //     "?",
-                //     "client_id=",
-                //     CLIENT_ID,
-                //     "&redirect_uri=",
-                //     REDIRECT_URI,
-                //     "&scope=",
-                //     SCOPE,
-                //     "&response_type=",
-                //     RESPONSE_TYPE
-                //   );
 
                 // const report = await fetch(PASSPORT_AUTHORIZE_URL)
                 
@@ -72,7 +60,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                 })
                 const data = (await response.json()) as BankAdmin
                 if (response.ok || response.status === 200 || response.status === 201) {
-                    debugger
+                    // debugger
                     props.setUserAuthority(data)
                 } else {
                     throw {
@@ -88,7 +76,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
             })
         } catch (error: any) {
             // debugger
-            console.log({error})
+            // console.log({error})
             if (typeof error.data !== "undefined") {
                 toast({
                     title: error.data.error_description,
@@ -123,7 +111,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
         if (typeof canNotSubmit !== "undefined") {
             if (!canNotSubmit) {
                 // debbuger
-                console.log({ PASSPORT_TOKEN_URL })
+                // console.log({ PASSPORT_TOKEN_URL })
                 setForm(prev => ({
                     ...prev as PassportLoginCredentials,
                     postUrl: PASSPORT_TOKEN_URL,

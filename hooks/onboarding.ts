@@ -3,54 +3,38 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { useLoading } from ".";
-import { CURRENT_API_VERSION, links } from "../constants";
+import { CURRENT_API_VERSION, links, onboardingTabs } from "../constants";
+import { getCookie } from "../lib";
 import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Loading, Onboarding, Step, BankAdmin } from "../models";
 
 
-export const steps: Step[] = [
-    {
-        name: "Create bank",
-        description: "Provide bank information and validation code",
-        url: links.createBank,
-        key:"tenant"
-    }, {
-        name: "Create Super Admin",
-        description: "Enter superadmin information and create user",
-        url: links.createSuperAdmin,
-        key: "bankAdmin"
-    }, {
-        name: "Institution colors",
-        description: "Select the color scheme for the institution",
-        url: links.institutionColors,
-        key:"institutionColorInfo"
-    }
-]
-export const initialOnboardingData: Onboarding = {state:0, tenant: {
-    name:"",
-    bankAddress:"",
-    bankBranch:"",
-    bankId:"",
-    bankLocation:"",
-    bankLogo:"",
-    completed:false,
-},
-bankAdmin: {
-    firstName:"",
-    lastName:"",
-    email:"",
-    mobileNo:"",
-    password:"",
-    confirmPassword:"",
-    access_token:"",
-    completed: false
-},
-institutionColorInfo: {
-    headerColor:"",
-    sidebarColor:"",
-    buttonColor:"",
-    completed: false
-},
-url:""
+export const initialOnboardingData: Onboarding = {
+    state: 0, tenant: {
+        name: "",
+        bankAddress: "",
+        bankBranch: "",
+        bankId: "",
+        bankLocation: "",
+        bankLogo: "",
+        completed: false,
+    },
+    bankAdmin: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        mobileNo: "",
+        password: "",
+        confirmPassword: "",
+        access_token: "",
+        completed: false
+    },
+    institutionColorInfo: {
+        headerColor: "",
+        sidebarColor: "",
+        buttonColor: "",
+        completed: false
+    },
+    url: ""
 }
 const checkPersistedData = () => {
     const persistedData = sessionStorage.getItem("onboarding")
@@ -64,57 +48,54 @@ const checkPersistedData = () => {
 }
 
 interface UseOnboardingReturn {
-    steps:Step[],
+    steps: Step[],
     onboarding?: Onboarding,
-    addInfo:(onboardingKey: keyof Onboarding, stepKey: keyof Tenant |  keyof BankAdmin |  keyof InstitutionColorInfo , value:any) => void,
-    completeForm:(onboardingKey: keyof Onboarding) =>void,
-    refresh:(onboardingKey: keyof Onboarding, state:number) => void,
-    changeIsRefresh:defaultCallbackInitiator<boolean>,
+    addInfo: (onboardingKey: keyof Onboarding, stepKey: keyof Tenant | keyof BankAdmin | keyof InstitutionColorInfo, value: any) => void,
+    completeForm: (onboardingKey: keyof Onboarding) => void,
+    refresh: (onboardingKey: keyof Onboarding, state: number) => void,
+    changeIsRefresh: defaultCallbackInitiator<boolean>,
     resetForm: (onboardingKey: keyof Onboarding, data: Tenant | BankAdmin | InstitutionColorInfo, state?: number) => void,
     previousState: () => void,
     loading: Loading,
     startLoading: () => void,
     stopLoading: () => void
 }
-export default function useOnboarding():UseOnboardingReturn {
+export default function useOnboarding(): UseOnboardingReturn {
 
-    const {data:interchangeId, mutate, error} = useSWR<{interchange: string}, string>(`/api/${CURRENT_API_VERSION}/interchange/checkexistinginterchange`)
     const [onboarding, setOnboarding] = useState<Onboarding>(initialOnboardingData)
     const [isRefresh, setIsRefresh] = useState<boolean>(false)
     const router = useRouter()
-    const [loading, setLoading] = useLoading({isLoading:false, text:""})
-    useEffect(() => {
-        if(typeof interchangeId?.interchange !== "undefined") {
-            // debugger
-            if(interchangeId.interchange === "") {
-                sessionStorage.removeItem("onboarding")
-                router.push(links.registerOrganization)
-            }
-        }
-    },[interchangeId?.interchange])
+    const [loading, setLoading] = useLoading({ isLoading: false, text: "" })
 
     useMemo(() => {
         // debugger
-        setLoading({isLoading:true, text:"loading"})
+        setLoading({ isLoading: true, text: "loading" })
         if (typeof window !== "undefined") {
-            if(typeof isRefresh !== "undefined"){
-                if(isRefresh) {
+            if (typeof isRefresh !== "undefined") {
+                if (isRefresh) {
                     sessionStorage.removeItem("onboarding")
                 }
             }
             setOnboarding(checkPersistedData())
         }
-        setLoading({isLoading:false, text:""})
+        setLoading({ isLoading: false, text: "" })
     }, [checkPersistedData, isRefresh])
 
     useEffect(() => {
-        setLoading({isLoading:true, text:"loading"})
+        if (typeof window !== "undefined") {
+            const interchangeId = getCookie("interchangeId")
+            if (interchangeId === "") {
+                sessionStorage.removeItem("onboarding")
+                router.push(links.registerOrganization)
+            }
+        }
+        setLoading({ isLoading: true, text: "loading" })
         if (onboarding !== null && typeof onboarding !== "undefined") {
             if (Object.keys(onboarding).length > 1) {
                 sessionStorage.setItem("onboarding", JSON.stringify(onboarding))
             }
         }
-        setLoading({isLoading:false, text:""})
+        setLoading({ isLoading: false, text: "" })
 
         return () => {
             // setOnboarding(initialData)
@@ -122,17 +103,17 @@ export default function useOnboarding():UseOnboardingReturn {
         }
     }, [onboarding])
 
-    const changeIsRefresh = (callback:defaultCallback<boolean>|boolean) => {
+    const changeIsRefresh = (callback: defaultCallback<boolean> | boolean) => {
         setIsRefresh(callback)
     }
-    
-    const startLoading =() => {
-        setLoading({isLoading:true, text:"loading"})
+
+    const startLoading = () => {
+        setLoading({ isLoading: true, text: "loading" })
     }
-    const stopLoading =() => {
-        setLoading({isLoading:false, text:""})
+    const stopLoading = () => {
+        setLoading({ isLoading: false, text: "" })
     }
-    const addInfo =(onboardingKey: keyof Onboarding, stepKey: keyof Tenant |  keyof BankAdmin |  keyof InstitutionColorInfo , value:any) => {
+    const addInfo = (onboardingKey: keyof Onboarding, stepKey: keyof Tenant | keyof BankAdmin | keyof InstitutionColorInfo, value: any) => {
         // debugger
         setOnboarding(prev => {
 
@@ -148,7 +129,7 @@ export default function useOnboarding():UseOnboardingReturn {
         })
     }
 
-    const refresh = (onboardingKey: keyof Onboarding, state:number) => {
+    const refresh = (onboardingKey: keyof Onboarding, state: number) => {
 
         setOnboarding(prev => ({
             ...prev,
@@ -159,7 +140,7 @@ export default function useOnboarding():UseOnboardingReturn {
             }
         }))
     }
-    const completeForm = (onboardingKey: keyof Onboarding) =>{
+    const completeForm = (onboardingKey: keyof Onboarding) => {
 
         setOnboarding(prev => (
             {
@@ -172,11 +153,11 @@ export default function useOnboarding():UseOnboardingReturn {
             }))
     }
 
-    const resetForm = (onboardingKey:keyof Onboarding, data:Tenant | BankAdmin | InstitutionColorInfo, state?:number) => {
+    const resetForm = (onboardingKey: keyof Onboarding, data: Tenant | BankAdmin | InstitutionColorInfo, state?: number) => {
         setOnboarding(prev => (
             {
                 ...prev,
-                state: typeof state === "undefined"? (prev.state as number): state ,
+                state: typeof state === "undefined" ? (prev.state as number) : state,
                 [onboardingKey]: {
                     ...data
                 }
@@ -191,6 +172,6 @@ export default function useOnboarding():UseOnboardingReturn {
             }))
     }
 
-    return { steps, onboarding, changeIsRefresh, addInfo, completeForm, refresh, resetForm, previousState, loading, startLoading, stopLoading }
+    return { steps: onboardingTabs , onboarding, changeIsRefresh, addInfo, completeForm, refresh, resetForm, previousState, loading, startLoading, stopLoading }
 }
 

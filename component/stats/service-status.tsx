@@ -35,13 +35,13 @@ export default function ServiceStatus(props: any) {
     },]
   }, [])
   useMemo(() => {
-    console.log("waiting")
+    // console.log("waiting")
     setTimeout(() => {
       setStats(getStats())
 
     }, 10000);
   }, [getStats])
-  const Skeleton = useCallback(() => <SkeletonLoader skeletonRange={[0, 3]} itemRange={[0, 2]} width="200px" height="50px" />, [])
+  const Skeleton = useCallback(() => <SkeletonLoader rows={3} columns={2} width="200px" height="50px" />, [])
 
   return (
     <StatCard topic={<Text variant="card-header" size="card-header">What is our service</Text>} statsComponent={Stat}>

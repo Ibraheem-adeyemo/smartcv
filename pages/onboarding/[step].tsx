@@ -31,7 +31,7 @@ export default function Step1(props: any) {
     }, [steps, step])
 
     useEffect(() => {
-        console.log({stepNumber})
+        // console.log({stepNumber})
     }, [stepNumber])
 
     const LoadTab = useCallback(({index}: {index:number}) => {

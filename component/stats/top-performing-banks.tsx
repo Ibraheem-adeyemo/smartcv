@@ -44,13 +44,13 @@ export default function TopPerforminBanks(props: any) {
         ]
     }, [])
     useMemo(() => {
-        console.log("waiting")
+        // console.log("waiting")
         setTimeout(() => {
             setStats(getStats())
 
         }, 10000);
     }, [getStats])
-    const Skeleton = useCallback(() => <SkeletonLoader skeletonRange={[0, 3]} itemRange={[0, 1]} width="100%" height="50px" />, [])
+    const Skeleton = useCallback(() => <SkeletonLoader rows={3} columns={1} width="100%" height="50px" />, [])
     return <StatCard topic={
         <Flex justifyContent="space-between" textAlign="center">
             <Flex flexDir="column" justifySelf="flex-start">

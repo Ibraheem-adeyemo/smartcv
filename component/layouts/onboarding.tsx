@@ -1,8 +1,8 @@
 import { Divider, Flex, Link } from "@chakra-ui/layout";
 import { Avatar, forwardRef, Image, Text, useToast } from "@chakra-ui/react";
 import React, { createContext, Fragment, useCallback, useEffect } from "react";
-import { Images, links, notificationMesage, TickIcon } from "../../constants";
-import { initialOnboardingData, steps, useOnboarding } from "../../hooks";
+import { Images, links, notificationMesage, onboardingTabs, TickIcon } from "../../constants";
+import { initialOnboardingData, useOnboarding } from "../../hooks";
 import { InterswitchLogo } from "../custom-component";
 import NextLink from 'next/link'
 import { useRouter } from "next/router";
@@ -21,10 +21,9 @@ const OnboardingLink = forwardRef((props, ref) => {
         </Link>)
 })
 
-type OnboardingContext = ReturnType<typeof useOnboarding>
-export const onboardingContext = createContext<OnboardingContext>(
+export const onboardingContext = createContext<ReturnType<typeof useOnboarding>>(
     {
-        steps,
+        steps: onboardingTabs,
         changeIsRefresh: () => (""),
         addInfo: () => (""),
         refresh: () => (""),

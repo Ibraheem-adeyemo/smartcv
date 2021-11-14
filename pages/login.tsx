@@ -1,8 +1,6 @@
 import { Image } from "@chakra-ui/image"
 import { Flex } from "@chakra-ui/layout"
 import { NextApiRequest, NextApiResponse } from "next"
-import { Session } from "next-auth"
-import { getCsrfToken, getSession } from "next-auth/client"
 import React, { } from "react"
 import { LoginForm } from "../component/auth"
 import Container from "../component/container"

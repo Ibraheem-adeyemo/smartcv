@@ -6,7 +6,6 @@ import React, { useMemo } from "react"
 import { CustomFilter, DropdownSearchFilter, } from "../component/stats"
 import { Authenticated } from "../component/layouts"
 import { Banks, ChannelsEnum } from "../constants"
-import { AuthGuard } from "../lib"
 const TerminalsPerformance = dynamic(() => import('../component/stats/terminals-performance'))
 const SuccessRate = dynamic(() => import('../component/stats/success-rate'))
 const ServiceStatus = dynamic(() => import('../component/stats/service-status'))
@@ -61,11 +60,5 @@ const Dashboard = () => {
       </Flex>
     </Authenticated>
   )
-}
-
-// checks for exixsting coookie session to redirect to the correct page
-export async function getServerSideProps({ req, res }: { req: NextApiRequest, res: NextApiResponse }) {
-  return AuthGuard({ req, res })
-
 }
 export default Dashboard

@@ -2,29 +2,26 @@ import { Flex } from '@chakra-ui/layout'
 import { CircularProgress } from '@chakra-ui/react'
 import { m } from 'framer-motion'
 import type { NextPage } from 'next'
-import { getSession, useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
-import React, { useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { links } from '../constants'
-
+import { AuthContext } from '../provider/auth-provider'
 
 const Home: NextPage = () => {
-  const [loading, setLoading] = useState(true)
+  const { user, token } = useContext(AuthContext)
   const router = useRouter()
-  useMemo(() => {
-    getSession().then(val => {
-      if(val === null) {
-        router.push(links.login)
+  useEffect(() => {
+    // debugger
+     if (token !== "") {
+        router.push(links.dashboard)
       } else {
-        router.push(links.dasboard)
+        router.push(links.login)
       }
-      // setLoading(false)
-    })
-  }, [])  
+  }, [token])
 
   return (
     <Flex height="100vh">
-      {loading && <CircularProgress isIndeterminate color="brand.primary-blue" m="auto" size="120px" /> }
+      {token == "" && <CircularProgress isIndeterminate color="brand.primary-blue" m="auto" size="120px" />}
     </Flex>
   )
 }

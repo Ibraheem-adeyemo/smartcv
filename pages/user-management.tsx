@@ -1,18 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { BankAdmin } from "../component/user-management"
+import { UserManagement as UserManagementComponent } from "../component/user-management"
 import { Authenticated } from "../component/layouts"
-import { AuthGuard } from "../lib"
+import UserManagementTabProvider from "../provider/user-management-tab-provider"
 
-export default function UserManagement(props:any) {
+export default function UserManagement(_props:any) {
 
     return (<Authenticated pageHeader="User Management">
-        <BankAdmin />
+        
+        <UserManagementTabProvider>
+            <UserManagementComponent />
+        </UserManagementTabProvider>
     </Authenticated>)
 }
-
-
-// checks for exixsting coookie session to redirect to the correct page
-export async function getServerSideProps({ req, res }: { req: NextApiRequest, res: NextApiResponse }) {
-    return AuthGuard({ req, res })
-  
-  }

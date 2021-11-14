@@ -14,7 +14,7 @@ export default function TerminalsPerformance(props: any) {
       width: ["224px", "224px", "224px", "224px", "229px", "229px"],
       height: ["159px", "159px", "159px", "159px", "159px", "189px"]
     }
-    console.log("done waiting")
+    // console.log("done waiting")
 
     setLoading(prev => !prev)
     return [{
@@ -43,13 +43,13 @@ export default function TerminalsPerformance(props: any) {
   }, [])
 
   useMemo(() => {
-    console.log("waiting")
+    // console.log("waiting")
     setTimeout(() => {
       setStats(getStats())
 
     }, 10000);
   }, [getStats])
-  const Skeleton = useCallback( () => <SkeletonLoader skeletonRange={[0, 3]} itemRange={[0, 3]} width="200px" height="50px" />,[])
+  const Skeleton = useCallback( () => <SkeletonLoader rows={3} columns={3} width="200px" height="50px" />,[])
   return (
     <StatCard topic={<Text variant="card-header" size="card-header">How are terminals performance</Text>} >  
         {!loading ? stats?.map((x, i) =>

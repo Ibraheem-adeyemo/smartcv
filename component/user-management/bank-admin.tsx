@@ -1,30 +1,32 @@
-import { useMemo } from "react";
-import { AppTable } from "..";
-import { Banks } from "../../constants";
-import { getRandomInt } from "../../lib";
+import { Flex } from "@chakra-ui/layout";
+import _ from "lodash";
+import React, { useContext, useEffect, useMemo } from "react";
+import useSWR from "swr";
+import { AppTable, SkeletonLoader } from "..";
+import { BankAdminView, Paginate } from "../../models";
+import { TableProvider } from "../../provider";
+import { TableContext } from "../../provider/table-provider";
 
-export default function BankAdmin() {
 
+function BankAdminTable(_props: any) {
+    // console.log({pageNumber})
+
+    const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
+    const { data: bankAdmin, mutate, error } = useSWR<Paginate<BankAdminView, string>>(`/api/get-bank-admins?page=${pageNumber}&countPerPage=${countPerPage}`)
     const data = useMemo(() => ({
         columns: [
             {
-                name: "Bank Logo",
-                key: "bankLogo"
+                name: "Name",
+                key: "firstName,lastName"
             }, {
                 name: "Bank name",
-                key: "name"
+                key: "bank"
             }, {
-                name: "Bank ID",
-                key: "bankID"
-            }, {
-                name: "Address",
-                key: "address"
+                name: "Email",
+                key: "email"
             }, {
                 name: "Date Created",
                 key: "dateCreated"
-            }, {
-                name: "Bank Super Admin",
-                key: "babnkSuperAdmin"
             }, {
                 name: "Status",
                 key: "status"
@@ -33,7 +35,7 @@ export default function BankAdmin() {
         actions: [
             {
                 name: "Edit",
-                icons:{
+                icons: {
                     use: true
                 },
                 method: () => {
@@ -42,7 +44,7 @@ export default function BankAdmin() {
             },
             {
                 name: "Delete",
-                icons:{
+                icons: {
                     use: true,
                 },
                 method: () => {
@@ -51,7 +53,7 @@ export default function BankAdmin() {
             },
             {
                 name: "View",
-                icons:{
+                icons: {
                     use: true
                 },
                 method: () => {
@@ -59,21 +61,24 @@ export default function BankAdmin() {
                 }
             },
         ],
-        data: (() => {
-            const data = []
-            for (let i = 0; i < 38; i++) {
-                data.push({
-                    name: Banks[getRandomInt(Banks.length - 1)],
-                    bankLogo: "",
-                    bankId: "7638GFTJ876",
-                    addrress: "Bank Address",
-                    dateCreated: (new Date()).getDate().toString(),
-                    babnkSuperAdmin: "John Wick",
-                    status: "John wick"
-                })
-            }
-            return data
-        })()
-    }), [])
-    return (<AppTable actions={data.actions} columns={data.columns} rows={data.data} />)
+        data: bankAdmin?.data as BankAdminView[]
+    }), [bankAdmin])
+
+    useEffect(() => {
+        if(typeof bankAdmin !== "undefined") {
+            setPaginationProps(bankAdmin.totalData )
+        }
+    }, [bankAdmin])
+
+    return (<AppTable<BankAdminView, string> columns={data?.columns} rows={data.data as BankAdminView[]} actions={data.actions} />)
+
+}
+
+export default function BankAdmin(_props: any) {
+    return (
+
+        <TableProvider>
+            <BankAdminTable />
+        </TableProvider>
+    )
 }

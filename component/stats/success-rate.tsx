@@ -27,7 +27,7 @@ export default function SuccessRate(props: any) {
             setStats(getStats())
         }, 10000);
     }, [])
-    const Skeleton = useCallback(() => <SkeletonLoader skeletonRange={[0, 2]} itemRange={[0, 1]} width="100%" height="80px" />, [])
+    const Skeleton = useCallback(() => <SkeletonLoader rows={2} columns={1} width="100%" height="80px" />, [])
     return (<StatCard topic={<><Text variant="card-header" size="card-header">How are terminals performance?</Text><Text fontSize="12px" fontWeight={400}>Last 7 days</Text></>}>
         {
             !loading ?

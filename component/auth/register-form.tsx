@@ -2,11 +2,12 @@ import { Flex, Link } from "@chakra-ui/layout";
 import { Text, Button, FormControl, FormLabel, Input, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { CURRENT_API_VERSION, links, notificationMesage } from "../../constants";
+import { API_BASE_URL, CURRENT_API_VERSION, links, notificationMesage } from "../../constants";
 import NextLink from 'next/link'
-import { fetchJson } from "../../lib";
+import { fetchJson, setCookie } from "../../lib";
 import { InterchangeResponse, Loading } from "../../models";
 import useLoading from "../../hooks/loading";
+import { getInterchangeById } from "../../services/v1";
 
 export default function RegisterForm(props: any) {
     const router = useRouter()
@@ -16,36 +17,36 @@ export default function RegisterForm(props: any) {
     const getInterChangebyInterchangeId = async () => {
         try {
             // debugger
-            setLoading({isLoading:true, text:"Confirming"})
-            const data = await fetchJson<InterchangeResponse, string >(`/api/${CURRENT_API_VERSION}/interchange/${interChangeId}`, {
-                method: "post"
-            })
-            if(typeof data.statusCondition !== "undefined" && +data.statusCondition === 1) {
+            setLoading({ isLoading: true, text: "Confirming" })
+            const data = await getInterchangeById(interChangeId as string)
+            if (typeof data.statusCondition !== "undefined" && +data.statusCondition === 1 && typeof interChangeId !== "undefined") {
                 // debugger
+                setCookie("interchange", interChangeId, 15)
                 toast({
                     status: "success",
                     title: notificationMesage.SuccessfulLogin,
-                    isClosable:true,
-                    variant:"left-accent"
+                    isClosable: true,
+                    variant: "left-accent"
                 })
                 router.push(links.onboarding)
                 return
-            }else if(typeof data.statusCondition !== "undefined") {
+            } else if (typeof data.statusCondition !== "undefined") {
                 throw {
                     data
                 }
             } else {
                 throw new Error("An error occured")
             }
-        } catch (error:any) {
-            console.error({getInterChangebyInterchangeIdError: error})
+        } catch (error: any) {
+            console.error({ getInterChangebyInterchangeIdError: error })
+            
             toast({
                 status: "error",
-                title: error,
-                isClosable:true,
-                variant:"left-accent"
+                title: typeof error.message === "undefined"? error: error.message,
+                isClosable: true,
+                variant: "left-accent"
             })
-            setLoading({isLoading:false, text:""})
+            setLoading({ isLoading: false, text: "" })
         }
     }
     return (
