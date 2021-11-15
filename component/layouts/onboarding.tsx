@@ -92,6 +92,7 @@ export default function Onboarding(props: OnboardingProps) {
                     isClosable: true,
                     variant: "left-accent"
                 })
+                
                 router.push(links.onboardingSuccessPage)
             } else {
                 toast({
