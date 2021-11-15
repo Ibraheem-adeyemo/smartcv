@@ -1,8 +1,9 @@
 import { Text } from "@chakra-ui/react";
 import React, { useCallback, useMemo, useState } from "react"
-import { Stat, StatCard } from "."
+import { Stat } from "."
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
+import { AppCard } from "../app";
 
 
 export default function ServiceStatus(props: any) {
@@ -44,12 +45,12 @@ export default function ServiceStatus(props: any) {
   const Skeleton = useCallback(() => <SkeletonLoader rows={3} columns={2} width="200px" height="50px" />, [])
 
   return (
-    <StatCard topic={<Text variant="card-header" size="card-header">What is our service</Text>} statsComponent={Stat}>
+    <AppCard topic={<Text variant="card-header" size="card-header">What is our service</Text>} statsComponent={Stat}>
         {!loading ? stats?.map((x, i) =>
           <Stat key={i} {...x} />
         ) :
         <Skeleton />
         }
-    </StatCard>
+    </AppCard>
   )
 }

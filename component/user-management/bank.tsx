@@ -2,10 +2,11 @@ import { Flex } from "@chakra-ui/layout";
 import _ from "lodash";
 import React, { useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
-import { AppTable, SkeletonLoader } from "..";
+import { SkeletonLoader } from "..";
 import { TenantView, Paginate } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
+import { AppTable } from "../app";
 
 
 function BankTable(_props: any) {

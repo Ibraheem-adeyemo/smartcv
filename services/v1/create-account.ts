@@ -1,4 +1,4 @@
-import { API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION, Names } from "../../constants"
+import { API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION, Names, notificationMesage } from "../../constants"
 import { getCookie, getRandomInt, setCookie } from "../../lib"
 import { Onboarding } from "../../models"
 
@@ -58,7 +58,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
             else if(typeof data.message !== "undefined") {
                 throw data.message
             } else {
-                throw "An error occurred"
+                throw notificationMesage.AnErrorOccurred
             }
         } else {
             throw new Error("You need to login with your Organization ID")

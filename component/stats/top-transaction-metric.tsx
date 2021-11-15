@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { StatsC, StatsCMore } from "../../models";
-import { Barchart, StatCard } from ".";
+import { Barchart } from ".";
 import { Flex, Text } from "@chakra-ui/layout";
 import DropdownSearchFilter from "./search-filters";
 import { Months } from "../../constants";
 import { SkeletonLoader } from "..";
+import { AppCard } from "../app";
 
 export default function TopTransactionMetric(props: any) {
     const Filter = useMemo(() => DropdownSearchFilter, [])
@@ -52,7 +53,7 @@ export default function TopTransactionMetric(props: any) {
         }, 10000);
     }, [getStats])
     const Skeleton = useCallback(() => <SkeletonLoader rows={3} columns={1} width="200px" height="50px" />, [])
-    return <StatCard topic={
+    return <AppCard topic={
         <Flex>
             <Text variant="card-header" size="card-header">Total Transction Metric</Text>
             <Flex>
@@ -64,5 +65,5 @@ export default function TopTransactionMetric(props: any) {
         {!loading? stats?.map((x,i) =>  <Barchart key={i} {...x} />):<Skeleton />
         
     }
-    </StatCard>
+    </AppCard>
 }

@@ -1,7 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { AppCard } from "..";
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from '@chakra-ui/react'
-import onboarding from "../layouts/onboarding";
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { ISWAdminView, UserManagementModal } from "../../models";
 import { methods, Roles, UserManagementModalNames, userManagementTabsName } from "../../constants";

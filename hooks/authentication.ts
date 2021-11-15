@@ -39,7 +39,7 @@ export default function useAuthentication() {
 
 
     useEffect(() => {
-        debugger
+        // debugger
         if (typeof window !== "undefined") {
 
             if (getCookie("token") === "") {
@@ -52,6 +52,7 @@ export default function useAuthentication() {
         
         if ((typeof user === "undefined" && typeof error !== "undefined") || token === "") {
             const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
+            // debugger
             if (shouldRedirect) {
                 window.location.href = links.login
             }
@@ -85,11 +86,11 @@ export default function useAuthentication() {
                 mutate()
             }
         } catch (error) {
-
+            throw error
         }
 
     }
 
-    return { user, token, signIn, signOut, loginWithPassport }
+    return { user, token, error, signIn, signOut, loginWithPassport }
 }
 

@@ -3,12 +3,13 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
-import { AppTable, SkeletonLoader } from "..";
+import { SkeletonLoader } from "..";
 import { UserManagementModalNames } from "../../constants";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
+import { AppTable } from "../app";
 
 const AddNewUser = dynamic(() => import("./add-new-user"))
 function ISWAdminTable(_props: any) {

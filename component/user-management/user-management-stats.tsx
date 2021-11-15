@@ -4,7 +4,7 @@ import React, { useCallback } from "react";
 import useSWR from "swr";
 import { AvatarIcon, CapitolIcon, UserManagementStatsName } from "../../constants";
 import { UserManagementStat } from "../../models";
-import AppCard from "../app-card";
+import {AppCard} from "../app";
 
 export default function UserManagementStats(_props: any) {
     const { data: userManagementStats, mutate, error } = useSWR<UserManagementStat[]>('/api/get-user-management-stats')

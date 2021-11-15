@@ -8,16 +8,10 @@ import { fetchJson, setCookie } from "../../lib";
 import { InterchangeResponse, Loading } from "../../models";
 import useLoading from "../../hooks/loading";
 import { getInterchangeById } from "../../services/v1";
+import { AppLink } from "../app";
 
 export default function RegisterForm(props: any) {
-    
-const AppLink = forwardRef((props, ref) => {
-    const { children, ...rest } = props
-    return (
-        <Link textAlign="center" as={NextLink} {...rest} ref={ref}>
-            <Link textAlign="center" as={"a"} {...rest}>{children}</Link>
-        </Link>)
-})
+
     const router = useRouter()
     const [interChangeId, setInterChangeId] = useState<string>()
     const toast = useToast()
@@ -43,7 +37,7 @@ const AppLink = forwardRef((props, ref) => {
                     data
                 }
             } else {
-                throw new Error("An error occured")
+                throw new Error(notificationMesage.AnErrorOccurred)
             }
         } catch (error: any) {
             console.error({ getInterChangebyInterchangeIdError: error })

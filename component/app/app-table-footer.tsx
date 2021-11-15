@@ -1,6 +1,6 @@
 import { HStack, Link, Text } from "@chakra-ui/layout"
 import { useContext } from "react"
-import { TableContext } from "../provider/table-provider"
+import { TableContext } from "../../provider/table-provider"
 import _ from "lodash"
 
 export default function AppTableFooter(_props: any) {

@@ -4,6 +4,7 @@ import { useAuthentication } from "../hooks";
 export const AuthContext = createContext<ReturnType<typeof useAuthentication>>({
     user: undefined,
     token: "",
+    error:undefined,
     signIn: () => (""),
     signOut: () => (""),
     loginWithPassport: async (code: string) =>{}

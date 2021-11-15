@@ -1,8 +1,9 @@
 import { Text } from "@chakra-ui/layout";
 import React, { useCallback, useMemo, useState } from "react"
-import { Stat, StatCard } from "."
+import { Stat } from "."
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
+import { AppCard } from "../app";
 
 
 export default function TerminalsUnderWatch(props: any) {
@@ -47,7 +48,7 @@ export default function TerminalsUnderWatch(props: any) {
     }, 10000);
   }, [getStats])
   const Skeleton = useCallback( () => <SkeletonLoader rows={3} columns={3} width="200px" height="50px" />,[])
-  return (<StatCard topic={<Text variant="card-header" size="card-header">What Terminals are under watch</Text>}>
+  return (<AppCard topic={<Text variant="card-header" size="card-header">What Terminals are under watch</Text>}>
     <>
         {!loading ? stats?.map((x, i) =>
           <Stat key={i} {...x} />
@@ -55,5 +56,5 @@ export default function TerminalsUnderWatch(props: any) {
         <Skeleton />
         }
       </>
-  </StatCard>)
+  </AppCard>)
 }

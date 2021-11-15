@@ -6,7 +6,7 @@ const ISWLogo = {
         backgroundImage: `url('${Images.iswBlueLogo}')`,
         width:"156px",
         height:"42px",
-        backgroundRepeat: "none"
+        backgroundRepeat: "no-repeat"
     },
     // Styles for the size variations
     sizes: {},

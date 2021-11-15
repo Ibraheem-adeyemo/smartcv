@@ -5,6 +5,7 @@ import { useOnboarding } from "../../hooks";
 import { useCallback, useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { links } from "../../constants";
+import { getCookie } from "../../lib";
 
 const CreateBank = dynamic(() => import('../../component/onboarding/create-bank'))
 const CreateSuperAmin = dynamic(() => import('../../component/onboarding/create-super-admin'))
@@ -32,9 +33,12 @@ export default function Step1(props: any) {
 
     useEffect(() => {
         // console.log({stepNumber})
-    }, [stepNumber])
+        if(typeof window !== "undefined" && getCookie("interchangeId") === "") {
+            router.push(links.registerOrganization)
+        }
+    }, [])
 
-    const LoadTab = useCallback(({index}: {index:number}) => {
+    const LoadTab = useCallback(({ index }: { index: number }) => {
         // debugger
         switch (`/onboarding/${step}`) {
             case links.createBank:
@@ -48,9 +52,13 @@ export default function Step1(props: any) {
         }
     }, [step, stepNumber])
     return (
-        <Onboarding>{
-            <LoadTab index={stepNumber as number}  />
-        }</Onboarding>
+        <>
+            {typeof window !== "undefined" && getCookie("interchangeId") !== "" &&
+                <Onboarding>
+                    <LoadTab index={stepNumber as number} />
+                </Onboarding>
+            }
+        </>
     )
 }
 

@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { StatsC, StatsCMore } from "../../models";
-import { Barchart, StatCard } from ".";
+import { Barchart } from ".";
 import { Flex, Text } from "@chakra-ui/layout";
 import { Tag } from "@chakra-ui/tag";
 import { DropdownIcon } from "../../constants";
 import { SkeletonLoader } from "..";
+import { AppCard } from "../app";
 
 export default function TopPerforminBanks(props: any) {
     const [loading, setLoading] = useState(true)
@@ -51,7 +52,7 @@ export default function TopPerforminBanks(props: any) {
         }, 10000);
     }, [getStats])
     const Skeleton = useCallback(() => <SkeletonLoader rows={3} columns={1} width="100%" height="50px" />, [])
-    return <StatCard topic={
+    return <AppCard topic={
         <Flex justifyContent="space-between" textAlign="center">
             <Flex flexDir="column" justifySelf="flex-start">
                 <Text variant="card-header" size="card-header">What are the top performing 5 banks</Text>
@@ -65,5 +66,5 @@ export default function TopPerforminBanks(props: any) {
 
         </Flex>}>
         {!loading ? stats?.map((x, i) => <Barchart key={i} {...x} />) : <Skeleton />}
-    </StatCard>
+    </AppCard>
 }

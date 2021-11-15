@@ -3,9 +3,7 @@ import { Table, Tbody, Td, Tr } from "@chakra-ui/table";
 import React, { useContext, useEffect, useMemo } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
 import { AppTableFooter } from ".";
-import { usePagination } from "../hooks";
-import { TableContext } from "../provider/table-provider";
-import bankAdmin from "./user-management/bank-admin";
+import { TableContext } from "../../provider/table-provider";
 interface Column {
     name: string,
     key: string,
