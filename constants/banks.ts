@@ -1,1 +1,1 @@
-export const Banks = ["First Bank", "UBA", "GTCO", "Heritage Bank", "Access Banks", "Wema Bank"]
+export const Banks = ["First Bank", "UBA", "GTCO", "Heritage Bank", "Access Bank", "Wema Bank"]

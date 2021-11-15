@@ -2,11 +2,12 @@ import Icon from "@chakra-ui/icon"
 import {IoGridOutline, IoNewspaperOutline} from "react-icons/io5"
 import {FiUsers} from "react-icons/fi"
 import {HiOutlineClipboardList, HiChevronDown} from 'react-icons/hi'
-import {AiOutlineAudit, AiOutlineSearch} from 'react-icons/ai'
+import {AiOutlineAudit, AiOutlineSearch, AiOutlineUser} from 'react-icons/ai'
 import {FaRegCalendarAlt} from 'react-icons/fa'
 import {TiTick} from 'react-icons/ti'
 import {MdOutlineInvertColors} from 'react-icons/md'
 import {BsGear} from 'react-icons/bs'
+import {GiCapitol} from 'react-icons/gi'
 import { forwardRef } from "@chakra-ui/system"
 
 
@@ -32,3 +33,7 @@ export const TickIcon =  forwardRef((props, ref) => <Icon as={TiTick} {...props}
 export const PickerIcon =  forwardRef((props, ref) => <Icon as={MdOutlineInvertColors} {...props} ref={ref} />)
 
 export const SearchIcon =  forwardRef((props, ref) => <Icon as={AiOutlineSearch} {...props} ref={ref} />)
+
+export const CapitolIcon =  forwardRef((props, ref) => <Icon as={GiCapitol} {...props} ref={ref} />)
+
+export const AvatarIcon =  forwardRef((props, ref) => <Icon as={AiOutlineUser} {...props} ref={ref} />)

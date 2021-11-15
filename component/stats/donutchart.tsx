@@ -21,7 +21,7 @@ export default function DonutChart(props: DonutChartProps) {
   useEffect(() => {
     // debugger
     Chart.register(...registerables);
-    const cv = canvasRef.current?.getContext('2d')
+    const cv = canvasRef.current?.getContext('2d') as CanvasRenderingContext2D 
     const chart = new Chart(cv, {
       type: "doughnut",
       data,

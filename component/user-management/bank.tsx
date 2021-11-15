@@ -17,7 +17,8 @@ function BankTable(_props: any) {
         columns: [
             {
                 name: "Bank Logo",
-                key: "bankLogo"
+                key: "bankLogo",
+                ele: "image"
             }, {
                 name: "Bank name",
                 key: "name"

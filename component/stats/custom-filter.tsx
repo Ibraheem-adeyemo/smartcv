@@ -1,7 +1,5 @@
 import { FormControl, FormLabel, FormHelperText } from "@chakra-ui/form-control";
-import { Flex, Text } from "@chakra-ui/layout";
-import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
-import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { Flex, Text, Menu, MenuButton, MenuItem, MenuList, Button, Input, InputGroup, InputRightElement  } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { CalendarIcon, DropdownIcon } from "../../constants";
 

@@ -4,7 +4,7 @@ import { Banks, Names, Roles, SECRET } from "../../constants";
 import { getRandomInt } from "../../lib";
 import { ISWAdminView, Paginate } from "../../models";
 
-export default async function GetUsers(req:NextApiRequest, res: NextApiResponse) {
+export default async function ISWAdmin(req:NextApiRequest, res: NextApiResponse) {
     // debugger
     try {
         // const token = await getToken({req, secret: SECRET})

@@ -1,6 +1,7 @@
 import { VStack } from "@chakra-ui/layout";
 import dynamic from "next/dynamic";
 import React, { useCallback, useContext, useMemo } from "react";
+import { UserManagementStats } from ".";
 import { userManagementTabsName } from "../../constants";
 import { UserManagementTabProvider } from "../../provider";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
@@ -32,9 +33,12 @@ export default function UserManagement(_props: any) {
         return <></>
     }, [tabs])
     return (
-        <VStack spacing="36px">
-            <UserManagementTabAndSearch />
-            <SelectedTable />
+        <VStack spacing="21px">
+            <UserManagementStats />
+            <VStack spacing="36px" w="100%">
+                <UserManagementTabAndSearch />
+                <SelectedTable />
+            </VStack>
         </VStack>
     )
 }

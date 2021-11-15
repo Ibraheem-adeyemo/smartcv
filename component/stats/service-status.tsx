@@ -1,4 +1,4 @@
-import { Text } from "@chakra-ui/layout";
+import { Text } from "@chakra-ui/react";
 import React, { useCallback, useMemo, useState } from "react"
 import { Stat, StatCard } from "."
 import { StatsA } from "../../models/stats-models";

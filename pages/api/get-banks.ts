@@ -2,18 +2,19 @@ import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Banks, SECRET } from "../../constants";
 import { getRandomInt } from "../../lib";
-import { BankAdmin, BankAdminView, BankView, Paginate } from "../../models";
+import { TenantView, Paginate } from "../../models";
 
-export default async function GetUsers(req:NextApiRequest, res: NextApiResponse) {
+export default async function GetBanks(req:NextApiRequest, res: NextApiResponse) {
     // debugger
     try {
         // const token = await getToken({req, secret: SECRET})
         const {page, countPerPage} = req.query
         const offset = (+page - 1) * +countPerPage
-        const data: BankView[] = _.range(0, 178).map((x,i) =>
+        const bankRandomNumber = _.range(0, 178).map((x,i) => getRandomInt(Banks.length - 1))
+        const data: TenantView[] = _.range(0, 178).map((x,i) =>
         ({
-            name: Banks[getRandomInt(Banks.length - 1)],
-            bankLogo: "logo",
+            name: Banks[bankRandomNumber[i]],
+            bankLogo: "/images/"+Banks[bankRandomNumber[i]].replace(" ", "_").toLowerCase() + ".png",
             bankId: "7638GFTJ876",
             address: "Bank Address",
             dateCreated: (new Date()).getDate().toString(),
@@ -21,7 +22,7 @@ export default async function GetUsers(req:NextApiRequest, res: NextApiResponse)
             status: "John wick"
         }))
         setTimeout(()=>{}, 3000)
-        const returnData:Paginate<BankView, string> = {
+        const returnData:Paginate<TenantView, string> = {
             totalData: data.length,
             data: _.drop(data, offset).slice(0, +countPerPage)
         } 

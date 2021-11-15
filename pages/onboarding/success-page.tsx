@@ -1,41 +1,35 @@
 import { Flex, VStack } from "@chakra-ui/layout"
-import React from "react"
+import { useRouter } from "next/router"
+import React, { useEffect, useState } from "react"
 import { OnboardingNav } from "../../component/layouts"
 import { SuccessCard } from "../../component/onboarding"
 import { links } from "../../constants"
-import withSession, { ServerSideHandler } from "../../lib/session"
-
-// checks for exixsting coookie session to redirect to the correct page
-export const getServerSideProps = withSession<ServerSideHandler>(async function getServerSideProps({ req, res }) {
-    const createdAccount = req.session.get("created-account")
-
-    if (typeof createdAccount !== "undefined" && createdAccount === "account created") {
-        req.session.destroy()
-        await req.session.save()
-        return {
-            props: {
-
-            }
-        }
-
-    } else {
-        return {
-            redirect: {
-                destination: links.login,
-                permanent: false,
-            },
-        }
-    }
-}, 'pass-interchange', 60)
+import { getCookie, setCookie } from "../../lib"
 
 export default function SuccessPage() {
+    const [status, setStatus] = useState(typeof window !== "undefined" ? getCookie("created-account") : "")
+    const altStatus = typeof window !== "undefined" ? getCookie("created-account") : ""
+    const router = useRouter()
+    if (typeof window !== "undefined") {
+        if (altStatus === "") {
+            router.push(links.registerOrganization)
+        } else {
+            setCookie("created-account", "done", -20)
+        }
+    }
+    useEffect(() => {
+        setStatus(typeof window !== "undefined" ? getCookie("created-account") : "")
+    }, [])
     return (
-        <VStack>
-        <OnboardingNav />
-        <Flex w="fit-content">
-            <SuccessCard />
-        </Flex>
-        </VStack>
-        
+        <>
+            {(status !== "" || altStatus !== "") &&
+                <VStack>
+                    <OnboardingNav />
+                    <Flex w="fit-content">
+                        <SuccessCard />
+                    </Flex>
+                </VStack>
+            }
+        </>
     )
 }

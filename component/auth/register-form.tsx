@@ -21,7 +21,7 @@ export default function RegisterForm(props: any) {
             const data = await getInterchangeById(interChangeId as string)
             if (typeof data.statusCondition !== "undefined" && +data.statusCondition === 1 && typeof interChangeId !== "undefined") {
                 // debugger
-                setCookie("interchange", interChangeId, 15)
+                setCookie("interchangeId", interChangeId, 15)
                 toast({
                     status: "success",
                     title: notificationMesage.SuccessfulLogin,

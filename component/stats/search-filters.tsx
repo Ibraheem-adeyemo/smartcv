@@ -1,8 +1,6 @@
 import { Button } from "@chakra-ui/button";
-import { Box, Text } from "@chakra-ui/layout";
-import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
+import { Box, Text, Menu, MenuButton, MenuList, MenuItem, Input } from "@chakra-ui/react";
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Input } from "@chakra-ui/input";
 import { debounce } from 'lodash';
 import { DropdownIcon } from "../../constants";
 

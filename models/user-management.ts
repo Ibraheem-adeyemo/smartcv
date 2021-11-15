@@ -35,3 +35,8 @@ export interface UserManagementModal {
     isOpen: boolean,
     triggerButton: string
 }
+
+export interface UserManagementStat {
+    name: string,
+    totalCount: number
+}
