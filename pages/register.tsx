@@ -16,11 +16,11 @@ const Register = (props: any) => {
     return (
         <NonAuthenticated>
 
-            <Flex flexDir="column" px={["147px","147px","147px","147px","247px"]} gridGap="102.61px" py="34.5px">
+            <Flex flexDir="column" px="147px" gridGap="102.61px" py="34.5px">
                 <Flex>
                     <InterswitchLogo variant="inverted" alt="Interswitch Logo" />
                 </Flex>
-                <Flex gridGap="45px">
+                <Flex gridGap="99px">
                     <MissionStatement />
                     <RegisterForm />
                 </Flex>

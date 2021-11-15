@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { useLoading } from ".";
 import { CURRENT_API_VERSION, links, onboardingTabs } from "../constants";
-import { getCookie } from "../lib";
+import { getCookie, setCookie } from "../lib";
 import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Loading, Onboarding, Step, BankAdmin } from "../models";
 
 
@@ -69,6 +69,9 @@ export default function useOnboarding(): UseOnboardingReturn {
 
     useMemo(() => {
         // debugger
+        if (typeof document !== "undefined") {
+            setCookie("token", "", -60)
+        }
         setLoading({ isLoading: true, text: "loading" })
         if (typeof window !== "undefined") {
             if (typeof isRefresh !== "undefined") {
@@ -172,6 +175,6 @@ export default function useOnboarding(): UseOnboardingReturn {
             }))
     }
 
-    return { steps: onboardingTabs , onboarding, changeIsRefresh, addInfo, completeForm, refresh, resetForm, previousState, loading, startLoading, stopLoading }
+    return { steps: onboardingTabs, onboarding, changeIsRefresh, addInfo, completeForm, refresh, resetForm, previousState, loading, startLoading, stopLoading }
 }
 

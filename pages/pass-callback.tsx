@@ -30,7 +30,7 @@ export default function PassCallback(_props: any) {
         } else {
             router.push("/")
         }
-    }, [code, loginWithPassport, router])
+    }, [])
     return (
         <Flex height="100vh">
             <CircularProgress isIndeterminate color="brand.primary-blue" m="auto" size="120px" />

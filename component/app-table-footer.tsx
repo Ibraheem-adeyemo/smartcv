@@ -11,7 +11,7 @@ export default function AppTableFooter(_props: any) {
         decrementPageNumber,
         gotoPage } = useContext(TableContext)
 
-    console.log({ pageNumber, totalPageNumber })
+    // console.log({ pageNumber, totalPageNumber })
     return (<>
         {typeof totalPageNumber !== "undefined" &&
             <HStack spacing="8px" justifyContent="right">

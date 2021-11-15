@@ -1,4 +1,5 @@
-import { Flex, VStack } from "@chakra-ui/layout"
+import { Center, Flex, VStack } from "@chakra-ui/layout"
+import { CircularProgress } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { OnboardingNav } from "../../component/layouts"
@@ -8,28 +9,35 @@ import { getCookie, setCookie } from "../../lib"
 
 export default function SuccessPage() {
     const [status, setStatus] = useState(typeof window !== "undefined" ? getCookie("created-account") : "")
-    const altStatus = typeof window !== "undefined" ? getCookie("created-account") : ""
     const router = useRouter()
-    if (typeof window !== "undefined") {
-        if (altStatus === "") {
-            router.push(links.registerOrganization)
-        } else {
-            setCookie("created-account", "done", -20)
-        }
-    }
+   
     useEffect(() => {
         setStatus(typeof window !== "undefined" ? getCookie("created-account") : "")
     }, [])
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            if (status === "") {
+                router.push(links.registerOrganization)
+            }
+        }
+    }, [status])
     return (
         <>
-            {(status !== "" || altStatus !== "") &&
-                <VStack>
+            
+                <VStack h="100vh">
                     <OnboardingNav />
-                    <Flex w="fit-content">
-                        <SuccessCard />
-                    </Flex>
+                    <Center h="100%">
+                    {(status === "") &&
+                        <CircularProgress isIndeterminate color="brand.primary-blue" m="auto" size="120px" />
+                    }
+                    {(status !== "") &&
+                        <Flex width="586px" height="485.85px" alignSelf="center">
+                            <SuccessCard />
+                        </Flex>
+                    }
+                    </Center>
                 </VStack>
-            }
+            
         </>
     )
 }

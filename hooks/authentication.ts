@@ -4,7 +4,7 @@ import { apiUrls, AuthenticatedPage, CLIENT_ID, GRANT_TYPE, links, PASSPORT_AUTH
 import { fetchJson, getCookie, setCookie } from '../lib'
 import { AuthModel, TokenRequestBody } from '../models/auth'
 export default function useAuthentication() {
-    const { data: user, mutate } = useSWR<AuthModel>(PASSPORT_PROFILE_URL)
+    const { data: user, mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie("token") == "" ? null : PASSPORT_PROFILE_URL)
     const [countFlag, setCoountFlag] = useState(0)
     // const [user, setUser] = useState<any>()
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie("token") : "")
@@ -20,11 +20,10 @@ export default function useAuthentication() {
         setCookie("token", "", -60)
         const confirmToken = getCookie("token")
         if (confirmToken === "") {
-            setToken("") 
+            setToken("")
             window.location.href = links.login
         }
     }
-
     const signIn = () => {
         window.location.href = apiUrls.passportUrl
     }
@@ -40,20 +39,24 @@ export default function useAuthentication() {
 
 
     useEffect(() => {
-        // debugger
-        
-        if(getCookie("token") === "") {
-            setToken("")
-        }
-        if(typeof window !== "undefined") {
-            if(typeof user === "undefined") {
-                const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
-                if(shouldRedirect) {
-                    window.location.href = links.login
-                }
+        debugger
+        if (typeof window !== "undefined") {
+
+            if (getCookie("token") === "") {
+                setToken("")
             }
         }
     }, [user])
+
+    useEffect(() => {
+        
+        if ((typeof user === "undefined" && typeof error !== "undefined") || token === "") {
+            const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
+            if (shouldRedirect) {
+                window.location.href = links.login
+            }
+        }
+    }, [token])
 
     const loginWithPassport = async (code: string) => {
         // debugger

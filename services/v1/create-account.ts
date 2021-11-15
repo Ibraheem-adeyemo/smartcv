@@ -1,5 +1,5 @@
-import { API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION } from "../../constants"
-import { getCookie, setCookie } from "../../lib"
+import { API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION, Names } from "../../constants"
+import { getCookie, getRandomInt, setCookie } from "../../lib"
 import { Onboarding } from "../../models"
 
 export const createAccountAsync = async (onboarding: Onboarding) => {
@@ -13,9 +13,9 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
                 tenant: {
                     name: body.tenant?.name,
                     code: body.tenant?.bankId,
-                    domain: "",
+                    domain: `www.${Names[getRandomInt(Names.length)].firstName}-${Names[getRandomInt(Names.length)].lastName}.${Names[getRandomInt(Names.length)].lastName}`,
                     slogan: "",
-                    logo: body.tenant.bankLogo,
+                    logo: body.tenant.bankLogo.split(",")[1],
                     address: body.tenant.bankAddress,
                     location: body.tenant.bankLocation,
                     branch: body.tenant.bankBranch,
@@ -55,7 +55,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
                 setCookie("created-account", "done", 5)
                 return data
             }
-            else if(typeof data.data !== "undefined") {
+            else if(typeof data.message !== "undefined") {
                 throw data.message
             } else {
                 throw "An error occurred"

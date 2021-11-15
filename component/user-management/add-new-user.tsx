@@ -49,7 +49,7 @@ export default function AddNewUser(_props: any) {
     useEffect(() => {
         if (typeof form !== "undefined") {
             inputData(form)
-            console.log({ validation })
+            // console.log({ validation })
         }
     }, [form])
 

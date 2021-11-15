@@ -24,6 +24,9 @@ const breakpoints = createBreakpoints({
 const overrides = {
     styles,
     colors,
+    fonts: {
+      body: "avertastd-regularuploadedfile"
+    },
     components: {
         LoginForm,
         ImageBackground,

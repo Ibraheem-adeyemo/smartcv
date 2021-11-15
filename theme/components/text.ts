@@ -2,7 +2,6 @@ const Text = {
     // Styles for the base style
     baseStyle: {
       color: "brand.primary-text",
-      fontFamily: "Averta",
       fontStyle: "normal",
       
     },

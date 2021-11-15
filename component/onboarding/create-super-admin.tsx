@@ -91,7 +91,7 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
                 <AccordionItem w="100%" bgColor="white">
                     {({ isExpanded }) => {
                         return <>
-                            <AccordionButton onClick={() => setOpenModal(() => isExpanded ? false : true)}>
+                            <AccordionButton onClick={() => setOpenModal(() => isExpanded ? false : true)}  py="34px" >
                                 <Flex gridGap="17px" alignItems="center" justifyContent="flex-start" w="100%">
                                     {isExpanded ? (
                                         <Avatar boxSize="26px" bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
@@ -114,7 +114,7 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
                 <AccordionItem w="100%" bgColor="white">
                     {({ isExpanded }) => (
                         <>
-                            <AccordionButton w="100%">
+                            <AccordionButton w="100%"  py="34px">
                                 <Flex gridGap="17px" alignItems="center" justifyContent="flex-start" w="100%">
                                     {isExpanded ? (
                                         <Avatar boxSize="26px" bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>

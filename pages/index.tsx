@@ -11,7 +11,7 @@ const Home: NextPage = () => {
   const { user, token } = useContext(AuthContext)
   const router = useRouter()
   useEffect(() => {
-    // debugger
+      debugger
      if (token !== "") {
         router.push(links.dashboard)
       } else {

@@ -66,7 +66,7 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
                     fontSize={["16px", "16px", "16px", "16px", "16px", "20px"]}
                 >
                     <Icon as={x.icon} _groupHover={{
-                        color: "#EAF4FE"
+                        color: "brand.primary-blue"
                     }}
                         h="23px"
                         w="23px"
@@ -79,7 +79,7 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
     useMemo(() => {
         setTimeout(() => {
             setLoading((prev) => !prev)
-        }, 10000)
+        }, 1000)
     }, [])
 
     return (
@@ -126,7 +126,7 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
                                 </MenuItem>
                                 <MenuDivider />
                                 <MenuItem>
-                                    <Text size="dropdown-tes">Prifle and Oreferences</Text>
+                                    <Text size="dropdown-tes">Profile and Oreferences</Text>
                                 </MenuItem>
                                 <MenuDivider />
                                 <MenuItem onClick={() => signOut()}>

@@ -15,7 +15,7 @@ export default function useForm<T extends Record<keyof T, any>>(initialModel: T)
     }, [refresh])
 
     useEffect(() => {
-        console.log({ form })
+        // console.log({ form })
     }, [form])
     const formOnChange = (value: Record<keyof T & formType, any>) => {
         // debugger

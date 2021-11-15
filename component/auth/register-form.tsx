@@ -1,5 +1,5 @@
 import { Flex, Link } from "@chakra-ui/layout";
-import { Text, Button, FormControl, FormLabel, Input, useToast } from "@chakra-ui/react";
+import { Text, Button, FormControl, FormLabel, Input, useToast, forwardRef } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { API_BASE_URL, CURRENT_API_VERSION, links, notificationMesage } from "../../constants";
@@ -10,6 +10,14 @@ import useLoading from "../../hooks/loading";
 import { getInterchangeById } from "../../services/v1";
 
 export default function RegisterForm(props: any) {
+    
+const AppLink = forwardRef((props, ref) => {
+    const { children, ...rest } = props
+    return (
+        <Link textAlign="center" as={NextLink} {...rest} ref={ref}>
+            <Link textAlign="center" as={"a"} {...rest}>{children}</Link>
+        </Link>)
+})
     const router = useRouter()
     const [interChangeId, setInterChangeId] = useState<string>()
     const toast = useToast()
@@ -67,7 +75,7 @@ export default function RegisterForm(props: any) {
                     <Button isLoading={loading.isLoading} loadingText={loading.text} type="submit" variant="primary-button" w="100%" py="12px">
                         Submit
                     </Button>
-                    <Link href={links.login} color="brand.primary-blue" ><NextLink href={links.login}>Back to Login</NextLink></Link>
+                    <AppLink href={links.login} color="brand.primary-blue" >Back to Login</AppLink>
                 </Flex>
             </Flex>
         </form>)

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import React, { ComponentProps, ComponentPropsWithoutRef, useContext, useMemo, useState } from "react";
 import { Images, links } from "../../constants";
 import { AuthContext } from "../../provider/auth-provider";
+import { setCookie } from "../../lib";
 
 interface LoginFormProps extends ComponentPropsWithoutRef<any> {
     loginDetails: {
@@ -14,14 +15,14 @@ interface LoginFormProps extends ComponentPropsWithoutRef<any> {
 }
 
 export default function LoginForm(props: LoginFormProps) {
-    const {user, signIn, signOut} = useContext(AuthContext)
-    const [redirectUri, setRedirectUri] = useState<string>()
-    const router = useRouter()
+    const { user, signIn, signOut } = useContext(AuthContext)
 
     useMemo(() => {
         // debugger
-        setRedirectUri(props.loginDetails.redirectUri)
-    }, [props.loginDetails.redirectUri])
+        if (typeof window !== "undefined") {
+            setCookie("token", "", -60)
+        }
+    }, [])
 
     return (
         <form method="POST" onSubmit={(e: React.FormEvent<HTMLFormElement>) => (
@@ -42,7 +43,7 @@ export default function LoginForm(props: LoginFormProps) {
                 {/* <p className="error">{error}</p> */}
                 <Flex flexWrap="wrap" gridGap="1px">
                     <Text> Not on boarded yet?</Text>
-                    <NextLink  href={links.registerOrganization}><Link href={links.registerOrganization}>Register</Link></NextLink>
+                    <NextLink href={links.registerOrganization}><Link href={links.registerOrganization}>Register</Link></NextLink>
                 </Flex>
             </Flex>
         </form>)
