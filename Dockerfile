@@ -59,8 +59,5 @@ ENV COOKIE_PASSWORD ${COOKIE_PASSWORD}
 
 WORKDIR /opt/app
 
-COPY next.config.js ./
-COPY public ./public
-COPY .next ./.next
-COPY node_modules ./node_modules
-CMD ["node_modules/.bin/next", "start"]
+COPY out ./out
+CMD ["npm", "start"]
