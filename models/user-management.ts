@@ -1,4 +1,4 @@
-export interface BankView {
+export interface TenantView {
     name: string,
     bankLogo: string,
     bankId: string,
@@ -7,7 +7,7 @@ export interface BankView {
     babnkSuperAdmin: string,
     status: string
 }
-export interface BankAdminView {
+export interface TenantAdminView {
     firstName: string,
     lastName: string,
     bank: string,
@@ -28,4 +28,10 @@ export interface ISWAdminView {
     email:string,
     dateCreated:string,
     status: string
+}
+
+export interface UserManagementModal {
+    name: string,
+    isOpen: boolean,
+    triggerButton: string
 }

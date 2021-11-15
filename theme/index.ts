@@ -11,6 +11,8 @@ import Button from "./components/button";
 import { createBreakpoints } from "@chakra-ui/theme-tools"
 import Tag from "./components/tag";
 import Link from "./components/link";
+import Input from "./components/input";
+import Select from "./components/select";
 
 const breakpoints = createBreakpoints({
   sm: "30em",
@@ -29,7 +31,9 @@ const overrides = {
         Text,
         Tag,
         Button,
-        Link
+        Link,
+        Input,
+        Select
     },
     breakpoints
 

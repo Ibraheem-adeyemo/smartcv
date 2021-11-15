@@ -287,13 +287,13 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
 
                 <Input placeholder="janedoe@gmail.com" name="email" type="email" borderRadius="4px" value={onboarding?.bankAdmin?.email} onInput={addData} />
                 <FormErrorMessage>{validation?.errors.email}</FormErrorMessage>
-                <FormErrorMessage>{!validateEmail(onboarding?.bankAdmin?.email as string) ? "Invalid email" : ""}</FormErrorMessage>
+                <FormErrorMessage>{!validateEmail(onboarding?.bankAdmin?.email as string) && validation?.errors.email === "" ? "Invalid email" : ""}</FormErrorMessage>
             </FormControl>
             <FormControl isRequired id="mobileNo" flexGrow={1} width="35%" isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(onboarding?.bankAdmin?.mobileNo as string)) && validation?.touched.mobileNo === "touched"}>
                 <FormLabel>Phone Number</FormLabel>
                 <MobleNoInput placeholder="Enter Phone no" name="mobileNo" borderRadius="4px" value={onboarding?.bankAdmin?.mobileNo} ref={numberRef} onChange={enterSuperAdminMobile} />
                 <FormErrorMessage>{validation?.errors.mobileNo}</FormErrorMessage>
-                <FormErrorMessage>{!isValidPhoneNumber(onboarding?.bankAdmin?.mobileNo as string) ? "Invalid number" : ""}</FormErrorMessage>
+                <FormErrorMessage>{!isValidPhoneNumber(onboarding?.bankAdmin?.mobileNo as string) && validation?.errors.mobileNo === "" ? "Invalid number" : ""}</FormErrorMessage>
 
             </FormControl>
             <Popover
@@ -313,7 +313,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                             onInput={checkPassworValidity} />
                         <FormErrorMessage>{validation?.errors.password}</FormErrorMessage>
 
-                        <FormErrorMessage> {((passC as PasswordChecker[])?.filter(x => !(x?.status as boolean)).length) > 0 ? ("Your password must be " + passC?.map(x => x.text).join(", ")) : ""}</FormErrorMessage>
+                        <FormErrorMessage> {((passC as PasswordChecker[])?.filter(x => !(x?.status as boolean)).length) > 0 && validation?.errors.password === "" ? ("Your password must be " + passC?.map(x => x.text).join(", ")) : ""}</FormErrorMessage>
                     </FormControl>
                 </PopoverTrigger>
                 <PopoverContent bgColor="brand.light-blue" py="25px" px="33px">
@@ -332,7 +332,7 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
                 <FormLabel>Confirm Password</FormLabel>
                 <Input type="password" placeholder="Confirm Password" name="confirmPassword" borderRadius="4px" value={onboarding?.bankAdmin?.confirmPassword} onInput={addData} />
                 <FormErrorMessage>{validation?.errors.confirmPassword}</FormErrorMessage>
-                <FormErrorMessage>{!comparePassword(onboarding?.bankAdmin?.confirmPassword as string, onboarding?.bankAdmin?.password as string) ? "Confirm password does not match with password" : ""}</FormErrorMessage>
+                <FormErrorMessage>{!comparePassword(onboarding?.bankAdmin?.confirmPassword as string, onboarding?.bankAdmin?.password as string) && validation?.errors.confirmPassword == "" ? "Confirm password does not match with password" : ""}</FormErrorMessage>
 
             </FormControl>
         </Flex>

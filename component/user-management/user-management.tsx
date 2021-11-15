@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/layout";
 import dynamic from "next/dynamic";
 import React, { useCallback, useContext, useMemo } from "react";
-import { userManagementTabsname } from "../../constants";
+import { userManagementTabsName } from "../../constants";
 import { UserManagementTabProvider } from "../../provider";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 import UserManagementTabAndSearch from "./user-management-tab-and-search";
@@ -19,11 +19,11 @@ export default function UserManagement(_props: any) {
         const selectedIndex = tabs.findIndex((x, i) => x.isSelected)
         if (selectedIndex > -1) {
             switch (tabs[selectedIndex].name) {
-                case userManagementTabsname.bank:
+                case userManagementTabsName.bank:
                     return <Bank />
-                case userManagementTabsname.bankAdmin:
+                case userManagementTabsName.bankAdmin:
                     return <BankAdmin />
-                case userManagementTabsname.iSWAdmin:
+                case userManagementTabsName.iSWAdmin:
                     return <ISWAdmin />
                 default:
                     return <></>

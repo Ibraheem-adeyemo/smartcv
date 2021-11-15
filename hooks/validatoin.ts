@@ -1,9 +1,9 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
-import { Validation } from "../models";
+import { formType, Validation } from "../models";
 
 
-export default function useValidator<T>() {
+export default function useValidator<T>(compulsoryField?: (keyof T)[]) {
     const [validation, setValidation] = useState<Validation<T>>()
 
     const [data, setData] = useState<T>();
@@ -14,13 +14,25 @@ export default function useValidator<T>() {
         if (typeof field !== "undefined") {
             if (field !== "" && typeof data !== "undefined") {
                 setValidation((prev) => {
+                    // debugger
                     const s = _.clone(prev) as Validation<T>
                     if (typeof s !== "undefined") {
-                        s.errors[field as keyof T] = "" as any
-                        s.touched[field as keyof T] = "touched" as any
+                        s.errors[field] = ""
+                        s.touched[field] = "touched"
                     }
-
+                    else {
+                        
+                        return {
+                            errors: {
+                                [field as keyof (T | formType)]:""
+                            },
+                            touched: {
+                                [field as keyof (T | formType)]:"touched"
+                            }
+                        } as Validation<T>
+                    }
                     return s
+                    
 
                 })
                 if (String(data[field as keyof T]) as string === "") {
@@ -48,16 +60,32 @@ export default function useValidator<T>() {
             }
         }
         return () => {
-            if (typeof field !== "undefined") {
-                setField(undefined)
-            }
-            if(typeof data !== "undefined") {
+            // if (typeof field !== "undefined") {
+            //     setField(undefined)
+            // }
+            // if(typeof data !== "undefined") {
                 
-                setData(undefined)
-            }
+            //     setData(undefined)
+            // }
         }
     }, [data])
 
-    return { validation, setData, setField }
+    const addField = (value: keyof T) => {
+        setField(value)
+    }
+
+    const inputData = (value: Record<keyof T, any>) => {
+        setData(value)
+    }
+
+    const validateAllCompulsoryFields = () => {
+        if(typeof compulsoryField !== "undefined" && typeof data !== "undefined") {
+            const values = compulsoryField.map((x, i) => String(data[x])) 
+            return !(values.findIndex(x => x === "") > - 1)
+        }
+        return true
+    }
+
+    return { validation, setData, setField, addField, inputData, validateAllCompulsoryFields }
 
 }

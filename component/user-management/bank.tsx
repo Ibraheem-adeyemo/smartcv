@@ -3,7 +3,7 @@ import _ from "lodash";
 import React, { useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable, SkeletonLoader } from "..";
-import { BankView, Paginate } from "../../models";
+import { TenantView, Paginate } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
 
@@ -12,7 +12,7 @@ function BankTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: bankAdmin, mutate, error } = useSWR<Paginate<BankView, string>>(`/api/get-banks?page=${pageNumber}&countPerPage=${countPerPage}`)
+    const { data: bankAdmin, mutate, error } = useSWR<Paginate<TenantView, string>>(`/api/get-banks?page=${pageNumber}&countPerPage=${countPerPage}`)
     const data = useMemo(() => ({
         columns: [
             {
@@ -67,7 +67,7 @@ function BankTable(_props: any) {
                 }
             },
         ],
-        data: bankAdmin?.data as BankView[]
+        data: bankAdmin?.data as TenantView[]
     }), [bankAdmin])
 
     useEffect(() => {
@@ -76,7 +76,7 @@ function BankTable(_props: any) {
         }
     }, [bankAdmin])
 
-    return (<AppTable<BankView, string> columns={data?.columns} rows={data.data as BankView[]} actions={data.actions} />)
+    return (<AppTable<TenantView, string> columns={data?.columns} rows={data.data as TenantView[]} actions={data.actions} />)
 
 }
 

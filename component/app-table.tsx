@@ -46,7 +46,7 @@ export default function AppTable<T extends Record<keyof T, K>, K>(props: Apptabl
                         let data = x[columns[0]]
                         if(columns.length > 1) {
 
-                            debugger
+                            // debugger
                            data = columns.reduce((acc: unknown, curr) => acc === ""? x[curr]: acc + " " + x[curr], "") as T[keyof T]
                         }
                         return <Td  fontSize="13px" py="19px" key={j}>
@@ -73,7 +73,7 @@ export default function AppTable<T extends Record<keyof T, K>, K>(props: Apptabl
 
                     }
                     {
-                        props.actions.length === 1 && <Td>{props.actions[0].name}</Td>
+                        props.actions.length === 1 && <Td><Button bgColor="white" _hover={{bgColor:"white"}} onClick={props.actions[0].method}>{props.actions[0].name}</Button></Td>
                     }
                 </Tr>)}
             </Tbody>

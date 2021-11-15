@@ -27,14 +27,14 @@ export default function CreateBank(props: CreateBankProps) {
     // useMemo(() => {
 
     // }, [steps])
-    const { validation, setData, setField } = useValidator<Tenant>()
+    const { validation, addField, inputData } = useValidator<Tenant>()
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Event) => {
         // debugger
         if(typeof e.stopPropagation !== "undefined")
         e.stopPropagation()
         // debugger
         const ele = (e.target as HTMLInputElement | HTMLSelectElement)
-        setField(ele.id as keyof Tenant)
+        addField(ele.id as keyof Tenant)
         let value = ""
         if (ele.id === "bankLogo") {
             let v = e as React.ChangeEvent<HTMLInputElement>
@@ -48,7 +48,7 @@ export default function CreateBank(props: CreateBankProps) {
                 reader.onload = () => {
                     // debugger
                     value = reader.result?.toString() as string
-                    setField(ele.id as keyof Tenant)
+                    addField(ele.id as keyof Tenant)
                     addInfo("tenant", ele.id as keyof Tenant, value)
                 }
             }
@@ -70,9 +70,9 @@ export default function CreateBank(props: CreateBankProps) {
 
     useEffect(() => {
         // debugger
-        setData((prev) => onboarding?.tenant as Tenant)
 
         if (typeof onboarding?.tenant !== "undefined") {
+            inputData(onboarding.tenant)
             // debugger
             if (Object.values(onboarding.tenant).some((val) => val as string === "")) {
                 setCanNotSubmit(true)

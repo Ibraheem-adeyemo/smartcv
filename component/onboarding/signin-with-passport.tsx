@@ -25,7 +25,7 @@ interface RequestBody {
     scope:string
 }
 export default function SigninWithPassport(props: SigninWithPassportProps) {
-    const { form, setForm } = useForm<PassportLoginCredentials>(initialLogin)
+    const { form, formOnChange: setForm } = useForm<PassportLoginCredentials>(initialLogin)
     const { validation, setData, setField } = useValidator<PassportLoginCredentials>()
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
     const toast = useToast()
@@ -112,11 +112,10 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
             if (!canNotSubmit) {
                 // debbuger
                 // console.log({ PASSPORT_TOKEN_URL })
-                setForm(prev => ({
-                    ...prev as PassportLoginCredentials,
+                setForm({
                     postUrl: PASSPORT_TOKEN_URL,
                     completed: true
-                }))
+                })
             } else {
 
             }
@@ -148,10 +147,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
         setField(ele.id as keyof PassportLoginCredentials)
         const value = ele.value
         setField(ele.id as keyof PassportLoginCredentials)
-        setForm(prev => ({
-            ...prev as PassportLoginCredentials,
-            [ele.id]: value
-        }))
+        setForm({ [ele.id]: value})
     }, [])
 
     return (

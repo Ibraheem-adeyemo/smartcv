@@ -1,18 +1,22 @@
 import { Flex } from "@chakra-ui/layout";
 import _ from "lodash";
-import React, { useContext, useEffect, useMemo } from "react";
+import dynamic from "next/dynamic";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { AppTable, SkeletonLoader } from "..";
-import { BankAdminView, ISWAdminView, Paginate } from "../../models";
+import { UserManagementModalNames } from "../../constants";
+import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
+import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 
-
+const AddNewUser = dynamic(() => import("./add-new-user"))
 function ISWAdminTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: iswAdmin, mutate, error } = useSWR<Paginate<ISWAdminView, string>>(`/api/get-bank-admins?page=${pageNumber}&countPerPage=${countPerPage}`)
+    const { data: iswAdmin, mutate, error } = useSWR<Paginate<ISWAdminView, string>>(`/api/get-isw-admins?page=${pageNumber}&countPerPage=${countPerPage}`)
+
     const data = useMemo(() => ({
         columns: [
             {
@@ -34,24 +38,6 @@ function ISWAdminTable(_props: any) {
         ],
         actions: [
             {
-                name: "Edit",
-                icons: {
-                    use: true
-                },
-                method: () => {
-                    alert("Edit")
-                }
-            },
-            {
-                name: "Delete",
-                icons: {
-                    use: true,
-                },
-                method: () => {
-                    alert("Delete")
-                }
-            },
-            {
                 name: "View",
                 icons: {
                     use: true
@@ -65,20 +51,33 @@ function ISWAdminTable(_props: any) {
     }), [iswAdmin])
 
     useEffect(() => {
-        if(typeof iswAdmin !== "undefined") {
-            setPaginationProps(iswAdmin.totalData )
+        if (typeof iswAdmin !== "undefined") {
+            setPaginationProps(iswAdmin.totalData)
         }
     }, [iswAdmin])
+
+
 
     return (<AppTable<ISWAdminView, string> columns={data?.columns} rows={data.data as ISWAdminView[]} actions={data.actions} />)
 
 }
 
 export default function ISWAdmin(_props: any) {
+    const { modals } = useContext(UserManagementTabProviderContext)
+    const [selectedModal, setSelectedModal] = useState<UserManagementModal>()
+
+    useEffect(() => {
+        const modal = modals.find((x, i) => x.name === UserManagementModalNames.addNewUser)
+        setSelectedModal(modal)
+    }, [modals])
+
     return (
 
         <TableProvider>
-            <ISWAdminTable />
+            <>
+                <ISWAdminTable />
+                {typeof selectedModal !== "undefined" && selectedModal.isOpen ? <AddNewUser /> : <></>}
+            </>
         </TableProvider>
     )
 }

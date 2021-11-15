@@ -2,7 +2,7 @@ import { links } from "."
 import { Step, userManagementTab } from "../models"
 
 
-export enum userManagementTabsname {
+export enum userManagementTabsName {
     bank='Bank',
     bankAdmin="BankAdmin",
     iSWAdmin="ISW Admin"
@@ -10,15 +10,15 @@ export enum userManagementTabsname {
 
 export const userManagementTabs: userManagementTab[] = [
     {
-        name: userManagementTabsname.bank,
+        name: userManagementTabsName.bank,
         isSelected: false
     },
     {
-        name: userManagementTabsname.bankAdmin,
+        name: userManagementTabsName.bankAdmin,
         isSelected: false
     },
     {
-        name: userManagementTabsname.iSWAdmin,
+        name: userManagementTabsName.iSWAdmin,
         isSelected: false
     }
 ]

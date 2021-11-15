@@ -33,7 +33,7 @@ export default function usePagination<T extends Record<keyof T, string>>(initial
 
     useEffect(() => {
         setTotalPageNumber((prev) => {
-            debugger
+            // debugger
             if (typeof totalNumber !== "undefined" && typeof countPerPage !== "undefined") {
                 const division = Math.floor(totalNumber / countPerPage)
                 if (totalNumber % countPerPage == 0) {

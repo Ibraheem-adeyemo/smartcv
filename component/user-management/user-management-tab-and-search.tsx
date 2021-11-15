@@ -1,16 +1,39 @@
 import { ButtonGroup, Button } from "@chakra-ui/button";
 import { Flex, HStack } from "@chakra-ui/layout";
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { UserManagementSearch } from ".";
-import { userManagementTabs, userManagementTabsname } from "../../constants";
+import { UserManagementModalNames, userManagementTabs, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 
 export default function UserManagementTabAndSearch() {
-    const { tabs, handleTabSelection } = useContext(UserManagementTabProviderContext)
-    // const []
-
+    const { tabs, handleTabSelection, handleToggleModal } = useContext(UserManagementTabProviderContext)
+    const [showActionButton, setShowActionButton] = useState(false)
+    const [showActionButtonText, setShowActionButtonText] = useState("")
+    const showActionButtonMethod = useCallback(() => {
+        let modalName: string;
+        switch (showActionButtonText) {
+            case UserManagementTriggerButtons.addNewBank:
+                modalName = UserManagementModalNames.addNewBank
+                break;
+            case UserManagementTriggerButtons.addNewUser:
+                modalName = UserManagementModalNames.addNewUser
+                break;
+            default:
+                modalName = ""
+        }
+        handleToggleModal(modalName)
+    }, [showActionButtonText])
     useEffect(() => {
+        setShowActionButtonText((prev) => {
+            if (tabs.findIndex((x, i) => (x.name === userManagementTabsName.bank) && x.isSelected) > -1) {
+                return UserManagementTriggerButtons.addNewBank
+            } else if (tabs.findIndex((x, i) => (x.name === userManagementTabsName.iSWAdmin) && x.isSelected) > -1) {
+                return UserManagementTriggerButtons.addNewUser
+            }
+            return ""
 
+        })
+        setShowActionButton(tabs.findIndex((x, i) => (x.name === userManagementTabsName.bank || x.name === userManagementTabsName.iSWAdmin) && x.isSelected) > -1)
     }, [tabs])
     return <HStack justifyContent="space-between" w="100%">
         <ButtonGroup spacing="0px">
@@ -18,8 +41,7 @@ export default function UserManagementTabAndSearch() {
         </ButtonGroup>
         <HStack spacing="38px">
             <UserManagementSearch />
-            {tabs.findIndex((x, i) => (x.name === userManagementTabsname.bank || x.name === userManagementTabsname.iSWAdmin ) && x.isSelected) > -1? 
-                    <Button variant="primary-button" px="53px" py="8px" >New Bank</Button>:<></>}
+            {showActionButton && <Button variant="primary-button" px="53px" py="8px" onClick={showActionButtonMethod} >{showActionButtonText}</Button>}
         </HStack>
     </HStack>
 }

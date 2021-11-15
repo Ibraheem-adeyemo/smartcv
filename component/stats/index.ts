@@ -3,7 +3,7 @@ import canvas from "./canvas";
 import customFilter from "./custom-filter";
 import donutChart from "./donutchart";
 import stat from "./stat";
-import statCard from "./stat-card";
+import statCard from "../app-card";
 import terminalsPerformance from "./terminals-performance";
 import successRate from "./success-rate";
 import serviceStatus from "./service-status";
