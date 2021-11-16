@@ -3,12 +3,11 @@
 FROM node:16.3.0-alpine as builder
 
 # copy the package.json to install dependencies
-COPY package.json ./
-
-# Install the dependencies and make the folder
-RUN npm install && mkdir /opt/app/ && mv ./node_modules ./opt/app/
+COPY package.json package-lock.json ./
 
 WORKDIR /opt/app/
+# Install the dependencies and make the folder
+COPY ./node_modules ./opt/app/
 
 COPY . .
 
