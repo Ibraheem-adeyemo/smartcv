@@ -20,6 +20,7 @@ services:
         - NEXT_PUBLIC_CURRENT_API_VERSION=${NEXT_PUBLIC_CURRENT_API_VERSION}
         - NEXT_PUBLIC_API_BASE_URL_ALTERNATIVE=${NEXT_PUBLIC_API_BASE_URL_ALTERNATIVE}
         - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
+        - http_proxy=${http_proxy}
       dockerfile: ./Dockerfile
     ports:
       - 80:80

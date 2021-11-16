@@ -11,9 +11,12 @@ COPY ./node_modules ./opt/app/
 
 COPY . .
 
+ARG http_proxy
+
 
 ARG NODE_ENV
 ENV NODE_ENV ${NODE_ENV}
+
 RUN echo ${NODE_ENV}
 
 ARG NEXT_PUBLIC_APP_BASE_URL
