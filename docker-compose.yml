@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   passui:
-    image: paasui
+    image: repo.isw.la/paas-ui:${APP_VERSION}.${BUILD_NUMBER}
     env_file:
       - ./.env.local.docker
     build:
