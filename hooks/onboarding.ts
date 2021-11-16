@@ -1,9 +1,8 @@
 import _ from "lodash";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
+import { useEffect, useState } from "react";
 import { useLoading } from ".";
-import { CURRENT_API_VERSION, links, onboardingTabs } from "../constants";
+import { links, onboardingTabs } from "../constants";
 import { getCookie, setCookie } from "../lib";
 import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Loading, Onboarding, Step, BankAdmin } from "../models";
 
@@ -67,7 +66,7 @@ export default function useOnboarding(): UseOnboardingReturn {
     const router = useRouter()
     const [loading, setLoading] = useLoading({ isLoading: false, text: "" })
 
-    useMemo(() => {
+    useEffect(() => {
         // debugger
         if (typeof document !== "undefined") {
             setCookie("token", "", -60)

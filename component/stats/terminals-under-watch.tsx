@@ -1,5 +1,5 @@
 import { Text } from "@chakra-ui/layout";
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Stat } from "."
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
@@ -40,7 +40,7 @@ export default function TerminalsUnderWatch(props: any) {
     },]
   },[])
 
-  useMemo(() => {
+  useEffect(() => {
     // console.log("waiting")
     setTimeout(() => {
       setStats(getStats())

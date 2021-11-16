@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text, Menu, MenuButton, MenuList, MenuItem, Input } from "@chakra-ui/react";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { debounce } from 'lodash';
 import { DropdownIcon } from "../../constants";
 
@@ -23,7 +23,7 @@ type ResultFromSearch = (items?: DropdownContent[]) => void
 export default function DropdownSearchFilter(props: DropdownSearchFilterProps) {
     const [dropdownContent, setDropdownContent] = useState<DropdownContent[]>()
     const [query, setQuery] = useState<string>()
-    useMemo(() => {
+    useEffect(() => {
         setDropdownContent(props.data.map((x, i) => ( 
             typeof x ==="string"? {
             label:x,

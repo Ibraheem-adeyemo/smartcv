@@ -1,6 +1,5 @@
 import { Flex, Text } from "@chakra-ui/layout"
 import { Tag } from "@chakra-ui/react"
-import { NextApiRequest, NextApiResponse } from "next"
 import dynamic from 'next/dynamic'
 import React, { useMemo } from "react"
 import { CustomFilter, DropdownSearchFilter, } from "../component/stats"

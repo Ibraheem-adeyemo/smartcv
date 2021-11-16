@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { defaultCallback, defaultCallbackInitiator, Loading } from "../models";
 type  UseLoadingReturn = [Loading, defaultCallbackInitiator<Loading>]
 export default function useLoading(initialData?: Loading) : UseLoadingReturn {
 
     const [loading, setLoading] = useState<Loading>({isLoading:false, text:""})
 
-    useMemo(() => {
+    useEffect(() => {
 
         setLoading(prev => ({
             ...prev,

@@ -1,9 +1,8 @@
 import { VStack } from "@chakra-ui/layout";
 import dynamic from "next/dynamic";
-import React, { useCallback, useContext, useMemo } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { UserManagementStats } from ".";
 import { userManagementTabsName } from "../../constants";
-import { UserManagementTabProvider } from "../../provider";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 import UserManagementTabAndSearch from "./user-management-tab-and-search";
 
@@ -13,7 +12,7 @@ const ISWAdmin = dynamic(() => import("./isw-admin"))
 
 export default function UserManagement(_props: any) {
     const { tabs, handleTabSelection } = useContext(UserManagementTabProviderContext)
-    useMemo(() => {
+    useEffect(() => {
         handleTabSelection(0)
     }, [])
     const SelectedTable = useCallback(() => {

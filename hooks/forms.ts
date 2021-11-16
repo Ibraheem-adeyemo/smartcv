@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { formType } from "../models"
 
 export default function useForm<T extends Record<keyof T, any>>(initialModel: T) {
 
     const [form, setForm] = useState<T & formType>()
     const [refresh, setRefresh] = useState(true)
-    useMemo(() => {
+    useEffect(() => {
         if (refresh) {
             setForm({ ...initialModel, completed: false, postUrl: "" })
             setRefresh(false)

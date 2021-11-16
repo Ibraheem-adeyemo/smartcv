@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { StatsC, StatsCMore } from "../../models";
+import React, { useCallback, useEffect, useState } from "react";
+import { StatsCMore } from "../../models";
 import { Barchart } from ".";
 import { Flex, Text } from "@chakra-ui/layout";
 import { Tag } from "@chakra-ui/tag";
@@ -44,7 +44,7 @@ export default function TopPerforminBanks(props: any) {
             }
         ]
     }, [])
-    useMemo(() => {
+    useEffect(() => {
         // console.log("waiting")
         setTimeout(() => {
             setStats(getStats())

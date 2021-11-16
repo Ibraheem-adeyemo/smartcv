@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { DonutChart } from ".";
-import { StatsB, StatsA } from "../../models/stats-models";
+import { StatsB } from "../../models/stats-models";
 import { Text } from '@chakra-ui/react'
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
@@ -22,7 +22,7 @@ export default function SuccessRate(props: any) {
             chartTitle: "Success rate"
         }]
     }, [])
-    useMemo(() => {
+    useEffect(() => {
         setTimeout(() => {
 
             setStats(getStats())

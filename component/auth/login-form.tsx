@@ -1,23 +1,15 @@
 import { Flex, Link } from "@chakra-ui/layout";
 import NextLink from 'next/link'
-import { VisuallyHiddenInput, Image, Text, Button } from "@chakra-ui/react";
-import { AppProps } from "next/app";
-import { useRouter } from "next/router";
-import React, { ComponentProps, ComponentPropsWithoutRef, useContext, useMemo, useState } from "react";
+import { Image, Text, Button } from "@chakra-ui/react";
+import React, { useContext, useEffect } from "react";
 import { Images, links } from "../../constants";
 import { AuthContext } from "../../provider/auth-provider";
 import { setCookie } from "../../lib";
 
-interface LoginFormProps extends ComponentPropsWithoutRef<any> {
-    loginDetails: {
-        redirectUri: string
-    }
-}
-
-export default function LoginForm(props: LoginFormProps) {
+export default function LoginForm(_props:any) {
     const { user, signIn, signOut } = useContext(AuthContext)
 
-    useMemo(() => {
+    useEffect(() => {
         // debugger
         if (typeof window !== "undefined") {
             setCookie("token", "", -60)

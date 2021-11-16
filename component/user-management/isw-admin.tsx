@@ -1,9 +1,7 @@
-import { Flex } from "@chakra-ui/layout";
 import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
-import { SkeletonLoader } from "..";
 import { UserManagementModalNames } from "../../constants";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
 import { TableProvider } from "../../provider";

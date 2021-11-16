@@ -1,6 +1,6 @@
 import { Icon, Menu, MenuButton, MenuItem, MenuList, Tfoot, Thead, Button, Image } from "@chakra-ui/react";
 import { Table, Tbody, Td, Tr } from "@chakra-ui/table";
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
 import { AppTableFooter } from ".";
 import { TableContext } from "../../provider/table-provider";

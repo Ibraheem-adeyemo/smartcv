@@ -1,10 +1,9 @@
 import Icon from "@chakra-ui/icon";
-import { Box, Flex, Grid, GridItem, Link as ChakraLink, Text } from "@chakra-ui/layout";
-import React, { ComponentProps, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { dashboardIcon, terminalsIcon, reportingIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, DropdownIcon } from "../../constants";
+import { Flex, Grid, GridItem, Link as ChakraLink, Text } from "@chakra-ui/layout";
+import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { dashboardIcon, terminalsIcon, reportingIcon, userManagementIcon, auditIcon, systemSettingsIcon, links } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 import NextLink from 'next/link'
-import { AppProps } from "next/app";
 import { As, Avatar, Button, ComponentWithAs, Menu, MenuButton, MenuDivider, MenuItem, MenuList } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
 import { AuthContext } from "../../provider/auth-provider";
@@ -76,7 +75,7 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
         </>
     }, [loading])
 
-    useMemo(() => {
+    useEffect(() => {
         setTimeout(() => {
             setLoading((prev) => !prev)
         }, 1000)

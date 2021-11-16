@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { StatsC, StatsCMore } from "../../models";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { StatsCMore } from "../../models";
 import { Barchart } from ".";
 import { Flex, Text } from "@chakra-ui/layout";
 import DropdownSearchFilter from "./search-filters";
@@ -45,7 +45,7 @@ export default function TopTransactionMetric(props: any) {
             }
         ]
     },[])
-    useMemo(() => {
+    useEffect(() => {
         // console.log("waiting")
         setTimeout(() => {
             setStats(getStats())

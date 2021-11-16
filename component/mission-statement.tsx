@@ -1,6 +1,6 @@
-import { Box, Flex, Image, Text, List, ListItem, Avatar } from "@chakra-ui/react"
+import { Flex, Text, List, ListItem, Avatar } from "@chakra-ui/react"
 import React, { useMemo } from "react"
-import { Images, TickIcon } from "../constants"
+import { TickIcon } from "../constants"
 
 const MissionStatement = () => {
     const missionStatement = useMemo(() => [{

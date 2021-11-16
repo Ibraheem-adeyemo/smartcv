@@ -1,7 +1,5 @@
 import { Flex } from "@chakra-ui/layout";
-import { Props } from "framer-motion/types/types";
-import { AppProps } from "next/app";
-import React, { ComponentProps, ReactNode, useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 
 interface OnboardingCardProps{
     cardTitle: JSX.Element | JSX.Element[] | string,

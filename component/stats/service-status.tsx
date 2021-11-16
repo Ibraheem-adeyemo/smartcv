@@ -1,5 +1,5 @@
 import { Text } from "@chakra-ui/react";
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Stat } from "."
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
@@ -35,7 +35,7 @@ export default function ServiceStatus(props: any) {
       days: "Last 7 days"
     },]
   }, [])
-  useMemo(() => {
+  useEffect(() => {
     // console.log("waiting")
     setTimeout(() => {
       setStats(getStats())

@@ -1,8 +1,6 @@
-import { Flex } from "@chakra-ui/layout";
 import _ from "lodash";
 import React, { useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
-import { SkeletonLoader } from "..";
 import { AppTable } from "../app";
 import { TenantAdminView, Paginate } from "../../models";
 import { TableProvider } from "../../provider";
