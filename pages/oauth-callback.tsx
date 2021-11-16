@@ -2,7 +2,7 @@ import { CircularProgress } from "@chakra-ui/progress"
 import { useToast, Flex } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { useContext, useEffect } from "react"
-import { APP_BASE_URL, links, notificationMesage } from "../constants"
+import {  links, notificationMesage } from "../constants"
 import { AuthContext } from "../provider/auth-provider"
 
 export default function OauthCallback() {
@@ -10,8 +10,8 @@ export default function OauthCallback() {
     const router = useRouter()
     const toast = useToast()
     useEffect(() => {
-
-        const url = new URL(`${APP_BASE_URL}${router.asPath}`).search
+        // debugger
+        const url = new URL(`${window.location.protocol}//${window.location.host}${router.asPath}`).search
         const code = new URLSearchParams(url).get("code");
         if (typeof window !== "undefined" && typeof code !== "undefined") {
             debugger

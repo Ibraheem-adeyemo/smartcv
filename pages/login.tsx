@@ -1,13 +1,9 @@
-import { Image } from "@chakra-ui/image"
 import { Flex } from "@chakra-ui/layout"
-import { NextApiRequest, NextApiResponse } from "next"
 import React, { } from "react"
 import { LoginForm } from "../component/auth"
-import Container from "../component/container"
 import { InterswitchLogo } from "../component/custom-component"
 import { NonAuthenticated } from "../component/layouts"
 import MissionStatement from "../component/mission-statement"
-import { Images, REDIRECT_URI } from "../constants"
 
 
 const Login = (props: any) => {
@@ -23,9 +19,7 @@ const Login = (props: any) => {
                 </Flex>
                 <Flex gridGap="99px">
                     <MissionStatement />
-                    <LoginForm loginDetails={{
-                        redirectUri: REDIRECT_URI
-                    }} />
+                    <LoginForm />
                 </Flex>
             </Flex>
         </NonAuthenticated>)

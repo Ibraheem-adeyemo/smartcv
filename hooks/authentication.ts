@@ -25,7 +25,7 @@ export default function useAuthentication() {
         }
     }
     const signIn = () => {
-        window.location.href = apiUrls.passportUrl
+        window.location.href = `${apiUrls.passportUrl}${window.location.protocol}//${window.location.host}/${REDIRECT_URI}`
     }
 
     useEffect(() => {
@@ -63,7 +63,7 @@ export default function useAuthentication() {
         // debugger
         const body = {
             client_id: CLIENT_ID,
-            redirect_uri: REDIRECT_URI,
+            redirect_uri: `${window.location.protocol}//${window.location.host}/${REDIRECT_URI}`,
             grant_type: GRANT_TYPE,
             code: code
         }

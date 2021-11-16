@@ -1,4 +1,4 @@
-import { PASSPORT_AUTHORIZE_URL, CLIENT_ID, REDIRECT_URI, SCOPE, RESPONSE_TYPE } from ".";
+import { PASSPORT_AUTHORIZE_URL, CLIENT_ID, SCOPE, RESPONSE_TYPE } from ".";
 
 export enum links {
     index="/",
@@ -15,5 +15,5 @@ export enum links {
 }
 
 export const apiUrls = {
-    passportUrl:`${PASSPORT_AUTHORIZE_URL}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}`
+    passportUrl:`${PASSPORT_AUTHORIZE_URL}?client_id=${CLIENT_ID}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=`
 }
