@@ -22,8 +22,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "cypress/pages/index.test.tsx"  ],
+    "**/*.tsx" ],
   "exclude": [
     "node_modules"
   ]
