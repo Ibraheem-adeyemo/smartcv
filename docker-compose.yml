@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  passui:
+  paasui:
     image: repo.isw.la/paas-ui:${APP_VERSION}.${BUILD_NUMBER}
     build:
       context: .
