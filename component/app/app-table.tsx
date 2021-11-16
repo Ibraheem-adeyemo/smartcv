@@ -20,7 +20,7 @@ interface Action {
 interface ApptableProps<T extends Record<keyof T, k>, k> {
     columns: Column[],
     rows: T[],
-    actions: Action[] | []
+    actions?: Action[]
 }
 
 export default function AppTable<T extends Record<keyof T, K>, K>(props: ApptableProps<T, K>) {
@@ -32,8 +32,8 @@ export default function AppTable<T extends Record<keyof T, K>, K>(props: Apptabl
         <Table>
             <Thead>
                 <Tr bgColor="#F8F9FF">
-                    {props.columns?.map((x, i, arr) => <Td fontSize="13px" py="19px" key={i} borderTopLeftRadius={i === 0 ? "6px" : "unset"} borderTopRightRadius={(i + 1) === arr.length && props.actions.length === 0 ? "6px" : "unset"} >{x.name}</Td>)}
-                    {props.actions.length > 0 && <Td borderTopRightRadius="6px"></Td>}
+                    {props.columns?.map((x, i, arr) => <Td fontSize="13px" py="19px" key={i} borderTopLeftRadius={i === 0 ? "6px" : "unset"} borderTopRightRadius={(i + 1) === arr.length && typeof props.actions !== "undefined" && props.actions.length === 0 ? "6px" : "unset"} >{x.name}</Td>)}
+                    {typeof props.actions !== "undefined" && props.actions.length > 0 && <Td borderTopRightRadius="6px"></Td>}
                 </Tr>
             </Thead>
             <Tbody>
@@ -66,7 +66,7 @@ export default function AppTable<T extends Record<keyof T, K>, K>(props: Apptabl
                         })}
                     {
 
-                        props.actions.length > 1 && <Td>
+                       typeof props.actions !== "undefined" && props.actions.length > 1 && <Td>
                             <Menu>
                                 <MenuButton as={Button} bgColor="white">
                                     <Icon as={IoEllipsisVerticalOutline} />
@@ -82,7 +82,7 @@ export default function AppTable<T extends Record<keyof T, K>, K>(props: Apptabl
 
                     }
                     {
-                        props.actions.length === 1 && <Td><Button bgColor="white" _hover={{ bgColor: "white" }} onClick={props.actions[0].method}>{props.actions[0].name}</Button></Td>
+                      typeof props.actions !== "undefined" &&  props.actions.length === 1 && <Td><Button bgColor="white" _hover={{ bgColor: "white" }} onClick={props.actions[0].method}>{props.actions[0].name}</Button></Td>
                     }
                 </Tr>)}
             </Tbody>
