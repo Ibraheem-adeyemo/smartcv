@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import React, { useMemo } from "react"
 import { CustomFilter, DropdownSearchFilter, } from "../component/stats"
 import { Authenticated } from "../component/layouts"
-import { Banks, ChannelsEnum } from "../constants"
+import { Banks, channels, ChannelsEnum } from "../constants"
 const TerminalsPerformance = dynamic(() => import('../component/stats/terminals-performance'))
 const SuccessRate = dynamic(() => import('../component/stats/success-rate'))
 const ServiceStatus = dynamic(() => import('../component/stats/service-status'))
@@ -26,8 +26,7 @@ const Dashboard = () => {
               ...Banks.map((x, i) => ({ label: x, value: x, selected: false }))
             ]
           } label="Institution" />
-          <Filter data={
-            Object.keys(ChannelsEnum)
+          <Filter data={channels.map((x, i) => ({value:x, label:x, selected: i===0?true:false}))
           } label="Channel" />
 
           <Tag><Text variant="dropdown-text-header" size="tag-text">Today</Text></Tag>

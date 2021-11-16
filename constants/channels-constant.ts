@@ -4,3 +4,5 @@ export enum ChannelsEnum {
  Mobile='Mboile',
  Atm='Atm'
 }
+
+export const channels = [ChannelsEnum.Pos, ChannelsEnum.Web, ChannelsEnum.Mobile, ChannelsEnum.Atm]

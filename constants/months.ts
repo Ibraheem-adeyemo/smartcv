@@ -1,4 +1,4 @@
-export enum Months {
+export enum MonthsEnum {
     January=1,
     Februrary=2,
     March=3,
@@ -12,3 +12,5 @@ export enum Months {
     November=11,
     December=12
 }
+
+export const months = ["January", "Februrary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]

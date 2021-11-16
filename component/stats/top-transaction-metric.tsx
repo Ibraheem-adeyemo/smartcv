@@ -3,7 +3,7 @@ import { StatsCMore } from "../../models";
 import { Barchart } from ".";
 import { Flex, Text } from "@chakra-ui/layout";
 import DropdownSearchFilter from "./search-filters";
-import { Months } from "../../constants";
+import { months, MonthsEnum } from "../../constants";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 
@@ -57,7 +57,7 @@ export default function TopTransactionMetric(props: any) {
         <Flex>
             <Text variant="card-header" size="card-header">Total Transction Metric</Text>
             <Flex>
-                <Filter label="Month" data={Object.keys(Months).filter(x => isNaN(+x))} />
+                <Filter label="Month" data={months.map((x, i) => ({value: x, label:i + 1, selected: i===0?true:false}))} />
             </Flex>
         </Flex>}
 

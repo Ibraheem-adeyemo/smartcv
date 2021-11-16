@@ -11,7 +11,7 @@ const debouncedFetchData = debounce((query: string, cb: ResultFromSearch, data: 
     cb(result)
 }, 500);
 interface DropdownSearchFilterProps {
-    data: DropdownContent[] | string[],
+    data: DropdownContent[],
     label?:string
 }
 interface DropdownContent {
