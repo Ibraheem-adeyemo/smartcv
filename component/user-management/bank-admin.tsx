@@ -5,13 +5,16 @@ import { AppTable } from "../app";
 import { TenantAdminView, Paginate } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
+import { useToast } from "@chakra-ui/react";
+import { apiUrls } from "../../constants";
 
 
 function BankAdminTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: bankAdmin, mutate, error } = useSWR<Paginate<TenantAdminView, string>>(`/api/get-bank-admins?page=${pageNumber}&countPerPage=${countPerPage}`)
+    const { data: tenantAdmin, mutate, error } = useSWR<Paginate<TenantAdminView>>(`${apiUrls.tenantAdmin}?page=${pageNumber}&countPerPage=${countPerPage}`)
+    const toast = useToast()
     const data = useMemo(() => ({
         columns: [
             {
@@ -60,20 +63,31 @@ function BankAdminTable(_props: any) {
                 }
             },
         ],
-        data: bankAdmin?.data as TenantAdminView[]
-    }), [bankAdmin])
+        data: typeof tenantAdmin !== "undefined" && typeof error ==="undefined"? tenantAdmin?.data as TenantAdminView[]:[]
+    }), [tenantAdmin, error])
 
     useEffect(() => {
-        if(typeof bankAdmin !== "undefined") {
-            setPaginationProps(bankAdmin.totalData )
+        if(typeof error !== "undefined") {
+            toast({
+                status:"error",
+                title: typeof error.message === "undefined"? error:error.message,
+                variant:"left-accent",
+                isClosable:true
+            })
         }
-    }, [bankAdmin])
+    }, [error])
+    useEffect(() => {
+        if(typeof tenantAdmin !== "undefined" && typeof tenantAdmin.totalData !== "undefined") {
+            setPaginationProps(tenantAdmin.totalData )
+        }
+    }, [tenantAdmin])
 
-    return (<AppTable<TenantAdminView, string> columns={data?.columns} rows={data.data as TenantAdminView[]} actions={data.actions} />)
+
+    return (<AppTable<TenantAdminView> columns={data?.columns} rows={data.data as TenantAdminView[]} actions={data.actions} />)
 
 }
 
-export default function BankAdmin(_props: any) {
+export default function tenantAdmin(_props: any) {
     return (
 
         <TableProvider>

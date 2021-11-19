@@ -7,9 +7,10 @@ import { InterswitchLogo } from "../custom-component";
 import NextLink from 'next/link'
 import { useRouter } from "next/router";
 import { CreateBank } from "../onboarding";
-import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Onboarding as OnboardingModel, Step, BankAdmin } from "../../models";
+import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Onboarding as OnboardingModel, Step, tenantAdmin } from "../../models";
 import { createAccountAsync } from "../../services/v1";
 import { OnboardingNav } from '.'
+import _ from "lodash";
 interface OnboardingProps {
     children: JSX.Element
 }
@@ -23,7 +24,7 @@ const OnboardingLink = forwardRef((props, ref) => {
 
 export const onboardingContext = createContext<ReturnType<typeof useOnboarding>>(
     {
-        steps: onboardingTabs,
+        steps: onboardingTabs as Step[],
         changeIsRefresh: () => (""),
         addInfo: () => (""),
         refresh: () => (""),
@@ -50,7 +51,7 @@ export default function Onboarding(props: OnboardingProps) {
             if (i === onboarding?.state) {
                 return <Avatar name={`${i + 1}`} bgColor="brand.muted-blue"></Avatar>
             } else {
-                const tab = onboarding[x.key as keyof OnboardingModel] as Tenant | BankAdmin | InstitutionColorInfo
+                const tab = onboarding[x.key as keyof OnboardingModel] as Tenant | tenantAdmin | InstitutionColorInfo
                 // debugger
                 if (tab.completed) {
                     return <Avatar bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
@@ -105,12 +106,14 @@ export default function Onboarding(props: OnboardingProps) {
             stopLoading()
         } catch (error: any) {
             // debugger
-            toast({
-                status: "error",
-                title: error,
-                isClosable: true,
-                variant: "left-accent"
-            })
+            if (typeof error.message !== "undefined" || typeof error !== "undefined") {
+                toast({
+                    status: "error",
+                    title: typeof error.message !== "undefined"? error.message:error,
+                    isClosable: true,
+                    variant: "left-accent"
+                })
+            }
             console.error({ createAccountError: error })
             stopLoading()
         }

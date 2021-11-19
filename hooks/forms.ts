@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { formType } from "../models"
 
-export default function useForm<T extends Record<keyof T, any>>(initialModel: T) {
+export default function useForm<T extends Record< keyof T, T[keyof T]>>(initialModel: T) {
 
     const [form, setForm] = useState<T & formType>()
     const [refresh, setRefresh] = useState(true)

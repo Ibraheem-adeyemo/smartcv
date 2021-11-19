@@ -1,11 +1,14 @@
 export interface TenantView {
     name: string,
-    bankLogo: string,
-    bankId: string,
+    image: string,
+    logo:string,
+    tenantCode: string,
     address: string,
     dateCreated: string,
-    babnkSuperAdmin: string,
-    status: string
+    bankSuperAdmin: string,
+    status: string,
+    location:string,
+    branch:string
 }
 export interface TenantAdminView {
     firstName: string,
@@ -33,10 +36,17 @@ export interface ISWAdminView {
 export interface UserManagementModal {
     name: string,
     isOpen: boolean,
-    triggerButton: string
+    triggerButton: string,
+    isSubmitted: boolean
 }
 
 export interface UserManagementStat {
     name: string,
     totalCount: number
+}
+
+export interface InstitutionColor {
+    headerColor:string,
+    sidebarColor:string,
+    buttonColor:string
 }

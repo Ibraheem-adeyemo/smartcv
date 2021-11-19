@@ -11,17 +11,18 @@ const BankAdmin = dynamic(() => import("./bank-admin"))
 const ISWAdmin = dynamic(() => import("./isw-admin"))
 
 export default function UserManagement(_props: any) {
-    const { tabs, handleTabSelection } = useContext(UserManagementTabProviderContext)
+    const { tabs, handleTabSelection, handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
     useEffect(() => {
         handleTabSelection(0)
     }, [])
     const SelectedTable = useCallback(() => {
         const selectedIndex = tabs.findIndex((x, i) => x.isSelected)
+        // debugger
         if (selectedIndex > -1) {
             switch (tabs[selectedIndex].name) {
                 case userManagementTabsName.bank:
                     return <Bank />
-                case userManagementTabsName.bankAdmin:
+                case userManagementTabsName.tenantAdmin:
                     return <BankAdmin />
                 case userManagementTabsName.iSWAdmin:
                     return <ISWAdmin />
@@ -30,6 +31,13 @@ export default function UserManagement(_props: any) {
             }
         }
         return <></>
+    }, [tabs])
+    useEffect(() => {
+        
+        const checkOpenTab = modals.some((x) => x.isOpen)
+        if (checkOpenTab) {
+            handleToggleModal()
+        }
     }, [tabs])
     return (
         <VStack spacing="21px">

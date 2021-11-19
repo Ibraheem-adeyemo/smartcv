@@ -54,17 +54,17 @@ export function comparePassword(pass1: string, pass2: string) {
     return pass1 === pass2
 }
 
-export function validateexColor(color: string) {
+export function validateHexColor(color: string) {
     return /^#[0-9A-F]{6}$/i.test(color) || /^#([0-9A-F]{3}){1,2}$/i.test(color)
 }
 
 
-export async function fetchJson<T extends Record<keyof T, K>, K>(input: RequestInfo, init?: RequestInit): Promise<T> {
+export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit): Promise<T> {
 
     try {
         // console.log({init});
         // debugger
-        let token = window ? getCookie("token") : ""
+        let token = typeof window !== "undefined" ? getCookie("token") : ""
         const response = token !== "" ? await fetch(input, typeof init === "undefined" ? {
             method: "GET",
             headers: {
@@ -81,6 +81,7 @@ export async function fetchJson<T extends Record<keyof T, K>, K>(input: RequestI
             }
         }
         else if (typeof data !== "undefined") {
+            // debugger
             if (typeof data.message !== "undefined") {
                 throw data.message
             } else {

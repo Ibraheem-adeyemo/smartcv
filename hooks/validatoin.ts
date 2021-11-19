@@ -6,7 +6,7 @@ import { formType, Validation } from "../models";
 export default function useValidator<T>(compulsoryField?: (keyof T)[]) {
     const [validation, setValidation] = useState<Validation<T>>()
 
-    const [data, setData] = useState<T>();
+    const [data, setData] = useState<Record<keyof T, T[keyof T]>>();
     const [field, setField] = useState<keyof T>();
     // debugger
     useEffect(() => {
@@ -74,7 +74,7 @@ export default function useValidator<T>(compulsoryField?: (keyof T)[]) {
         setField(value)
     }
 
-    const inputData = (value: Record<keyof T, any>) => {
+    const inputData = (value: Record<keyof T, T[keyof T]>) => {
         setData(value)
     }
 

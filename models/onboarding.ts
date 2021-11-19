@@ -1,10 +1,10 @@
 export interface Tenant {
     name: string,
-    bankId: string,
-    bankBranch: string,
-    bankLocation: string,
-    bankAddress: string,
-    bankLogo: string,
+    tenantCode: string,
+    branch: string,
+    location: string,
+    address: string,
+    logo: string,
     completed: boolean,
 }
 
@@ -15,7 +15,7 @@ export interface InstitutionColorInfo {
     completed: boolean,
 }
 
-export interface BankAdmin {
+export interface tenantAdmin {
     firstName: string,
     lastName: string,
     email: string,
@@ -30,7 +30,7 @@ export interface BankAdmin {
 export interface Onboarding {
     state: number,
     tenant: Tenant,
-    bankAdmin: BankAdmin,
+    tenantAdmin: tenantAdmin,
     institutionColorInfo: InstitutionColorInfo,
     url: string
 

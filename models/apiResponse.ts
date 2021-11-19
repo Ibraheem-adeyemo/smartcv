@@ -1,4 +1,4 @@
-export interface APIResponse<T extends Record<keyof T, any>> {
+export interface APIResponse<T extends Record<keyof T, T[keyof T]>> {
     status: string,
     message: string,
     data: T,

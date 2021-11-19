@@ -1,4 +1,4 @@
-export const Names = [
+export const Names:Readonly<Record<string, string>[]> = [
     {
         firstName: "John",
         lastName:"Wick"

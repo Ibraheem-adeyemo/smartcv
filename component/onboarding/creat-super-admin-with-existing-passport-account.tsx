@@ -1,30 +1,24 @@
 import { Button } from "@chakra-ui/button";
 import { Flex } from "@chakra-ui/layout";
-import { FormControl, useToast, FormLabel, Input, FormErrorMessage, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
+import { FormControl, useToast, FormLabel, Input } from "@chakra-ui/react";
 
 import _ from "lodash";
 import { useRouter } from "next/router";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { OnboardingCard } from ".";
 import { notificationMesage } from "../../constants";
-import useValidator from "../../hooks/validatoin";
-import { BankAdmin, Loading, Onboarding } from "../../models";
 import { OnboardingContext } from "../layouts";
-import createBank from "./create-bank";
 
-interface CreateSuperAdminWithExistingSuperAdminAccountProps {
-    // authenticatedUser: BankAdmin
-}
 
-export default function CreateSuperAdminWithExistingSuperAdminAccount(props: CreateSuperAdminWithExistingSuperAdminAccountProps) {
-    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState, loading} = useContext(OnboardingContext)
+export default function CreateSuperAdminWithExistingSuperAdminAccount() {
+    const { steps, onboarding, completeForm, previousState, loading} = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
     const toast = useToast()
     const router = useRouter()
 
     useEffect(() => {
-        // if(typeof onboarding?.bankAdmin !== "undefined") {
-        if (onboarding?.bankAdmin?.access_token !== "") {
+        // if(typeof onboarding?.tenantAdmin !== "undefined") {
+        if (onboarding?.tenantAdmin?.access_token !== "") {
 
             setCanNotSubmit(false)
         } else {
@@ -32,13 +26,13 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
         }
         // }
 
-    }, [onboarding?.bankAdmin])
+    }, [onboarding?.tenantAdmin])
 
-    const createSuperAdmin = useCallback((e) => {
+    const createSuperAdmin = useCallback(() => {
         // debugger
-        if (typeof onboarding?.bankAdmin !== "undefined" && typeof canNotSubmit !== "undefined" && typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
+        if (typeof onboarding?.tenantAdmin !== "undefined" && typeof canNotSubmit !== "undefined" && typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
             if (steps.length !== (onboarding.state + 1)) {
-                completeForm("bankAdmin")
+                completeForm("tenantAdmin")
                 toast({
                     title: notificationMesage.SuccessfulSuperAdminCreation,
                     variant: "left-accent",
@@ -62,7 +56,7 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
                 status: "error"
             })
         }
-    }, [canNotSubmit, onboarding?.state, onboarding?.bankAdmin, steps])
+    }, [canNotSubmit, onboarding?.state, onboarding?.tenantAdmin, steps])
 
     const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
@@ -84,21 +78,21 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount(props: Cre
             <FormControl isRequired flexGrow={1} width="35%">
                 <FormLabel>First Name</FormLabel>
 
-                <Input placeholder="Jane" borderRadius="4px" value={onboarding?.bankAdmin?.firstName} disabled={true} />
+                <Input placeholder="Jane" borderRadius="4px" value={onboarding?.tenantAdmin?.firstName} disabled={true} />
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%" >
                 <FormLabel>Last name</FormLabel>
-                <Input placeholder="Doe" borderRadius="4px" value={onboarding?.bankAdmin?.lastName} disabled={true} />
+                <Input placeholder="Doe" borderRadius="4px" value={onboarding?.tenantAdmin?.lastName} disabled={true} />
 
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%">
                 <FormLabel>Email Address</FormLabel>
 
-                <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.bankAdmin?.email} disabled={true} />
+                <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.tenantAdmin?.email} disabled={true} />
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%" >
                 <FormLabel>Phone Number</FormLabel>
-                <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.bankAdmin?.mobileNo} disabled={true} />
+                <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.tenantAdmin?.mobileNo} disabled={true} />
 
             </FormControl>
         </Flex>

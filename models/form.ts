@@ -1,5 +1,5 @@
 
 export type formType = {
-    completed?: boolean,
-    postUrl?: string
+    completed: boolean,
+    postUrl: string
 }

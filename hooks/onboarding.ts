@@ -4,20 +4,20 @@ import { useEffect, useState } from "react";
 import { useLoading } from ".";
 import { links, onboardingTabs } from "../constants";
 import { getCookie, setCookie } from "../lib";
-import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Loading, Onboarding, Step, BankAdmin } from "../models";
+import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Loading, Onboarding, Step, tenantAdmin } from "../models";
 
 
 export const initialOnboardingData: Onboarding = {
     state: 0, tenant: {
         name: "",
-        bankAddress: "",
-        bankBranch: "",
-        bankId: "",
-        bankLocation: "",
-        bankLogo: "",
+        address: "",
+        branch: "",
+        tenantCode: "",
+        location: "",
+        logo: "",
         completed: false,
     },
-    bankAdmin: {
+    tenantAdmin: {
         firstName: "",
         lastName: "",
         email: "",
@@ -49,11 +49,11 @@ const checkPersistedData = () => {
 interface UseOnboardingReturn {
     steps: Step[],
     onboarding?: Onboarding,
-    addInfo: (onboardingKey: keyof Onboarding, stepKey: keyof Tenant | keyof BankAdmin | keyof InstitutionColorInfo, value: any) => void,
+    addInfo: (onboardingKey: keyof Onboarding, stepKey: keyof Tenant | keyof tenantAdmin | keyof InstitutionColorInfo, value: any) => void,
     completeForm: (onboardingKey: keyof Onboarding) => void,
     refresh: (onboardingKey: keyof Onboarding, state: number) => void,
     changeIsRefresh: defaultCallbackInitiator<boolean>,
-    resetForm: (onboardingKey: keyof Onboarding, data: Tenant | BankAdmin | InstitutionColorInfo, state?: number) => void,
+    resetForm: (onboardingKey: keyof Onboarding, data: Tenant | tenantAdmin | InstitutionColorInfo, state?: number) => void,
     previousState: () => void,
     loading: Loading,
     startLoading: () => void,
@@ -115,7 +115,7 @@ export default function useOnboarding(): UseOnboardingReturn {
     const stopLoading = () => {
         setLoading({ isLoading: false, text: "" })
     }
-    const addInfo = (onboardingKey: keyof Onboarding, stepKey: keyof Tenant | keyof BankAdmin | keyof InstitutionColorInfo, value: any) => {
+    const addInfo = (onboardingKey: keyof Onboarding, stepKey: keyof Tenant | keyof tenantAdmin | keyof InstitutionColorInfo, value: any) => {
         // debugger
         setOnboarding(prev => {
 
@@ -123,7 +123,7 @@ export default function useOnboarding(): UseOnboardingReturn {
             const returnedData: Onboarding = {
                 ...data,
                 [onboardingKey]: {
-                    ...data[onboardingKey] as Tenant | BankAdmin | InstitutionColorInfo,
+                    ...data[onboardingKey] as Tenant | tenantAdmin | InstitutionColorInfo,
                     [stepKey]: value
                 } as Tenant
             }
@@ -137,7 +137,7 @@ export default function useOnboarding(): UseOnboardingReturn {
             ...prev,
             state,
             [onboardingKey]: {
-                ...prev[onboardingKey] as Tenant | BankAdmin | InstitutionColorInfo,
+                ...prev[onboardingKey] as Tenant | tenantAdmin | InstitutionColorInfo,
                 completed: false
             }
         }))
@@ -149,13 +149,13 @@ export default function useOnboarding(): UseOnboardingReturn {
                 ...prev,
                 state: (prev.state as number) + 1,
                 [onboardingKey]: {
-                    ...prev[onboardingKey] as Tenant | BankAdmin | InstitutionColorInfo,
+                    ...prev[onboardingKey] as Tenant | tenantAdmin | InstitutionColorInfo,
                     completed: true
                 }
             }))
     }
 
-    const resetForm = (onboardingKey: keyof Onboarding, data: Tenant | BankAdmin | InstitutionColorInfo, state?: number) => {
+    const resetForm = (onboardingKey: keyof Onboarding, data: Tenant | tenantAdmin | InstitutionColorInfo, state?: number) => {
         setOnboarding(prev => (
             {
                 ...prev,
@@ -174,6 +174,6 @@ export default function useOnboarding(): UseOnboardingReturn {
             }))
     }
 
-    return { steps: onboardingTabs, onboarding, changeIsRefresh, addInfo, completeForm, refresh, resetForm, previousState, loading, startLoading, stopLoading }
+    return { steps: _.clone(onboardingTabs) as Step[], onboarding, changeIsRefresh, addInfo, completeForm, refresh, resetForm, previousState, loading, startLoading, stopLoading }
 }
 

@@ -41,13 +41,14 @@ export default function RegisterForm(props: any) {
             }
         } catch (error: any) {
             console.error({ getInterChangebyInterchangeIdError: error })
-            
-            toast({
-                status: "error",
-                title: typeof error.message === "undefined"? error: error.message,
-                isClosable: true,
-                variant: "left-accent"
-            })
+            if (typeof error.message !== "undefined" || typeof error !== "undefined") {
+                toast({
+                    status: "error",
+                    title: typeof error.message === "undefined" ? error : error.message,
+                    isClosable: true,
+                    variant: "left-accent"
+                })
+            }
             setLoading({ isLoading: false, text: "" })
         }
     }

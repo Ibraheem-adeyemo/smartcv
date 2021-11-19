@@ -1,5 +1,6 @@
-import { debounce } from "lodash"
-import { createContext, useState } from "react"
+import _ from "lodash"
+import { debounce, Function } from "lodash"
+import { ClassAttributes, createContext, Props, useState } from "react"
 import { UserManagementModals, userManagementTabs } from "../constants"
 import { UserManagementModal } from "../models"
 
@@ -9,7 +10,8 @@ export const UserManagementTabProviderContext = createContext({
     modals: UserManagementModals,
     handleTabSelection: (index: number) => { },
     handleSearchItem: debounce((searchText: string) => { }, 500),
-    handleToggleModal: (modalname: string) => {}
+    handleToggleModal: (modalInstance?: UserManagementModal) => { },
+    mutateData:(callBack: () => void) => {""}
 })
 
 interface UserManagementTabProviderProps {
@@ -29,16 +31,20 @@ export default function UserManagementTabProvider(props: UserManagementTabProvid
         setSearchText(searchText)
     }, 500)
 
-    const handleToggleModal = (modalName: string) => {
-        setModals(prev => prev.map((x, i) => (
-            {
-                ...x,
-                isOpen: x.name === modalName ? !x.isOpen : false
-            }
-        )))
+    const mutateData = (callBack: () => void) => {
+        callBack()
+    }
+
+    const handleToggleModal = (modalInstance?: UserManagementModal) => {
+        // debugger
+        if(typeof  modalInstance !== "undefined") {
+            setModals((prev) => _.map(prev, (x) => x.name === modalInstance.name?({...x, ...modalInstance}): x))
+        } else {
+            setModals(UserManagementModals)
+        }
     }
     return (
-        <UserManagementTabProviderContext.Provider value={{ searchText, tabs, modals, handleTabSelection, handleSearchItem, handleToggleModal }}>
+        <UserManagementTabProviderContext.Provider value={{ searchText, tabs, modals, handleTabSelection, handleSearchItem, handleToggleModal, mutateData }}>
             {props.children}
         </UserManagementTabProviderContext.Provider>
     )

@@ -5,7 +5,7 @@ import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 
-export default function TerminalsPerformance(props: any) {
+export default function TerminalsPerformance(_props: any) {
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState<StatsA[]>()
 
@@ -33,14 +33,7 @@ export default function TerminalsPerformance(props: any) {
       status: "green",
       percentage: "6.0%",
       days: "Last 7 days",
-    }, {
-      ...boxSize,
-      headerName: "Not Dispensing",
-      totalNumber: 120,
-      status: "red",
-      percentage: "6.0%",
-      days: "Last 7 days"
-    },]
+    }]
   }, [])
 
   useEffect(() => {

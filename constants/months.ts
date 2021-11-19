@@ -13,4 +13,4 @@ export enum MonthsEnum {
     December=12
 }
 
-export const months = ["January", "Februrary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+export const months: Readonly<string[]> = ["January", "Februrary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]

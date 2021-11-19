@@ -5,12 +5,18 @@ import React, { useMemo } from "react"
 import { CustomFilter, DropdownSearchFilter, } from "../component/stats"
 import { Authenticated } from "../component/layouts"
 import { Banks, channels, ChannelsEnum } from "../constants"
+import { SkeletonLoader } from "../component"
 const TerminalsPerformance = dynamic(() => import('../component/stats/terminals-performance'))
 const SuccessRate = dynamic(() => import('../component/stats/success-rate'))
 const ServiceStatus = dynamic(() => import('../component/stats/service-status'))
 const TerminalsUnderWatch = dynamic(() => import('../component/stats/terminals-under-watch'))
 const TopPerforminBanks = dynamic(() => import('../component/stats/top-performing-banks'))
 const TopTransactionMetric = dynamic(() => import('../component/stats/top-transaction-metric'))
+const TransactionBreakdown = dynamic(() => import('../component/stats/transaction-breakdown'))
+const TransactionMetric = dynamic(() => import('../component/stats/transaction-metric'))
+const UsageMetric = dynamic(() => import('../component/stats/usage-metric'))
+const InstitutionFilter = dynamic(() => import('../component/stats/institution-filter'))
+const ChannelFilter = dynamic(() => import('../component/stats/channel-filter'))
 
 const Dashboard = () => {
   const Filter = useMemo(() => DropdownSearchFilter, [])
@@ -19,16 +25,8 @@ const Dashboard = () => {
       <Flex w="100%" flexWrap="wrap" justifyContent="space-between" px="50px" alignItems="center">
         <Text variant="page-header" size="page-header">User Dashboard</Text>
         <Flex alignItems="center" gridGap="17px">
-          <Filter data={
-
-            [
-              { label: "All", value: "All", selected: true },
-              ...Banks.map((x, i) => ({ label: x, value: x, selected: false }))
-            ]
-          } label="Institution" />
-          <Filter data={channels.map((x, i) => ({value:x, label:x, selected: i===0?true:false}))
-          } label="Channel" />
-
+          <InstitutionFilter />
+          <ChannelFilter />
           <Tag><Text variant="dropdown-text-header" size="tag-text">Today</Text></Tag>
           <Tag><Text size="tag-text">This week</Text></Tag>
           <Tag><Text size="tag-text">This month</Text></Tag>
@@ -49,6 +47,16 @@ const Dashboard = () => {
         <Flex flexGrow={3}>
           <TerminalsUnderWatch />
         </Flex>
+        <Flex flexGrow={3}>
+          <TransactionMetric />
+        </Flex>
+        <Flex flexGrow={1}>
+          <UsageMetric />
+        </Flex>
+        <Flex flexGrow={1}>
+          <TransactionBreakdown />
+        </Flex>
+
         <Flex flexGrow={4} width6="70%">
           <TopPerforminBanks />
         </Flex>

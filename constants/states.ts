@@ -1,4 +1,4 @@
-export const states = [
+export const states: Readonly<Record<string, string|Number>[]> = [
     { "id": 1, "name": "Abia State" },
     { "id": 2, "name": "Adamawa State" },
     { "id": 3, "name": "Akwa Ibom State" },

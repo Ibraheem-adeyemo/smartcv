@@ -32,7 +32,7 @@ export default function TerminalsUnderWatch(props: any) {
       days: "Last 7 days"
     }, {
       ...boxSize,
-      headerName: "Not Dispensing",
+      headerName: "ATM Cassete Jam",
       totalNumber: 120,
       status: "red",
       percentage: "6.0%",

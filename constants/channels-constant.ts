@@ -5,4 +5,4 @@ export enum ChannelsEnum {
  Atm='Atm'
 }
 
-export const channels = [ChannelsEnum.Pos, ChannelsEnum.Web, ChannelsEnum.Mobile, ChannelsEnum.Atm]
+export const channels: Readonly<string[]> = [ChannelsEnum.Pos, ChannelsEnum.Web, ChannelsEnum.Mobile, ChannelsEnum.Atm]

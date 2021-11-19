@@ -1,14 +1,14 @@
-import { Modal, ModalOverlay, ModalContent, ModalBody, ModalHeader, ModalCloseButton, Button, ModalFooter, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, toast, useToast } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalBody, ModalHeader, ModalCloseButton, Button, ModalFooter, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
-import { CLIENT_ID, PASSPORT_AUTHORIZE_URL, PASSPORT_TOKEN_URL, SCOPE, SECRET } from "../../constants";
+import { CLIENT_ID, PASSPORT_TOKEN_URL, SCOPE, SECRET } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
-import { Loading, PassportLoginCredentials, BankAdmin } from "../../models";
+import { PassportLoginCredentials, tenantAdmin } from "../../models";
 
 type onClose = () => void
 const voidfunc = () => {
 
 }
-type SetUserAuthority = (superAdmin: BankAdmin) => void
+type SetUserAuthority = (superAdmin: tenantAdmin) => void
 interface SigninWithPassportProps {
     openModal: boolean,
     onCloseModal: onClose,
@@ -58,7 +58,7 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
                     },
                     body: urlencoded
                 })
-                const data = (await response.json()) as BankAdmin
+                const data = (await response.json()) as tenantAdmin
                 if (response.ok || response.status === 200 || response.status === 201) {
                     // debugger
                     props.setUserAuthority(data)

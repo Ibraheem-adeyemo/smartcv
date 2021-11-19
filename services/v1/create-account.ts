@@ -12,13 +12,13 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
             const requestBody = JSON.stringify({
                 tenant: {
                     name: body.tenant?.name,
-                    code: body.tenant?.bankId,
+                    code: body.tenant?.tenantCode,
                     domain: `www.${Names[getRandomInt(Names.length)].firstName}-${Names[getRandomInt(Names.length)].lastName}.${Names[getRandomInt(Names.length)].lastName}`,
                     slogan: "",
-                    logo: body.tenant.bankLogo.split(",")[1],
-                    address: body.tenant.bankAddress,
-                    location: body.tenant.bankLocation,
-                    branch: body.tenant.bankBranch,
+                    logo: body.tenant.logo.split(",")[1],
+                    address: body.tenant.address,
+                    location: body.tenant.location,
+                    branch: body.tenant.branch,
                     color: {
                         headerColor: body.institutionColorInfo.headerColor,
                         sidebarColour: body.institutionColorInfo.sidebarColor,
@@ -26,13 +26,13 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
                     }
                 },
                 tenantAdmin: {
-                    firstName: body.bankAdmin.firstName,
-                    lastName: body.bankAdmin.lastName,
-                    email: body.bankAdmin.email,
-                    password: body.bankAdmin.password,
-                    mobileNo: body.bankAdmin.mobileNo,
-                    tenantCode: body.tenant?.bankId,
-                    username: body.bankAdmin.email
+                    firstName: body.tenantAdmin.firstName,
+                    lastName: body.tenantAdmin.lastName,
+                    email: body.tenantAdmin.email,
+                    password: body.tenantAdmin.password,
+                    mobileNo: body.tenantAdmin.mobileNo,
+                    tenantCode: body.tenant?.tenantCode,
+                    username: body.tenantAdmin.email
                 }
                 // ...body.institutionColorInfo,
             })

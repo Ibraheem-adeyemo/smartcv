@@ -2,9 +2,10 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { ISWAdminView, UserManagementModal } from "../../models";
-import { methods, Roles, UserManagementModalNames, userManagementTabsName } from "../../constants";
+import { methods, Roles, UserManagementModalNames, UserManagementModals, userManagementTabsName } from "../../constants";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 import { validateEmail } from "../../lib";
+import _ from "lodash";
 
 export default function AddNewUser(_props: any) {
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
@@ -17,9 +18,10 @@ export default function AddNewUser(_props: any) {
         dateCreated: ""
     })
     const { validation, addField, inputData, validateAllCompulsoryFields } = useValidator<ISWAdminView>(["firstName", "lastName", "role", "email"])
-    const [selectedModal, setSelectedModal] = useState<UserManagementModal>()
+    const [selectedModal, setSelectedModal] = useState<UserManagementModal>(UserManagementModals[0])
     const [loading, changeLoading] = useLoading()
     const [isValidEmail, setIsValidEmail] = useState(false)
+    const [institutionColorModal, SetInstitutionColorModal] = useState(false)
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         e.stopPropagation()
         addField(e.target.id as keyof ISWAdminView)
@@ -30,11 +32,15 @@ export default function AddNewUser(_props: any) {
 
     }, [])
 
-    const saveUser = useCallback(() => {
-
+    const saveUser = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        // debugger
+        changeLoading((prev) => ({ isLoading: true, text: "Creating user" }))
+        handleToggleModal({ ...selectedModal, isSubmitted: !selectedModal.isSubmitted })
+        changeLoading((prev) => ({ isLoading: false, text: "" }))
     }, [form])
     useEffect(() => {
-        const modal = modals.find((x, i) => x.name === UserManagementModalNames.addNewUser)
+        // debugger
+        const modal = modals.find((x, i) => x.name === UserManagementModalNames.addNewUser) as UserManagementModal
         setSelectedModal(modal)
     }, [modals])
 
@@ -54,8 +60,8 @@ export default function AddNewUser(_props: any) {
 
     return (
         <>
-            {typeof form !== "undefined" && <form method={methods.post} action={form?.postUrl} onSubmit={saveUser}>
-                {typeof selectedModal !== "undefined" && <Modal size="xl" onClose={() => handleToggleModal(UserManagementModalNames.addNewUser)} isOpen={selectedModal?.isOpen} isCentered>
+            {typeof form !== "undefined" && <form>
+                {typeof selectedModal !== "undefined" && <Modal size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
                     <ModalOverlay />
                     <ModalContent bgColor="white" px="48px">
                         <ModalHeader>{UserManagementModalNames.addNewUser}</ModalHeader>
@@ -82,20 +88,25 @@ export default function AddNewUser(_props: any) {
                                 <FormControl isRequired id="role" flexGrow={1} width="35%" isInvalid={validation?.errors?.role !== "" && validation?.touched.role === "touched"}>
                                     <FormLabel>Role</FormLabel>
                                     <Select placeholder="Select Role" borderRadius="4px" value={form?.role} onChange={addData}>
-                                        {Roles?.map((x, i) => <option key={i} value={x}>{x}</option>)}
+                                        {_.map(Roles, (x: string, i) => <option key={i} value={x}>{x}</option>)}
                                     </Select>
                                     <FormErrorMessage>{validation?.errors.role}</FormErrorMessage>
                                 </FormControl>
+                                <FormControl>
+                                    <Button>Add Institution Colors</Button>
+                                </FormControl>
+                                
                             </Flex>
                         </ModalBody>
                         <ModalFooter>
                             <HStack justifyContent="right" spacing="20px" pt="100px">
-                                <Button variant="muted-primary-button" px="45px" py="8px" onClick={() => handleToggleModal(UserManagementModalNames.addNewUser)}>Cancel</Button>
-                                <Button variant="primary-button" px="115px" py="8px" isDisabled={!validateAllCompulsoryFields() || !isValidEmail} isLoading={loading?.isLoading} loadingText={typeof loading?.text === "undefined" ? "loading" : loading.text} type="submit">Save</Button>
+                                <Button variant="muted-primary-button" px="45px" py="8px" onClick={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })}>Cancel</Button>
+                                <Button variant="primary-button" px="115px" py="8px" isDisabled={!validateAllCompulsoryFields() || !isValidEmail} isLoading={loading?.isLoading} loadingText={typeof loading?.text === "undefined" ? "loading" : loading.text} onClick={saveUser}>Save</Button>
                             </HStack>
                         </ModalFooter>
                     </ModalContent>
                 </Modal>}
+
             </form>
             }
         </>)

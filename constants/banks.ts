@@ -1,1 +1,1 @@
-export const Banks = ["First Bank", "UBA", "GTCO", "Heritage Bank", "Access Bank", "Wema Bank"]
+export const Banks: Readonly<string[]> = ["First Bank", "UBA", "GTCO", "Heritage Bank", "Access Bank", "Wema Bank"]

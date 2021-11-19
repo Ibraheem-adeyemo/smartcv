@@ -7,10 +7,12 @@ import { UserManagementStat } from "../../models";
 import {AppCard} from "../app";
 
 export default function UserManagementStats(_props: any) {
-    const { data: userManagementStats, mutate, error } = useSWR<UserManagementStat[]>('/api/get-user-management-stats')
+    // const { data: userManagementStats, mutate, error } = useSWR<UserManagementStat[]>('/api/get-user-management-stats')
+    const userManagementStats = [] as UserManagementStat[]
+    let error;
     const GetStateIcon = useCallback(({ statName }: { statName: string }) => {
         switch (statName) {
-            case UserManagementStatsName.bankAdminUser:
+            case UserManagementStatsName.tenantAdminUser:
 
                 return <AvatarIcon />
             case UserManagementStatsName.createdBanks:
@@ -26,8 +28,8 @@ export default function UserManagementStats(_props: any) {
     }, [])
     return (
         <AppCard topic="">
-            {typeof userManagementStats !== "undefined" && typeof error !== "undefined" &&
-                userManagementStats.map((x, i) => <Flex p="19px" bgColor="brand.muted-background" flexGrow={1} gridGap="15px">
+            {typeof userManagementStats !== "undefined" && typeof error === "undefined" &&
+                userManagementStats.map((x, i) => <Flex key={i} p="19px" bgColor="brand.muted-background" flexGrow={1} gridGap="15px">
                     <HStack justifyContent="space-between">
                         <VStack spacing="14.5px">
                             <Text>{x.name}</Text>

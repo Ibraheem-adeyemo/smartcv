@@ -14,11 +14,11 @@ export default async function GetBanks(req:NextApiRequest, res: NextApiResponse)
         const data: TenantView[] = _.range(0, 178).map((x,i) =>
         ({
             name: Banks[bankRandomNumber[i]],
-            bankLogo: "/images/"+Banks[bankRandomNumber[i]].replace(" ", "_").toLowerCase() + ".png",
-            bankId: "7638GFTJ876",
+            logo: "/images/"+Banks[bankRandomNumber[i]].replace(" ", "_").toLowerCase() + ".png",
+            tenantCode: "7638GFTJ876",
             address: "Bank Address",
             dateCreated: (new Date()).getDate().toString(),
-            babnkSuperAdmin: "John Wick",
+            bankSuperAdmin: "John Wick",
             status: "John wick"
         }))
         setTimeout(()=>{}, 3000)

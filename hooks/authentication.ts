@@ -54,6 +54,7 @@ export default function useAuthentication() {
             const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
             // debugger
             if (shouldRedirect) {
+                setCookie("redirectUrl", window.location.pathname, 10)
                 window.location.href = links.login
             }
         }
@@ -72,7 +73,7 @@ export default function useAuthentication() {
             urlencoded.append(x, body[x as keyof TokenRequestBody])
         })
         try {
-            const response = await fetchJson<any, any>(PASSPORT_TOKEN_URL, {
+            const response = await fetchJson<any>(PASSPORT_TOKEN_URL, {
                 method: "POST",
                 headers: {
                     Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,

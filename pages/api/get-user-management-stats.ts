@@ -11,7 +11,7 @@ export async function GetUserManagementStats(eq: NextApiRequest, res: NextApiRes
                 totalCount: getRandomInt(3000)
             },
             {
-                name: UserManagementStatsName.bankAdminUser,
+                name: UserManagementStatsName.tenantAdminUser,
                 totalCount: getRandomInt(3000)
             },
             {

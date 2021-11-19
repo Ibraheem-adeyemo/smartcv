@@ -2,7 +2,7 @@ import { ButtonGroup, Button } from "@chakra-ui/button";
 import { Flex, HStack } from "@chakra-ui/layout";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { UserManagementSearch } from ".";
-import { UserManagementModalNames, userManagementTabs, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
+import { UserManagementModalNames, UserManagementModals, userManagementTabs, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 
 export default function UserManagementTabAndSearch() {
@@ -10,18 +10,16 @@ export default function UserManagementTabAndSearch() {
     const [showActionButton, setShowActionButton] = useState(false)
     const [showActionButtonText, setShowActionButtonText] = useState("")
     const showActionButtonMethod = useCallback(() => {
-        let modalName: string;
         switch (showActionButtonText) {
             case UserManagementTriggerButtons.addNewBank:
-                modalName = UserManagementModalNames.addNewBank
+                handleToggleModal({...UserManagementModals[1], isOpen: !UserManagementModals[1].isOpen})
                 break;
             case UserManagementTriggerButtons.addNewUser:
-                modalName = UserManagementModalNames.addNewUser
+                handleToggleModal({...UserManagementModals[0], isOpen: !UserManagementModals[0].isOpen})
                 break;
             default:
-                modalName = ""
+                ""
         }
-        handleToggleModal(modalName)
     }, [showActionButtonText])
     useEffect(() => {
         setShowActionButtonText((prev) => {

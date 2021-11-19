@@ -1,12 +1,9 @@
-import { Button } from "@chakra-ui/button";
-import { Badge, Box, Flex, Text } from "@chakra-ui/layout";
-import { FormControl, FormLabel, Input, Image, FormErrorMessage, AvatarBadge, CloseButton, useToast, useTheme, Select } from "@chakra-ui/react";
+import { Badge, Box, Flex, Text, Button, FormControl, FormLabel, Input, Image, FormErrorMessage, CloseButton, useToast, Select } from "@chakra-ui/react";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
 import { API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION, Images, notificationMesage } from "../../constants";
-import { useOnboarding } from "../../hooks";
 import _ from 'lodash'
-import { Tenant, InstitutionColorInfo, Loading, Onboarding, stepsProps, BankAdmin, APIResponse, State } from "../../models";
+import { Tenant, stepsProps, State } from "../../models";
 import useValidator from "../../hooks/validatoin";
 import { useRouter } from "next/router";
 import { OnboardingContext } from "../layouts";
@@ -36,7 +33,7 @@ export default function CreateBank(props: CreateBankProps) {
         const ele = (e.target as HTMLInputElement | HTMLSelectElement)
         addField(ele.id as keyof Tenant)
         let value = ""
-        if (ele.id === "bankLogo") {
+        if (ele.id === "logo") {
             let v = e as React.ChangeEvent<HTMLInputElement>
             const reader = new FileReader();
             const file = v.target.files as FileList
@@ -134,30 +131,30 @@ export default function CreateBank(props: CreateBankProps) {
                     <Input placeholder="Enter Bank Name" borderRadius="4px" value={onboarding?.tenant?.name} onChange={addData} />
                     <FormErrorMessage>{validation?.errors.name}</FormErrorMessage>
                 </FormControl>
-                <FormControl isRequired id="bankId" flexGrow={1} width="35%" isInvalid={validation?.errors?.bankId !== "" && validation?.touched.bankId === "touched"}>
+                <FormControl isRequired id="tenantCode" flexGrow={1} width="35%" isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
                     <FormLabel>Bank ID</FormLabel>
-                    <Input placeholder="Enter Bank ID" borderRadius="4px" value={onboarding?.tenant?.bankId} onChange={addData} />
-                    <FormErrorMessage>{validation?.errors.bankId}</FormErrorMessage>
+                    <Input placeholder="Enter Bank ID" borderRadius="4px" value={onboarding?.tenant?.tenantCode} onChange={addData} />
+                    <FormErrorMessage>{validation?.errors.tenantCode}</FormErrorMessage>
                 </FormControl>
-                <FormControl isRequired id="bankBranch" flexGrow={1} width="35%" isInvalid={validation?.errors?.bankBranch !== "" && validation?.touched.bankBranch === "touched"}>
+                <FormControl isRequired id="branch" flexGrow={1} width="35%" isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
                     <FormLabel>Bank Branch</FormLabel>
 
-                    <Input placeholder="Enter Bank Branch" borderRadius="4px" value={onboarding?.tenant?.bankBranch} onChange={addData} />
-                    <FormErrorMessage>{validation?.errors.bankBranch}</FormErrorMessage>
+                    <Input placeholder="Enter Bank Branch" borderRadius="4px" value={onboarding?.tenant?.branch} onChange={addData} />
+                    <FormErrorMessage>{validation?.errors.branch}</FormErrorMessage>
                 </FormControl>
-                <FormControl isRequired id="bankLocation" flexGrow={1} width="35%" isInvalid={validation?.errors?.bankLocation !== "" && validation?.touched.bankLocation === "touched"}>
-                    <FormLabel>Bank Locatoin</FormLabel>
-                    <Select borderRadius="4px" value={onboarding?.tenant?.bankLocation} onChange={addData} placeholder="Select a state">
+                <FormControl isRequired id="location" flexGrow={1} width="35%" isInvalid={validation?.errors?.location !== "" && validation?.touched.location === "touched"}>
+                    <FormLabel>Bank LocatIon</FormLabel>
+                    <Select aria-labelledby="state" borderRadius="4px" value={onboarding?.tenant?.location} onChange={addData} placeholder="Select a state">
                         {states?.map((x, i) =><option key={i} value={x.id}>{x.name}</option>)}
                     </Select>
-                    <FormErrorMessage>{validation?.errors.bankLocation}</FormErrorMessage>
+                    <FormErrorMessage>{validation?.errors.location}</FormErrorMessage>
                 </FormControl>
-                <FormControl isRequired id="bankAddress" flexGrow={2} width="100%" isInvalid={validation?.errors?.bankAddress !== "" && validation?.touched.bankAddress === "touched"}>
+                <FormControl isRequired id="address" flexGrow={2} width="100%" isInvalid={validation?.errors?.address !== "" && validation?.touched.address === "touched"}>
                     <FormLabel>Bank Address</FormLabel>
-                    <Input placeholder="Enter Bank Address" borderRadius="4px" value={onboarding?.tenant?.bankAddress} onChange={addData} />
-                    <FormErrorMessage>{validation?.errors.bankAddress}</FormErrorMessage>
+                    <Input placeholder="Enter Bank Address" borderRadius="4px" value={onboarding?.tenant?.address} onChange={addData} />
+                    <FormErrorMessage>{validation?.errors.address}</FormErrorMessage>
                 </FormControl>
-                <FormControl isRequired id="bankLogo" width="15%" flexGrow={1} isInvalid={validation?.errors?.bankLogo !== "" && validation?.touched.bankLogo === "touched"}>
+                <FormControl isRequired id="logo" width="15%" flexGrow={1} isInvalid={validation?.errors?.logo !== "" && validation?.touched.logo === "touched"}>
                     <FormLabel>Upload a Bank Logo</FormLabel>
                     <Input placeholder="Enter Bank Address" ref={fileRef} borderRadius="4px" type="file" sx={{
                         display: "none"
@@ -173,11 +170,11 @@ export default function CreateBank(props: CreateBankProps) {
                             </Flex>
                         </Flex>
                     </Button>
-                    <FormErrorMessage>{validation?.errors.bankLogo}</FormErrorMessage>
+                    <FormErrorMessage>{validation?.errors.logo}</FormErrorMessage>
                 </FormControl>
-                <FormControl id="bankLogo" w="25%" flexGrow={1} >
+                <FormControl id="logo" w="25%" flexGrow={1} >
                     <Box w="fit-content">
-                        {onboarding?.tenant?.bankLogo !== "" &&
+                        {onboarding?.tenant?.logo !== "" &&
 
                             <><Badge pos="absolute" borderRadius="full"><CloseButton onClick={(e) => {
                                 // debugger
@@ -186,7 +183,7 @@ export default function CreateBank(props: CreateBankProps) {
                                 fileRef.current?.addEventListener('change', addData)
                                 fileRef.current?.dispatchEvent(s)
                             }} /></Badge>
-                                <Image src={onboarding?.tenant?.bankLogo} h="127px" /></>}
+                                <Image src={onboarding?.tenant?.logo} h="127px" /></>}
                     </Box>
                 </FormControl>
             </Flex>

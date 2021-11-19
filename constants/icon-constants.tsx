@@ -8,6 +8,7 @@ import {TiTick} from 'react-icons/ti'
 import {MdOutlineInvertColors} from 'react-icons/md'
 import {BsGear} from 'react-icons/bs'
 import {GiCapitol} from 'react-icons/gi'
+import {GoPrimitiveDot} from 'react-icons/go'
 import { forwardRef } from "@chakra-ui/system"
 
 
@@ -37,3 +38,5 @@ export const SearchIcon =  forwardRef((props, ref) => <Icon as={AiOutlineSearch}
 export const CapitolIcon =  forwardRef((props, ref) => <Icon as={GiCapitol} {...props} ref={ref} />)
 
 export const AvatarIcon =  forwardRef((props, ref) => <Icon as={AiOutlineUser} {...props} ref={ref} />)
+
+export const DotIcon =  forwardRef((props, ref) => <Icon as={GoPrimitiveDot} {...props} ref={ref} />)

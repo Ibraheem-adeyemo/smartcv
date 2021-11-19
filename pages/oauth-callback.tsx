@@ -2,7 +2,8 @@ import { CircularProgress } from "@chakra-ui/progress"
 import { useToast, Flex } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { useContext, useEffect } from "react"
-import {  links, notificationMesage } from "../constants"
+import { links, notificationMesage } from "../constants"
+import { getCookie, setCookie } from "../lib"
 import { AuthContext } from "../provider/auth-provider"
 
 export default function OauthCallback() {
@@ -14,12 +15,18 @@ export default function OauthCallback() {
         const url = new URL(`${window.location.protocol}//${window.location.host}${router.asPath}`).search
         const code = new URLSearchParams(url).get("code");
         if (typeof window !== "undefined" && typeof code !== "undefined") {
-            debugger
+            // debugger
             loginWithPassport(code as string).then(() => {
-                debugger
-                router.push(links.dashboard)
+                // debugger 
+                if (getCookie("redirectUrl") !== "") {
+                    const redirectUrl = getCookie("redirectUrl")
+                    setCookie("redirectUrl", "", -10)
+                    router.push(redirectUrl)
+                } else {
+                    router.push(links.dashboard)
+                }
             }).catch((err) => {
-                debugger
+                // debugger
                 typeof err !== "undefined" ?
                     toast({
                         status: "error",

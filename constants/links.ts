@@ -1,4 +1,4 @@
-import { PASSPORT_AUTHORIZE_URL, CLIENT_ID, SCOPE, RESPONSE_TYPE } from ".";
+import { PASSPORT_AUTHORIZE_URL, CLIENT_ID, SCOPE, RESPONSE_TYPE, API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION } from ".";
 
 export enum links {
     index="/",
@@ -14,6 +14,10 @@ export enum links {
     notFound="/404"
 }
 
-export const apiUrls = {
-    passportUrl:`${PASSPORT_AUTHORIZE_URL}?client_id=${CLIENT_ID}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=`
+export const apiUrls: Readonly<Record<string, string>> = {
+    passportUrl:`${PASSPORT_AUTHORIZE_URL}?client_id=${CLIENT_ID}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=`,
+    states:`${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/location/states`,
+    tenantAdmin:`/api/get-bank-admins`,
+    iswAdmin:`/api/get-isw-admins`,
+    tenant:`${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/tenant`
 }

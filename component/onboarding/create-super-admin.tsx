@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { notificationMesage, TickIcon } from "../../constants";
-import { Tenant, Onboarding, stepsProps, BankAdmin } from "../../models";
+import { Tenant, Onboarding, stepsProps, tenantAdmin } from "../../models";
 import { OnboardingContext } from "../layouts";
 
 interface CreateSuperAdminProps extends stepsProps {
@@ -22,16 +22,16 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
     
     const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState } = useContext(OnboardingContext)
     const router = useRouter()
-    const [authenticatedUser, setAuthenticatedUser] = useState<BankAdmin>()
+    const [authenticatedUser, setAuthenticatedUser] = useState<tenantAdmin>()
     const [accordionindex, setAccordionindex] = useState<number>()
     const [openModal, setOpenModal] = useState<boolean>()
     const toast = useToast()
     
-    const setUserAuthority = (user: BankAdmin) => {
+    const setUserAuthority = (user: tenantAdmin) => {
         // debugger
         // setAuthenticatedUser(user)
         onCloseModal()
-        resetForm("bankAdmin", user)
+        resetForm("tenantAdmin", user)
         toast({
             title: notificationMesage.AccountVerified,
             status: "success",
@@ -45,20 +45,20 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
     }
 
     useEffect(() => {
-        refresh("bankAdmin", 1)
+        refresh("tenantAdmin", 1)
     }, [])
     useEffect(() => {
-        if (typeof onboarding?.bankAdmin !== "undefined") {
-            if (onboarding.bankAdmin.access_token !== "") {
+        if (typeof onboarding?.tenantAdmin !== "undefined") {
+            if (onboarding.tenantAdmin.access_token !== "") {
                 setAccordionindex(0)
-            } else if(onboarding.bankAdmin.confirmPassword !== "") {
+            } else if(onboarding.tenantAdmin.confirmPassword !== "") {
                 setAccordionindex(1)
             }
         } else {
 
             setAccordionindex(-1)
         }
-    }, [onboarding?.bankAdmin])
+    }, [onboarding?.tenantAdmin])
     useEffect(() => {
         if (typeof onboarding !== "undefined" && typeof steps !== "undefined" && typeof props.step !== "undefined") {
             // debugger

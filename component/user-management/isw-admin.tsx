@@ -1,8 +1,9 @@
+import { useToast } from "@chakra-ui/react";
 import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
-import { UserManagementModalNames } from "../../constants";
+import { apiUrls, UserManagementModalNames } from "../../constants";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
@@ -14,8 +15,10 @@ function ISWAdminTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: iswAdmin, mutate, error } = useSWR<Paginate<ISWAdminView, string>>(`/api/get-isw-admins?page=${pageNumber}&countPerPage=${countPerPage}`)
-
+    const { data: iswAdmin, mutate, error } = useSWR<Paginate<ISWAdminView>>(`${apiUrls.iswAdmin}?page=${pageNumber}&countPerPage=${countPerPage}`)
+    const toast = useToast()
+    
+    const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
     const data = useMemo(() => ({
         columns: [
             {
@@ -46,18 +49,44 @@ function ISWAdminTable(_props: any) {
                 }
             },
         ],
-        data: iswAdmin?.data as ISWAdminView[]
-    }), [iswAdmin])
+        data: typeof iswAdmin !== "undefined" && typeof error ==="undefined"? iswAdmin?.data as ISWAdminView[]:[]
+    }), [iswAdmin, error])
 
     useEffect(() => {
-        if (typeof iswAdmin !== "undefined") {
-            setPaginationProps(iswAdmin.totalData)
+        if(typeof error !== "undefined") {
+            toast({
+                status:"error",
+                title: typeof error.message === "undefined"? error:error.message,
+                variant:"left-accent",
+                isClosable:true
+            })
+        }
+    }, [error])
+
+    useEffect(() => {
+        if(typeof iswAdmin !== "undefined" && typeof iswAdmin.totalData !== "undefined") {
+            setPaginationProps(iswAdmin.totalData )
         }
     }, [iswAdmin])
 
+    
+
+    useEffect(() => {
+        
+        debugger
+        const selectedModal = modals.some(x => x.isSubmitted)
+        if(selectedModal) {
+            mutateData(() => {
+                debugger
+                mutate()
+                handleToggleModal()
+            })
+        }
+    }, [modals])
 
 
-    return (<AppTable<ISWAdminView, string> columns={data?.columns} rows={data.data as ISWAdminView[]} actions={data.actions} />)
+
+    return (<AppTable<ISWAdminView> columns={data?.columns} rows={data.data as ISWAdminView[]} actions={data.actions} />)
 
 }
 

@@ -2,9 +2,9 @@ import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Banks, Names, SECRET } from "../../constants";
 import { getRandomInt } from "../../lib";
-import { BankAdmin, TenantAdminView, Paginate } from "../../models";
+import { tenantAdmin, TenantAdminView, Paginate } from "../../models";
 
-export default async function GetBankAdmins(req:NextApiRequest, res: NextApiResponse) {
+export default async function GettenantAdmins(req:NextApiRequest, res: NextApiResponse) {
     // debugger
     try {
         // const token = await getToken({req, secret: SECRET})

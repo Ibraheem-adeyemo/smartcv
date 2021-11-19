@@ -1,13 +1,13 @@
 import { Flex, Text, VStack } from "@chakra-ui/layout";
-import { Button, FormErrorMessage, Input, InputGroup, InputLeftElement, InputRightElement, Skeleton } from "@chakra-ui/react";
+import { Button, Input, Skeleton } from "@chakra-ui/react";
 import _ from "lodash";
 import { range } from "lodash";
 import router from "next/router";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
-import { CURRENT_API_VERSION, PickerIcon } from "../../constants";
-import { fetchJson, validateexColor } from "../../lib";
-import { Onboarding, Tenant, BankAdmin, InstitutionColorInfo } from "../../models";
+import { PickerIcon } from "../../constants";
+import { validateHexColor } from "../../lib";
+import { Onboarding, tenantAdmin, InstitutionColorInfo } from "../../models";
 import { OnboardingContext } from "../layouts";
 
 export default function InstitutionCOlors(props: any) {
@@ -15,7 +15,7 @@ export default function InstitutionCOlors(props: any) {
     const { steps, onboarding, addInfo, resetForm, previousState, loading } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
     const headerColorRef = useRef<HTMLInputElement>(null)
-    const sidbarColorRef = useRef<HTMLInputElement>(null)
+    const sidebarColorRef = useRef<HTMLInputElement>(null)
     const buttonColorRef = useRef<HTMLInputElement>(null)
     const [validation, setValidation] = useState<string[]>()
 
@@ -53,7 +53,7 @@ export default function InstitutionCOlors(props: any) {
             if (props.step - 1 > -1) {
                 step = steps[props.step - 1]
             }
-            if ((onboarding[step.key as keyof Onboarding] as BankAdmin).completed === false) {
+            if ((onboarding[step.key as keyof Onboarding] as tenantAdmin).completed === false) {
                 previousState()
                 router.push(step.url)
             }
@@ -73,7 +73,7 @@ export default function InstitutionCOlors(props: any) {
             const value = (onboarding?.institutionColorInfo as InstitutionColorInfo)[x as keyof InstitutionColorInfo]
             if (value === "") {
                 return "This field cannot be empty"
-            } else if (!validateexColor(value as string)) {
+            } else if (!validateHexColor(value as string)) {
                 return "This hexcode is invalid"
             }
             return ""
@@ -154,10 +154,10 @@ export default function InstitutionCOlors(props: any) {
                     <Flex bgColor="brand.muted-background" borderRadius="8px" w="100%" border={(typeof validation !== "undefined" && validation[1] !== "") ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.sidebarColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
-                                sidbarColorRef.current?.click()
+                                sidebarColorRef.current?.click()
                             }
                         }>
-                            <Input visibility="hidden" ref={sidbarColorRef} name="sidebarColor" onChange={addData} type="color" w="40px" h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.sidebarColor} />
+                            <Input visibility="hidden" ref={sidebarColorRef} name="sidebarColor" onChange={addData} type="color" w="40px" h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.sidebarColor} />
                         </Button>
                         <Input placeholder="Side menu & accents eg. #04257F" value={onboarding?.institutionColorInfo?.sidebarColor} border="0" bgColor="brand.muted-background" onInput={setSidebarColor} />
                         <PickerIcon />

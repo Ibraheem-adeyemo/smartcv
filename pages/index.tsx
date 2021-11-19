@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect } from 'react'
 import { links } from '../constants'
-import { getCookie } from '../lib'
+import { getCookie, setCookie } from '../lib'
 import { AuthContext } from '../provider/auth-provider'
 
 const Home: NextPage = () => {
@@ -19,14 +19,22 @@ const Home: NextPage = () => {
     }
   }, [])
   useEffect(() => {
-    debugger
+    // debugger
     if (typeof window !== "undefined") {
       if (getCookie("token") === "") {
+        // setCookie("redirectUrl", router.asPath, 10)
         router.push(links.login)
       }
       else if (typeof user !== "undefined" || typeof error !== "undefined") {
         if (typeof user !== "undefined") {
-          router.push(links.dashboard)
+          debugger
+          if(getCookie("redirectUrl") !== "") {
+            const redirectUrl = getCookie("redirectUrl")
+            setCookie("redirectUrl", "", -10)
+            router.push(redirectUrl)
+          } else {
+            router.push(links.dashboard)
+          }
         } else if (typeof error !== "undefined") {
           toast({
             title: typeof error.message !== "undefined" ? error.message : error,
@@ -34,6 +42,7 @@ const Home: NextPage = () => {
             variant: "left-accent",
             isClosable: true
           })
+          // setCookie("redirectUrl", router.asPath, 10)
           router.push(links.login)
         }
       }
