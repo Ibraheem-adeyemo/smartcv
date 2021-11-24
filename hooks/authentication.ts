@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { apiUrls, AuthenticatedPage, CLIENT_ID, GRANT_TYPE, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
+import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, GRANT_TYPE, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie } from '../lib'
-import { AuthModel, TokenRequestBody } from '../models/auth'
+import { AuthModel, TokenRequestBody } from '../models'
 export default function useAuthentication() {
-    const { data: user, mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie("token") == "" ? null : PASSPORT_PROFILE_URL)
+    // const url = "/api/passport"
+    const url = PASSPORT_PROFILE_URL
+    const { data: user, mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie("token") == "" ? null : url)
     const [countFlag, setCoountFlag] = useState(0)
     // const [user, setUser] = useState<any>()
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie("token") : "")
@@ -25,7 +27,8 @@ export default function useAuthentication() {
         }
     }
     const signIn = () => {
-        window.location.href = `${apiUrls.passportUrl}${window.location.protocol}//${window.location.host}/${REDIRECT_URI}`
+        window.location.href = `${apiUrlsv1.passportUrl}${window.location.protocol}//${window.location.host}/${REDIRECT_URI}`
+        // loginWithPassport()
     }
 
     useEffect(() => {
@@ -49,7 +52,7 @@ export default function useAuthentication() {
     }, [user])
 
     useEffect(() => {
-        
+
         if ((typeof user === "undefined" && typeof error !== "undefined") || token === "") {
             const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
             // debugger
@@ -60,34 +63,54 @@ export default function useAuthentication() {
         }
     }, [token])
 
-    const loginWithPassport = async (code: string) => {
+    const loginWithPassport = async (code?: string) => {
         // debugger
-        const body = {
-            client_id: CLIENT_ID,
-            redirect_uri: `${window.location.protocol}//${window.location.host}/${REDIRECT_URI}`,
-            grant_type: GRANT_TYPE,
-            code: code
-        }
-        const urlencoded = new URLSearchParams();
-        Object.keys(body).forEach((x) => {
-            urlencoded.append(x, body[x as keyof TokenRequestBody])
-        })
-        try {
-            const response = await fetchJson<any>(PASSPORT_TOKEN_URL, {
-                method: "POST",
-                headers: {
-                    Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: urlencoded
-            })
-            // debugger
-            if (typeof response !== "undefined") {
-                postLoginAction(response.access_token)
-                mutate()
+        if (typeof code !== "undefined") {
+            const body = {
+                client_id: CLIENT_ID,
+                redirect_uri: `${window.location.protocol}//${window.location.host}/${REDIRECT_URI}`,
+                grant_type: GRANT_TYPE,
+                code: code
             }
-        } catch (error) {
-            throw error
+            const urlencoded = new URLSearchParams();
+            Object.keys(body).forEach((x) => {
+                urlencoded.append(x, body[x as keyof TokenRequestBody])
+            })
+            try {
+                const response = await fetchJson<any>(PASSPORT_TOKEN_URL, {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: urlencoded
+                })
+                // debugger
+                if (typeof response !== "undefined") {
+                    postLoginAction(response.access_token)
+                    mutate()
+                }
+            } catch (error) {
+                throw error
+            }
+        } else {
+            try {
+                const response = await fetchJson<any>("/api/passport-token", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                })
+                // debugger
+                if (typeof response !== "undefined") {
+                    postLoginAction(response.access_token)
+                    mutate()
+                    window.location.href=links.dashboard
+                }
+            } catch (error) {
+                throw error
+            }
         }
 
     }

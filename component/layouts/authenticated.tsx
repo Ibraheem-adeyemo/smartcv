@@ -1,9 +1,9 @@
 import Icon from "@chakra-ui/icon";
 import { Flex, Grid, GridItem, Text } from "@chakra-ui/layout";
 import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { dashboardIcon, terminalsIcon, reportingIcon, userManagementIcon, auditIcon, systemSettingsIcon, links } from "../../constants";
+import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, transactionMonitoringIcon, channelsMonitoringIcon } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
-import { As, Avatar, Button, ComponentWithAs, Menu, MenuButton, MenuDivider, MenuItem, MenuList } from "@chakra-ui/react";
+import { As, Avatar, Button, ComponentWithAs, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
 import { AuthContext } from "../../provider/auth-provider";
 import { AppLink } from "../app";
@@ -21,18 +21,23 @@ interface MenuListItem {
 export default function AuthenticatedLayout(props: AuthenticatedLayout) {
     const { user, signOut, error } = useContext(AuthContext)
     const router = useRouter()
-    const menuList: MenuListItem[] = useMemo(() => ([{
+    const [loading, setLoading] = useState(true)
+    // console.log({ session })
+
+    const MenuLists = useCallback(() => {
+        
+    const menuList: MenuListItem[] = [{
         icon: dashboardIcon,
         name: "Dashboard",
         link: links.dashboard
     }, {
-        icon: terminalsIcon,
-        name: "Terminals",
+        icon: transactionMonitoringIcon,
+        name: "Transaction Monitoring",
         link: "/"
     }, {
-        icon: reportingIcon,
-        name: "Reporting",
-        link: ""
+        icon: channelsMonitoringIcon,
+        name: "Channels Monitoring",
+        link: links.channelsMonitoring
     }, {
         icon: userManagementIcon,
         name: "user Management",
@@ -45,11 +50,7 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
         icon: systemSettingsIcon,
         name: "System Settings",
         link: ""
-    }]), [])
-    const [loading, setLoading] = useState(true)
-    // console.log({ session })
-
-    const MenuLists = useCallback(() => {
+    }]
         return <>
             {menuList.map((x, i) =>
                 <AppLink key={i} href={x.link ? x.link : "/"} d="flex" gridGap="20px" role="group"
@@ -84,7 +85,7 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
                     <Text color="brand.muted">{x.name}</Text>
                 </AppLink>)}
         </>
-    }, [menuList])
+    }, [])
 
     useEffect(() => {
         // setTimeout(() => {
@@ -115,41 +116,52 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
                     h="89px">
                     <InterswitchLogo variant="sidbar-logo" />
                 </Flex>
-                {typeof user !== "undefined" && typeof error === "undefined" &&
-                    <Flex alignItems="center" pr="39px">
-                        <Menu>
-                            <MenuButton as={Button} variant="just-text">
-                                <Flex gridGap="42px" alignItems="center">
-                                    <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {user?.firstName}</Text>
+                <Flex alignItems="center" pr="39px">
+                    <Menu>
+                        <MenuButton as={Button} variant="just-text">
+                            <Flex gridGap="42px" alignItems="center">
 
-                                    <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" />
+                                {typeof user === "undefined" && typeof error === "undefined" && <> <SkeletonLoader rows={1} width="100px" height="15px" columns={1} /> <SkeletonCircle size="25" /></>}
+                                {typeof user !== "undefined" && typeof error === "undefined" &&
+                                    <><Text size="dropdown-text" variant="dropdown-text-header"> Hello, {user?.firstName}</Text>
+
+                                        <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" /> </>
+                                }
+
+                            </Flex>
+                        </MenuButton>
+                        <MenuList d="flex" gridGap="1px" flexDir="column" px="18px" pt="22px">
+                            <MenuItem as={Flex} gridGap="11px" alignItems="center">
+
+                                {typeof user === "undefined" && typeof error === "undefined" && <SkeletonCircle size="25" />}
+                                {typeof user !== "undefined" && typeof error === "undefined" && <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" />}
+                                <Flex flexDir="column" gridGap="1px">
+                                    {typeof user !== "undefined" && typeof error === "undefined" &&
+                                        <>
+                                            <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {user?.firstName}</Text>
+                                            <Text variant="small-uted-tex"> {user?.email}</Text>
+                                        </>
+                                    }
+
+                                    {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={2} width="100px" height="15px" columns={1} />}
+
                                 </Flex>
-                            </MenuButton>
-                            <MenuList d="flex" gridGap="1px" flexDir="column" px="18px" pt="22px">
-                                <MenuItem as={Flex} gridGap="11px" alignItems="center">
-                                    <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" />
-                                    <Flex flexDir="column" gridGap="1px">
-                                        <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {user?.firstName}</Text>
-                                        <Text variant="small-uted-tex"> {user?.email}</Text>
+                            </MenuItem>
+                            <MenuDivider />
+                            <MenuItem>
+                                {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={1} width="100px" height="15px" columns={1} />}
 
-                                    </Flex>
-                                </MenuItem>
-                                <MenuDivider />
-                                <MenuItem>
-                                    <Text size="dropdown-tes">Profile and Preferences</Text>
-                                </MenuItem>
-                                <MenuDivider />
-                                <MenuItem onClick={() => signOut()}>
-                                    <Text size="dropdown-tes">Signout</Text>
-                                </MenuItem>
-                                <MenuDivider />
-                            </MenuList>
-                        </Menu>
-                    </Flex>
-                }
-                {
-                    typeof user === "undefined" && typeof error === "undefined" && <Flex h="100%" w="100%" justify="center"  pr="39px"><SkeletonLoader rows={1} height="80%" width="100%" columns={1} /></Flex>
-                }
+                                {typeof user !== "undefined" && typeof error === "undefined" && <Text size="dropdown-tes">Profile and Preferences</Text>}
+                            </MenuItem>
+                            <MenuDivider />
+                            <MenuItem onClick={() => signOut()}>
+                                {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={1} width="100px" height="15px" columns={1} />}
+                                {typeof user !== "undefined" && typeof error === "undefined" && <Text size="dropdown-tes">Signout</Text>}
+                            </MenuItem>
+                            <MenuDivider />
+                        </MenuList>
+                    </Menu>
+                </Flex>
             </GridItem>
             <GridItem
                 gridArea="sidebar"
@@ -161,19 +173,19 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
                 ml="40px"
                 overflowX="auto"
             >
-                {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={1} height="90%" width="80%" columns={1} />}
+                {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={5} width="300px" columns={1} />}
                 {typeof user !== "undefined" && typeof error === "undefined" && <MenuLists />}
             </GridItem>
-            {typeof user === "undefined" && typeof error === "undefined" && <Flex d="flex" w="100%" h="100%"> <SkeletonLoader rows={1} height="100%" width="100%" columns={1} /></Flex>}
+            {typeof user === "undefined" && typeof error === "undefined" && <GridItem d="flex" w="100%" alignItems="center" px="50px">  <SkeletonLoader rows={1} width="200px" height="20px" columns={1} /></GridItem>}
             {typeof user !== "undefined" && typeof error === "undefined" &&
                 <GridItem d="flex" w="100%" alignItems="center"> {props.pageHeader}</GridItem>
             }
 
 
             {typeof user === "undefined" && typeof error === "undefined" && <Flex w="100%" h="100%"
-                    pl="50px"
-                    pr="55px"
-                    py="30px"> <SkeletonLoader rows={1} height="100%" width="100%" columns={1} /></Flex>}
+                pl="50px"
+                pr="55px"
+                py="30px"> <SkeletonLoader rows={1} height="100%" width="100%" columns={1} /></Flex>}
             {typeof user !== "undefined" && typeof error === "undefined" &&
                 <GridItem
                     gridArea="main"

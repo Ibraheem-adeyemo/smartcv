@@ -1,28 +1,27 @@
 import { toast, useToast } from "@chakra-ui/react"
 import { useToken } from "@chakra-ui/system"
 import _ from "lodash"
-import React, { useEffect, useMemo } from "react"
+import React, { useContext, useEffect, useMemo } from "react"
 import useSWR from "swr"
-import { DropdownSearchFilter } from "."
+import { DropdownSearchFilter as Filter } from "."
 import { SkeletonLoader } from ".."
-import { apiUrls, Banks } from "../../constants"
+import { apiUrlsv1, Banks } from "../../constants"
 import { TenantView } from "../../models"
+import { StatsContext } from "../../provider/stats-provider"
 
 export default function (_props: any) {
-    const apiUrl = typeof window !== "undefined" ? apiUrls.tenant : null
-    const { data: institutions, mutate, error } = useSWR<TenantView[]>(apiUrl)
-    const Filter = useMemo(() => DropdownSearchFilter, [])
+    const {selectedTenantCode, institutions, institutionsError, changeSelectedTenantCode} = useContext(StatsContext)
     const toast = useToast()
     useEffect(() => {
-        if (typeof error !== "undefined") {
+        if (typeof institutionsError !== "undefined") {
             toast({
-                title: error,
+                title: institutionsError,
                 status: "error",
                 isClosable: true,
                 variant: "left-accent"
             })
         }
-    }, [error])
+    }, [institutionsError])
 
     return (
         <>
@@ -31,13 +30,13 @@ export default function (_props: any) {
                     data={
 
                         [
-                            { label: "All", value: "All", selected: true },
-                            ..._.map(institutions, (x, i) => ({ label: x.name, value: x.name, selected: false }))
+                            { label: "All", value: "0", selected: selectedTenantCode === "0" },
+                            ..._.map(institutions, (x, i) => ({ label: x.name, value: x.code, selected: x.code === selectedTenantCode }))
                         ]
-                    } label="Institution" />
+                    } label="Institution" onSelected={(e) => changeSelectedTenantCode(e.value)} />
             }
             {
-                typeof institutions === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={1} columns={1} width="100px" height="30px" />
+                typeof institutions === "undefined" && typeof institutionsError === "undefined" && <SkeletonLoader rows={1} columns={1} width="100px" height="30px" />
             }
         </>
     )

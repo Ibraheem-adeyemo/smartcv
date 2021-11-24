@@ -8,7 +8,8 @@ export interface TenantView {
     bankSuperAdmin: string,
     status: string,
     location:string,
-    branch:string
+    branch:string,
+    code:string
 }
 export interface TenantAdminView {
     firstName: string,

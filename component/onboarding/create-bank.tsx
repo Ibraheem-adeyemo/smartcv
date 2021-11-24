@@ -144,7 +144,7 @@ export default function CreateBank(props: CreateBankProps) {
                 </FormControl>
                 <FormControl isRequired id="location" flexGrow={1} width="35%" isInvalid={validation?.errors?.location !== "" && validation?.touched.location === "touched"}>
                     <FormLabel>Bank LocatIon</FormLabel>
-                    <Select aria-labelledby="state" borderRadius="4px" value={onboarding?.tenant?.location} onChange={addData} placeholder="Select a state">
+                    <Select borderRadius="4px" value={onboarding?.tenant?.location} onChange={addData} placeholder="Select a state">
                         {states?.map((x, i) =><option key={i} value={x.id}>{x.name}</option>)}
                     </Select>
                     <FormErrorMessage>{validation?.errors.location}</FormErrorMessage>

@@ -28,6 +28,7 @@ export default function UserManagementStats(_props: any) {
     }, [])
     return (
         <AppCard topic="">
+            <>
             {typeof userManagementStats !== "undefined" && typeof error === "undefined" &&
                 userManagementStats.map((x, i) => <Flex key={i} p="19px" bgColor="brand.muted-background" flexGrow={1} gridGap="15px">
                     <HStack justifyContent="space-between">
@@ -44,7 +45,7 @@ export default function UserManagementStats(_props: any) {
                     </HStack>
                 </Flex >)
 
-            }
+            }</>
         </AppCard >
     )
 }

@@ -27,7 +27,7 @@ const Home: NextPage = () => {
       }
       else if (typeof user !== "undefined" || typeof error !== "undefined") {
         if (typeof user !== "undefined") {
-          debugger
+          // debugger
           if(getCookie("redirectUrl") !== "") {
             const redirectUrl = getCookie("redirectUrl")
             setCookie("redirectUrl", "", -10)

@@ -5,6 +5,8 @@ export interface StatsA {
     status: string;
     percentage: string;
     days: string;
+    prefix:string,
+    suffix:string
 }
 
 export interface StatsB {

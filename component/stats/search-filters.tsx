@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text, Menu, MenuButton, MenuList, MenuItem, Input } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { debounce } from 'lodash';
+import _, { debounce } from 'lodash';
 import { DropdownIcon } from "../../constants";
 
 
@@ -12,7 +12,8 @@ const debouncedFetchData = debounce((query: string, cb: ResultFromSearch, data: 
 }, 500);
 interface DropdownSearchFilterProps {
     data: DropdownContent[],
-    label?: string
+    label?: string,
+    onSelected?: (selectedItem: DropdownContent) => void
 }
 interface DropdownContent {
     label: any,
@@ -24,6 +25,7 @@ export default function DropdownSearchFilter(props: DropdownSearchFilterProps) {
     const [dropdownContent, setDropdownContent] = useState<DropdownContent[]>()
     const [query, setQuery] = useState<string>()
     useEffect(() => {
+        // debugger
         setDropdownContent(props.data.map((x, i) => (
             typeof x === "string" ? {
                 label: x,
@@ -55,6 +57,18 @@ export default function DropdownSearchFilter(props: DropdownSearchFilterProps) {
 
     }, [])
 
+    useEffect(() => {
+        if(typeof dropdownContent !== "undefined" && dropdownContent.length > 0) {
+            // debugger
+            const selectedItem = _.find(dropdownContent, (content) => content.selected)
+            if(typeof selectedItem !== "undefined") {
+                if(typeof props.onSelected !== "undefined") {
+                    // debugger
+                    props.onSelected(selectedItem)
+                }
+            }
+        }
+    }, [dropdownContent])
     return (
         <Menu onOpen={() => setTimeout(() => ref.current?.focus(), 500)}>
             <MenuButton as={Button} h="26px" px="12px" py="3px" rightIcon={<DropdownIcon />}>

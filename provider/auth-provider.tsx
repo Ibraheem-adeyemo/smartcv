@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { useAuthentication } from "../hooks";
+import { ComponentWithChildren } from "../models";
 
 export const AuthContext = createContext<ReturnType<typeof useAuthentication>>({
     user: undefined,
@@ -7,10 +8,9 @@ export const AuthContext = createContext<ReturnType<typeof useAuthentication>>({
     error:undefined,
     signIn: () => (""),
     signOut: () => (""),
-    loginWithPassport: async (code: string) =>{}
+    loginWithPassport: async (code?: string) =>{}
 })
-interface AuthProviderProps {
-    children: JSX.Element
+interface AuthProviderProps extends ComponentWithChildren {
 }
 export default function AuthProvider(props: AuthProviderProps) {
 

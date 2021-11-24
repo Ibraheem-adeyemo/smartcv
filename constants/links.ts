@@ -11,13 +11,18 @@ export enum links {
     institutionColors="/onboarding/institution-colors",
     onboarding="/onboarding",
     onboardingSuccessPage="/onboarding/success-page",
-    notFound="/404"
+    notFound="/404",
+    channelsMonitoring="/channels-monitoring"
 }
 
-export const apiUrls: Readonly<Record<string, string>> = {
+export const apiUrlsv1: Readonly<Record<string, string>> = {
     passportUrl:`${PASSPORT_AUTHORIZE_URL}?client_id=${CLIENT_ID}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=`,
     states:`${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/location/states`,
     tenantAdmin:`/api/get-bank-admins`,
     iswAdmin:`/api/get-isw-admins`,
-    tenant:`${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/tenant`
+    tenant:`${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/tenant`,
+    atmCount: `${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/monitor/atm/count`,
+    atmInService:`${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/monitor/atm/in-service`,
+    atmOutOfService:`${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/monitor/atm/offline`,
+    atmInSupervisor:`${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/monitor/atm/supervisor`
 }

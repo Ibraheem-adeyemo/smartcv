@@ -2,18 +2,18 @@ import _ from "lodash";
 import React, { useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
-import { TenantAdminView, Paginate } from "../../models";
+import { TenantAdminView, Paginate, APIResponse } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
 import { useToast } from "@chakra-ui/react";
-import { apiUrls } from "../../constants";
+import { apiUrlsv1 } from "../../constants";
 
 
 function BankAdminTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: tenantAdmin, mutate, error } = useSWR<Paginate<TenantAdminView>>(`${apiUrls.tenantAdmin}?page=${pageNumber}&countPerPage=${countPerPage}`)
+    const { data: tenantAdmin, mutate, error } = useSWR<Paginate<TenantAdminView>>(`${apiUrlsv1.tenantAdmin}?page=${pageNumber}&countPerPage=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => ({
         columns: [
@@ -63,7 +63,7 @@ function BankAdminTable(_props: any) {
                 }
             },
         ],
-        data: typeof tenantAdmin !== "undefined" && typeof error ==="undefined"? tenantAdmin?.data as TenantAdminView[]:[]
+        data: typeof tenantAdmin !== "undefined" && typeof error ==="undefined"? tenantAdmin?.content as TenantAdminView[]:[]
     }), [tenantAdmin, error])
 
     useEffect(() => {
@@ -77,8 +77,8 @@ function BankAdminTable(_props: any) {
         }
     }, [error])
     useEffect(() => {
-        if(typeof tenantAdmin !== "undefined" && typeof tenantAdmin.totalData !== "undefined") {
-            setPaginationProps(tenantAdmin.totalData )
+        if(typeof tenantAdmin !== "undefined" && typeof tenantAdmin.totalElements !== "undefined") {
+            setPaginationProps(tenantAdmin.totalElements )
         }
     }, [tenantAdmin])
 

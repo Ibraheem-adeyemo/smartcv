@@ -1,9 +1,17 @@
 import { Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { BsArrowUpCircle } from "react-icons/bs";
+import { shortenNumber } from "../../lib";
 import { StatProps } from "../../models";
 
 export default function Stat(props: StatProps) {
+  let val = props.prefix === "N" && props.totalNumber === 0 ?`${props.totalNumber}.00`:`${props.totalNumber}`
+  if(val.length > 5){
+     const shortenedVal = shortenNumber(props.totalNumber)
+     if(shortenedVal.fractionAmount !== Number.MAX_VALUE) {
+       val = `${shortenedVal.fractionAmount}${shortenedVal.abbrev}`
+     }
+  }
   return (
     <Flex flexGrow={1} h={props.height} bgColor="brand.stat_card">
       <Flex mt="13px" ml="19px" mb="18px" mr="65.36" gridGap="16px" flexDir="column" h="89%" >
@@ -16,7 +24,7 @@ export default function Stat(props: StatProps) {
               Total Number
             </Text>
             <Text fontWeight="800" fontSize="36px">
-              {props.totalNumber}
+              {props.prefix}{val}{props.suffix}
             </Text>
           </Flex>
           <Flex w="100%" justifyContent="flex-start" gridGap="6.4px" >

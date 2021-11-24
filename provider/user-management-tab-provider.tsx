@@ -2,7 +2,7 @@ import _ from "lodash"
 import { debounce, Function } from "lodash"
 import { ClassAttributes, createContext, Props, useState } from "react"
 import { UserManagementModals, userManagementTabs } from "../constants"
-import { UserManagementModal } from "../models"
+import { ComponentWithChildren, UserManagementModal } from "../models"
 
 export const UserManagementTabProviderContext = createContext({
     searchText: "",
@@ -14,8 +14,8 @@ export const UserManagementTabProviderContext = createContext({
     mutateData:(callBack: () => void) => {""}
 })
 
-interface UserManagementTabProviderProps {
-    children: JSX.Element
+interface UserManagementTabProviderProps extends ComponentWithChildren  {
+    
 }
 export default function UserManagementTabProvider(props: UserManagementTabProviderProps) {
 

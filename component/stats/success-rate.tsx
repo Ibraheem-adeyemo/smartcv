@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { DonutChart } from ".";
 import { StatsB } from "../../models/stats-models";
-import { Text } from '@chakra-ui/react'
+import { SkeletonCircle, Text } from '@chakra-ui/react'
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 export default function SuccessRate(props: any) {
@@ -28,11 +28,12 @@ export default function SuccessRate(props: any) {
             setStats(getStats())
         }, 10000);
     }, [])
-    const Skeleton = useCallback(() => <SkeletonLoader rows={2} columns={1} width="100%" height="80px" />, [])
-    return (<AppCard topic={<><Text variant="card-header" size="card-header">How are terminals performance?</Text><Text fontSize="12px" fontWeight={400}>Last 7 days</Text></>}>
+    return (<AppCard topic={<><Text variant="card-header" size="card-header">What is our success rate?</Text><Text fontSize="12px" fontWeight={400}>Last 7 days</Text></>}>
         {
             !loading ?
-                stats?.map((x, i) => <DonutChart key={i} {...x} />) : <Skeleton />
+                <>
+                    {stats?.map((x, i) => <DonutChart key={i} {...x} />)}
+                </> : <SkeletonCircle justifySelf="center" size="160px" />
         }
     </AppCard>)
 }

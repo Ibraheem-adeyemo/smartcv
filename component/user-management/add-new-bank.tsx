@@ -2,14 +2,14 @@ import { Image, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalClose
 import _ from "lodash";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
-import { apiUrls, Images, methods, PickerIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
+import { apiUrlsv1, Images, methods, PickerIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { validateHexColor } from "../../lib";
 import { formType, InstitutionColor, InstitutionColorInfo, State, TenantView, UserManagementModal } from "../../models";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 
 export default function AddNewBank(_props: any) {
-    const { data: states, error } = useSWR<State[]>(apiUrls.states)
+    const { data: states, error } = useSWR<State[]>(apiUrlsv1.states)
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
     const { form, formOnChange, refreshForm } = useForm<TenantView>({
         name: "",
@@ -68,7 +68,7 @@ export default function AddNewBank(_props: any) {
     function setHeaderColor(e: React.FormEvent<HTMLInputElement>) {
 
         e.stopPropagation()
-        debugger
+        // debugger
         institutionColorAddField("headerColor")
         institutionColorFormOnChange({"headerColor":(e.target as HTMLInputElement).value})
     }

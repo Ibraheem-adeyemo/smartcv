@@ -9,3 +9,7 @@ export interface State {
     id: string,
     name: string
 }
+
+export interface ComponentWithChildren {
+    children: JSX.Element
+}

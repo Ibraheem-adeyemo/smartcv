@@ -3,7 +3,7 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
-import { apiUrls, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, UserManagementModalNames } from "../../constants";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
@@ -15,7 +15,7 @@ function ISWAdminTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: iswAdmin, mutate, error } = useSWR<Paginate<ISWAdminView>>(`${apiUrls.iswAdmin}?page=${pageNumber}&countPerPage=${countPerPage}`)
+    const { data: iswAdmin, mutate, error } = useSWR<Paginate<ISWAdminView>>(`${apiUrlsv1.iswAdmin}?page=${pageNumber}&countPerPage=${countPerPage}`)
     const toast = useToast()
     
     const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
@@ -49,7 +49,7 @@ function ISWAdminTable(_props: any) {
                 }
             },
         ],
-        data: typeof iswAdmin !== "undefined" && typeof error ==="undefined"? iswAdmin?.data as ISWAdminView[]:[]
+        data: typeof iswAdmin !== "undefined" && typeof error ==="undefined"? iswAdmin?.content as ISWAdminView[]:[]
     }), [iswAdmin, error])
 
     useEffect(() => {
@@ -64,8 +64,8 @@ function ISWAdminTable(_props: any) {
     }, [error])
 
     useEffect(() => {
-        if(typeof iswAdmin !== "undefined" && typeof iswAdmin.totalData !== "undefined") {
-            setPaginationProps(iswAdmin.totalData )
+        if(typeof iswAdmin !== "undefined" && typeof iswAdmin.totalElements !== "undefined") {
+            setPaginationProps(iswAdmin.totalElements )
         }
     }, [iswAdmin])
 
@@ -73,11 +73,11 @@ function ISWAdminTable(_props: any) {
 
     useEffect(() => {
         
-        debugger
+        // debugger
         const selectedModal = modals.some(x => x.isSubmitted)
         if(selectedModal) {
             mutateData(() => {
-                debugger
+                // debugger
                 mutate()
                 handleToggleModal()
             })

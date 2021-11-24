@@ -15,9 +15,9 @@ import { forwardRef } from "@chakra-ui/system"
 
 export const dashboardIcon =  forwardRef((props, ref) => <Icon as = {IoGridOutline} {...props} ref={ref} />)
 
-export const terminalsIcon =  forwardRef((props, ref) => <Icon as={FiUsers} {...props} ref={ref} />)
+export const transactionMonitoringIcon =  forwardRef((props, ref) => <Icon as={FiUsers} {...props} ref={ref} />)
 
-export const reportingIcon =  forwardRef((props, ref) => <Icon as={IoNewspaperOutline} {...props} ref={ref} />)
+export const channelsMonitoringIcon =  forwardRef((props, ref) => <Icon as={IoNewspaperOutline} {...props} ref={ref} />)
 
 export const userManagementIcon =  forwardRef((props, ref) => <Icon as={HiOutlineClipboardList} {...props} ref={ref} />)
 

@@ -51,7 +51,6 @@ export default function TopPerforminBanks(props: any) {
 
         }, 10000);
     }, [getStats])
-    const Skeleton = useCallback(() => <SkeletonLoader rows={3} columns={1} width="100%" height="50px" />, [])
     return <AppCard topic={
         <Flex justifyContent="space-between" textAlign="center">
             <Flex flexDir="column" justifySelf="flex-start">
@@ -65,6 +64,9 @@ export default function TopPerforminBanks(props: any) {
             </Flex>
 
         </Flex>}>
-        {!loading ? stats?.map((x, i) => <Barchart key={i} {...x} />) : <Skeleton />}
+        {!loading ?
+            <>
+                {stats?.map((x, i) => <Barchart key={i} {...x} />)}
+            </> : <SkeletonLoader rows={3} columns={1} width="100%" height="50px" />}
     </AppCard>
 }

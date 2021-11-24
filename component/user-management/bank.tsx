@@ -3,7 +3,7 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
-import { apiUrls, API_BASE_URL, API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, API_BASE_URL, API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION, UserManagementModalNames } from "../../constants";
 import { TenantView, Paginate, UserManagementModal } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
@@ -16,7 +16,7 @@ function BankTable(_props: any) {
     const toast = useToast()
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
     const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
-    const { data: bank, mutate, error } = useSWR<Paginate<TenantView>>(`${apiUrls.tenant}?page=${pageNumber}&size=${countPerPage}`)
+    const { data: bank, mutate, error } = useSWR<Paginate<TenantView>>(`${apiUrlsv1.tenant}?page=${pageNumber}&size=${countPerPage}`)
 
     const data = useMemo(() => ({
         columns: [
@@ -74,7 +74,7 @@ function BankTable(_props: any) {
                 }
             },
         ],
-        data: typeof bank !== "undefined" && typeof error === "undefined" ? bank as unknown as TenantView[] : []
+        data: typeof bank === "undefined" && typeof error === "undefined" ? bank: (typeof bank !== "undefined" && typeof error === "undefined" )?  bank as unknown as TenantView[]:[]
     }), [bank, error])
 
     useEffect(() => {
@@ -89,18 +89,18 @@ function BankTable(_props: any) {
     }, [error])
 
     useEffect(() => {
-        if (typeof bank !== "undefined" && typeof bank.totalData !== "undefined") {
-            setPaginationProps(bank.totalData)
+        if (typeof bank !== "undefined" && typeof bank.totalElements !== "undefined") {
+            setPaginationProps(bank.totalElements)
         }
     }, [bank])
 
     useEffect(() => {
         
-        debugger
+        // debugger
         const selectedModal = modals.some(x => x.isSubmitted)
         if(selectedModal) {
             mutateData(() => {
-                debugger
+                // debugger
                 mutate()
                 handleToggleModal()
             })
