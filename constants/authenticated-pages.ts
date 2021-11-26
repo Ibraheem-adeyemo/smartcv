@@ -1,4 +1,9 @@
+import { links } from ".";
+
 export const AuthenticatedPage = [
-    "/dashboard",
-    "/user-management"
+    links.dashboard,
+    links.userManagement,
+    links.channelsMonitoring,
+    links.transactionMonitoring,
+    links.audit
 ]

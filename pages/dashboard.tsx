@@ -1,39 +1,26 @@
 import { Flex, Text } from "@chakra-ui/layout"
-import { Tag } from "@chakra-ui/react"
 import dynamic from 'next/dynamic'
-import React, { useMemo } from "react"
-import { CustomFilter, DropdownSearchFilter, } from "../component/stats"
+import React from "react"
 import { Authenticated } from "../component/layouts"
-import { Banks, channels, ChannelsEnum } from "../constants"
-import { SkeletonLoader } from "../component"
 import { StatsProvider } from "../provider"
-const TerminalsPerformance = dynamic(() => import('../component/stats/terminals-performance'))
-const SuccessRate = dynamic(() => import('../component/stats/success-rate'))
-const ServiceStatus = dynamic(() => import('../component/stats/service-status'))
-const TerminalsUnderWatch = dynamic(() => import('../component/stats/terminals-under-watch'))
-const TopPerforminBanks = dynamic(() => import('../component/stats/top-performing-banks'))
-const TopTransactionMetric = dynamic(() => import('../component/stats/top-transaction-metric'))
-const TransactionBreakdown = dynamic(() => import('../component/stats/transaction-breakdown'))
-const TransactionMetric = dynamic(() => import('../component/stats/transaction-metric'))
-const UsageMetric = dynamic(() => import('../component/stats/usage-metric'))
-const InstitutionFilter = dynamic(() => import('../component/stats/institution-filter'))
-const ChannelFilter = dynamic(() => import('../component/stats/channel-filter'))
+const TerminalsPerformance = dynamic(() => import('../component/dashboard/terminals-performance'))
+const SuccessRate = dynamic(() => import('../component/dashboard/success-rate'))
+const ServiceStatus = dynamic(() => import('../component/dashboard/service-status'))
+const TerminalsUnderWatch = dynamic(() => import('../component/dashboard/terminals-under-watch'))
+const TopPerforminBanks = dynamic(() => import('../component/dashboard/top-performing-banks'))
+const TopTransactionMetric = dynamic(() => import('../component/dashboard/top-transaction-metric'))
+const TransactionBreakdown = dynamic(() => import('../component/dashboard/transaction-breakdown'))
+const TransactionMetric = dynamic(() => import('../component/dashboard/transaction-metric'))
+const UsageMetric = dynamic(() => import('../component/dashboard/usage-metric'))
+const AppBarFilter = dynamic(() => import('../component/stats/app-bar-filter'))
 
 const Dashboard = () => {
-  const Filter = useMemo(() => DropdownSearchFilter, [])
   return (
     <StatsProvider>
       <Authenticated pageHeader={
         <Flex w="100%" flexWrap="wrap" justifyContent="space-between" px="50px" alignItems="center">
           <Text variant="page-header" size="page-header">User Dashboard</Text>
-          <Flex alignItems="center" gridGap="17px">
-            <InstitutionFilter />
-            <ChannelFilter />
-            <Tag><Text variant="dropdown-text-header" size="tag-text">Today</Text></Tag>
-            <Tag><Text size="tag-text">This week</Text></Tag>
-            <Tag><Text size="tag-text">This month</Text></Tag>
-            <CustomFilter />
-          </Flex>
+          <AppBarFilter />
         </Flex>
       }>
         <Flex gridGap="30px" flexWrap="wrap">

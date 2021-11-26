@@ -1,18 +1,21 @@
 import { Text, useToast } from "@chakra-ui/react";
-import React, { useCallback, useContext, useEffect, useState } from "react"
-import { Stat } from "."
+import React, { useContext, useEffect, useState } from "react"
+import { Stat } from "../stats"
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 import useSWR from "swr";
 import { apiUrlsv1 } from "../../constants";
-import { Paginate, ATMCount, ATMInService } from "../../models";
+import { Paginate, ATMInService } from "../../models";
 import { useLoading } from "../../hooks";
 import _ from "lodash";
 import { StatsContext } from "../../provider/stats-provider";
 
+interface ServiceStatusProps {
+  title?: string
+}
 
-export default function ServiceStatus(props: any) {
+export default function ServiceStatus(props: ServiceStatusProps) {
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let atmInServiceurl = apiUrlsv1.atmInService
   let atmOutOfServiceurl = apiUrlsv1.atmOutOfService
@@ -30,13 +33,13 @@ export default function ServiceStatus(props: any) {
   useEffect(() => {
     // console.log("waiting")
 
-    const getStats = () : StatsA[] => {
+    const getStats = (): StatsA[] => {
 
       const boxSize = {
         width: ["224px", "224px", "224px", "224px", "224px", "222px"],
         height: ["159px", "159px", "159px", "159px", "159px", "189px"],
-        prefix:"",
-        suffix:""
+        prefix: "",
+        suffix: ""
       }
       return [{
 
@@ -81,7 +84,7 @@ export default function ServiceStatus(props: any) {
   }, [totalATMInService, totalATMOutOfService, totalATMInServiceError, totalATMOutOfServiceError, institutions, institutionsError])
 
   return (
-    <AppCard topic={<Text variant="card-header" size="card-header">What is our service</Text>} statsComponent={Stat}>
+    <AppCard topic={<Text variant="card-header" size="card-header"> {typeof props.title !== "undefined" && props.title !== "" ? props.title : "What is our service"}</Text>} statsComponent={Stat}>
       {!loading.isLoading ?
         <>
           {stats?.map((x, i) => <Stat key={i} {...x} />)}

@@ -18,13 +18,13 @@ export default async function ISWAdmin(req:NextApiRequest, res: NextApiResponse)
             email: `${Names[nameRandomNumbers[i]].firstName}.${Names[nameRandomNumbers[i]].lastName}@mailinator.com`,
             role: Roles[getRandomInt(Roles.length - 1)],
             dateCreated: (new Date()).getDate().toString(),
-            status: "John wick"
+            status: "1"
         }))
         setTimeout(()=>{}, 3000)
-        const returnData:Paginate<ISWAdminView, string> = {
-            totalData: data.length,
-            data: _.drop(data, offset).slice(0, +countPerPage)
-        } 
+        const returnData:Paginate<ISWAdminView> = {
+            content: _.drop(data, offset).slice(0, +countPerPage)as ISWAdminView[],
+            totalElements: data.length
+        }
         return res.json({
             data: returnData
         })

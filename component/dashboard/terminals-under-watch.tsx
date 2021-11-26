@@ -1,6 +1,6 @@
 import { Text } from "@chakra-ui/layout";
 import React, { useCallback, useContext, useEffect, useState } from "react"
-import { Stat } from "."
+import { Stat } from "../stats"
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
@@ -12,8 +12,10 @@ import { StatsContext } from "../../provider/stats-provider";
 import { useToast } from "@chakra-ui/react";
 import _ from "lodash";
 
-
-export default function TerminalsUnderWatch(props: any) {
+interface TerminalsUnderWatchProps {
+  title?:string
+}
+export default function TerminalsUnderWatch(props: TerminalsUnderWatchProps) {
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let atmInSupervisorUrl = apiUrlsv1.atmInSupervisor
   if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
@@ -76,13 +78,13 @@ export default function TerminalsUnderWatch(props: any) {
     }
   }, [atmInSupervisor, atmInSupervisorError, institutions, institutionsError])
   return (
-    <AppCard topic={<Text variant="card-header" size="card-header">What Terminals are under watch</Text>}>
+    <AppCard topic={<Text variant="card-header" size="card-header">{typeof props.title !== "undefined" && props.title !== "" ? props.title : "What Terminals are under watch"}</Text>}>
 
       {!loading.isLoading ?
         <>
           {stats?.map((x, i) => <Stat key={i} {...x} />)}
         </> :
-        <SkeletonLoader rows={1} columns={3} width="200px" height="200px" />
+        <SkeletonLoader rows={3} columns={3} width="200px" height="10px" gridGap="30px" />
       }
     </AppCard>
   )

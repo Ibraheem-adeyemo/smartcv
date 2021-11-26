@@ -1,4 +1,5 @@
 import { VStack } from "@chakra-ui/layout";
+import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useCallback, useContext, useEffect } from "react";
 import { UserManagementStats } from ".";
@@ -16,7 +17,7 @@ export default function UserManagement(_props: any) {
         handleTabSelection(0)
     }, [])
     const SelectedTable = useCallback(() => {
-        const selectedIndex = tabs.findIndex((x, i) => x.isSelected)
+        const selectedIndex = _.findIndex(tabs, (x, i) => x.isSelected)
         // debugger
         if (selectedIndex > -1) {
             switch (tabs[selectedIndex].name) {
@@ -34,7 +35,7 @@ export default function UserManagement(_props: any) {
     }, [tabs])
     useEffect(() => {
         
-        const checkOpenTab = modals.some((x) => x.isOpen)
+        const checkOpenTab = _.some(modals, (x) => x.isOpen)
         if (checkOpenTab) {
             handleToggleModal()
         }

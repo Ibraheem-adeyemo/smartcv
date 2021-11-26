@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { NextApiResponse } from "next";
 import { getCookie } from ".";
-import { notificationMesage } from "../constants";
+import { months, notificationMesage } from "../constants";
 import { APIResponse } from "../models";
 
 export function getRandomInt(max: number) {
@@ -56,6 +56,25 @@ export function comparePassword(pass1: string, pass2: string) {
 
 export function validateHexColor(color: string) {
     return /^#[0-9A-F]{6}$/i.test(color) || /^#([0-9A-F]{3}){1,2}$/i.test(color)
+}
+
+export function appDate(dateStr: string, withTime = true) {
+    if (typeof dateStr !== "undefined" && dateStr !== null) {
+        const date = new Date(dateStr)
+        const day = date.getDate()
+        const monthNumber = date.getMonth()
+        const month = months[monthNumber]
+        const year = date.getFullYear()
+        const hour = date.getHours() - 12 > 0 ? date.getHours() - 12 : date.getHours()
+        const minute = date.getMinutes()
+        const d = date.getHours() - 12 > -1 ? "PM" : "AM"
+        let fullDate = `${day}-${month}-${year}`
+        if (withTime) {
+            fullDate += ` | ${hour}:${minute}${d}`
+        }
+        return fullDate
+    }
+    return ""
 }
 
 

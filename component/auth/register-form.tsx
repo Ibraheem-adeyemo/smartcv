@@ -2,7 +2,7 @@ import { Flex, Link } from "@chakra-ui/layout";
 import { Text, Button, FormControl, FormLabel, Input, useToast, forwardRef } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { API_BASE_URL, CURRENT_API_VERSION, links, notificationMesage } from "../../constants";
+import { API_BASE_URL, cookies, CURRENT_API_VERSION, links, notificationMesage } from "../../constants";
 import NextLink from 'next/link'
 import { fetchJson, setCookie } from "../../lib";
 import { InterchangeResponse, Loading } from "../../models";
@@ -23,7 +23,7 @@ export default function RegisterForm(props: any) {
             const data = await getInterchangeById(interChangeId as string)
             if (typeof data.statusCondition !== "undefined" && +data.statusCondition === 1 && typeof interChangeId !== "undefined") {
                 // debugger
-                setCookie("interchangeId", interChangeId, 15)
+                setCookie(cookies.interchangeId, interChangeId, 15)
                 toast({
                     status: "success",
                     title: notificationMesage.SuccessfulLogin,

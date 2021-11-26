@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StatsCMore } from "../../models";
-import { Barchart } from ".";
+import { Barchart } from "../charts";
 import { Flex, Text } from "@chakra-ui/layout";
 import { Tag } from "@chakra-ui/tag";
 import { DropdownIcon } from "../../constants";
@@ -67,6 +67,6 @@ export default function TopPerforminBanks(props: any) {
         {!loading ?
             <>
                 {stats?.map((x, i) => <Barchart key={i} {...x} />)}
-            </> : <SkeletonLoader rows={3} columns={1} width="100%" height="50px" />}
+            </> : <SkeletonLoader rows={1} columns={5} width="10px" height="200px" gridGap="30px" />}
     </AppCard>
 }

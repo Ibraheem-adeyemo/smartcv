@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, GRANT_TYPE, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
+import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookies, GRANT_TYPE, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie } from '../lib'
 import { AuthModel, TokenRequestBody } from '../models'
 export default function useAuthentication() {
@@ -12,15 +12,15 @@ export default function useAuthentication() {
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie("token") : "")
 
     const postLoginAction = (token: string) => {
-        setCookie("token", token, 60)
+        setCookie(cookies.token, token, 60)
         const confirmToken = getCookie("token")
         if (confirmToken !== "") {
             setToken(confirmToken)
         }
     }
     const signOut = () => {
-        setCookie("token", "", -60)
-        const confirmToken = getCookie("token")
+        setCookie(cookies.token, "", -60)
+        const confirmToken = getCookie(cookies.token)
         if (confirmToken === "") {
             setToken("")
             window.location.href = links.login
@@ -33,7 +33,7 @@ export default function useAuthentication() {
 
     useEffect(() => {
         if (window) {
-            const cookieToken = getCookie("token")
+            const cookieToken = getCookie(cookies.token)
             if (cookieToken !== "") {
                 setToken(cookieToken)
             }
@@ -45,7 +45,7 @@ export default function useAuthentication() {
         // debugger
         if (typeof window !== "undefined") {
 
-            if (getCookie("token") === "") {
+            if (getCookie(cookies.token) === "") {
                 setToken("")
             }
         }

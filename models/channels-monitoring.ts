@@ -17,3 +17,15 @@ export interface ATMInService extends ATM {
 export interface ATMInSupervisor extends ATM {
 
 }
+
+export interface ATMCountDetail {
+    tenantName: string,
+    tenantCode: string,
+    terminalId: string,
+    terminalStatus: string,
+    externalIP: string,
+    internalPort: string,
+    location: string,
+    state: string,
+    lastTranTime: string
+}

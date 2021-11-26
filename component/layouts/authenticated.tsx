@@ -33,7 +33,7 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
     }, {
         icon: transactionMonitoringIcon,
         name: "Transaction Monitoring",
-        link: "/"
+        link: links.transactionMonitoring
     }, {
         icon: channelsMonitoringIcon,
         name: "Channels Monitoring",

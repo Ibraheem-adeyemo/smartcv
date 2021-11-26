@@ -1,6 +1,6 @@
 import { Text } from "@chakra-ui/layout";
-import React, { useCallback, useContext, useEffect, useState } from "react"
-import { Stat } from "."
+import React, { useContext, useEffect, useState } from "react"
+import { Stat } from "../stats"
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
@@ -11,7 +11,6 @@ import _ from "lodash";
 import { ATMCount, Paginate } from "../../models";
 import { useToast } from "@chakra-ui/react";
 import { StatsContext } from "../../provider/stats-provider";
-import { shortenNumber } from "../../lib";
 
 export default function TerminalsPerformance(_props: any) {
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
@@ -73,10 +72,8 @@ export default function TerminalsPerformance(_props: any) {
   return (
     <AppCard topic={<Text variant="card-header" size="card-header">How are terminals performance</Text>} >
       {!loading.isLoading ?
-        <>
-          {stats?.map((x, i) => <Stat key={i} {...x} />)}
-        </> :
-        <SkeletonLoader rows={1} columns={2} width="400px" height="200px" />
+        <>{stats?.map((x, i) => <Stat key={i} {...x} />)}</> :
+        <SkeletonLoader rows={3} columns={2} width="400px" height="10px" gridGap="30px" />
       }
     </AppCard>
   )

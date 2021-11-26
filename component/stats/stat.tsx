@@ -27,7 +27,7 @@ export default function Stat(props: StatProps) {
               {props.prefix}{val}{props.suffix}
             </Text>
           </Flex>
-          <Flex w="100%" justifyContent="flex-start" gridGap="6.4px" >
+          {/* <Flex w="100%" justifyContent="flex-start" gridGap="6.4px" >
             <Icon as={BsArrowUpCircle} fill={props.status} flexGrow={1} />
             <Text fontSize="13px" flexGrow={2}>
               {props.percentage}
@@ -35,7 +35,7 @@ export default function Stat(props: StatProps) {
             <Text fontSize="11px" color="brand.muted" flexGrow={3}>
               {props.days}
             </Text>
-          </Flex>
+          </Flex> */}
         </Flex>
       </Flex>
     </Flex>

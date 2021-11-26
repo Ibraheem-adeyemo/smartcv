@@ -3,7 +3,8 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
-import { apiUrlsv1, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, cookies, UserManagementModalNames } from "../../constants";
+import { setCookie } from "../../lib";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
@@ -15,7 +16,7 @@ function ISWAdminTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: iswAdmin, mutate, error } = useSWR<Paginate<ISWAdminView>>(`${apiUrlsv1.iswAdmin}?page=${pageNumber}&countPerPage=${countPerPage}`)
+    const { data: iswAdmin, mutate, error } = useSWR<Paginate<ISWAdminView>>(`${apiUrlsv1.iswAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
     const toast = useToast()
     
     const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
@@ -35,7 +36,8 @@ function ISWAdminTable(_props: any) {
                 key: "dateCreated"
             }, {
                 name: "Status",
-                key: "status"
+                key: "status",
+                ele:"status"
             }
         ],
         actions: [
@@ -49,7 +51,7 @@ function ISWAdminTable(_props: any) {
                 }
             },
         ],
-        data: typeof iswAdmin !== "undefined" && typeof error ==="undefined"? iswAdmin?.content as ISWAdminView[]:[]
+        data: typeof iswAdmin === "undefined" && typeof error === "undefined"? iswAdmin: typeof iswAdmin !== "undefined" && typeof error ==="undefined"? iswAdmin?.content as ISWAdminView[]:[]
     }), [iswAdmin, error])
 
     useEffect(() => {
@@ -65,6 +67,7 @@ function ISWAdminTable(_props: any) {
 
     useEffect(() => {
         if(typeof iswAdmin !== "undefined" && typeof iswAdmin.totalElements !== "undefined") {
+            setCookie(cookies.totalISWAdmin, iswAdmin.totalElements.toString(), 10)
             setPaginationProps(iswAdmin.totalElements )
         }
     }, [iswAdmin])

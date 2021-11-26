@@ -10,7 +10,7 @@ export default function CustomFilter(props: any) {
 
     return (
         <Menu>
-            <MenuButton as={Button} h="26px" rightIcon={<DropdownIcon />}>
+            <MenuButton as={Button} h="26px" px="12px" py="3px" rightIcon={<DropdownIcon />}>
                 <Text size="dropdown-text" variant="dropdown-text-header">Custom</Text>
             </MenuButton>
             <MenuList>

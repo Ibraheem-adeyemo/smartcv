@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { DonutChart } from ".";
+import { DonutChart } from "../charts";
 import { StatsB } from "../../models/stats-models";
 import { SkeletonCircle, Text } from '@chakra-ui/react'
-import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 export default function SuccessRate(props: any) {
     const [stats, setStats] = useState<StatsB[]>()

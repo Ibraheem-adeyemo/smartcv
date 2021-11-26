@@ -5,5 +5,5 @@ export  enum Images {
     handShake="/images/handshake.png",
     imageUpload="/images/upload-image.png",
     onboardingSuccess="/images/onboarding-success.png",
-    defaulyCompanyLogo="/images/default-company-logo.png"
+    defaultCompanyLogo="/images/default-company-logo.png"
 }

@@ -2,7 +2,7 @@ import { Flex, Link } from "@chakra-ui/layout";
 import NextLink from 'next/link'
 import { Image, Text, Button } from "@chakra-ui/react";
 import React, { useContext, useEffect } from "react";
-import { Images, links } from "../../constants";
+import { cookies, Images, links } from "../../constants";
 import { AuthContext } from "../../provider/auth-provider";
 import { setCookie } from "../../lib";
 
@@ -12,7 +12,7 @@ export default function LoginForm(_props:any) {
     useEffect(() => {
         // debugger
         if (typeof window !== "undefined") {
-            setCookie("token", "", -60)
+            setCookie(cookies.token, "", -60)
         }
     }, [])
 

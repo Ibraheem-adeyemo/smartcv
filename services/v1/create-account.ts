@@ -1,4 +1,4 @@
-import { API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION, Names, notificationMesage } from "../../constants"
+import { apiUrlsv1, cookies, Names, notificationMesage } from "../../constants"
 import { getCookie, getRandomInt, setCookie } from "../../lib"
 import { Onboarding } from "../../models"
 
@@ -36,7 +36,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
                 }
                 // ...body.institutionColorInfo,
             })
-            const url = `${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/user/tenant-admin`
+            const url = apiUrlsv1.createTenantAdmin
             const response = await fetch(url, {
                 method: "post",
                 headers: {
@@ -52,7 +52,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
             const data = await response.json()
             if (response.ok || response.status === 200) {
                 if(typeof window !== "undefined")
-                setCookie("created-account", "done", 5)
+                setCookie(cookies.createdAccount, "done", 5)
                 return data
             }
             else if(typeof data.message !== "undefined") {

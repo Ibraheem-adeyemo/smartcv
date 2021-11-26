@@ -1,1 +1,1 @@
-export const Roles:Readonly<String[]> = ["Super Admin", "Admin", "user"]
+export const Roles:Readonly<string[]> = ["Super Admin", "Admin", "user"]

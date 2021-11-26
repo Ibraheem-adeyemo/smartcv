@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
-import { Stat } from "."
+import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
 import { StatsA } from "../../models"
 import { AppCard } from "../app"
@@ -62,7 +62,7 @@ export default function TransactionMetric(_props: any) {
                 <>
                     {stats?.map((x, i) => <Stat key={i} {...x} />)}
                 </> :
-                <SkeletonLoader rows={1} columns={3} width="200px" height="200px" />
+                <SkeletonLoader rows={3} columns={3} width="200px" height="10px" gridGap="30px" />
             }
         </AppCard>)
 }

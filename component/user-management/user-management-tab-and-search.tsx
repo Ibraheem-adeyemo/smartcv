@@ -1,8 +1,8 @@
 import { ButtonGroup, Button } from "@chakra-ui/button";
-import { Flex, HStack } from "@chakra-ui/layout";
+import { HStack } from "@chakra-ui/layout";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { UserManagementSearch } from ".";
-import { UserManagementModalNames, UserManagementModals, userManagementTabs, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
+import { UserManagementModals, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 
 export default function UserManagementTabAndSearch() {

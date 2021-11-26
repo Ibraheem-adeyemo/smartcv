@@ -1,12 +1,12 @@
 import { useToast } from "@chakra-ui/react"
 import { error } from "@chakra-ui/utils"
-import React, { useMemo, useEffect } from "react"
-import { DropdownSearchFilter } from "."
+import React, { useMemo } from "react"
+import { SearchFilter } from "../stats"
 import { SkeletonLoader } from ".."
 import { channels } from "../../constants"
 
 export default function ChannelFilter(_props: any) {
-    const Filter = useMemo(() => DropdownSearchFilter, [])
+    const Filter = useMemo(() => SearchFilter, [])
     const toast = useToast()
     // let error = ;
     // useEffect(() => {

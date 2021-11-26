@@ -6,14 +6,15 @@ import { TenantAdminView, Paginate, APIResponse } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
 import { useToast } from "@chakra-ui/react";
-import { apiUrlsv1 } from "../../constants";
+import { apiUrlsv1, cookies } from "../../constants";
+import { setCookie } from "../../lib";
 
 
 function BankAdminTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: tenantAdmin, mutate, error } = useSWR<Paginate<TenantAdminView>>(`${apiUrlsv1.tenantAdmin}?page=${pageNumber}&countPerPage=${countPerPage}`)
+    const { data: tenantAdmin, mutate, error } = useSWR<Paginate<TenantAdminView>>(`${apiUrlsv1.tenantAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => ({
         columns: [
@@ -22,16 +23,18 @@ function BankAdminTable(_props: any) {
                 key: "firstName,lastName"
             }, {
                 name: "Bank name",
-                key: "bank"
+                key: "tenant.name"
             }, {
                 name: "Email",
                 key: "email"
             }, {
                 name: "Date Created",
-                key: "dateCreated"
+                key: "createdAt",
+                ele: "datetime"
             }, {
                 name: "Status",
-                key: "status"
+                key: "isActive",
+                ele: "status"
             }
         ],
         actions: [
@@ -63,7 +66,7 @@ function BankAdminTable(_props: any) {
                 }
             },
         ],
-        data: typeof tenantAdmin !== "undefined" && typeof error ==="undefined"? tenantAdmin?.content as TenantAdminView[]:[]
+        data: typeof tenantAdmin === "undefined" && typeof error ==="undefined"? tenantAdmin: typeof tenantAdmin !== "undefined" && typeof error ==="undefined" ? tenantAdmin?.content as TenantAdminView[]:[]
     }), [tenantAdmin, error])
 
     useEffect(() => {
@@ -78,6 +81,7 @@ function BankAdminTable(_props: any) {
     }, [error])
     useEffect(() => {
         if(typeof tenantAdmin !== "undefined" && typeof tenantAdmin.totalElements !== "undefined") {
+            setCookie(cookies.totalTenantAdmin, tenantAdmin.totalElements.toString(), 10)
             setPaginationProps(tenantAdmin.totalElements )
         }
     }, [tenantAdmin])
@@ -87,7 +91,7 @@ function BankAdminTable(_props: any) {
 
 }
 
-export default function tenantAdmin(_props: any) {
+export default function TenantAdmin(_props: any) {
     return (
 
         <TableProvider>

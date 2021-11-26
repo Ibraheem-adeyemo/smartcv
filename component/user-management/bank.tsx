@@ -3,7 +3,8 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
-import { apiUrlsv1, API_BASE_URL, API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, cookies, UserManagementModalNames } from "../../constants";
+import { setCookie } from "../../lib";
 import { TenantView, Paginate, UserManagementModal } from "../../models";
 import { TableProvider } from "../../provider";
 import { TableContext } from "../../provider/table-provider";
@@ -11,12 +12,13 @@ import { UserManagementTabProviderContext } from "../../provider/user-management
 import { AppTable } from "../app";
 
 const AddNewBank = dynamic(() =>import('./add-new-bank'))
+
 function BankTable(_props: any) {
     // console.log({pageNumber})
     const toast = useToast()
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
     const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
-    const { data: bank, mutate, error } = useSWR<Paginate<TenantView>>(`${apiUrlsv1.tenant}?page=${pageNumber}&size=${countPerPage}`)
+    const { data: tenant, mutate, error } = useSWR<Paginate<TenantView>>(`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`)
 
     const data = useMemo(() => ({
         columns: [
@@ -74,8 +76,8 @@ function BankTable(_props: any) {
                 }
             },
         ],
-        data: typeof bank === "undefined" && typeof error === "undefined" ? bank: (typeof bank !== "undefined" && typeof error === "undefined" )?  bank as unknown as TenantView[]:[]
-    }), [bank, error])
+        data: typeof tenant === "undefined" && typeof error === "undefined" ? tenant: (typeof tenant !== "undefined" && typeof error === "undefined" )?  tenant as unknown as TenantView[]:[]
+    }), [tenant, error])
 
     useEffect(() => {
         if (typeof error !== "undefined") {
@@ -89,10 +91,11 @@ function BankTable(_props: any) {
     }, [error])
 
     useEffect(() => {
-        if (typeof bank !== "undefined" && typeof bank.totalElements !== "undefined") {
-            setPaginationProps(bank.totalElements)
+        if (typeof tenant !== "undefined" && typeof tenant.totalElements !== "undefined") {
+            setCookie(cookies.totalTenant, tenant.totalElements.toString(), 10)
+            setPaginationProps(tenant.totalElements)
         }
-    }, [bank])
+    }, [tenant])
 
     useEffect(() => {
         

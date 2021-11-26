@@ -1,6 +1,6 @@
 import { Text } from "@chakra-ui/react"
 import React, { useState, useCallback, useEffect, useContext } from "react"
-import { Stat } from "."
+import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
 import { useLoading } from "../../hooks"
 import { StatsA } from "../../models"
@@ -70,7 +70,7 @@ export default function TransactionBreakdown(_props: any) {
       {!loading.isLoading ?
         <>{stats?.map((x, i) =><Stat key={i} {...x} />)}
         </> :
-        <SkeletonLoader rows={1} columns={4} width="200px" height="200px" />
+        <SkeletonLoader rows={3} columns={4} width="200px" height="10px" gridGap="30px" />
       }
     </AppCard>)
 }

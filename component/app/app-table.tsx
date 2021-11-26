@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import React, { useContext } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
 import { DotIcon, Images } from "../../constants";
+import { appDate } from "../../lib";
 import { TableContext } from "../../provider/table-provider";
 import SkeletonLoader from "../skeleton-loader";
 interface Column {
@@ -30,7 +31,7 @@ const AppTableFooter = dynamic(() => import('../app/app-table-footer'))
 
 export default function AppTable<T extends Record<keyof T, T[keyof T]>>(props: ApptableProps<T>) {
 
-    const { pageNumber, countPerPage, totalPageNumber, changeCountPerPage, incrementPageNumber, decrementPageNumber, gotoPage, setPaginationProps } = useContext(TableContext)
+    const { totalPageNumber } = useContext(TableContext)
     // console.log({rows: props.rows})
 
     return (
@@ -47,29 +48,34 @@ export default function AppTable<T extends Record<keyof T, T[keyof T]>>(props: A
                     {
                         props.columns.map((y, j) => {
                             const columns = (y.key).split(",") as (keyof T)[];
-                            let data = x[columns[0]]
+                            let data = _.get(x, columns[0])
+                            // debugger
                             if (columns.length > 1) {
 
                                 // debugger
-                                data = columns.reduce((acc: unknown, curr) => acc === "" ? x[curr] : acc + " " + x[curr], "") as T[keyof T]
+                                data = columns.reduce((acc: unknown, curr) => acc === "" ? _.get(x, curr) : acc + " " + _.get(x, curr), "") as T[keyof T]
                             }
                             return <Td fontSize="13px" py="19px" key={j}>
                                 {
-                                    ((data) => {
+                                    (() => {
                                         if (typeof y.ele !== "undefined" && y.ele !== "") {
                                             switch (y.ele) {
                                                 case "image":
-                                                    return <Image src={ typeof data === "undefined" || data===null? Images.defaulyCompanyLogo : "data:image/jpg;base64,"+data as unknown as string} onError={() => Images.defaulyCompanyLogo} height="45px" width="auto" />
+                                                    return <Image src={typeof data === "undefined" || data === null ? Images.defaultCompanyLogo : "data:image/jpg;base64," + data as unknown as string} onError={() => Images.defaultCompanyLogo} height="45px" width="auto" />
                                                 case "status":
                                                     // debugger
-                                                    return <HStack spacing="11px">{+data === 1? <><DotIcon color="green" /> <Text>Active</Text></>:<><DotIcon color="red"  /> <Text>Not active</Text></>
-                                                         }</HStack>
+                                                    return <HStack spacing="11px">{+data === 1 ? <><DotIcon color="green" /> <Text>Active</Text></> : <><DotIcon color="red" /> <Text>Not active</Text></>
+                                                    }</HStack>
+                                                case "datetime":
+                                                    return <>{appDate(data)}</>
+                                                case "date":
+                                                    return <>{appDate(data, false)}</>
                                                 default:
                                                     return <>{data}</>
                                             }
                                         }
                                         return data
-                                    })(data)
+                                    })()
                                 }
                             </Td>
                         })}
@@ -98,22 +104,22 @@ export default function AppTable<T extends Record<keyof T, T[keyof T]>>(props: A
                     typeof props.rows === "undefined" && _.range(0, 8).map(() =>
                         <Tr>
                             {
-                                typeof props.columns !== "undefined" && props.columns.map((x, i) => <Td key={i}><SkeletonLoader rows={1} columns={1} width="100%" /></Td>)
+                                typeof props.columns !== "undefined" && props.columns.map((x, i) => <Td key={i}><SkeletonLoader rows={1} columns={1} width="60px" height="10px" /></Td>)
                             }
                         </Tr>
                     )
                 }
                 {
-                    typeof props.rows !== "undefined" &&  props.rows.length === 0 &&
-                        <Tr>
-                            {
-                                typeof props.columns !== "undefined" && <Td colSpan={props.columns.length} textAlign="center">No data</Td>
-                            }
-                        </Tr>
-                    
+                    typeof props.rows !== "undefined" && props.rows.length === 0 &&
+                    <Tr>
+                        {
+                            typeof props.columns !== "undefined" && <Td colSpan={props.columns.length} textAlign="center">No data</Td>
+                        }
+                    </Tr>
+
                 }
             </Tbody>
-            {typeof totalPageNumber !== "undefined" && totalPageNumber > 0 && <Tfoot>
+            {typeof totalPageNumber !== "undefined" && totalPageNumber > 1 && <Tfoot>
                 <Tr>
                     <Td borderBottomRadius="6px" fontSize="13px" pt="25px" pb="25px" colSpan={props.columns.length}>
                         <AppTableFooter />

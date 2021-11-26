@@ -1,15 +1,11 @@
-import { toast, useToast } from "@chakra-ui/react"
-import { useToken } from "@chakra-ui/system"
+import { useToast } from "@chakra-ui/react"
 import _ from "lodash"
-import React, { useContext, useEffect, useMemo } from "react"
-import useSWR from "swr"
-import { DropdownSearchFilter as Filter } from "."
+import React, { useContext, useEffect } from "react"
+import { SearchFilter } from "."
 import { SkeletonLoader } from ".."
-import { apiUrlsv1, Banks } from "../../constants"
-import { TenantView } from "../../models"
 import { StatsContext } from "../../provider/stats-provider"
 
-export default function (_props: any) {
+export default function InstitutionFilter (_props: any) {
     const {selectedTenantCode, institutions, institutionsError, changeSelectedTenantCode} = useContext(StatsContext)
     const toast = useToast()
     useEffect(() => {
@@ -26,7 +22,7 @@ export default function (_props: any) {
     return (
         <>
             { typeof institutions !== "undefined" &&
-                <Filter
+                <SearchFilter
                     data={
 
                         [

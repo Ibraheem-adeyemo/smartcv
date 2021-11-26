@@ -16,16 +16,16 @@ type Pageable = {
     unpaged: boolean
 }
 export interface Paginate<T extends Record<keyof T, T[keyof T]>>{
-    pageable: Pageable,
-    totalPages: number,
-    totalElements: number,
-    last: boolean,
-    sort: Sort,
-    numberOfElements: number,
-    first: boolean,
-    size: number,
-    number: number,
-    empty: boolean,
-    content: T[]
+    pageable?: Pageable,
+    totalPages?: number,
+    totalElements?: number,
+    last?: boolean,
+    sort?: Sort,
+    numberOfElements?: number,
+    first?: boolean,
+    size?: number,
+    number?: number,
+    empty?: boolean,
+    content?: T[]
 
 }

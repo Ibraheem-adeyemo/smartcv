@@ -21,7 +21,8 @@ export default function AddNewBank(_props: any) {
         bankSuperAdmin: "",
         status: "",
         location: "",
-        branch: ""
+        branch: "",
+        code:""
     })
     const {form:institutionColorForm, formOnChange:institutionColorFormOnChange, refreshForm:institutionColorRefreshForm} = useForm<InstitutionColor>({
         headerColor: "#C8D2D6",

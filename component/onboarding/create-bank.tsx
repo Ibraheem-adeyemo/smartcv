@@ -1,7 +1,7 @@
 import { Badge, Box, Flex, Text, Button, FormControl, FormLabel, Input, Image, FormErrorMessage, CloseButton, useToast, Select } from "@chakra-ui/react";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
-import { API_BASE_URL_ALTERNATIVE, CURRENT_API_VERSION, Images, notificationMesage } from "../../constants";
+import { apiUrlsv1, Images, notificationMesage } from "../../constants";
 import _ from 'lodash'
 import { Tenant, stepsProps, State } from "../../models";
 import useValidator from "../../hooks/validatoin";
@@ -14,7 +14,7 @@ interface CreateBankProps extends stepsProps {
 }
 
 export default function CreateBank(props: CreateBankProps) {
-    const {data:states, error} = useSWR<State[]>(`${API_BASE_URL_ALTERNATIVE}/${CURRENT_API_VERSION}/location/states`)
+    const {data:states, error} = useSWR<State[]>(apiUrlsv1.states)
     const fileRef = useRef<HTMLInputElement>(null)
     const { steps, onboarding, addInfo, refresh, completeForm, changeIsRefresh, loading } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
