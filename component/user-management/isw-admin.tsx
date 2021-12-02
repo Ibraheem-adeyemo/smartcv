@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, cookies, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
@@ -16,7 +16,8 @@ function ISWAdminTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: iswAdmin, mutate, error } = useSWR<Paginate<ISWAdminView>>(`${apiUrlsv1.iswAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
+    const {mutate} = useSWRConfig()
+    const { data: iswAdmin, mutate:_mutate, error } = useSWR<Paginate<ISWAdminView>>(`${apiUrlsv1.iswAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
     const toast = useToast()
     
     const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
@@ -81,7 +82,7 @@ function ISWAdminTable(_props: any) {
         if(selectedModal) {
             mutateData(() => {
                 // debugger
-                mutate()
+                mutate(`${apiUrlsv1.iswAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
                 handleToggleModal()
             })
         }

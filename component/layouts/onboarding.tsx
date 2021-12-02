@@ -1,13 +1,11 @@
 import { Divider, Flex, Link } from "@chakra-ui/layout";
-import { Avatar, forwardRef, Image, Text, useToast } from "@chakra-ui/react";
-import React, { createContext, Fragment, useCallback, useEffect } from "react";
-import { Images, links, notificationMesage, onboardingTabs, TickIcon } from "../../constants";
-import { initialOnboardingData, useOnboarding } from "../../hooks";
-import { InterswitchLogo } from "../custom-component";
+import { Avatar, forwardRef, Text, useToast } from "@chakra-ui/react";
+import React, { createContext, Fragment, useCallback } from "react";
+import { links, notificationMesage, onboardingTabs, TickIcon } from "../../constants";
+import { useOnboarding } from "../../hooks";
 import NextLink from 'next/link'
 import { useRouter } from "next/router";
-import { CreateBank } from "../onboarding";
-import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Onboarding as OnboardingModel, Step, tenantAdmin } from "../../models";
+import { Tenant, InstitutionColorInfo, Onboarding as OnboardingModel, Step, tenantAdmin } from "../../models";
 import { createAccountAsync } from "../../services/v1";
 import { OnboardingNav } from '.'
 import _ from "lodash";

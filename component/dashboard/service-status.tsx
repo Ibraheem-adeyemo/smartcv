@@ -23,8 +23,8 @@ export default function ServiceStatus(props: ServiceStatusProps) {
     atmInServiceurl += `/${selectedTenantCode}`
     atmOutOfServiceurl += `/${selectedTenantCode}`
   }
-  const { data: totalATMInService, mutate: totalATMInServiceMutate, error: totalATMInServiceError } = useSWR<Paginate<ATMInService>>(atmInServiceurl)
-  const { data: totalATMOutOfService, mutate: totalATMOutOfServiceMutate, error: totalATMOutOfServiceError } = useSWR<Paginate<ATMInService>>(atmOutOfServiceurl)
+  const { data: totalATMInService, mutate: _totalATMInServiceMutate, error: totalATMInServiceError } = useSWR<Paginate<ATMInService>>(atmInServiceurl)
+  const { data: totalATMOutOfService, mutate: _totalATMOutOfServiceMutate, error: totalATMOutOfServiceError } = useSWR<Paginate<ATMInService>>(atmOutOfServiceurl)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "" })
   const [stats, setStats] = useState<StatsA[]>()
   const toast = useToast()

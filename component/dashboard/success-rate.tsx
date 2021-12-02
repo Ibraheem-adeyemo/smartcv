@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { DonutChart } from "../charts";
+import { DonutChart } from "../app-charts";
 import { StatsB } from "../../models/stats-models";
 import { SkeletonCircle, Text } from '@chakra-ui/react'
 import { AppCard } from "../app";

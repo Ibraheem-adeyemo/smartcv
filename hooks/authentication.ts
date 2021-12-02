@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
-import useSWR from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookies, GRANT_TYPE, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie } from '../lib'
 import { AuthModel, TokenRequestBody } from '../models'
 export default function useAuthentication() {
     // const url = "/api/passport"
     const url = PASSPORT_PROFILE_URL
-    const { data: user, mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie("token") == "" ? null : url)
+    const {mutate} = useSWRConfig()
+    const { data: user, mutate:_mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie("token") == "" ? null : url)
     const [countFlag, setCoountFlag] = useState(0)
     // const [user, setUser] = useState<any>()
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie("token") : "")
@@ -88,7 +89,7 @@ export default function useAuthentication() {
                 // debugger
                 if (typeof response !== "undefined") {
                     postLoginAction(response.access_token)
-                    mutate()
+                    mutate(url)
                 }
             } catch (error) {
                 throw error
@@ -105,7 +106,7 @@ export default function useAuthentication() {
                 // debugger
                 if (typeof response !== "undefined") {
                     postLoginAction(response.access_token)
-                    mutate()
+                    mutate(url)
                     window.location.href=links.dashboard
                 }
             } catch (error) {

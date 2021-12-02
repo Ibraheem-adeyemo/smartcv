@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StatsCMore } from "../../models";
-import { Barchart } from "../charts";
+import { Barchart } from "../app-charts";
 import { Flex, Text } from "@chakra-ui/layout";
 import DropdownSearchFilter from "../stats/search-filters";
 import { months, MonthsEnum } from "../../constants";

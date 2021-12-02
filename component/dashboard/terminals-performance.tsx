@@ -18,7 +18,7 @@ export default function TerminalsPerformance(_props: any) {
   if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
     url += `/${selectedTenantCode}`
   }
-  const { data: totalATMCount, mutate, error: totalATMCountError } = useSWR<Paginate<ATMCount>>(url)
+  const { data: totalATMCount, mutate: _mutate, error: totalATMCountError } = useSWR<Paginate<ATMCount>>(url)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "Loading" })
   const [stats, setStats] = useState<StatsA[]>()
   const toast = useToast()

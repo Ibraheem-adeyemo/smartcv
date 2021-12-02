@@ -13,7 +13,7 @@ function ChannelsMonitoringTable(_props: any) {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
-    const { data: atmCountDetail, mutate, error } = useSWR<Paginate<ATMCountDetail>>(`${apiUrlsv1.atmCountDetails}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
+    const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(`${apiUrlsv1.atmCountDetails}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => ({
         columns: [

@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, cookies, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { TenantView, Paginate, UserManagementModal } from "../../models";
@@ -18,7 +18,8 @@ function BankTable(_props: any) {
     const toast = useToast()
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
     const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
-    const { data: tenant, mutate, error } = useSWR<Paginate<TenantView>>(`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`)
+    const {mutate} = useSWRConfig()
+    const { data: tenant, mutate:_mutate, error } = useSWR<Paginate<TenantView>>(`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`)
 
     const data = useMemo(() => ({
         columns: [
@@ -104,7 +105,7 @@ function BankTable(_props: any) {
         if(selectedModal) {
             mutateData(() => {
                 // debugger
-                mutate()
+                mutate(`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`)
                 handleToggleModal()
             })
         }

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StatsCMore } from "../../models";
-import { Barchart } from "../charts";
+import { Barchart } from "../app-charts";
 import { Flex, Text } from "@chakra-ui/layout";
 import { Tag } from "@chakra-ui/tag";
 import { DropdownIcon } from "../../constants";
