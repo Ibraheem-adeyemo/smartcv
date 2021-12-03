@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Banks, Names, SECRET } from "../../constants";
+import { Banks, Names } from "../../constants";
 import { getRandomInt } from "../../lib";
-import { tenantAdmin, TenantAdminView, Paginate } from "../../models";
+import { TenantAdminView, Paginate } from "../../models";
 
 export default async function GettenantAdmins(req:NextApiRequest, res: NextApiResponse) {
     // debugger
@@ -18,7 +18,7 @@ export default async function GettenantAdmins(req:NextApiRequest, res: NextApiRe
             email: `${Names[nameRandomNumbers[i]].firstName}.${Names[nameRandomNumbers[i]].lastName}@mailinator.com`,
             bank: Banks[getRandomInt(Banks.length - 1)],
             dateCreated: (new Date()).getDate().toString(),
-            status: "John wick"
+            status: getRandomInt(1)
         }))
         setTimeout(()=>{}, 3000)
         const returnData:Paginate<TenantAdminView, string> = {
