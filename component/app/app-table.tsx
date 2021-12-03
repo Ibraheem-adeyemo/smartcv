@@ -6,7 +6,7 @@ import React, { useContext } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
 import { DotIcon, Images } from "../../constants";
 import { appDate } from "../../lib";
-import { TableContext } from "../../provider/table-provider";
+import { PaginatorContext } from "../../provider/paginator-provider";
 import SkeletonLoader from "../skeleton-loader";
 interface Column {
     name: string,
@@ -31,7 +31,7 @@ const AppTableFooter = dynamic(() => import('../app/app-table-footer'))
 
 const AppTable = <T extends Record<keyof T, T[keyof T]>>(props: ApptableProps<T>) => {
 
-    const { totalPageNumber } = useContext(TableContext)
+    const { totalPageNumber } = useContext(PaginatorContext)
     // console.log({rows: props.rows})
 
     return (

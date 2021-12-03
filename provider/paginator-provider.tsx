@@ -3,7 +3,7 @@ import React, { createContext, FC, useState } from "react";
 import { usePagination } from "../hooks";
 import { ComponentWithChildren } from "../models";
 
-export const TableContext = createContext<ReturnType<typeof usePagination>>({
+export const PaginatorContext = createContext<ReturnType<typeof usePagination>>({
     pageNumber: 1,
     countPerPage: 8,
     totalPageNumber: 100,
@@ -17,7 +17,7 @@ export const TableContext = createContext<ReturnType<typeof usePagination>>({
 interface TableProviderProps extends ComponentWithChildren {
     
 }
-const TableProvider:FC<TableProviderProps> = (props: TableProviderProps) => {
+const PaginatorProvider:FC<TableProviderProps> = (props: TableProviderProps) => {
     const { pageNumber,
         countPerPage,
         totalPageNumber,
@@ -25,7 +25,7 @@ const TableProvider:FC<TableProviderProps> = (props: TableProviderProps) => {
         incrementPageNumber,
         decrementPageNumber,
         gotoPage, setPaginationProps } = usePagination(8)
-    return <TableContext.Provider value={{
+    return <PaginatorContext.Provider value={{
         pageNumber,
         countPerPage,
         totalPageNumber,
@@ -38,6 +38,6 @@ const TableProvider:FC<TableProviderProps> = (props: TableProviderProps) => {
         <Box w="100%" bgColor="white" borderRadius="6px" boxShadow="0px 4px 15px rgba(0, 0, 0, 0.05)">
         {props.children}
         </Box>
-    </TableContext.Provider>
+    </PaginatorContext.Provider>
 }
-export default TableProvider
+export default PaginatorProvider
