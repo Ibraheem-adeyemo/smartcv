@@ -3,8 +3,8 @@ import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { Paginate, ATMCountDetail, AuditView } from "../../models";
-import { TableProvider } from "../../provider";
-import { TableContext } from "../../provider/table-provider";
+import { PaginatorProvider } from "../../provider";
+import { PaginatorContext } from "../../provider/paginator-provider";
 import { useToast } from "@chakra-ui/react";
 import { apiUrlsv1 } from "../../constants";
 
@@ -12,7 +12,7 @@ import { apiUrlsv1 } from "../../constants";
 const  AuditTable:React.FC = () => {
     // console.log({pageNumber})
 
-    const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
+    const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { data: auditView, mutate: _mutate, error } = useSWR<Paginate<AuditView>>(`${apiUrlsv1.atmCountDetails}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => ({
@@ -77,9 +77,9 @@ const  AuditTable:React.FC = () => {
 const Audit:FC =() => {
     return (
 
-        <TableProvider>
+        <PaginatorProvider>
             <AuditTable />
-        </TableProvider>
+        </PaginatorProvider>
     )
 }
 
