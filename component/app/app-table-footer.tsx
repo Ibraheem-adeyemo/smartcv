@@ -1,6 +1,6 @@
 import { HStack, Link, Text } from "@chakra-ui/layout"
 import React, { FC, useContext } from "react"
-import { TableContext } from "../../provider/table-provider"
+import { PaginatorContext } from "../../provider/paginator-provider"
 import _ from "lodash"
 
 const AppTableFooter:FC = () => {
@@ -9,7 +9,7 @@ const AppTableFooter:FC = () => {
         totalPageNumber,
         incrementPageNumber,
         decrementPageNumber,
-        gotoPage } = useContext(TableContext)
+        gotoPage } = useContext(PaginatorContext)
 
     // console.log({ pageNumber, totalPageNumber })
     return (<>

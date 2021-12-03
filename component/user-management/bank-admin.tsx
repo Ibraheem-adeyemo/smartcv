@@ -2,9 +2,9 @@ import _ from "lodash";
 import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
-import { TenantAdminView, Paginate, APIResponse } from "../../models";
-import { TableProvider } from "../../provider";
-import { TableContext } from "../../provider/table-provider";
+import { TenantAdminView, Paginate} from "../../models";
+import { PaginatorProvider } from "../../provider";
+import { PaginatorContext } from "../../provider/paginator-provider";
 import { useToast } from "@chakra-ui/react";
 import { apiUrlsv1, cookies } from "../../constants";
 import { setCookie } from "../../lib";
@@ -13,7 +13,7 @@ import { setCookie } from "../../lib";
 const BankAdminTable:FC = () => {
     // console.log({pageNumber})
 
-    const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
+    const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { data: tenantAdmin, mutate, error } = useSWR<Paginate<TenantAdminView>>(`${apiUrlsv1.tenantAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => ({
@@ -94,9 +94,9 @@ const BankAdminTable:FC = () => {
 const TenantAdmin:FC = () => {
     return (
 
-        <TableProvider>
+        <PaginatorProvider>
             <BankAdminTable />
-        </TableProvider>
+        </PaginatorProvider>
     )
 }
 export default TenantAdmin

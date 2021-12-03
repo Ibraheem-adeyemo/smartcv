@@ -6,8 +6,8 @@ import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, cookies, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { TenantView, Paginate, UserManagementModal } from "../../models";
-import { TableProvider } from "../../provider";
-import { TableContext } from "../../provider/table-provider";
+import { PaginatorProvider } from "../../provider";
+import { PaginatorContext } from "../../provider/paginator-provider";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 import { AppTable } from "../app";
 
@@ -16,7 +16,7 @@ const AddNewBank = dynamic(() =>import('./add-new-bank'))
 const BankTable:FC = () => {
     // console.log({pageNumber})
     const toast = useToast()
-    const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
+    const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
     const {mutate} = useSWRConfig()
     const { data: tenant, mutate:_mutate, error } = useSWR<Paginate<TenantView>>(`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`)
@@ -126,12 +126,12 @@ const Bank:FC = () => {
 
     return (
 
-        <TableProvider>
+        <PaginatorProvider>
             <>
                 <BankTable />
                 {typeof selectedModal !== "undefined" && selectedModal.isOpen ? <AddNewBank /> : <></>}
             </>
-        </TableProvider>
+        </PaginatorProvider>
     )
 }
 export default Bank

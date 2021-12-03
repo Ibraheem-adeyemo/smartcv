@@ -6,8 +6,8 @@ import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, cookies, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
-import { TableProvider } from "../../provider";
-import { TableContext } from "../../provider/table-provider";
+import { PaginatorProvider } from "../../provider";
+import { PaginatorContext } from "../../provider/paginator-provider";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 import { AppTable } from "../app";
 
@@ -15,7 +15,7 @@ const AddNewUser = dynamic(() => import("./add-new-user"))
 const ISWAdminTable:FC = () => {
     // console.log({pageNumber})
 
-    const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
+    const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const {mutate} = useSWRConfig()
     const { data: iswAdmin, mutate:_mutate, error } = useSWR<Paginate<ISWAdminView>>(`${apiUrlsv1.iswAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
     const toast = useToast()
@@ -105,12 +105,12 @@ const ISWAdmin:FC = () => {
 
     return (
 
-        <TableProvider>
+        <PaginatorProvider>
             <>
                 <ISWAdminTable />
                 {typeof selectedModal !== "undefined" && selectedModal.isOpen ? <AddNewUser /> : <></>}
             </>
-        </TableProvider>
+        </PaginatorProvider>
     )
 }
 export default ISWAdmin
