@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { debounce, Function } from "lodash"
-import { ClassAttributes, createContext, Props, useState } from "react"
+import { ClassAttributes, createContext, FC, Props, useState } from "react"
 import { UserManagementModals, userManagementTabs } from "../constants"
 import { ComponentWithChildren, UserManagementModal } from "../models"
 
@@ -17,7 +17,7 @@ export const UserManagementTabProviderContext = createContext({
 interface UserManagementTabProviderProps extends ComponentWithChildren  {
     
 }
-export default function UserManagementTabProvider(props: UserManagementTabProviderProps) {
+const UserManagementTabProvider:FC<UserManagementTabProviderProps> = (props: UserManagementTabProviderProps) => {
 
     const [tabs, setTabs] = useState(userManagementTabs)
     const [searchText, setSearchText] = useState("")
@@ -49,3 +49,4 @@ export default function UserManagementTabProvider(props: UserManagementTabProvid
         </UserManagementTabProviderContext.Provider>
     )
 }
+export default UserManagementTabProvider

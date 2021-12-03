@@ -1,8 +1,8 @@
 import { Flex, Text, List, ListItem, Avatar } from "@chakra-ui/react"
-import React, { useMemo } from "react"
+import React, { FC, useMemo } from "react"
 import { TickIcon } from "../constants"
 
-const MissionStatement = () => {
+const MissionStatement:FC = () => {
     const missionStatement = useMemo(() => [{
         missionHead: "ATM & Transaction monitoring",
         missionText: `Set-up new terminals,send downloads to disconnected terminals, realtime transaction monitoring, monitor online/offline/supervisor mode terminals`

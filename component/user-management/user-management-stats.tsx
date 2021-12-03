@@ -1,7 +1,7 @@
-import { Flex, HStack, VStack, Text, Box } from "@chakra-ui/react";
+import { Flex, VStack, Text, Box } from "@chakra-ui/react";
 import { Badge } from "@chakra-ui/react";
 import _ from "lodash";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import { apiUrlsv1, AvatarIcon, CapitolIcon, cookies, UserManagementStatsName } from "../../constants";
 import { getCookie } from "../../lib";
@@ -9,7 +9,7 @@ import { ISWAdminView, Paginate, TenantAdminView, TenantView, UserManagementStat
 import { AppCard } from "../app";
 import SkeletonLoader from "../skeleton-loader";
 
-export default function UserManagementStats(_props: any) {
+const UserManagementStats:FC = () => {
     // const { data: userManagementStats, mutate, error } = useSWR<UserManagementStat[]>('/api/get-user-management-stats')
 
     const { data: iswAdmin, mutate: _mutateISWAdmin, error: iswAdminError } = useSWR<Paginate<ISWAdminView>>(typeof document !== "undefined" && getCookie(cookies.totalISWAdmin) !== "" ? null : apiUrlsv1.iswAdmin)
@@ -87,3 +87,5 @@ export default function UserManagementStats(_props: any) {
         </AppCard >
     )
 }
+
+export default UserManagementStats

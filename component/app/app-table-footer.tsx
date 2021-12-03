@@ -1,9 +1,9 @@
 import { HStack, Link, Text } from "@chakra-ui/layout"
-import { useContext } from "react"
+import React, { FC, useContext } from "react"
 import { TableContext } from "../../provider/table-provider"
 import _ from "lodash"
 
-export default function AppTableFooter(_props: any) {
+const AppTableFooter:FC = () => {
 
     const { pageNumber,
         totalPageNumber,
@@ -27,3 +27,5 @@ export default function AppTableFooter(_props: any) {
             </HStack>}</>
     )
 }
+
+export default AppTableFooter

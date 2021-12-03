@@ -1,12 +1,12 @@
 import { Flex, Link } from "@chakra-ui/layout";
 import NextLink from 'next/link'
 import { Image, Text, Button } from "@chakra-ui/react";
-import React, { useContext, useEffect } from "react";
+import React, { FC, useContext, useEffect } from "react";
 import { cookies, Images, links } from "../../constants";
 import { AuthContext } from "../../provider/auth-provider";
 import { setCookie } from "../../lib";
 
-export default function LoginForm(_props:any) {
+const LoginForm:FC = () => {
     const { user, signIn, signOut } = useContext(AuthContext)
 
     useEffect(() => {
@@ -40,3 +40,5 @@ export default function LoginForm(_props:any) {
             </Flex>
         </form>)
 }
+
+export default LoginForm

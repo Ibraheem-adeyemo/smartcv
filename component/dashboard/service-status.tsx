@@ -1,5 +1,5 @@
 import { Text, useToast } from "@chakra-ui/react";
-import React, { useContext, useEffect, useState } from "react"
+import React, { FC, useContext, useEffect, useState } from "react"
 import { Stat } from "../stats"
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
@@ -15,7 +15,7 @@ interface ServiceStatusProps {
   title?: string
 }
 
-export default function ServiceStatus(props: ServiceStatusProps) {
+const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let atmInServiceurl = apiUrlsv1.atmInService
   let atmOutOfServiceurl = apiUrlsv1.atmOutOfService
@@ -94,3 +94,5 @@ export default function ServiceStatus(props: ServiceStatusProps) {
     </AppCard>
   )
 }
+
+export default ServiceStatus

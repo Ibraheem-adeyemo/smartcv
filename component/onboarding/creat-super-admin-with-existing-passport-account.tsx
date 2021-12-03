@@ -10,7 +10,7 @@ import { notificationMesage } from "../../constants";
 import { OnboardingContext } from "../layouts";
 
 
-export default function CreateSuperAdminWithExistingSuperAdminAccount() {
+const CreateSuperAdminWithExistingSuperAdminAccount:React.FC = () => {
     const { steps, onboarding, completeForm, previousState, loading} = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
     const toast = useToast()
@@ -99,3 +99,5 @@ export default function CreateSuperAdminWithExistingSuperAdminAccount() {
 
     </OnboardingCard>)
 }
+
+export default CreateSuperAdminWithExistingSuperAdminAccount

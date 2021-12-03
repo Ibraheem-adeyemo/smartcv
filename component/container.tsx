@@ -1,8 +1,7 @@
 import { Box } from "@chakra-ui/layout"
-import { AppProps } from "next/app"
-import React, { ComponentProps, JSXElementConstructor } from "react"
+import React, {  } from "react"
 
-const Container = ({children, ...props}:{children:React.ReactNode}) => {
+const Container = ({children}:{children:React.ReactNode}) => {
     return <Box display="flex" justifyContent="space-evenly" color="white">
         {children}
     </Box>

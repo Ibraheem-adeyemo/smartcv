@@ -1,12 +1,13 @@
 import { CircularProgress } from "@chakra-ui/progress"
 import { useToast, Flex } from "@chakra-ui/react"
+import { NextPage } from "next"
 import { useRouter } from "next/router"
 import React, { useContext, useEffect } from "react"
 import { links, notificationMesage } from "../constants"
 import { getCookie, setCookie } from "../lib"
 import { AuthContext } from "../provider/auth-provider"
 
-export default function OauthCallback() {
+const OauthCallback:NextPage = () => {
     const { loginWithPassport } = useContext(AuthContext)
     const router = useRouter()
     const toast = useToast()
@@ -50,3 +51,4 @@ export default function OauthCallback() {
         </Flex>
     )
 }
+export default OauthCallback

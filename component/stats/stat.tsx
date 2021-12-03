@@ -1,10 +1,9 @@
-import { Flex, Icon, Text } from "@chakra-ui/react";
-import React from "react";
-import { BsArrowUpCircle } from "react-icons/bs";
+import { Flex, Text } from "@chakra-ui/react";
+import React, { FC } from "react";
 import { shortenNumber } from "../../lib";
 import { StatProps } from "../../models";
 
-export default function Stat(props: StatProps) {
+const Stat:FC<StatProps> = (props: StatProps) => {
   let val = props.prefix === "N" && props.totalNumber === 0 ?`${props.totalNumber}.00`:`${props.totalNumber}`
   if(val.length > 5){
      const shortenedVal = shortenNumber(props.totalNumber)
@@ -41,3 +40,5 @@ export default function Stat(props: StatProps) {
     </Flex>
   )
 }
+
+export default Stat

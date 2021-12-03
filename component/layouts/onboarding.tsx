@@ -33,7 +33,7 @@ export const onboardingContext = createContext<ReturnType<typeof useOnboarding>>
         startLoading: () => (""),
         stopLoading: () => ("")
     })
-export default function Onboarding(props: OnboardingProps) {
+const Onboarding:React.FC<OnboardingProps> = (props: OnboardingProps) => {
     const { steps, onboarding, changeIsRefresh, addInfo, refresh, completeForm, resetForm, previousState, loading, startLoading, stopLoading } = useOnboarding()
     // useEffect(() => console.log({ c: onboarding }))
     const router = useRouter()
@@ -149,3 +149,5 @@ export default function Onboarding(props: OnboardingProps) {
         </Provider>
     )
 }
+
+export default Onboarding

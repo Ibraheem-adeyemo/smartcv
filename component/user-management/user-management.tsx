@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/layout";
 import _ from "lodash";
 import dynamic from "next/dynamic";
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { FC, useCallback, useContext, useEffect } from "react";
 import { UserManagementStats } from ".";
 import { userManagementTabsName } from "../../constants";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
@@ -11,7 +11,7 @@ const Bank = dynamic(() => import("./bank"))
 const BankAdmin = dynamic(() => import("./bank-admin"))
 const ISWAdmin = dynamic(() => import("./isw-admin"))
 
-export default function UserManagement(_props: any) {
+const UserManagement:FC = () => {
     const { tabs, handleTabSelection, handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
     useEffect(() => {
         handleTabSelection(0)
@@ -50,3 +50,5 @@ export default function UserManagement(_props: any) {
         </VStack>
     )
 }
+
+export default UserManagement

@@ -3,8 +3,9 @@ import { Image } from "@chakra-ui/react";
 import { OnboardingCard } from ".";
 import { Images, links } from "../../constants";
 import NextLink from 'next/link'
+import React, { FC } from "react";
 
-export default function SuccessCard(_props: any) {
+const SuccessCard:FC =() => {
     const cardTitle = <VStack spacing="20px">
         <Image src={Images.onboardingSuccess} boxSize="134px" />
         <Text variant="card-header" size="extra-large-text" color="brand.success">Changes updated</Text>
@@ -23,3 +24,5 @@ export default function SuccessCard(_props: any) {
         </OnboardingCard>
     )
 }
+
+export default SuccessCard

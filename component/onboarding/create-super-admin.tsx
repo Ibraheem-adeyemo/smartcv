@@ -18,11 +18,11 @@ const SigninWithPassport = dynamic(() => import('./signin-with-passport'))
 
 
 
-export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
+const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdminProps) => {
     
-    const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState } = useContext(OnboardingContext)
+    const { steps, onboarding, refresh, resetForm, previousState } = useContext(OnboardingContext)
     const router = useRouter()
-    const [authenticatedUser, setAuthenticatedUser] = useState<tenantAdmin>()
+    const [authenticatedUser] = useState<tenantAdmin>()
     const [accordionindex, setAccordionindex] = useState<number>()
     const [openModal, setOpenModal] = useState<boolean>()
     const toast = useToast()
@@ -139,3 +139,5 @@ export default function CreateSuperAdmin(props: CreateSuperAdminProps) {
         </>
     )
 }
+
+export default CreateSuperAdmin

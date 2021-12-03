@@ -1,6 +1,7 @@
 import { Flex, Text } from "@chakra-ui/layout"
+import { NextPage } from "next"
 import dynamic from 'next/dynamic'
-import React from "react"
+import React, { FC } from "react"
 import { Authenticated } from "../component/layouts"
 import { StatsProvider } from "../provider"
 const TerminalsPerformance = dynamic(() => import('../component/dashboard/terminals-performance'))
@@ -14,7 +15,7 @@ const TransactionMetric = dynamic(() => import('../component/dashboard/transacti
 const UsageMetric = dynamic(() => import('../component/dashboard/usage-metric'))
 const AppBarFilter = dynamic(() => import('../component/stats/app-bar-filter'))
 
-const Dashboard = () => {
+const Dashboard:NextPage = () => {
   return (
     <StatsProvider>
       <Authenticated pageHeader={

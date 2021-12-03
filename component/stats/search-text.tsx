@@ -1,13 +1,13 @@
 import { InputGroup, InputLeftElement, Input } from "@chakra-ui/input";
 import { HStack } from "@chakra-ui/layout";
-import React from "react";
+import React, { FC } from "react";
 import { SearchIcon } from "../../constants";
 
 interface SearchTextProps {
     searchText:string,
     handleSearchItem: (searchText:string) => void
 }
-export default function SearchText(props:SearchTextProps) {
+const SearchText:FC<SearchTextProps> = (props:SearchTextProps) => {
     
     return (
         <HStack>
@@ -21,3 +21,4 @@ export default function SearchText(props:SearchTextProps) {
         </HStack>
     )
 }
+export default SearchText

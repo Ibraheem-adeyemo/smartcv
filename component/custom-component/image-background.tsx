@@ -1,7 +1,7 @@
 import { Box, useStyleConfig } from "@chakra-ui/react";
-import React from "react";
+import React, { FC } from "react";
 
-export function ImageBackground(props:any) {
+export const ImageBackground:FC = (props:any) => {
 
     const { size, variant, children, ...rest } = props 
     const styles = useStyleConfig("ImageBackground", { size, variant })

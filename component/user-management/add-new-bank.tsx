@@ -1,14 +1,14 @@
 import { Image, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex, FormControl, FormLabel, Input, FormErrorMessage, Select, ModalFooter, HStack, Button, Badge, Box, CloseButton, Skeleton, VStack, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/react";
 import _ from "lodash";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
-import { apiUrlsv1, Images, methods, PickerIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
+import { apiUrlsv1, Images, PickerIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { validateHexColor } from "../../lib";
-import { formType, InstitutionColor, InstitutionColorInfo, State, TenantView, UserManagementModal } from "../../models";
+import { InstitutionColor, InstitutionColorInfo, State, TenantView, UserManagementModal } from "../../models";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 
-export default function AddNewBank(_props: any) {
+const AddNewBank:FC = () => {
     const { data: states, error } = useSWR<State[]>(apiUrlsv1.states)
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
     const { form, formOnChange, refreshForm } = useForm<TenantView>({
@@ -274,3 +274,5 @@ export default function AddNewBank(_props: any) {
             }
         </>)
 }
+
+export default AddNewBank

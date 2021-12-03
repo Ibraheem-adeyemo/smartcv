@@ -7,10 +7,12 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from "rea
 import { OnboardingCard } from ".";
 import { PickerIcon } from "../../constants";
 import { validateHexColor } from "../../lib";
-import { Onboarding, tenantAdmin, InstitutionColorInfo } from "../../models";
+import { Onboarding, tenantAdmin, InstitutionColorInfo, Step } from "../../models";
 import { OnboardingContext } from "../layouts";
-
-export default function InstitutionCOlors(props: any) {
+interface InstitutionColorsProps {
+    step: number
+}
+const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionColorsProps) => {
     
     const { steps, onboarding, addInfo, resetForm, previousState, loading } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
@@ -168,3 +170,5 @@ export default function InstitutionCOlors(props: any) {
         </OnboardingCard>
     )
 }
+
+export default InstitutionColors

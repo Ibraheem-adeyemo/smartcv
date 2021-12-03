@@ -1,5 +1,5 @@
 import { Text } from "@chakra-ui/layout";
-import React, { useCallback, useContext, useEffect, useState } from "react"
+import React, { FC, useContext, useEffect, useState } from "react"
 import { Stat } from "../stats"
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
@@ -7,7 +7,7 @@ import { AppCard } from "../app";
 import { useLoading } from "../../hooks";
 import { apiUrlsv1 } from "../../constants";
 import useSWR from "swr";
-import { ATMInService, ATMInSupervisor, Paginate } from "../../models";
+import { ATMInSupervisor, Paginate } from "../../models";
 import { StatsContext } from "../../provider/stats-provider";
 import { useToast } from "@chakra-ui/react";
 import _ from "lodash";
@@ -15,7 +15,8 @@ import _ from "lodash";
 interface TerminalsUnderWatchProps {
   title?:string
 }
-export default function TerminalsUnderWatch(props: TerminalsUnderWatchProps) {
+
+const TerminalsUnderWatch:FC<TerminalsUnderWatchProps> = (props: TerminalsUnderWatchProps) => {
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let atmInSupervisorUrl = apiUrlsv1.atmInSupervisor
   if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
@@ -89,3 +90,4 @@ export default function TerminalsUnderWatch(props: TerminalsUnderWatchProps) {
     </AppCard>
   )
 }
+export default TerminalsUnderWatch

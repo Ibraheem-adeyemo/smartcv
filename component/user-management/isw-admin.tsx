@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import _ from "lodash";
 import dynamic from "next/dynamic";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, cookies, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
@@ -12,7 +12,7 @@ import { UserManagementTabProviderContext } from "../../provider/user-management
 import { AppTable } from "../app";
 
 const AddNewUser = dynamic(() => import("./add-new-user"))
-function ISWAdminTable(_props: any) {
+const ISWAdminTable:FC = () => {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
@@ -94,7 +94,7 @@ function ISWAdminTable(_props: any) {
 
 }
 
-export default function ISWAdmin(_props: any) {
+const ISWAdmin:FC = () => {
     const { modals } = useContext(UserManagementTabProviderContext)
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>()
 
@@ -113,3 +113,4 @@ export default function ISWAdmin(_props: any) {
         </TableProvider>
     )
 }
+export default ISWAdmin

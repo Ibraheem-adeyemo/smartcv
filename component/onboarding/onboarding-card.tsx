@@ -6,8 +6,7 @@ interface OnboardingCardProps{
     cardFooter: JSX.Element | JSX.Element[],
     children: JSX.Element
 }
-
-export default function OnboardingCard(props:OnboardingCardProps) {
+const  OnboardingCard:React.FC<OnboardingCardProps> = (props:OnboardingCardProps) => {
     const cardTitle = useMemo(() =>  props.cardTitle,[])
     return(
          <Flex px="49px" py="30px" gridGap="25px" bgColor="white" flexDir="column" w="100%" >
@@ -17,3 +16,5 @@ export default function OnboardingCard(props:OnboardingCardProps) {
         </Flex>
     )
 }
+
+export default  OnboardingCard

@@ -1,5 +1,5 @@
 import { Modal, ModalOverlay, ModalContent, ModalBody, ModalHeader, ModalCloseButton, Button, ModalFooter, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, useToast } from "@chakra-ui/react";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { CLIENT_ID, PASSPORT_TOKEN_URL, SCOPE, SECRET } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { PassportLoginCredentials, tenantAdmin } from "../../models";
@@ -24,7 +24,7 @@ interface RequestBody {
     password:string,
     scope:string
 }
-export default function SigninWithPassport(props: SigninWithPassportProps) {
+const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPassportProps) => {
     const { form, formOnChange: setForm } = useForm<PassportLoginCredentials>(initialLogin)
     const { validation, setData, setField } = useValidator<PassportLoginCredentials>()
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
@@ -183,3 +183,5 @@ export default function SigninWithPassport(props: SigninWithPassportProps) {
         </Modal>
     )
 }
+
+export default SigninWithPassport 

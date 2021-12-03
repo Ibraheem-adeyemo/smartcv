@@ -1,13 +1,13 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Button, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from '@chakra-ui/react'
+import React, { FC, useCallback, useContext, useEffect, useState } from "react";
+import { Button, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { ISWAdminView, UserManagementModal } from "../../models";
-import { methods, Roles, UserManagementModalNames, UserManagementModals, userManagementTabsName } from "../../constants";
+import { Roles, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 import { validateEmail } from "../../lib";
 import _ from "lodash";
 
-export default function AddNewUser(_props: any) {
+const AddNewUser:FC = () => {
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
     const { form, formOnChange, refreshForm } = useForm<ISWAdminView>({
         firstName: "",
@@ -111,3 +111,5 @@ export default function AddNewUser(_props: any) {
             }
         </>)
 }
+
+export default AddNewUser

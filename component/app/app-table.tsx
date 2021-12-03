@@ -29,7 +29,7 @@ interface ApptableProps<T extends Record<keyof T, T[keyof T]>> {
 
 const AppTableFooter = dynamic(() => import('../app/app-table-footer'))
 
-export default function AppTable<T extends Record<keyof T, T[keyof T]>>(props: ApptableProps<T>) {
+const AppTable = <T extends Record<keyof T, T[keyof T]>>(props: ApptableProps<T>) => {
 
     const { totalPageNumber } = useContext(TableContext)
     // console.log({rows: props.rows})
@@ -129,3 +129,5 @@ export default function AppTable<T extends Record<keyof T, T[keyof T]>>(props: A
         </Table>
     )
 }
+
+export default AppTable

@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { StatsCMore } from "../../models";
 import { Barchart } from "../app-charts";
 import { Flex, Text } from "@chakra-ui/layout";
 import DropdownSearchFilter from "../stats/search-filters";
-import { months, MonthsEnum } from "../../constants";
+import { months } from "../../constants";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 
-export default function TopTransactionMetric(props: any) {
+const TopTransactionMetri:FC = () => {
     const Filter = useMemo(() => DropdownSearchFilter, [])
 
     const [loading, setLoading] = useState(true)
@@ -66,3 +66,5 @@ export default function TopTransactionMetric(props: any) {
         }
     </AppCard>
 }
+
+export default TopTransactionMetri

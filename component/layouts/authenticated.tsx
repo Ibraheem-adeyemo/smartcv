@@ -18,7 +18,7 @@ interface MenuListItem {
     name: string,
     link: string
 }
-export default function AuthenticatedLayout(props: AuthenticatedLayout) {
+const AuthenticatedLayout:React.FC<AuthenticatedLayout> = (props: AuthenticatedLayout) => {
     const { user, signOut, error } = useContext(AuthContext)
     const router = useRouter()
     const [loading, setLoading] = useState(true)
@@ -201,3 +201,4 @@ export default function AuthenticatedLayout(props: AuthenticatedLayout) {
             }
         </Grid>)
 }
+export default AuthenticatedLayout

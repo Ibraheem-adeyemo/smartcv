@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/layout";
-import React, { createContext, useState } from "react";
+import React, { createContext, FC, useState } from "react";
 import { usePagination } from "../hooks";
 import { ComponentWithChildren } from "../models";
 
@@ -17,7 +17,7 @@ export const TableContext = createContext<ReturnType<typeof usePagination>>({
 interface TableProviderProps extends ComponentWithChildren {
     
 }
-export default function TableProvider(props: TableProviderProps) {
+const TableProvider:FC<TableProviderProps> = (props: TableProviderProps) => {
     const { pageNumber,
         countPerPage,
         totalPageNumber,
@@ -40,3 +40,4 @@ export default function TableProvider(props: TableProviderProps) {
         </Box>
     </TableContext.Provider>
 }
+export default TableProvider

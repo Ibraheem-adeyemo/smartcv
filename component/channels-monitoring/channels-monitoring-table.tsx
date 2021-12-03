@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { Paginate, ATMCountDetail } from "../../models";
@@ -9,7 +9,7 @@ import { useToast } from "@chakra-ui/react";
 import { apiUrlsv1 } from "../../constants";
 
 
-function ChannelsMonitoringTable(_props: any) {
+const  ChannelsMonitoringTable:React.FC = () => {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
@@ -73,7 +73,7 @@ function ChannelsMonitoringTable(_props: any) {
 
 }
 
-export default function ChannelsMonitoring(_props: any) {
+const ChannelsMonitoring:FC =() => {
     return (
 
         <TableProvider>
@@ -81,3 +81,5 @@ export default function ChannelsMonitoring(_props: any) {
         </TableProvider>
     )
 }
+
+export default ChannelsMonitoring

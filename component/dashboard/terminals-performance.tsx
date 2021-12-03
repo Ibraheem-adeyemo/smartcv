@@ -1,9 +1,5 @@
-import { Text } from "@chakra-ui/layout";
-import React, { useContext, useEffect, useState } from "react"
-import { Stat } from "../stats"
+import React, { FC, useContext, useEffect, useState } from "react"
 import { StatsA } from "../../models/stats-models";
-import { SkeletonLoader } from "..";
-import { AppCard } from "../app";
 import useSWR from "swr";
 import { apiUrlsv1 } from "../../constants";
 import { useLoading } from "../../hooks";
@@ -11,8 +7,12 @@ import _ from "lodash";
 import { ATMCount, Paginate } from "../../models";
 import { useToast } from "@chakra-ui/react";
 import { StatsContext } from "../../provider/stats-provider";
+import { AppCard } from "../app";
+import { SkeletonLoader } from "..";
+import {Text} from '@chakra-ui/react'
+import { Stat } from "../stats";
 
-export default function TerminalsPerformance(_props: any) {
+const TerminalsPerformance:FC = () => {
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let url = apiUrlsv1.atmCount
   if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
@@ -78,3 +78,4 @@ export default function TerminalsPerformance(_props: any) {
     </AppCard>
   )
 }
+export default  TerminalsPerformance

@@ -1,6 +1,6 @@
 import { Flex, Skeleton } from "@chakra-ui/react";
 import { range } from "lodash";
-import React from "react";
+import React, { FC } from "react";
 interface SkeletonLoaderProps {
     columns: number,
     rows: number,
@@ -8,7 +8,7 @@ interface SkeletonLoaderProps {
     height?: string | string[],
     gridGap?:string
 }
-export default function SkeletonLoader(props: SkeletonLoaderProps) {
+const SkeletonLoader:FC<SkeletonLoaderProps> = (props: SkeletonLoaderProps) => {
 
     return <>
         {range(0, props.columns).map((x, i) =>
@@ -19,3 +19,5 @@ export default function SkeletonLoader(props: SkeletonLoaderProps) {
             </Flex>)}
     </>
 }
+
+export default SkeletonLoader

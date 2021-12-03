@@ -1,9 +1,9 @@
-import { FormControl, FormLabel, FormHelperText } from "@chakra-ui/form-control";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Flex, Text, Menu, MenuButton, MenuItem, MenuList, Button, Input, InputGroup, InputRightElement  } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { FC, useRef } from "react";
 import { CalendarIcon, DropdownIcon } from "../../constants";
 
-export default function CustomFilter(props: any) {
+const CustomFilter:FC = () => {
     const startDateRef = useRef<HTMLInputElement>(null)
     const endDateRef = useRef<HTMLInputElement>(null)
 
@@ -44,3 +44,4 @@ export default function CustomFilter(props: any) {
         </Menu>
     )
 }
+export default CustomFilter

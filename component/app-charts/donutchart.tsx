@@ -1,10 +1,10 @@
-import React, { useMemo, useEffect, useRef } from "react";
+import React, { useMemo, useEffect, useRef, FC } from "react";
 import { Chart, registerables } from 'chart.js';
 import { DonutChartProps } from "../../models";
 import { Canvas } from ".";
 
 
-export default function DonutChart(props: DonutChartProps) {
+const DonutChart:FC<DonutChartProps> = (props: DonutChartProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
 
@@ -42,3 +42,5 @@ export default function DonutChart(props: DonutChartProps) {
 
   return <Canvas ref={canvasRef} w={props?.width} h={props?.height} as="canvas" mt="17px" />
 }
+
+export default DonutChart

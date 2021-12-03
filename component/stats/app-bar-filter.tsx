@@ -1,8 +1,8 @@
 import { Flex, Tag, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { FC } from "react";
 import { InstitutionFilter, ChannelFilter, CustomFilter } from ".";
 
-export default function AppBarFilter(_props: any) {
+const AppBarFilter:FC = () => {
     return (
         <Flex alignItems="center" gridGap="17px">
             <InstitutionFilter />
@@ -14,3 +14,4 @@ export default function AppBarFilter(_props: any) {
         </Flex>
     )
 }
+export default AppBarFilter

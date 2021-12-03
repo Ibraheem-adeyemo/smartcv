@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, FC } from "react";
 import { useFilter } from "../hooks";
 import { ComponentWithChildren } from "../models";
 
@@ -13,10 +13,11 @@ export const StatsContext = createContext<ReturnType<typeof useFilter>>({
 interface StatsProviderProps extends ComponentWithChildren {
 
 }
-export default function StatsProvider(props: StatsProviderProps) {
+const StatsProvider:FC<StatsProviderProps> = (props: StatsProviderProps) => {
     return (
         <StatsContext.Provider value={{...useFilter()}}>
             {props.children}
         </StatsContext.Provider>
     )
 }
+export default StatsProvider

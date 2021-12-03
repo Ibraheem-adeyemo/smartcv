@@ -1,8 +1,7 @@
-import { Box, useStyleConfig, useStyles } from "@chakra-ui/react"
-import React from "react"
-import styles from "../../theme/style"
+import { Box, useStyleConfig } from "@chakra-ui/react"
+import React, { FC } from "react"
 
-export function InterswitchLogo (props:any) {
+export const InterswitchLogo:FC<any> = (props:any) => {
     const {children, variant, ...rest} = props
     const style = useStyleConfig("ISWLogo", {variant})
     return (

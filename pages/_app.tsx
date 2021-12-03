@@ -7,10 +7,11 @@ import theme from "../theme"
 import { SWRConfig } from 'swr'
 import { fetchJson } from '../lib'
 import Fonts from '../component/font'
+import { NextPage } from 'next'
 // Use the <Provider> to improve performance and allow components that call
 // `useSession()` anywhere in your application to access the `session` object.
 
-export default function App({ Component, pageProps }: AppProps) {
+const App:NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <SWRConfig
       value={{
@@ -27,3 +28,4 @@ export default function App({ Component, pageProps }: AppProps) {
     </SWRConfig>
   )
 }
+export default App

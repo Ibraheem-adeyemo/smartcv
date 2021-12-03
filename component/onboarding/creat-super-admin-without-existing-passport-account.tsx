@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
 import useValidator from "../../hooks/validatoin";
-import { tenantAdmin, Onboarding } from "../../models";
+import { tenantAdmin } from "../../models";
 import { OnboardingContext } from "../layouts";
 import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
@@ -17,7 +17,7 @@ interface PasswordChecker { checker: string, status: boolean, text: string }
 const MobleNoInput = forwardRef((props, ref) => {
     return <Input as={PhoneInput} defaultCountry="NG" {...props} ref={ref} />
 })
-export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props: any) {
+const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
     const numberRef = useRef<HTMLInputElement>(null)
     const passRef = useRef<HTMLInputElement>(null)
     const { steps, onboarding, addInfo, refresh, completeForm, resetForm, previousState, loading } = useContext(OnboardingContext)
@@ -337,3 +337,5 @@ export default function CreateSuperAdminWithoutExistingSuperAdminAccount(_props:
         </Flex>
     </OnboardingCard>)
 }
+
+export default CreateSuperAdminWithoutExistingSuperAdminAccount

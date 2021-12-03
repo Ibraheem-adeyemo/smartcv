@@ -1,16 +1,14 @@
-import { Flex, Link } from "@chakra-ui/layout";
-import { Text, Button, FormControl, FormLabel, Input, useToast, forwardRef } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/layout";
+import { Text, Button, FormControl, FormLabel, Input, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
-import { API_BASE_URL, cookies, CURRENT_API_VERSION, links, notificationMesage } from "../../constants";
-import NextLink from 'next/link'
-import { fetchJson, setCookie } from "../../lib";
-import { InterchangeResponse, Loading } from "../../models";
+import React, { FC, useState } from "react";
+import { cookies, links, notificationMesage } from "../../constants";
+import { setCookie } from "../../lib";
 import useLoading from "../../hooks/loading";
 import { getInterchangeById } from "../../services/v1";
 import { AppLink } from "../app";
 
-export default function RegisterForm(props: any) {
+const RegisterForm:FC = () => {
 
     const router = useRouter()
     const [interChangeId, setInterChangeId] = useState<string>()
@@ -75,3 +73,5 @@ export default function RegisterForm(props: any) {
             </Flex>
         </form>)
 }
+
+export default RegisterForm

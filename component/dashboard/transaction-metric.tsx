@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react"
+import React, { useState, useEffect, useContext, FC } from "react"
 import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
 import { StatsA } from "../../models"
@@ -7,7 +7,7 @@ import { Text } from '@chakra-ui/react'
 import { StatsContext } from "../../provider/stats-provider"
 import { useLoading } from "../../hooks"
 
-export default function TransactionMetric(_props: any) {
+const TransactionMetric:FC = () => {
     const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
     const [loading, setLoading] = useLoading({isLoading:true, text:""})
     const [stats, setStats] = useState<StatsA[]>()
@@ -66,3 +66,5 @@ export default function TransactionMetric(_props: any) {
             }
         </AppCard>)
 }
+
+export default TransactionMetric

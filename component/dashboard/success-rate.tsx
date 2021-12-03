@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { DonutChart } from "../app-charts";
 import { StatsB } from "../../models/stats-models";
 import { SkeletonCircle, Text } from '@chakra-ui/react'
 import { AppCard } from "../app";
-export default function SuccessRate(props: any) {
+
+const SuccessRate:FC = () => {
     const [stats, setStats] = useState<StatsB[]>()
     const [loading, setLoading] = useState(true)
     const getStats = useCallback(() => {
@@ -36,3 +37,5 @@ export default function SuccessRate(props: any) {
         }
     </AppCard>)
 }
+
+export default SuccessRate

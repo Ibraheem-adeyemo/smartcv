@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { StatsCMore } from "../../models";
 import { Barchart } from "../app-charts";
 import { Flex, Text } from "@chakra-ui/layout";
@@ -7,7 +7,7 @@ import { DropdownIcon } from "../../constants";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 
-export default function TopPerforminBanks(props: any) {
+const TopPerforminBanks :FC= ()  => {
     const [loading, setLoading] = useState(true)
     const [stats, setStats] = useState<StatsCMore[]>()
 
@@ -70,3 +70,4 @@ export default function TopPerforminBanks(props: any) {
             </> : <SkeletonLoader rows={1} columns={5} width="10px" height="200px" gridGap="30px" />}
     </AppCard>
 }
+export default  TopPerforminBanks

@@ -1,9 +1,12 @@
 import { ImageBackground } from "../custom-component";
-
-export default function NonAuthenticated (props:any) {
+interface NonAuthenticatedProp {
+    children: JSX.Element | JSX.Element[]
+}
+const NonAuthenticated = (props:NonAuthenticatedProp) => {
     return (
         <ImageBackground>
             {props.children}
         </ImageBackground>
     )
 }
+export default NonAuthenticated

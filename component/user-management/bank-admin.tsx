@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { TenantAdminView, Paginate, APIResponse } from "../../models";
@@ -10,7 +10,7 @@ import { apiUrlsv1, cookies } from "../../constants";
 import { setCookie } from "../../lib";
 
 
-function BankAdminTable(_props: any) {
+const BankAdminTable:FC = () => {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
@@ -91,7 +91,7 @@ function BankAdminTable(_props: any) {
 
 }
 
-export default function TenantAdmin(_props: any) {
+const TenantAdmin:FC = () => {
     return (
 
         <TableProvider>
@@ -99,3 +99,4 @@ export default function TenantAdmin(_props: any) {
         </TableProvider>
     )
 }
+export default TenantAdmin

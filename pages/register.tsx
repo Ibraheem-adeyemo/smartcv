@@ -1,4 +1,5 @@
 import { Flex } from "@chakra-ui/layout"
+import { NextPage } from "next"
 import React, { useEffect } from "react"
 import { RegisterForm } from "../component/auth"
 import { InterswitchLogo } from "../component/custom-component"
@@ -6,7 +7,7 @@ import { NonAuthenticated } from "../component/layouts"
 import MissionStatement from "../component/mission-statement"
 
 
-const Register = (props: any) => {
+const Register:NextPage = () => {
 
     useEffect(() => {
         sessionStorage.removeItem('onboarding')

@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import _ from "lodash";
 import dynamic from "next/dynamic";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, cookies, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
@@ -13,7 +13,7 @@ import { AppTable } from "../app";
 
 const AddNewBank = dynamic(() =>import('./add-new-bank'))
 
-function BankTable(_props: any) {
+const BankTable:FC = () => {
     // console.log({pageNumber})
     const toast = useToast()
     const { pageNumber, countPerPage, setPaginationProps } = useContext(TableContext)
@@ -115,7 +115,7 @@ function BankTable(_props: any) {
 
 }
 
-export default function Bank(_props: any) {
+const Bank:FC = () => {
     const { modals } = useContext(UserManagementTabProviderContext)
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>()
 
@@ -134,3 +134,4 @@ export default function Bank(_props: any) {
         </TableProvider>
     )
 }
+export default Bank

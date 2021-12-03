@@ -1,10 +1,9 @@
 import { Flex } from "@chakra-ui/layout";
-import React, { } from "react"
+import React, { FC } from "react"
 import _ from "lodash";
-import dynamic from "next/dynamic";
 import { ServiceStatus, TerminalsUnderWatch } from "../dashboard";
 
-export default function ChannelsMonitoringStats(_props: any) {
+const ChannelsMonitoringStats:FC = () => {
 
   return (
     <Flex gridGap="20px" flexWrap="wrap">
@@ -17,3 +16,5 @@ export default function ChannelsMonitoringStats(_props: any) {
     </Flex>
   )
 }
+
+export default  ChannelsMonitoringStats

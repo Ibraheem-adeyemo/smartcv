@@ -1,11 +1,11 @@
 import { ButtonGroup, Button } from "@chakra-ui/button";
 import { HStack } from "@chakra-ui/layout";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { UserManagementSearch } from ".";
 import { UserManagementModals, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 
-export default function UserManagementTabAndSearch() {
+const UserManagementTabAndSearch:FC = () => {
     const { tabs, handleTabSelection, handleToggleModal } = useContext(UserManagementTabProviderContext)
     const [showActionButton, setShowActionButton] = useState(false)
     const [showActionButtonText, setShowActionButtonText] = useState("")
@@ -43,3 +43,4 @@ export default function UserManagementTabAndSearch() {
         </HStack>
     </HStack>
 }
+export default UserManagementTabAndSearch

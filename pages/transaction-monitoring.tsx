@@ -1,7 +1,10 @@
-export default function TransactionsMonitoring(_props: any) {
+import { NextPage } from "next"
+
+const TransactionsMonitoring:NextPage = () => {
     return (
         <>
             Transaction Monitoring
         </>
     )
 }
+export default TransactionsMonitoring

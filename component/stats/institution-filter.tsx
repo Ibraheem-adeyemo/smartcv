@@ -1,11 +1,11 @@
 import { useToast } from "@chakra-ui/react"
 import _ from "lodash"
-import React, { useContext, useEffect } from "react"
+import React, { FC, useContext, useEffect } from "react"
 import { SearchFilter } from "."
 import { SkeletonLoader } from ".."
 import { StatsContext } from "../../provider/stats-provider"
 
-export default function InstitutionFilter (_props: any) {
+const InstitutionFilter:FC = () => {
     const {selectedTenantCode, institutions, institutionsError, changeSelectedTenantCode} = useContext(StatsContext)
     const toast = useToast()
     useEffect(() => {
@@ -37,3 +37,4 @@ export default function InstitutionFilter (_props: any) {
         </>
     )
 }
+export default InstitutionFilter

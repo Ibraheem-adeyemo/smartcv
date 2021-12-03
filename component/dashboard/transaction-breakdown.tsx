@@ -1,5 +1,5 @@
 import { Text } from "@chakra-ui/react"
-import React, { useState, useCallback, useEffect, useContext } from "react"
+import React, { useState, useEffect, useContext, FC } from "react"
 import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
 import { useLoading } from "../../hooks"
@@ -7,7 +7,7 @@ import { StatsA } from "../../models"
 import { StatsContext } from "../../provider/stats-provider"
 import { AppCard } from "../app"
 
-export default function TransactionBreakdown(_props: any) {
+const TransactionBreakdown:FC = () => {
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   const [loading, setLoading] = useLoading({isLoading:true, text:""})
   const [stats, setStats] = useState<StatsA[]>()
@@ -74,3 +74,5 @@ export default function TransactionBreakdown(_props: any) {
       }
     </AppCard>)
 }
+
+export default TransactionBreakdown

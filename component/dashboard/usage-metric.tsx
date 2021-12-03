@@ -7,7 +7,7 @@ import { Text } from '@chakra-ui/react'
 import { useLoading } from "../../hooks"
 import { StatsContext } from "../../provider/stats-provider"
 
-export default function UsageMetric(_props: any) {
+const UsageMetric:React.FC = () => {
     const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
     const [loading, setLoading] = useLoading({isLoading:true, text:""})
     const [stats, setStats] = useState<StatsA[]>()
@@ -58,3 +58,5 @@ export default function UsageMetric(_props: any) {
             }
         </AppCard>)
 }
+
+export default UsageMetric

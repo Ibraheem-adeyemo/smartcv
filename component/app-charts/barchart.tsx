@@ -1,10 +1,10 @@
 import { Chart, registerables } from "chart.js";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import { GroupedBarChartProps } from "../../models";
 import { Canvas } from ".";
 import { shortenNumber } from "../../lib";
 
-export default function GroupedBarchart(props: GroupedBarChartProps) {
+const GroupedBarchart:FC<GroupedBarChartProps> = (props: GroupedBarChartProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [minMax, setMinMax] = useState<{ min: number, max: number }>()
     const raw = useMemo(() => {
@@ -82,3 +82,4 @@ export default function GroupedBarchart(props: GroupedBarChartProps) {
     }, [])
     return <Canvas ref={canvasRef} w={props?.width} h={props?.height} as="canvas" mt="17px" />
 }
+export default GroupedBarchart

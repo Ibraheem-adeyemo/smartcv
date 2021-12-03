@@ -13,7 +13,7 @@ interface CreateBankProps extends stepsProps {
 
 }
 
-export default function CreateBank(props: CreateBankProps) {
+const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
     const {data:states, error} = useSWR<State[]>(apiUrlsv1.states)
     const fileRef = useRef<HTMLInputElement>(null)
     const { steps, onboarding, addInfo, refresh, completeForm, changeIsRefresh, loading } = useContext(OnboardingContext)
@@ -190,3 +190,4 @@ export default function CreateBank(props: CreateBankProps) {
         </OnboardingCard>
     )
 }
+export default CreateBank
