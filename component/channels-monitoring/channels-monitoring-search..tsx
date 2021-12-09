@@ -6,7 +6,7 @@ const ChannelsMonitoringSearch:FC = () => {
     const { searchText, handleSearchText } = useContext(StatsContext)
     return (
 
-        <SearchText searchText={searchText} handleSearchItem={handleSearchText} />
+        <SearchText placeHolder="" searchText={searchText} handleSearchItem={handleSearchText} />
     )
 }
 

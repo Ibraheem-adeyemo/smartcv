@@ -8,10 +8,10 @@ import { SkeletonLoader } from "..";
 import { AuthContext } from "../../provider/auth-provider";
 import { AppLink } from "../app";
 import { useRouter } from "next/router";
+import { ComponentWithChildren } from "../../models";
 
-interface AuthenticatedLayout {
-    pageHeader: string | JSX.Element,
-    children?: ReactNode
+interface AuthenticatedLayout extends ComponentWithChildren  {
+    pageHeader: string | JSX.Element
 }
 interface MenuListItem {
     icon: ComponentWithAs<As<any>, object>,
@@ -21,7 +21,6 @@ interface MenuListItem {
 const AuthenticatedLayout:React.FC<AuthenticatedLayout> = (props: AuthenticatedLayout) => {
     const { user, signOut, error } = useContext(AuthContext)
     const router = useRouter()
-    const [loading, setLoading] = useState(true)
     // console.log({ session })
 
     const MenuLists = useCallback(() => {
@@ -45,7 +44,7 @@ const AuthenticatedLayout:React.FC<AuthenticatedLayout> = (props: AuthenticatedL
     }, {
         icon: auditIcon,
         name: "Audit",
-        link: ""
+        link: links.audit
     }, {
         icon: systemSettingsIcon,
         name: "System Settings",
@@ -178,7 +177,7 @@ const AuthenticatedLayout:React.FC<AuthenticatedLayout> = (props: AuthenticatedL
             </GridItem>
             {typeof user === "undefined" && typeof error === "undefined" && <GridItem d="flex" w="100%" alignItems="center" px="50px">  <SkeletonLoader rows={1} width="200px" height="20px" columns={1} /></GridItem>}
             {typeof user !== "undefined" && typeof error === "undefined" &&
-                <GridItem d="flex" w="100%" alignItems="center"> {props.pageHeader}</GridItem>
+                <GridItem d="flex" w="100%" alignItems="center"> {typeof props.pageHeader === "string"? <Text px="50px" variant="page-header">{props.pageHeader}</Text>:props.pageHeader}</GridItem>
             }
 
 

@@ -1,8 +1,8 @@
 import { Box, Flex } from "@chakra-ui/layout";
-import { Props } from "framer-motion/types/types";
 import React, { FC } from "react";
+import { ComponentWithChildren } from "../../models";
 
-interface AppCardProps extends Props {
+interface AppCardProps extends ComponentWithChildren  {
     topic: string|JSX.Element
 }
 

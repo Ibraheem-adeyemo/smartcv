@@ -2,7 +2,7 @@ import _ from "lodash";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useLoading } from ".";
-import { cookies, links, onboardingTabs } from "../constants";
+import { cookieKeys, links, onboardingTabs } from "../constants";
 import { getCookie, setCookie } from "../lib";
 import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Loading, Onboarding, Step, tenantAdmin } from "../models";
 
@@ -69,7 +69,7 @@ export default function useOnboarding(): UseOnboardingReturn {
     useEffect(() => {
         // debugger
         if (typeof document !== "undefined") {
-            setCookie(cookies.token, "", -60)
+            setCookie(cookieKeys.token, "", -60)
         }
         setLoading({ isLoading: true, text: "loading" })
         if (typeof window !== "undefined") {

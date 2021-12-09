@@ -5,7 +5,8 @@ import { SearchIcon } from "../../constants";
 
 interface SearchTextProps {
     searchText:string,
-    handleSearchItem: (searchText:string) => void
+    handleSearchItem: (searchText:string) => void,
+    placeHolder:string
 }
 const SearchText:FC<SearchTextProps> = (props:SearchTextProps) => {
     
@@ -16,7 +17,7 @@ const SearchText:FC<SearchTextProps> = (props:SearchTextProps) => {
                     pointerEvents="none"
                     children={<SearchIcon />}
                 />
-                <Input borderRadius="26px" bgColor="white" placeholder="Search per bank name" value={props.searchText} onChange={e => (e.stopPropagation(), props.handleSearchItem(e.target.value))} />
+                <Input borderRadius="26px" bgColor="white" placeholder={props.placeHolder} value={props.searchText} onChange={e => (e.stopPropagation(), props.handleSearchItem(e.target.value))} />
             </InputGroup>
         </HStack>
     )

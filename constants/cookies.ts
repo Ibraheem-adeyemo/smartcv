@@ -1,4 +1,4 @@
-export enum cookies {
+export enum cookieKeys {
     token="token",
     interchangeId="interchangeId",
     redirectUrl="redirectUrl",

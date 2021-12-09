@@ -1,3 +1,4 @@
+import UseAudit from "./audit";
 import UseAuthentication from "./authentication";
 import UseFilter from './filter';
 import UseForm from "./forms";
@@ -6,6 +7,7 @@ import UseOnboarding, {initialOnboardingData as y} from "./onboarding";
 import UsePagination from "./pagination";
 import UseValidator from "./validatoin";
 
+export const useAudit = UseAudit
 export const useAuthentication = UseAuthentication
 export const useFilter = UseFilter
 export const useForm = UseForm

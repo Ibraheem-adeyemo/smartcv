@@ -1,10 +1,10 @@
 import { Flex } from "@chakra-ui/layout";
 import React, { useMemo } from "react";
+import { ComponentWithChildren } from "../../models";
 
-interface OnboardingCardProps{
+interface OnboardingCardProps extends ComponentWithChildren {
     cardTitle: JSX.Element | JSX.Element[] | string,
-    cardFooter: JSX.Element | JSX.Element[],
-    children: JSX.Element
+    cardFooter: JSX.Element | JSX.Element[]
 }
 const  OnboardingCard:React.FC<OnboardingCardProps> = (props:OnboardingCardProps) => {
     const cardTitle = useMemo(() =>  props.cardTitle,[])

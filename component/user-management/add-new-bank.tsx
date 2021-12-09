@@ -1,5 +1,5 @@
 import { Image, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex, FormControl, FormLabel, Input, FormErrorMessage, Select, ModalFooter, HStack, Button, Badge, Box, CloseButton, Skeleton, VStack, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/react";
-import _ from "lodash";
+import _, { map, range } from "lodash";
 import React, { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { apiUrlsv1, Images, PickerIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
@@ -206,10 +206,10 @@ const AddNewBank:FC = () => {
                                                         <Flex flexDir="column" gridGap="39px" pl="26px" pr="20px">
                                                             <Flex gridGap="29px">
                                                                 <Flex flexDir="column" gridGap="13px">
-                                                                    {_.range(0, 3).map((x) => <Skeleton key={x} speed={0} bgColor={institutionColorForm?.sidebarColor} w="92px" h="13px" borderRadius="8px" />)}
+                                                                    {map(range(0, 3), (x) => <Skeleton key={x} speed={0} bgColor={institutionColorForm?.sidebarColor} w="92px" h="13px" borderRadius="8px" />)}
                                                                 </Flex>
                                                                 <Flex flexDir="column" gridGap="13px">
-                                                                    {_.range(0, 4).map((x) => <Skeleton key={x} speed={0} w="289px" bgColor="#E1E6ED" h="14px" borderRadius="8px" />)}
+                                                                    {map(range(0, 4), (x) => <Skeleton key={x} speed={0} w="289px" bgColor="#E1E6ED" h="14px" borderRadius="8px" />)}
                                                                 </Flex>
                                                             </Flex>
                                                             <Skeleton w="154px" h="53px" speed={0} alignSelf="flex-end" bgColor={institutionColorForm?.buttonColor} borderRadius="8px" />

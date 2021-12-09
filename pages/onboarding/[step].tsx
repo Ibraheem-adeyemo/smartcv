@@ -1,7 +1,6 @@
 import { Onboarding, OnboardingContext } from "../../component/layouts";
 import { Text } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
-import { useOnboarding } from "../../hooks";
 import { useCallback, useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { links } from "../../constants";

@@ -6,7 +6,7 @@ import { TenantAdminView, Paginate} from "../../models";
 import { PaginatorProvider } from "../../provider";
 import { PaginatorContext } from "../../provider/paginator-provider";
 import { useToast } from "@chakra-ui/react";
-import { apiUrlsv1, cookies } from "../../constants";
+import { apiUrlsv1, cookieKeys } from "../../constants";
 import { setCookie } from "../../lib";
 
 
@@ -81,13 +81,13 @@ const BankAdminTable:FC = () => {
     }, [error])
     useEffect(() => {
         if(typeof tenantAdmin !== "undefined" && typeof tenantAdmin.totalElements !== "undefined") {
-            setCookie(cookies.totalTenantAdmin, tenantAdmin.totalElements.toString(), 10)
+            setCookie(cookieKeys.totalTenantAdmin, tenantAdmin.totalElements.toString(), 10)
             setPaginationProps(tenantAdmin.totalElements )
         }
     }, [tenantAdmin])
 
 
-    return (<AppTable<TenantAdminView> columns={data?.columns} rows={data.data as TenantAdminView[]} actions={data.actions} />)
+    return (<AppTable<TenantAdminView> columns={data?.columns} rows={data.data as TenantAdminView[]} actions={data.actions} showNumbering />)
 
 }
 

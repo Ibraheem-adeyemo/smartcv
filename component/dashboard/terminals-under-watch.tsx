@@ -10,7 +10,7 @@ import useSWR from "swr";
 import { ATMInSupervisor, Paginate } from "../../models";
 import { StatsContext } from "../../provider/stats-provider";
 import { useToast } from "@chakra-ui/react";
-import _ from "lodash";
+import _, { sumBy } from "lodash";
 
 interface TerminalsUnderWatchProps {
   title?:string
@@ -41,7 +41,7 @@ const TerminalsUnderWatch:FC<TerminalsUnderWatchProps> = (props: TerminalsUnderW
       return [{
         ...boxSize,
         headerName: "ATM In-Supervisor",
-        totalNumber: typeof atmInSupervisor !== "undefined" && typeof atmInSupervisor.content !== "undefined" ? _.sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
+        totalNumber: typeof atmInSupervisor !== "undefined" && typeof atmInSupervisor.content !== "undefined" ? sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days"

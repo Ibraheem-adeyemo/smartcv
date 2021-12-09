@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/layout"
 import { NextPage } from "next"
 import dynamic from 'next/dynamic'
-import React, { FC } from "react"
+import React from "react"
 import { Authenticated } from "../component/layouts"
 import { StatsProvider } from "../provider"
 const TerminalsPerformance = dynamic(() => import('../component/dashboard/terminals-performance'))

@@ -1,9 +1,9 @@
 export interface AuditView {
     tenant: string,
     branch: string,
-    usernamr: string,
+    username: string,
     module: string,
     action: string,
     originatingIp:string,
-    date: string
+    date: string | number
 }

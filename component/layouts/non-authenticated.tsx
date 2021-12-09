@@ -1,6 +1,7 @@
+import { ComponentWithChildren } from "../../models";
 import { ImageBackground } from "../custom-component";
-interface NonAuthenticatedProp {
-    children: JSX.Element | JSX.Element[]
+interface NonAuthenticatedProp extends ComponentWithChildren {
+    
 }
 const NonAuthenticated = (props:NonAuthenticatedProp) => {
     return (

@@ -8,7 +8,7 @@ import useSWR from "swr";
 import { apiUrlsv1 } from "../../constants";
 import { Paginate, ATMInService } from "../../models";
 import { useLoading } from "../../hooks";
-import _ from "lodash";
+import _, { sumBy } from "lodash";
 import { StatsContext } from "../../provider/stats-provider";
 
 interface ServiceStatusProps {
@@ -45,14 +45,14 @@ const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
 
         ...boxSize,
         headerName: "ATM In Service",
-        totalNumber: typeof totalATMInService !== "undefined" && typeof totalATMInService.content !== "undefined" ? _.sumBy(totalATMInService?.content, (atm) => atm.count) : 0,
+        totalNumber: typeof totalATMInService !== "undefined" && typeof totalATMInService.content !== "undefined" ? sumBy(totalATMInService?.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days"
       }, {
         ...boxSize,
         headerName: "ATM Out Service",
-        totalNumber: typeof totalATMOutOfService !== "undefined" && typeof totalATMOutOfService.content !== "undefined" ? _.sumBy(totalATMOutOfService?.content, (atm) => atm.count) : 0,
+        totalNumber: typeof totalATMOutOfService !== "undefined" && typeof totalATMOutOfService.content !== "undefined" ? sumBy(totalATMOutOfService?.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days"
@@ -84,7 +84,7 @@ const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
   }, [totalATMInService, totalATMOutOfService, totalATMInServiceError, totalATMOutOfServiceError, institutions, institutionsError])
 
   return (
-    <AppCard topic={<Text variant="card-header" size="card-header"> {typeof props.title !== "undefined" && props.title !== "" ? props.title : "What is our service"}</Text>} statsComponent={Stat}>
+    <AppCard topic={<Text variant="card-header" size="card-header"> {typeof props.title !== "undefined" && props.title !== "" ? props.title : "What is our service"}</Text>}>
       {!loading.isLoading ?
         <>
           {stats?.map((x, i) => <Stat key={i} {...x} />)}

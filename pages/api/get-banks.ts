@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Banks, SECRET } from "../../constants";
+import { Tenants } from "../../constants";
 import { getRandomInt } from "../../lib";
 import { TenantView, Paginate } from "../../models";
 
@@ -10,7 +10,7 @@ export default async function GetBanks(req:NextApiRequest, res: NextApiResponse)
         // const token = await getToken({req, secret: SECRET})
         const {page, countPerPage} = req.query
         const offset = (+page - 1) * +countPerPage
-        const bankRandomNumber = _.range(0, 178).map((x,i) => getRandomInt(Banks.length - 1))
+        const bankRandomNumber = _.range(0, 178).map((x,i) => getRandomInt(Tenants.length - 1))
         const data: TenantView[] = _.range(0, 178).map((x,i) =>
         ({
             name: Banks[bankRandomNumber[i]],

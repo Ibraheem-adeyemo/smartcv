@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { Box, Text, Menu, MenuButton, MenuList, MenuItem, Input } from "@chakra-ui/react";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import _, { debounce } from 'lodash';
+import _, { debounce, find } from 'lodash';
 import { DropdownIcon } from "../../constants";
 
 
@@ -60,7 +60,7 @@ const DropdownSearchFilter:FC<DropdownSearchFilterProps> = (props: DropdownSearc
     useEffect(() => {
         if(typeof dropdownContent !== "undefined" && dropdownContent.length > 0) {
             // debugger
-            const selectedItem = _.find(dropdownContent, (content) => content.selected)
+            const selectedItem = find(dropdownContent, (content) => content.selected)
             if(typeof selectedItem !== "undefined") {
                 if(typeof props.onSelected !== "undefined") {
                     // debugger

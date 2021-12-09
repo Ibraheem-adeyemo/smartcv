@@ -5,12 +5,11 @@ import { links, notificationMesage, onboardingTabs, TickIcon } from "../../const
 import { useOnboarding } from "../../hooks";
 import NextLink from 'next/link'
 import { useRouter } from "next/router";
-import { Tenant, InstitutionColorInfo, Onboarding as OnboardingModel, Step, tenantAdmin } from "../../models";
+import { Tenant, InstitutionColorInfo, Onboarding as OnboardingModel, Step, tenantAdmin, ComponentWithChildren } from "../../models";
 import { createAccountAsync } from "../../services/v1";
 import { OnboardingNav } from '.'
 import _ from "lodash";
-interface OnboardingProps {
-    children: JSX.Element
+interface OnboardingProps extends ComponentWithChildren  {
 }
 const OnboardingLink = forwardRef((props, ref) => {
     const { children, ...rest } = props

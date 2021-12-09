@@ -1,6 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
+import { NextPage } from "next";
 import dynamic from "next/dynamic";
-import React, { FC } from "react";
+import React from "react";
 import ChannelsMonitoringSearch from "../component/channels-monitoring/channels-monitoring-search.";
 import { Authenticated } from "../component/layouts";
 import { StatsProvider } from "../provider";
@@ -8,7 +9,7 @@ import { StatsProvider } from "../provider";
 const AppBarFilter = dynamic(() => import("../component/stats/app-bar-filter"))
 const ChannelsMonitoringStats = dynamic(() => import("../component/channels-monitoring/channels-monitoring-stats"))
 const ChannelsMonitoringTable = dynamic(() => import("../component/channels-monitoring/channels-monitoring-table"))
-const ChannelsMonitoring:FC = () => {
+const ChannelsMonitoring:NextPage = () => {
 
     return (
         <StatsProvider>

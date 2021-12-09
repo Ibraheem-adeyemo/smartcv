@@ -7,39 +7,18 @@ import { PaginatorProvider } from "../../provider";
 import { PaginatorContext } from "../../provider/paginator-provider";
 import { useToast } from "@chakra-ui/react";
 import { apiUrlsv1 } from "../../constants";
+import { AuditContext } from "../../provider/audit-provider";
 
 
 const  AuditTable:React.FC = () => {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
-    const { data: auditView, mutate: _mutate, error } = useSWR<Paginate<AuditView>>(`${apiUrlsv1.atmCountDetails}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
+    const { changeAuditView, columns} = useContext(AuditContext)
+    const { data: auditView, mutate: _mutate, error } = useSWR<Paginate<AuditView>>(`${apiUrlsv1.audit}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => ({
-        columns: [
-            {
-                name: "Tenant",
-                key: "terminalId"
-            }, {
-                name: "Branch",
-                key: "externalIP"
-            }, {
-                name: "username",
-                key: "location"
-            }, {
-                name: "Module",
-                key: "state"
-            }, {
-                name: "Action",
-                key: "lastTranTime",
-            }, {
-                name: "Originating IP",
-                key: "terminalStatus",
-            }, {
-                name: "Date",
-                key: "terminalStatus",
-            }
-        ],
+        columns,
         actions: [
             {
                 name: "view",
@@ -52,6 +31,12 @@ const  AuditTable:React.FC = () => {
             }],
         data: typeof auditView !== "undefined" && typeof error ==="undefined"? auditView?.content as AuditView[]:undefined
     }), [auditView, error])
+
+    useEffect(() => {
+        if(typeof auditView?.content !== "undefined") {
+            changeAuditView(auditView.content)
+        }
+    }, [auditView, error])
 
     useEffect(() => {
         if(typeof error !== "undefined") {
@@ -70,7 +55,7 @@ const  AuditTable:React.FC = () => {
     }, [auditView])
 
 
-    return (<AppTable<AuditView> columns={data?.columns} rows={data.data as AuditView[]} actions={data.actions} />)
+    return (<AppTable<AuditView> columns={data?.columns} rows={data.data as AuditView[]} actions={data.actions} showNumbering />)
 
 }
 

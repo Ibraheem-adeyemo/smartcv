@@ -1,4 +1,4 @@
-import { apiUrlsv1, cookies, Names, notificationMesage } from "../../constants"
+import { apiUrlsv1, cookieKeys, Names, notificationMesage } from "../../constants"
 import { getCookie, getRandomInt, setCookie } from "../../lib"
 import { Onboarding } from "../../models"
 
@@ -52,7 +52,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
             const data = await response.json()
             if (response.ok || response.status === 200) {
                 if(typeof window !== "undefined")
-                setCookie(cookies.createdAccount, "done", 5)
+                setCookie(cookieKeys.createdAccount, "done", 5)
                 return data
             }
             else if(typeof data.message !== "undefined") {

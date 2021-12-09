@@ -19,16 +19,17 @@ export enum links {
 }
 
 export const apiUrlsv1: Readonly<Record<string, string>> = {
+    atmCount: `${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/count`,
+    atmCountDetails: `${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/count/details/`,
+    atmInService:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/in-service`,
+    atmInSupervisor:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/supervisor`,
+    atmOutOfService:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/offline`,
+    audit: `/api/get-audit`,
+    createTenantAdmin:`${API_BASE_URL}/${CURRENT_API_VERSION}/user/tenant-admin`,
+    interChange:`${API_BASE_URL}/${CURRENT_API_VERSION}/interchange`,
+    iswAdmin:`/api/get-isw-admins`,
     passportUrl:`${PASSPORT_AUTHORIZE_URL}?client_id=${CLIENT_ID}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=`,
     states:`${API_BASE_URL}/${CURRENT_API_VERSION}/location/states`,
-    tenantAdmin:`${API_BASE_URL}/${CURRENT_API_VERSION}/user/admins`,
-    iswAdmin:`/api/get-isw-admins`,
-    interChange:`${API_BASE_URL}/${CURRENT_API_VERSION}/interchange`,
     tenant:`${API_BASE_URL}/${CURRENT_API_VERSION}/tenant`,
-    atmCount: `${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/count`,
-    atmInService:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/in-service`,
-    atmOutOfService:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/offline`,
-    atmInSupervisor:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/supervisor`,
-    atmCountDetails: `${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/count/details/`,
-    createTenantAdmin:`${API_BASE_URL}/${CURRENT_API_VERSION}/user/tenant-admin`
+    tenantAdmin:`${API_BASE_URL}/${CURRENT_API_VERSION}/user/admins`,
 }

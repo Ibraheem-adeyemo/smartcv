@@ -1,9 +1,9 @@
 import { links } from ".";
-
-export const AuthenticatedPage = [
+console.log({links})
+export const AuthenticatedPage: Readonly<string[]> = typeof links !== "undefined"? [
     links.dashboard,
     links.userManagement,
     links.channelsMonitoring,
     links.transactionMonitoring,
     links.audit
-]
+]:[]

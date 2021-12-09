@@ -1,27 +1,27 @@
 import { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookies, GRANT_TYPE, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
+import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookieKeys, GRANT_TYPE, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie } from '../lib'
 import { AuthModel, TokenRequestBody } from '../models'
 export default function useAuthentication() {
     // const url = "/api/passport"
     const url = PASSPORT_PROFILE_URL
-    const {mutate} = useSWRConfig()
-    const { data: user, mutate:_mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie("token") == "" ? null : url)
+    const { mutate } = useSWRConfig()
+    const { data: user, mutate: _mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie("token") == "" ? null : url)
     const [countFlag, setCoountFlag] = useState(0)
     // const [user, setUser] = useState<any>()
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie("token") : "")
 
     const postLoginAction = (token: string) => {
-        setCookie(cookies.token, token, 60)
+        setCookie(cookieKeys.token, token, 60)
         const confirmToken = getCookie("token")
         if (confirmToken !== "") {
             setToken(confirmToken)
         }
     }
     const signOut = () => {
-        setCookie(cookies.token, "", -60)
-        const confirmToken = getCookie(cookies.token)
+        setCookie(cookieKeys.token, "", -60)
+        const confirmToken = getCookie(cookieKeys.token)
         if (confirmToken === "") {
             setToken("")
             window.location.href = links.login
@@ -33,8 +33,8 @@ export default function useAuthentication() {
     }
 
     useEffect(() => {
-        if (window) {
-            const cookieToken = getCookie(cookies.token)
+        if (typeof window !== "undefined") {
+            const cookieToken = getCookie(cookieKeys.token)
             if (cookieToken !== "") {
                 setToken(cookieToken)
             }
@@ -46,7 +46,7 @@ export default function useAuthentication() {
         // debugger
         if (typeof window !== "undefined") {
 
-            if (getCookie(cookies.token) === "") {
+            if (getCookie(cookieKeys.token) === "") {
                 setToken("")
             }
         }
@@ -54,12 +54,17 @@ export default function useAuthentication() {
 
     useEffect(() => {
 
-        if ((typeof user === "undefined" && typeof error !== "undefined") || token === "") {
-            const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
-            // debugger
-            if (shouldRedirect) {
-                setCookie("redirectUrl", window.location.pathname, 10)
-                window.location.href = links.login
+        if (typeof window !== "undefined") {
+            if ((typeof user === "undefined" && typeof error !== "undefined") || token === "") {
+                // debugger
+                console.log({AuthenticatedPage})
+                const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
+
+                // debugger
+                if (shouldRedirect) {
+                    setCookie("redirectUrl", window.location.pathname, 10)
+                    window.location.href = links.login
+                }
             }
         }
     }, [token])
@@ -107,7 +112,7 @@ export default function useAuthentication() {
                 if (typeof response !== "undefined") {
                     postLoginAction(response.access_token)
                     mutate(url)
-                    window.location.href=links.dashboard
+                    window.location.href = links.dashboard
                 }
             } catch (error) {
                 throw error

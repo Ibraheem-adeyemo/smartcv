@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react"
 import { OnboardingNav } from "../../component/layouts"
 import { SuccessCard } from "../../component/onboarding"
 import { links } from "../../constants"
-import { getCookie, setCookie } from "../../lib"
+import { getCookie } from "../../lib"
 
 export default function SuccessPage() {
     const [status, setStatus] = useState(typeof window !== "undefined" ? getCookie("created-account") : "")

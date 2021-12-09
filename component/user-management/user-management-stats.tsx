@@ -3,7 +3,7 @@ import { Badge } from "@chakra-ui/react";
 import _ from "lodash";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
-import { apiUrlsv1, AvatarIcon, CapitolIcon, cookies, UserManagementStatsName } from "../../constants";
+import { apiUrlsv1, AvatarIcon, CapitolIcon, cookieKeys, UserManagementStatsName } from "../../constants";
 import { getCookie } from "../../lib";
 import { ISWAdminView, Paginate, TenantAdminView, TenantView, UserManagementStat } from "../../models";
 import { AppCard } from "../app";
@@ -12,18 +12,18 @@ import SkeletonLoader from "../skeleton-loader";
 const UserManagementStats:FC = () => {
     // const { data: userManagementStats, mutate, error } = useSWR<UserManagementStat[]>('/api/get-user-management-stats')
 
-    const { data: iswAdmin, mutate: _mutateISWAdmin, error: iswAdminError } = useSWR<Paginate<ISWAdminView>>(typeof document !== "undefined" && getCookie(cookies.totalISWAdmin) !== "" ? null : apiUrlsv1.iswAdmin)
-    const { data: tenantAdmin, mutate: _mutateTenantAdmin, error: tenantAdminError } = useSWR<Paginate<TenantAdminView>>(typeof document !== "undefined" && getCookie(cookies.totalTenantAdmin) !== "" ? null : apiUrlsv1.tenantAdmin)
-    const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<TenantView[]>(typeof document !== "undefined" && getCookie(cookies.totalTenant) !== "" ? null : apiUrlsv1.tenant)
+    const { data: iswAdmin, mutate: _mutateISWAdmin, error: iswAdminError } = useSWR<Paginate<ISWAdminView>>(typeof document !== "undefined" && getCookie(cookieKeys.totalISWAdmin) !== "" ? null : apiUrlsv1.iswAdmin)
+    const { data: tenantAdmin, mutate: _mutateTenantAdmin, error: tenantAdminError } = useSWR<Paginate<TenantAdminView>>(typeof document !== "undefined" && getCookie(cookieKeys.totalTenantAdmin) !== "" ? null : apiUrlsv1.tenantAdmin)
+    const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<TenantView[]>(typeof document !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? null : apiUrlsv1.tenant)
     const [userManagementStats, setUserManagementStats] = useState<UserManagementStat[]>([{
         name: UserManagementStatsName.createdBanks,
-        totalCount: getCookie(cookies.totalTenant)
+        totalCount: getCookie(cookieKeys.totalTenant)
     }, {
         name: UserManagementStatsName.tenantAdminUser,
-        totalCount: getCookie(cookies.totalTenantAdmin)
+        totalCount: getCookie(cookieKeys.totalTenantAdmin)
     }, {
         name: UserManagementStatsName.iSWAdminUser,
-        totalCount: getCookie(cookies.totalISWAdmin)
+        totalCount: getCookie(cookieKeys.totalISWAdmin)
     }])
 
 
@@ -46,18 +46,18 @@ const UserManagementStats:FC = () => {
 
     useEffect(() => {
         // console.log({tenant, tenantError, tenantAdmin, tenantAdminError, iswAdmin, iswAdminError})
-        // console.log({tenantV:getCookie(cookies.totalTenant) !== "" ? getCookie(cookies.totalTenant) : typeof tenant === "undefined" && typeof tenantError === "undefined" ? "" : typeof tenant !== "undefined" && typeof tenantError === "undefined" ? `${tenant?.length}` : "0"})
-        // console.log({tenantAdminV:getCookie(cookies.totalTenantAdmin) !== "" ? getCookie(cookies.totalTenantAdmin) : typeof tenantAdmin === "undefined" && typeof tenantAdminError === "undefined" ? "" : typeof tenantAdmin !== "undefined" && typeof tenantAdminError === "undefined" ? `${tenantAdmin?.totalElements}` : "0"})
-        // console.log({iswAdminV:getCookie(cookies.totalISWAdmin) !== "" ? getCookie(cookies.totalISWAdmin) : (typeof iswAdmin === "undefined" && typeof iswAdminError === "undefined") ? "" : (typeof iswAdmin !== "undefined" && typeof iswAdminError === "undefined") ? `${iswAdmin?.totalElements}` : "0"})
+        // console.log({tenantV:getCookie(cookieKeys.totalTenant) !== "" ? getCookie(cookieKeys.totalTenant) : typeof tenant === "undefined" && typeof tenantError === "undefined" ? "" : typeof tenant !== "undefined" && typeof tenantError === "undefined" ? `${tenant?.length}` : "0"})
+        // console.log({tenantAdminV:getCookie(cookieKeys.totalTenantAdmin) !== "" ? getCookie(cookieKeys.totalTenantAdmin) : typeof tenantAdmin === "undefined" && typeof tenantAdminError === "undefined" ? "" : typeof tenantAdmin !== "undefined" && typeof tenantAdminError === "undefined" ? `${tenantAdmin?.totalElements}` : "0"})
+        // console.log({iswAdminV:getCookie(cookieKeys.totalISWAdmin) !== "" ? getCookie(cookieKeys.totalISWAdmin) : (typeof iswAdmin === "undefined" && typeof iswAdminError === "undefined") ? "" : (typeof iswAdmin !== "undefined" && typeof iswAdminError === "undefined") ? `${iswAdmin?.totalElements}` : "0"})
         setUserManagementStats([{
             name: UserManagementStatsName.createdBanks,
-            totalCount: typeof document !== "undefined" && getCookie(cookies.totalTenant) !== "" ? getCookie(cookies.totalTenant) : typeof tenant === "undefined" && typeof tenantError === "undefined" ? "" : typeof tenant !== "undefined" && typeof tenantError === "undefined" ? `${tenant?.length}` : "0"
+            totalCount: typeof document !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? getCookie(cookieKeys.totalTenant) : typeof tenant === "undefined" && typeof tenantError === "undefined" ? "" : typeof tenant !== "undefined" && typeof tenantError === "undefined" ? `${tenant?.length}` : "0"
         }, {
             name: UserManagementStatsName.tenantAdminUser,
-            totalCount: typeof document !== "undefined" && getCookie(cookies.totalTenantAdmin) !== "" ? getCookie(cookies.totalTenantAdmin) : typeof tenantAdmin === "undefined" && typeof tenantAdminError === "undefined" ? "" : typeof tenantAdmin !== "undefined" && typeof tenantAdminError === "undefined" ? `${tenantAdmin?.totalElements}` : "0"
+            totalCount: typeof document !== "undefined" && getCookie(cookieKeys.totalTenantAdmin) !== "" ? getCookie(cookieKeys.totalTenantAdmin) : typeof tenantAdmin === "undefined" && typeof tenantAdminError === "undefined" ? "" : typeof tenantAdmin !== "undefined" && typeof tenantAdminError === "undefined" ? `${tenantAdmin?.totalElements}` : "0"
         }, {
             name: UserManagementStatsName.iSWAdminUser,
-            totalCount: typeof document !== "undefined" && getCookie(cookies.totalISWAdmin) !== "" ? getCookie(cookies.totalISWAdmin) : (typeof iswAdmin === "undefined" && typeof iswAdminError === "undefined") ? "" : (typeof iswAdmin !== "undefined" && typeof iswAdminError === "undefined") ? `${iswAdmin?.totalElements}` : "0"
+            totalCount: typeof document !== "undefined" && getCookie(cookieKeys.totalISWAdmin) !== "" ? getCookie(cookieKeys.totalISWAdmin) : (typeof iswAdmin === "undefined" && typeof iswAdminError === "undefined") ? "" : (typeof iswAdmin !== "undefined" && typeof iswAdminError === "undefined") ? `${iswAdmin?.totalElements}` : "0"
         }])
     }, [tenant, tenantError, tenantAdmin, tenantAdminError, iswAdmin, iswAdminError])
 

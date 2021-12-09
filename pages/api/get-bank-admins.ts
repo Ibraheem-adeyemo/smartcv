@@ -18,12 +18,15 @@ export default async function GettenantAdmins(req:NextApiRequest, res: NextApiRe
             email: `${Names[nameRandomNumbers[i]].firstName}.${Names[nameRandomNumbers[i]].lastName}@mailinator.com`,
             bank: Banks[getRandomInt(Banks.length - 1)],
             dateCreated: (new Date()).getDate().toString(),
-            status: getRandomInt(1)
+            status: getRandomInt(1),
+            accountNonExpired:"",
+            accountNonLocked:"",
+            
         }))
         setTimeout(()=>{}, 3000)
-        const returnData:Paginate<TenantAdminView, string> = {
-            totalData: data.length,
-            data: _.drop(data, offset).slice(0, +countPerPage)
+        const returnData:Paginate<TenantAdminView> = {
+            totalElements: data.length,
+            content: _.drop(data, offset).slice(0, +countPerPage)
         } 
         return res.json({
             data: returnData

@@ -1,5 +1,5 @@
 import { useToast } from "@chakra-ui/react"
-import _ from "lodash"
+import _, { map } from "lodash"
 import React, { FC, useContext, useEffect } from "react"
 import { SearchFilter } from "."
 import { SkeletonLoader } from ".."
@@ -27,7 +27,7 @@ const InstitutionFilter:FC = () => {
 
                         [
                             { label: "All", value: "0", selected: selectedTenantCode === "0" },
-                            ..._.map(institutions, (x, i) => ({ label: x.name, value: x.code, selected: x.code === selectedTenantCode }))
+                            ...map(institutions, (x, i) => ({ label: x.name, value: x.code, selected: x.code === selectedTenantCode }))
                         ]
                     } label="Institution" onSelected={(e) => changeSelectedTenantCode(e.value)} />
             }

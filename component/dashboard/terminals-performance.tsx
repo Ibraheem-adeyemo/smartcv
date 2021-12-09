@@ -3,7 +3,7 @@ import { StatsA } from "../../models/stats-models";
 import useSWR from "swr";
 import { apiUrlsv1 } from "../../constants";
 import { useLoading } from "../../hooks";
-import _ from "lodash";
+import _, { sumBy } from "lodash";
 import { ATMCount, Paginate } from "../../models";
 import { useToast } from "@chakra-ui/react";
 import { StatsContext } from "../../provider/stats-provider";
@@ -33,7 +33,7 @@ const TerminalsPerformance:FC = () => {
         prefix: "",
         suffix: ""
       }
-      const atmCountValue = typeof totalATMCount !== "undefined" && typeof totalATMCount.content !== "undefined" ? _.sumBy(totalATMCount?.content, (atm) => atm.count) : 0
+      const atmCountValue = typeof totalATMCount !== "undefined" && typeof totalATMCount.content !== "undefined" ? sumBy(totalATMCount?.content, (atm) => atm.count) : 0
       const atmLowCashValue = 0
       return [{
         ...boxSize,

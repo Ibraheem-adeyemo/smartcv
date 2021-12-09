@@ -1,9 +1,10 @@
 import { Box } from "@chakra-ui/layout"
 import React, {  } from "react"
+import { ComponentWithChildren } from "../models"
 
-const Container = ({children}:{children:React.ReactNode}) => {
+const Container = (props: ComponentWithChildren) => {
     return <Box display="flex" justifyContent="space-evenly" color="white">
-        {children}
+        {props.children}
     </Box>
 }
 
