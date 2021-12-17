@@ -1,0 +1,1 @@
+export const Roles:Readonly<string[]> = ["Super Admin", "Admin", "user"]

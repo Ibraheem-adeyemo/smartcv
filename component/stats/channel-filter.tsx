@@ -1,0 +1,35 @@
+import { useToast } from "@chakra-ui/react"
+import { error } from "@chakra-ui/utils"
+import React, { FC, useMemo } from "react"
+import { SearchFilter } from "../stats"
+import { SkeletonLoader } from ".."
+import { channels } from "../../constants"
+
+const ChannelFilter:FC = () => {
+    const Filter = useMemo(() => SearchFilter, [])
+    const toast = useToast()
+    // let error = ;
+    // useEffect(() => {
+    //     if (typeof error !== "undefined") {
+    //         toast({
+    //             title: error,
+    //             status: "error",
+    //             isClosable: true,
+    //             variant: "left-accent"
+    //         })
+    //     }
+    // }, [error])
+
+    return (
+        <>
+            {typeof channels !== "undefined" &&
+                <Filter data={channels.map((x, i) => ({ value: x, label: x, selected: i === 0 ? true : false }))
+                } label="Channel" />
+            }
+            {
+                typeof channels === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={1} columns={1} width="100px" height="30px" />
+            }
+        </>
+    )
+}
+export default ChannelFilter
