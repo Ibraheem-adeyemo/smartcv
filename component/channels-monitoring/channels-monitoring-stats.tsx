@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/layout";
+import { Flex } from "@chakra-ui/react";
 import React, { FC } from "react"
 import _ from "lodash";
 import { ServiceStatus, TerminalsUnderWatch } from "../dashboard";

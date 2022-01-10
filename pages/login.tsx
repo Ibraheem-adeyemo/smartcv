@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/layout"
+import { Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import React, { } from "react"
 import { LoginForm } from "../component/auth"

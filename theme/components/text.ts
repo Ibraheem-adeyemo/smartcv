@@ -11,7 +11,7 @@ const Text = {
         fontSize: "18px",
       },
       "stat-header":{
-        fontSize: ["16px", "16px", "16px", "16px", "16px", "20px"]
+        fontSize: "16px"
       },
       "page-header": {
         fontSize:"23px"

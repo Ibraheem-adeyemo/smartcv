@@ -1,6 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Flex } from "@chakra-ui/layout";
-import { FormControl, useToast, FormLabel, Input } from "@chakra-ui/react";
+import { FormControl, useToast, FormLabel, Input, Flex } from "@chakra-ui/react";
 
 import _ from "lodash";
 import { useRouter } from "next/router";

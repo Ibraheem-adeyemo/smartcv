@@ -1,5 +1,4 @@
-import { Flex } from '@chakra-ui/layout'
-import { CircularProgress, useToast } from '@chakra-ui/react'
+import { CircularProgress, useToast, Flex } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect } from 'react'
@@ -51,7 +50,9 @@ const Home: NextPage = () => {
 
   return (
     <Flex height="100vh">
-      {token == "" && <CircularProgress isIndeterminate color="brand.primary-blue" m="auto" size="120px" />}
+      {token == "" && <CircularProgress isIndeterminate color="brand.primary-blue" size="120px" sx={{
+        margin:"auto"
+      }} />}
     </Flex>
   )
 }

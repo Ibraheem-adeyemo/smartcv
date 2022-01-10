@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/layout"
+import { Flex, Text } from "@chakra-ui/react"
 import { NextPage } from "next"
 import dynamic from 'next/dynamic'
 import React from "react"

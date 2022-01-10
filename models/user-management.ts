@@ -1,3 +1,5 @@
+import { Tab } from ".";
+
 export interface TenantView {
     name: string,
     image: string,
@@ -36,9 +38,8 @@ export interface Role {
     tenantCode:string
 }
 
-export interface userManagementTab {
-    name: string,
-    isSelected: boolean
+export interface userManagementTab extends Tab {
+    
 }
 
 export interface ISWAdminView {

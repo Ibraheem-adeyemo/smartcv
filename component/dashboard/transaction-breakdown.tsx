@@ -6,6 +6,7 @@ import { useLoading } from "../../hooks"
 import { StatsA } from "../../models"
 import { StatsContext } from "../../provider/stats-provider"
 import { AppCard } from "../app"
+import { StatsName } from "../../constants"
 
 const TransactionBreakdown:FC = () => {
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
@@ -25,7 +26,7 @@ const TransactionBreakdown:FC = () => {
     // console.log("done waiting")
     return [{
       ...boxSize,
-      headerName: "Cash Withdrawal",
+      headerName: StatsName.cashWithdrawal,
       totalNumber: 0.00,
       status: "green",
       percentage: "6.0%",
@@ -34,7 +35,7 @@ const TransactionBreakdown:FC = () => {
 
     }, {
       ...boxSize,
-      headerName: "Quickteller Airtime",
+      headerName: StatsName.quicktellerAirtime,
       totalNumber: 0.00,
       status: "green",
       percentage: "6.0%",
@@ -42,7 +43,7 @@ const TransactionBreakdown:FC = () => {
       prefix:"N"
     }, {
       ...boxSize,
-      headerName: "Quickteller Bills",
+      headerName: StatsName.quicktellerBill,
       totalNumber: 0.00,
       status: "green",
       percentage: "6.0%",
@@ -50,7 +51,7 @@ const TransactionBreakdown:FC = () => {
       prefix:"N"
     }, {
       ...boxSize,
-      headerName: "Paycode withdrawal",
+      headerName: StatsName.paycodeWithdrawal,
       totalNumber: 0.00,
       status: "green",
       percentage: "6.0%",

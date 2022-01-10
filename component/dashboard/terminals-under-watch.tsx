@@ -1,15 +1,14 @@
-import { Text } from "@chakra-ui/layout";
 import React, { FC, useContext, useEffect, useState } from "react"
 import { Stat } from "../stats"
 import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 import { useLoading } from "../../hooks";
-import { apiUrlsv1 } from "../../constants";
+import { apiUrlsv1, StatsName } from "../../constants";
 import useSWR from "swr";
 import { ATMInSupervisor, Paginate } from "../../models";
 import { StatsContext } from "../../provider/stats-provider";
-import { useToast } from "@chakra-ui/react";
+import { useToast, Text } from "@chakra-ui/react";
 import _, { sumBy } from "lodash";
 
 interface TerminalsUnderWatchProps {
@@ -40,21 +39,21 @@ const TerminalsUnderWatch:FC<TerminalsUnderWatchProps> = (props: TerminalsUnderW
       }
       return [{
         ...boxSize,
-        headerName: "ATM In-Supervisor",
+        headerName: StatsName.atmInSupervisor,
         totalNumber: typeof atmInSupervisor !== "undefined" && typeof atmInSupervisor.content !== "undefined" ? sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days"
       }, {
         ...boxSize,
-        headerName: "ATM In Cash-Jam",
+        headerName: StatsName.atmInCashJam,
         totalNumber: 0,
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days"
       }, {
         ...boxSize,
-        headerName: "ATM Cassete Errors",
+        headerName: StatsName.atmCassetteErrors,
         totalNumber: 0,
         status: "red",
         percentage: "6.0%",

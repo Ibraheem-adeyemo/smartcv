@@ -1,6 +1,5 @@
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel } from "@chakra-ui/accordion";
-import { Flex, Text } from "@chakra-ui/layout";
-import { Avatar, useToast } from "@chakra-ui/react";
+import { Avatar, useToast, Flex, Text } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";

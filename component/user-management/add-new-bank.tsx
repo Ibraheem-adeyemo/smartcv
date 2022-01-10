@@ -88,7 +88,7 @@ const AddNewBank:FC = () => {
 
     const saveBank = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         // debugger
-        changeLoading((prev) => ({ isLoading: true, text: "Creating user" }))
+        changeLoading((prev) => ({ isLoading: true, text: "Creating bank" }))
         handleToggleModal({ ...selectedModal, isSubmitted: !selectedModal.isSubmitted })
         changeLoading((prev) => ({ isLoading: false, text: "" }))
     }, [form])

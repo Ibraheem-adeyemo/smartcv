@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/layout";
+import { Flex } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import { ComponentWithChildren } from "../../models";
 

@@ -1,5 +1,4 @@
-import { Flex, VStack, Text, Box, Link } from "@chakra-ui/layout";
-import { Image } from "@chakra-ui/react";
+import { Image, VStack, Text, Box, Link } from "@chakra-ui/react";
 import { OnboardingCard } from ".";
 import { Images, links } from "../../constants";
 import NextLink from 'next/link'

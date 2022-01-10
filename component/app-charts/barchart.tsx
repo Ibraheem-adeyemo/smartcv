@@ -80,6 +80,6 @@ const GroupedBarchart:FC<GroupedBarChartProps> = (props: GroupedBarChartProps) =
         }
         //  chart.options.plugins?.legend?.position = "right"
     }, [])
-    return <Canvas ref={canvasRef} w={props?.width} h={props?.height} as="canvas" mt="17px" />
+    return <Canvas ref={canvasRef} w={props?.width} h={props?.height} mt="17px" />
 }
 export default GroupedBarchart

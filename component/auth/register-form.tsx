@@ -1,5 +1,4 @@
-import { Flex } from "@chakra-ui/layout";
-import { Text, Button, FormControl, FormLabel, Input, useToast } from "@chakra-ui/react";
+import { Text, Button, FormControl, FormLabel, Input, useToast, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { cookieKeys, links, notificationMesage } from "../../constants";

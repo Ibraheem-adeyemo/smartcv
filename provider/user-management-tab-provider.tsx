@@ -1,6 +1,6 @@
-import _ from "lodash"
-import { debounce, Function } from "lodash"
-import { ClassAttributes, createContext, FC, Props, useState } from "react"
+import { map } from "lodash"
+import { debounce } from "lodash"
+import { createContext, FC, useState } from "react"
 import { UserManagementModals, userManagementTabs } from "../constants"
 import { ComponentWithChildren, UserManagementModal } from "../models"
 
@@ -38,7 +38,7 @@ const UserManagementTabProvider:FC<UserManagementTabProviderProps> = (props: Use
     const handleToggleModal = (modalInstance?: UserManagementModal) => {
         // debugger
         if(typeof  modalInstance !== "undefined") {
-            setModals((prev) => _.map(prev, (x) => x.name === modalInstance.name?({...x, ...modalInstance}): x))
+            setModals((prev) => map(prev, (x) => x.name === modalInstance.name?({...x, ...modalInstance}): x))
         } else {
             setModals(UserManagementModals)
         }

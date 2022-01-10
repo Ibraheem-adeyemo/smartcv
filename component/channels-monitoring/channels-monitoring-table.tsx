@@ -1,23 +1,32 @@
-import _ from "lodash";
+import _, { xor } from "lodash";
 import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { Paginate, ATMCountDetail } from "../../models";
 import { PaginatorProvider } from "../../provider";
 import { PaginatorContext } from "../../provider/paginator-provider";
-import { useToast } from "@chakra-ui/react";
 import { apiUrlsv1 } from "../../constants";
+import { useToast } from "@chakra-ui/react";
+import { channelsMonitoringContext } from "../../provider/channels-monitoring-provider";
 
 
 const  ChannelsMonitoringTable:React.FC = () => {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
-    const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(`${apiUrlsv1.atmCountDetails}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
+    const {tabs} = useContext(channelsMonitoringContext)
+    // console.log({tabs})
+    const url = (tabs.findIndex((x) => x.isSelected) > -1? tabs.find((x) => x.isSelected)?.url:"") as string
+    const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(url === ""? null : `${url}?page=${(pageNumber-1)}&size=${countPerPage}`)
     const toast = useToast()
-    const data = useMemo(() => ({
+    const data = useMemo(() => {
+        const rowData = url === ""? []: typeof atmCountDetail !== "undefined" && typeof error ==="undefined"? atmCountDetail?.content as ATMCountDetail[]:typeof error !=="undefined"?[]:undefined
+        return{
         columns: [
             {
+                name: "Tenant",
+                key: "tenantName"
+            }, {
                 name: "Terminal ID",
                 key: "terminalId"
             }, {
@@ -39,18 +48,8 @@ const  ChannelsMonitoringTable:React.FC = () => {
                 ele:"status"
             }
         ],
-        actions: [
-            {
-                name: "Edit",
-                icons: {
-                    use: true
-                },
-                method: () => {
-                    alert("Edit")
-                }
-            }],
-        data: typeof atmCountDetail !== "undefined" && typeof error ==="undefined"? atmCountDetail?.content as ATMCountDetail[]:undefined
-    }), [   atmCountDetail, error])
+        data:rowData
+    }}, [   atmCountDetail, error])
 
     useEffect(() => {
         if(typeof error !== "undefined") {
@@ -63,13 +62,13 @@ const  ChannelsMonitoringTable:React.FC = () => {
         }
     }, [error])
     useEffect(() => {
-        if(typeof atmCountDetail !== "undefined" && typeof atmCountDetail.totalElements !== "undefined") {
-            setPaginationProps(atmCountDetail.totalElements )
+        if(typeof atmCountDetail !== "undefined" && typeof atmCountDetail.totalElements !== "undefined" && typeof atmCountDetail.totalPages !== "undefined" && atmCountDetail.totalPages > 1) {
+            setPaginationProps(atmCountDetail.totalElements)
         }
     }, [atmCountDetail])
 
 
-    return (<AppTable<ATMCountDetail> columns={data?.columns} rows={data.data as ATMCountDetail[]} />)
+    return (<AppTable<ATMCountDetail> columns={data?.columns} rows={data.data as ATMCountDetail[]} showNumbering />)
 
 }
 

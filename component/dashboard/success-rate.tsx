@@ -33,7 +33,7 @@ const SuccessRate:FC = () => {
             !loading ?
                 <>
                     {stats?.map((x, i) => <DonutChart key={i} {...x} />)}
-                </> : <SkeletonCircle justifySelf="center" size="160px" />
+                </> : <SkeletonCircle size="160px" />
         }
     </AppCard>)
 }

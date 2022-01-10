@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/layout"
+import { Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import React, { useEffect } from "react"
 import { RegisterForm } from "../component/auth"

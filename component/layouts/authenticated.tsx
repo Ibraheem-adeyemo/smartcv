@@ -1,9 +1,7 @@
-import Icon from "@chakra-ui/icon";
-import { Flex, Grid, GridItem, Text } from "@chakra-ui/layout";
 import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, transactionMonitoringIcon, channelsMonitoringIcon } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
-import { As, Avatar, Button, ComponentWithAs, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle } from "@chakra-ui/react";
+import { As, Avatar, Button, ComponentWithAs, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
 import { AuthContext } from "../../provider/auth-provider";
 import { AppLink } from "../app";

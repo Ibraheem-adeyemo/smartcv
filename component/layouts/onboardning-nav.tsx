@@ -1,4 +1,4 @@
-import { Flex, Link } from "@chakra-ui/layout";
+import { Flex, Link } from "@chakra-ui/react";
 import React from "react";
 import { links } from "../../constants";
 import { InterswitchLogo } from "../custom-component";

@@ -59,6 +59,7 @@ export function validateHexColor(color: string) {
 }
 
 export function appDate(dateStr: string, withTime = true) {
+    let fullDate = ""
     if (typeof dateStr !== "undefined" && dateStr !== null) {
         const date = new Date(dateStr)
         const day = date.getDate()
@@ -68,13 +69,13 @@ export function appDate(dateStr: string, withTime = true) {
         const hour = date.getHours() - 12 > 0 ? date.getHours() - 12 : date.getHours()
         const minute = date.getMinutes()
         const d = date.getHours() - 12 > -1 ? "PM" : "AM"
-        let fullDate = `${day}-${month}-${year}`
+        fullDate = `${day}-${month}-${year}`
         if (withTime) {
             fullDate += ` | ${hour}:${minute}${d}`
         }
         return fullDate
     }
-    return ""
+    return fullDate
 }
 
 

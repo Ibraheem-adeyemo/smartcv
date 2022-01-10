@@ -1,5 +1,5 @@
-import { Box } from "@chakra-ui/layout";
-import React, { createContext, FC, useState } from "react";
+import { Box } from "@chakra-ui/react";
+import React, { createContext, FC } from "react";
 import { usePagination } from "../hooks";
 import { ComponentWithChildren } from "../models";
 

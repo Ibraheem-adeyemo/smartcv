@@ -1,15 +1,14 @@
+import {Text, useToast} from '@chakra-ui/react'
 import React, { FC, useContext, useEffect, useState } from "react"
 import { StatsA } from "../../models/stats-models";
 import useSWR from "swr";
-import { apiUrlsv1 } from "../../constants";
+import { apiUrlsv1, StatsName } from "../../constants";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
 import { ATMCount, Paginate } from "../../models";
-import { useToast } from "@chakra-ui/react";
 import { StatsContext } from "../../provider/stats-provider";
 import { AppCard } from "../app";
 import { SkeletonLoader } from "..";
-import {Text} from '@chakra-ui/react'
 import { Stat } from "../stats";
 
 const TerminalsPerformance:FC = () => {
@@ -37,7 +36,7 @@ const TerminalsPerformance:FC = () => {
       const atmLowCashValue = 0
       return [{
         ...boxSize,
-        headerName: "ATM Count",
+        headerName: StatsName.atmCount,
         totalNumber: atmCountValue,
         status: "green",
         percentage: "6.0%",
@@ -45,7 +44,7 @@ const TerminalsPerformance:FC = () => {
 
       }, {
         ...boxSize,
-        headerName: "ATM Low Cash Level",
+        headerName: StatsName.atmLowCashLevel,
         totalNumber: atmLowCashValue,
         status: "green",
         percentage: "6.0%",

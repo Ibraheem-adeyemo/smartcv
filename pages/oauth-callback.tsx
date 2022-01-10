@@ -47,7 +47,7 @@ const OauthCallback:NextPage = () => {
     }, [])
     return (
         <Flex height="100vh">
-            <CircularProgress isIndeterminate color="brand.primary-blue" m="auto" size="120px" />
+            <CircularProgress isIndeterminate color="brand.primary-blue" sx={{margin:"auto"}} size="120px" />
         </Flex>
     )
 }

@@ -1,5 +1,5 @@
-import { Button } from "@chakra-ui/button";
-import { Box, Text, Menu, MenuButton, MenuList, MenuItem, Input } from "@chakra-ui/react";
+import {  } from "@chakra-ui/button";
+import { Box, Text, Menu, MenuButton, MenuList, MenuItem, Input, Button } from "@chakra-ui/react";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import _, { debounce, find } from 'lodash';
 import { DropdownIcon } from "../../constants";
@@ -71,7 +71,7 @@ const DropdownSearchFilter:FC<DropdownSearchFilterProps> = (props: DropdownSearc
     }, [dropdownContent])
     return (
         <Menu onOpen={() => setTimeout(() => ref.current?.focus(), 500)}>
-            <MenuButton as={Button} h="26px" px="12px" py="3px" rightIcon={<DropdownIcon />}>
+            <MenuButton as={Button} h="26px" p="12px" rightIcon={<DropdownIcon />}>
                 <Text size="dropdown-text" variant="dropdown-text-header">{props.label}: {dropdownContent?.find(x => x.selected)?.label}</Text>
             </MenuButton>
             <MenuList maxH="334px" overflowY="auto" maxW="204px">

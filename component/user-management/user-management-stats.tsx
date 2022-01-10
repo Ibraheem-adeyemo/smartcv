@@ -1,9 +1,8 @@
-import { Flex, VStack, Text, Box } from "@chakra-ui/react";
-import { Badge } from "@chakra-ui/react";
+import { Flex, VStack, Text, Box, Badge } from "@chakra-ui/react";
 import _ from "lodash";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
-import { apiUrlsv1, AvatarIcon, CapitolIcon, cookieKeys, UserManagementStatsName } from "../../constants";
+import { apiUrlsv1, AvatarIcon, CapitolIcon, cookieKeys, StatsName } from "../../constants";
 import { getCookie } from "../../lib";
 import { ISWAdminView, Paginate, TenantAdminView, TenantView, UserManagementStat } from "../../models";
 import { AppCard } from "../app";
@@ -16,26 +15,26 @@ const UserManagementStats:FC = () => {
     const { data: tenantAdmin, mutate: _mutateTenantAdmin, error: tenantAdminError } = useSWR<Paginate<TenantAdminView>>(typeof document !== "undefined" && getCookie(cookieKeys.totalTenantAdmin) !== "" ? null : apiUrlsv1.tenantAdmin)
     const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<TenantView[]>(typeof document !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? null : apiUrlsv1.tenant)
     const [userManagementStats, setUserManagementStats] = useState<UserManagementStat[]>([{
-        name: UserManagementStatsName.createdBanks,
+        name: StatsName.createdBanks,
         totalCount: getCookie(cookieKeys.totalTenant)
     }, {
-        name: UserManagementStatsName.tenantAdminUser,
+        name: StatsName.tenantAdminUser,
         totalCount: getCookie(cookieKeys.totalTenantAdmin)
     }, {
-        name: UserManagementStatsName.iSWAdminUser,
+        name: StatsName.iSWAdminUser,
         totalCount: getCookie(cookieKeys.totalISWAdmin)
     }])
 
 
     const GetStateIcon = useCallback(({ statName }: { statName: string }) => {
         switch (statName) {
-            case UserManagementStatsName.tenantAdminUser:
+            case StatsName.tenantAdminUser:
 
                 return <AvatarIcon fontSize="20px" />
-            case UserManagementStatsName.createdBanks:
+            case StatsName.createdBanks:
 
                 return <CapitolIcon fontSize="20px" />
-            case UserManagementStatsName.iSWAdminUser:
+            case StatsName.iSWAdminUser:
 
                 return <CapitolIcon fontSize="20px" />
 
@@ -50,13 +49,13 @@ const UserManagementStats:FC = () => {
         // console.log({tenantAdminV:getCookie(cookieKeys.totalTenantAdmin) !== "" ? getCookie(cookieKeys.totalTenantAdmin) : typeof tenantAdmin === "undefined" && typeof tenantAdminError === "undefined" ? "" : typeof tenantAdmin !== "undefined" && typeof tenantAdminError === "undefined" ? `${tenantAdmin?.totalElements}` : "0"})
         // console.log({iswAdminV:getCookie(cookieKeys.totalISWAdmin) !== "" ? getCookie(cookieKeys.totalISWAdmin) : (typeof iswAdmin === "undefined" && typeof iswAdminError === "undefined") ? "" : (typeof iswAdmin !== "undefined" && typeof iswAdminError === "undefined") ? `${iswAdmin?.totalElements}` : "0"})
         setUserManagementStats([{
-            name: UserManagementStatsName.createdBanks,
+            name: StatsName.createdBanks,
             totalCount: typeof document !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? getCookie(cookieKeys.totalTenant) : typeof tenant === "undefined" && typeof tenantError === "undefined" ? "" : typeof tenant !== "undefined" && typeof tenantError === "undefined" ? `${tenant?.length}` : "0"
         }, {
-            name: UserManagementStatsName.tenantAdminUser,
+            name: StatsName.tenantAdminUser,
             totalCount: typeof document !== "undefined" && getCookie(cookieKeys.totalTenantAdmin) !== "" ? getCookie(cookieKeys.totalTenantAdmin) : typeof tenantAdmin === "undefined" && typeof tenantAdminError === "undefined" ? "" : typeof tenantAdmin !== "undefined" && typeof tenantAdminError === "undefined" ? `${tenantAdmin?.totalElements}` : "0"
         }, {
-            name: UserManagementStatsName.iSWAdminUser,
+            name: StatsName.iSWAdminUser,
             totalCount: typeof document !== "undefined" && getCookie(cookieKeys.totalISWAdmin) !== "" ? getCookie(cookieKeys.totalISWAdmin) : (typeof iswAdmin === "undefined" && typeof iswAdminError === "undefined") ? "" : (typeof iswAdmin !== "undefined" && typeof iswAdminError === "undefined") ? `${iswAdmin?.totalElements}` : "0"
         }])
     }, [tenant, tenantError, tenantAdmin, tenantAdminError, iswAdmin, iswAdminError])

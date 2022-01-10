@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext, FC } from "react"
+import { Text } from '@chakra-ui/react'
 import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
 import { StatsA } from "../../models"
 import { AppCard } from "../app"
-import { Text } from '@chakra-ui/react'
 import { StatsContext } from "../../provider/stats-provider"
 import { useLoading } from "../../hooks"
+import { StatsName } from "../../constants"
 
 const TransactionMetric:FC = () => {
     const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
@@ -26,7 +27,7 @@ const TransactionMetric:FC = () => {
             // console.log("done waiting")
             return [{
                 ...boxSize,
-                headerName: "Transaction Amount",
+                headerName: StatsName.transactionAmount,
                 totalNumber: 0.00,
                 status: "green",
                 percentage: "6.0%",
@@ -35,7 +36,7 @@ const TransactionMetric:FC = () => {
 
             }, {
                 ...boxSize,
-                headerName: "Transaction Count",
+                headerName: StatsName.transactionCount,
                 totalNumber: 0,
                 status: "green",
                 percentage: "6.0%",

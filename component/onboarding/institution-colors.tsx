@@ -1,5 +1,4 @@
-import { Flex, Text, VStack } from "@chakra-ui/layout";
-import { Button, Input, Skeleton } from "@chakra-ui/react";
+import { Button, Input, Skeleton, Flex, Text, VStack } from "@chakra-ui/react";
 import _ from "lodash";
 import { range } from "lodash";
 import router from "next/router";

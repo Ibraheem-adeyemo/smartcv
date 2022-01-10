@@ -11,9 +11,6 @@ const columns =  [
         name: "Tenant",
         key: "tenant"
     }, {
-        name: "Branch",
-        key: "branch"
-    }, {
         name: "username",
         key: "username"
     }, {
@@ -24,19 +21,22 @@ const columns =  [
         key: "action",
     }, {
         name: "Originating IP",
-        key: "originatingIp",
+        key: "originIP",
     }, {
         name: "Date",
         key: "date",
+        ele: "datetime"
     }
 ]
 export const AuditContext = createContext<AuditContextType & ReturnType<typeof useAudit>>({
     auditView: undefined,
+    auditInfo:undefined,
     viewDetailsModal: false,
     searchText: "",
     toggleDetailsModal: (_state: boolean) => { },
     handleSearchItem: debounce(() => { }, 500),
     changeAuditView: () => { },
+    changeAuditInfo:()=>{},
     columns:columns
 })
 interface AuditProviderProps extends ComponentWithChildren {

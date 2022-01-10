@@ -1,5 +1,4 @@
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Flex, Text, Menu, MenuButton, MenuItem, MenuList, Button, Input, InputGroup, InputRightElement  } from "@chakra-ui/react";
+import { Flex, Text, Menu, MenuButton, MenuItem, MenuList, Button, Input, InputGroup, InputRightElement, FormControl, FormLabel } from "@chakra-ui/react";
 import React, { FC, useRef } from "react";
 import { CalendarIcon, DropdownIcon } from "../../constants";
 
@@ -10,7 +9,7 @@ const CustomFilter:FC = () => {
 
     return (
         <Menu>
-            <MenuButton as={Button} h="26px" px="12px" py="3px" rightIcon={<DropdownIcon />}>
+            <MenuButton as={Button} h="26px" p="12px" rightIcon={<DropdownIcon />}>
                 <Text size="dropdown-text" variant="dropdown-text-header">Custom</Text>
             </MenuButton>
             <MenuList>

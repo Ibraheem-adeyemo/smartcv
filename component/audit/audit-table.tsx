@@ -2,7 +2,7 @@ import _ from "lodash";
 import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
-import { Paginate, ATMCountDetail, AuditView } from "../../models";
+import { Paginate, ATMCountDetail, AuditView, Action } from "../../models";
 import { PaginatorProvider } from "../../provider";
 import { PaginatorContext } from "../../provider/paginator-provider";
 import { useToast } from "@chakra-ui/react";
@@ -10,12 +10,17 @@ import { apiUrlsv1 } from "../../constants";
 import { AuditContext } from "../../provider/audit-provider";
 
 
-const  AuditTable:React.FC = () => {
-    // console.log({pageNumber})
+const AuditTable:FC = () => {
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
-    const { changeAuditView, columns} = useContext(AuditContext)
-    const { data: auditView, mutate: _mutate, error } = useSWR<Paginate<AuditView>>(`${apiUrlsv1.audit}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
+    const { searchText, changeAuditView, columns, toggleDetailsModal, changeAuditInfo} = useContext(AuditContext)
+    let url = `${apiUrlsv1.audit}?page=${pageNumber-1}&size=${countPerPage}`
+    
+    if(searchText !== "") {
+        url =`${apiUrlsv1.auditByUser}/${searchText}?page=${pageNumber-1}&size=${countPerPage}` 
+    }
+    
+    const { data: auditView, mutate: _mutate, error } = useSWR<Paginate<AuditView>>(url)
     const toast = useToast()
     const data = useMemo(() => ({
         columns,
@@ -25,20 +30,18 @@ const  AuditTable:React.FC = () => {
                 icons: {
                     use: true
                 },
-                method: () => {
-                    alert("Edit")
+                method: (x: AuditView) => {
+                    toggleDetailsModal(true)
+                    changeAuditInfo(x)
                 }
             }],
-        data: typeof auditView !== "undefined" && typeof error ==="undefined"? auditView?.content as AuditView[]:undefined
+        data: typeof auditView !== "undefined" && typeof error ==="undefined"? auditView?.content as AuditView[]:typeof error !=="undefined"?[]:undefined
     }), [auditView, error])
 
     useEffect(() => {
         if(typeof auditView?.content !== "undefined") {
             changeAuditView(auditView.content)
         }
-    }, [auditView, error])
-
-    useEffect(() => {
         if(typeof error !== "undefined") {
             toast({
                 status:"error",
@@ -47,15 +50,12 @@ const  AuditTable:React.FC = () => {
                 isClosable:true
             })
         }
-    }, [error])
-    useEffect(() => {
         if(typeof auditView !== "undefined" && typeof auditView.totalElements !== "undefined") {
             setPaginationProps(auditView.totalElements )
         }
-    }, [auditView])
+    }, [auditView, error])
 
-
-    return (<AppTable<AuditView> columns={data?.columns} rows={data.data as AuditView[]} actions={data.actions} showNumbering />)
+    return (<AppTable<AuditView> columns={data?.columns} rows={data.data as AuditView[]} actions={data.actions as  Action[]} showNumbering />)
 
 }
 

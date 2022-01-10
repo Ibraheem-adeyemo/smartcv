@@ -5,6 +5,7 @@ import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import React, { useContext } from "react";
+import { appDate } from "../../lib";
 import { AuditView } from "../../models";
 import { AuditContext } from "../../provider/audit-provider";
 
@@ -18,9 +19,21 @@ const AuditExport: NextComponentType = () => {
             // debugger
             if(typeof auditView !== "undefined"){
                 const keynames = filter(map(columns, (x) => x.name), (x) => x !== "")
+                
                 const values = map(auditView, (x) => {
-                    return map(columns, (y) =>  x[y.key as keyof AuditView])
+                    return map(columns, (y) =>  {
+                        if(typeof y.ele !== "undefined") {
+                            switch(y.ele) {
+                                case "datetime":
+                                    return appDate(x[y.key as keyof AuditView] as string)
+                                case "date":
+                                    return appDate(x[y.key as keyof AuditView] as string, false)
+                            }
+                        }
+                        return x[y.key as keyof AuditView]
+                    })
                 })
+
                 // const values = [map(...keys, (x) => )]
                 const docDefinition: TDocumentDefinitions = {
                     watermark: { text: 'Interswitch', color: 'blue', opacity: 0.3, bold: true, italics: false },

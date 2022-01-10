@@ -1,4 +1,5 @@
-import { forwardRef, Link,  } from "@chakra-ui/react"
+
+import { forwardRef, Link } from "@chakra-ui/react"
 import NextLink from "next/link"
 import React from "react"
 

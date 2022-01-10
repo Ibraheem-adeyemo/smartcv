@@ -1,5 +1,4 @@
-import { Divider, Flex, Link } from "@chakra-ui/layout";
-import { Avatar, forwardRef, Text, useToast } from "@chakra-ui/react";
+import { Avatar, BoxProps, ChakraComponent, Divider, Flex, forwardRef, Link, Text, useToast } from "@chakra-ui/react";
 import React, { createContext, Fragment, useCallback } from "react";
 import { links, notificationMesage, onboardingTabs, TickIcon } from "../../constants";
 import { useOnboarding } from "../../hooks";
@@ -9,7 +8,7 @@ import { Tenant, InstitutionColorInfo, Onboarding as OnboardingModel, Step, tena
 import { createAccountAsync } from "../../services/v1";
 import { OnboardingNav } from '.'
 import _ from "lodash";
-interface OnboardingProps extends ComponentWithChildren  {
+interface OnboardingProps extends ComponentWithChildren {
 }
 const OnboardingLink = forwardRef((props, ref) => {
     const { children, ...rest } = props
@@ -18,7 +17,10 @@ const OnboardingLink = forwardRef((props, ref) => {
             <Link textAlign="center" as={"a"} {...rest}>{children}</Link>
         </Link>)
 })
-
+type SpanComponent = ChakraComponent<'span', {}>
+const Span = ((props: BoxProps) => (
+    <Flex display="flex" flexDir="column" gridGap="8px" alignItems="center" />
+)) as SpanComponent
 export const onboardingContext = createContext<ReturnType<typeof useOnboarding>>(
     {
         steps: onboardingTabs as Step[],
@@ -28,11 +30,11 @@ export const onboardingContext = createContext<ReturnType<typeof useOnboarding>>
         completeForm: () => (""),
         resetForm: () => (""),
         previousState: () => (""),
-        loading: {isLoading:false, text:""},
+        loading: { isLoading: false, text: "" },
         startLoading: () => (""),
         stopLoading: () => ("")
     })
-const Onboarding:React.FC<OnboardingProps> = (props: OnboardingProps) => {
+const Onboarding: React.FC<OnboardingProps> = (props: OnboardingProps) => {
     const { steps, onboarding, changeIsRefresh, addInfo, refresh, completeForm, resetForm, previousState, loading, startLoading, stopLoading } = useOnboarding()
     // useEffect(() => console.log({ c: onboarding }))
     const router = useRouter()
@@ -90,7 +92,7 @@ const Onboarding:React.FC<OnboardingProps> = (props: OnboardingProps) => {
                     isClosable: true,
                     variant: "left-accent"
                 })
-                
+
                 router.push(links.onboardingSuccessPage)
             } else {
                 toast({
@@ -106,7 +108,7 @@ const Onboarding:React.FC<OnboardingProps> = (props: OnboardingProps) => {
             if (typeof error.message !== "undefined" || typeof error !== "undefined") {
                 toast({
                     status: "error",
-                    title: typeof error.message !== "undefined"? error.message:error,
+                    title: typeof error.message !== "undefined" ? error.message : error,
                     isClosable: true,
                     variant: "left-accent"
                 })
@@ -128,12 +130,12 @@ const Onboarding:React.FC<OnboardingProps> = (props: OnboardingProps) => {
                                     <Fragment key={i}>
                                         <QuestionDivider i={i} arr={arr} />
                                         <OnboardingLink href={x.url}>
-                                            <Flex d="flex" as="span" flexDir="column" gridGap="8px" alignItems="center">
+                                            <Span>
 
                                                 <LoadAvatar i={i} x={x} />
                                                 <LoadTextHeader i={i} x={x} />
                                                 <Text textAlign="center">{x.description}</Text>
-                                            </Flex>
+                                            </Span>
                                         </OnboardingLink>
                                     </Fragment>
                                 )}

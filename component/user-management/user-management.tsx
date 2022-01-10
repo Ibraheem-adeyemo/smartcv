@@ -1,4 +1,4 @@
-import { VStack } from "@chakra-ui/layout";
+import { VStack } from "@chakra-ui/react";
 import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { FC, useCallback, useContext, useEffect } from "react";

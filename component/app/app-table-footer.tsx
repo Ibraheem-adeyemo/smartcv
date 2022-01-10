@@ -1,4 +1,4 @@
-import { HStack, Link, Text } from "@chakra-ui/layout"
+import { HStack, Link, Text } from "@chakra-ui/react"
 import React, { FC, useContext } from "react"
 import { PaginatorContext } from "../../provider/paginator-provider"
 import { map, range } from "lodash"

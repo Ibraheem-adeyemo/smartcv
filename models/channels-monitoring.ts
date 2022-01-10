@@ -1,3 +1,5 @@
+import { Tab } from ".";
+
 type ATMtypes = ""
 
 export interface ATM {
@@ -6,6 +8,10 @@ export interface ATM {
     tenantName: string,
     count: number
 }
+export interface ATMStats extends ATM {
+
+}
+
 export interface ATMCount extends ATM {
 
 }
@@ -16,6 +22,10 @@ export interface ATMInService extends ATM {
 
 export interface ATMInSupervisor extends ATM {
 
+}
+
+export interface channelsMonitoringTab extends Tab {
+    url: string
 }
 
 export interface ATMCountDetail {

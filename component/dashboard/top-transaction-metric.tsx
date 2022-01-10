@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
 import { StatsCMore } from "../../models";
 import { Barchart } from "../app-charts";
-import { Flex, Text } from "@chakra-ui/layout";
+import { Flex, Text } from "@chakra-ui/react";
 import DropdownSearchFilter from "../stats/search-filters";
 import { months } from "../../constants";
 import { SkeletonLoader } from "..";

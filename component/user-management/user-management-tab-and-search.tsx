@@ -1,5 +1,4 @@
-import { ButtonGroup, Button } from "@chakra-ui/button";
-import { HStack } from "@chakra-ui/layout";
+import { HStack, ButtonGroup, Button} from "@chakra-ui/react";
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { UserManagementSearch } from ".";
 import { UserManagementModals, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
