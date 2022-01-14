@@ -1,4 +1,4 @@
-import {  } from "@chakra-ui/button";
+import { } from "@chakra-ui/button";
 import { Box, Text, Menu, MenuButton, MenuList, MenuItem, Input, Button } from "@chakra-ui/react";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import _, { debounce, find } from 'lodash';
@@ -13,6 +13,7 @@ const debouncedFetchData = debounce((query: string, cb: ResultFromSearch, data: 
 interface DropdownSearchFilterProps {
     data: DropdownContent[],
     label?: string,
+    selected?: boolean,
     onSelected?: (selectedItem: DropdownContent) => void
 }
 interface DropdownContent {
@@ -21,7 +22,7 @@ interface DropdownContent {
     selected: boolean
 }
 type ResultFromSearch = (items?: DropdownContent[]) => void
-const DropdownSearchFilter:FC<DropdownSearchFilterProps> = (props: DropdownSearchFilterProps) => {
+const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false, ...props }: DropdownSearchFilterProps) => {
     const [dropdownContent, setDropdownContent] = useState<DropdownContent[]>()
     const [query, setQuery] = useState<string>()
     useEffect(() => {
@@ -58,11 +59,11 @@ const DropdownSearchFilter:FC<DropdownSearchFilterProps> = (props: DropdownSearc
     }, [])
 
     useEffect(() => {
-        if(typeof dropdownContent !== "undefined" && dropdownContent.length > 0) {
+        if (typeof dropdownContent !== "undefined" && dropdownContent.length > 0) {
             // debugger
             const selectedItem = find(dropdownContent, (content) => content.selected)
-            if(typeof selectedItem !== "undefined") {
-                if(typeof props.onSelected !== "undefined") {
+            if (typeof selectedItem !== "undefined") {
+                if (typeof props.onSelected !== "undefined") {
                     // debugger
                     props.onSelected(selectedItem)
                 }
@@ -70,9 +71,9 @@ const DropdownSearchFilter:FC<DropdownSearchFilterProps> = (props: DropdownSearc
         }
     }, [dropdownContent])
     return (
-        <Menu onOpen={() => setTimeout(() => ref.current?.focus(), 500)}>
-            <MenuButton as={Button} h="26px" p="12px" rightIcon={<DropdownIcon />}>
-                <Text size="dropdown-text" variant="dropdown-text-header">{props.label}: {dropdownContent?.find(x => x.selected)?.label}</Text>
+        <Menu onOpen={() => setTimeout(() => ref.current?.focus(), 500)} >
+            <MenuButton as={Button} h="26px" p="12px" rightIcon={<DropdownIcon />} borderWidth={selected ? '1px' : '0px'} borderStyle={selected ? 'bold' : ''} borderColor={selected ? 'var(--chakra-colors-brand-primary-blue)' : ''}  >
+                <Text size="dropdown-text" variant="dropdown-text-header" color={selected ? 'brand.primary-blue' : ''}>{props.label}: {dropdownContent?.find(x => x.selected)?.label}</Text>
             </MenuButton>
             <MenuList maxH="334px" overflowY="auto" maxW="204px">
                 <MenuItem closeOnSelect={false} onClick={() => ref.current?.focus()} as={Box}>

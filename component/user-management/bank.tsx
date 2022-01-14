@@ -3,7 +3,7 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
-import { apiUrlsv1, cookieKeys, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, appTableElements, cookieKeys, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { TenantView, Paginate, UserManagementModal } from "../../models";
 import { PaginatorProvider } from "../../provider";
@@ -26,7 +26,7 @@ const BankTable:FC = () => {
             {
                 name: "Bank Logo",
                 key: "image",
-                ele: "image"
+                ele: appTableElements.image
             }, {
                 name: "Bank name",
                 key: "name"
@@ -45,7 +45,7 @@ const BankTable:FC = () => {
             }, {
                 name: "Status",
                 key: "isActive",
-                ele: "status"
+                ele: appTableElements.status
             }
         ],
         actions: [

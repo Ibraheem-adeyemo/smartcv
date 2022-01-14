@@ -3,7 +3,7 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
-import { apiUrlsv1, cookieKeys, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, appTableElements, cookieKeys, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
 import { PaginatorProvider } from "../../provider";
@@ -38,7 +38,7 @@ const ISWAdminTable:FC = () => {
             }, {
                 name: "Status",
                 key: "status",
-                ele:"status"
+                ele:appTableElements.status
             }
         ],
         actions: [

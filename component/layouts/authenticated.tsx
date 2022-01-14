@@ -1,5 +1,5 @@
 import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, transactionMonitoringIcon, channelsMonitoringIcon } from "../../constants";
+import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 import { As, Avatar, Button, ComponentWithAs, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
@@ -35,6 +35,10 @@ const AuthenticatedLayout:React.FC<AuthenticatedLayout> = (props: AuthenticatedL
         icon: channelsMonitoringIcon,
         name: "Channels Monitoring",
         link: links.channelsMonitoring
+    }, {
+        icon: InterchangeDisconnectionIcon,
+        name: "Interchange Disconnection",
+        link: links.interchangeDisconnection
     }, {
         icon: userManagementIcon,
         name: "user Management",

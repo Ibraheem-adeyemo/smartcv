@@ -19,6 +19,8 @@ export const transactionMonitoringIcon = forwardRef((props, ref) => <Icon as={Fi
 
 export const channelsMonitoringIcon = forwardRef((props, ref) => <Icon as={IoNewspaperOutline} {...props} ref={ref} />)
 
+export const InterchangeDisconnectionIcon = forwardRef((props, ref) => <Icon as={HiOutlineClipboardList} {...props} ref={ref} />)
+
 export const userManagementIcon = forwardRef((props, ref) => <Icon as={HiOutlineClipboardList} {...props} ref={ref} />)
 
 export const auditIcon = forwardRef((props, ref) => <Icon as={AiOutlineAudit} {...props} ref={ref} />)

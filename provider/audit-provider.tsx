@@ -1,5 +1,6 @@
 import { debounce } from "lodash";
 import { createContext, FC } from "react";
+import { appTableElements } from "../constants";
 import { useAudit, useAuthentication } from "../hooks";
 import { Column, ComponentWithChildren } from "../models";
 
@@ -25,7 +26,7 @@ const columns =  [
     }, {
         name: "Date",
         key: "date",
-        ele: "datetime"
+        ele: appTableElements.dateTime
     }
 ]
 export const AuditContext = createContext<AuditContextType & ReturnType<typeof useAudit>>({

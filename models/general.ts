@@ -19,7 +19,8 @@ export interface Column {
     key: string,
     ele?:string,
     prefix?:string,
-    suffix?:string
+    suffix?:string,
+    lookUp?:Record<string, any>
 }
 
 export interface Tab {
@@ -42,6 +43,8 @@ export interface apiUrlsv1Model {
     auditByUser:string,
     createTenantAdmin: string,
     interChange: string,
+    interchangeDisconnectionRequest:string,
+    interchangeDisconnectionStatus:string,
     iswAdmin: string,
     passportUrl:string,
     states: string,
@@ -49,10 +52,23 @@ export interface apiUrlsv1Model {
     tenantAdmin: string,
 }
 
-
 type performAction = <T extends Record<keyof T, T[keyof T]>>(x:T) => void
 
 export interface Action {
     name: string,
-    method: performAction
+    method: performAction,
+    bgColor?: string,
+    color?:string,
+    showTextOnly?: boolean,
+    ele?: string
+}
+
+
+export interface setFiltersToShowProps { 
+    showTenantFilter?: boolean, 
+    showTodayFilter?: boolean, 
+    showThisWeekFilter?: boolean,
+    showThisMonthFilter?: boolean,
+    showThisYearFilter?: boolean,
+    showCustomFilter?: boolean,
 }

@@ -1,9 +1,9 @@
 const colors = {
     brand: {
-        50:"#d70900",
-        100:"#d70900",
-        500:"#d70900",
-        primary: "#d70900",
+        50:"#0275D8",
+        100:"#0275D8",
+        500:"#0275D8",
+        primary: "#0275D8",
         white: "white",
         "primary-text":"#364657",
         muted:"#7F91A8",

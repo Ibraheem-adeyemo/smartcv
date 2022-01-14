@@ -1,5 +1,5 @@
-import { apiUrlsv1, links } from "."
-import { channelsMonitoringTab, Step, userManagementTab } from "../models"
+import { apiUrlsv1, links, StatsName } from "."
+import { channelsMonitoringTab, interchangeDisconnectionTab, Step, userManagementTab } from "../models"
 
 
 export enum userManagementTabsName {
@@ -38,30 +38,49 @@ export const onboardingTabs: Readonly<Step[]> = [
         key: "institutionColorInfo"
     }
 ]
-export const channelsMonitorinTabs:Readonly<channelsMonitoringTab[]> = [
+
+
+export const channelsMonitoringTabs:Readonly<channelsMonitoringTab[]> = [
     {
-        name:"ATM Count",
+        name:StatsName.atmCount,
         url:apiUrlsv1.atmCountDetails,
         isSelected:true
     }, {
-        name:"Total in Service",
+        name:StatsName.atmInService,
         url:apiUrlsv1.atmInServiceDetails,
         isSelected:false
     }, {
-        name:"Total Out of Service",
+        name:StatsName.atmOutService,
         url:apiUrlsv1.atmOutOfServiceDetails,
         isSelected:false
     }, {
-        name:"ATM In-Supervisor",
+        name: StatsName.atmInSupervisor,
         url:apiUrlsv1.atmInSupervisorDetails,
         isSelected:false
     }, {
-        name:"ATM In Cash-Jam",
+        name:StatsName.atmInCashJam,
         url:"",
         isSelected:false
     }, {
-        name:"ATM Cassete Errors",
+        name:StatsName.atmCassetteErrors,
         url:"",
+        isSelected:false
+    }
+]
+
+export enum interchangeDisconnectionTabsName  {
+    status="Status",
+    connectionRequest="Connection Requestion"
+}
+
+export const interchangeDisconnectionTabs:Readonly<interchangeDisconnectionTab[]> = [
+    {
+        name:interchangeDisconnectionTabsName.status,
+        url:apiUrlsv1.interchangeDisconnectionStatus,
+        isSelected:true
+    }, {
+        name: interchangeDisconnectionTabsName.connectionRequest,
+        url:apiUrlsv1.interchangeDisconnectionRequest,
         isSelected:false
     }
 ]

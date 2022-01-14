@@ -5,64 +5,71 @@ import { AppTable } from "../app";
 import { Paginate, ATMCountDetail } from "../../models";
 import { PaginatorProvider } from "../../provider";
 import { PaginatorContext } from "../../provider/paginator-provider";
-import { apiUrlsv1 } from "../../constants";
+import { apiUrlsv1, appTableElements } from "../../constants";
 import { useToast } from "@chakra-ui/react";
 import { channelsMonitoringContext } from "../../provider/channels-monitoring-provider";
+import { StatsContext } from "../../provider/stats-provider";
 
 
-const  ChannelsMonitoringTable:React.FC = () => {
+const ChannelsMonitoringTable: React.FC = () => {
     // console.log({pageNumber})
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
-    const {tabs} = useContext(channelsMonitoringContext)
+    const { selectedTenantCode } = useContext(StatsContext)
+    const { tabs } = useContext(channelsMonitoringContext)
     // console.log({tabs})
-    const url = (tabs.findIndex((x) => x.isSelected) > -1? tabs.find((x) => x.isSelected)?.url:"") as string
-    const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(url === ""? null : `${url}?page=${(pageNumber-1)}&size=${countPerPage}`)
+    let url = (tabs.findIndex((x) => x.isSelected) > -1 ? tabs.find((x) => x.isSelected)?.url : "") as string
+    if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
+        url += `${selectedTenantCode}`
+    }
+    url += `/details/`
+    const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(url === "" ? null : `${url}?page=${(pageNumber - 1)}&size=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => {
-        const rowData = url === ""? []: typeof atmCountDetail !== "undefined" && typeof error ==="undefined"? atmCountDetail?.content as ATMCountDetail[]:typeof error !=="undefined"?[]:undefined
-        return{
-        columns: [
-            {
-                name: "Tenant",
-                key: "tenantName"
-            }, {
-                name: "Terminal ID",
-                key: "terminalId"
-            }, {
-                name: "Channel IP",
-                key: "externalIP"
-            }, {
-                name: "Location",
-                key: "location"
-            }, {
-                name: "State",
-                key: "state"
-            }, {
-                name: "Last Transaction Time",
-                key: "lastTranTime",
-                ele:"datetime"
-            }, {
-                name: "Terminal Status",
-                key: "terminalStatus",
-                ele:"status"
-            }
-        ],
-        data:rowData
-    }}, [   atmCountDetail, error])
+        const rowData = url === "" ? [] : typeof atmCountDetail !== "undefined" && typeof error === "undefined" ? atmCountDetail?.content as ATMCountDetail[] : typeof error !== "undefined" ? [] : undefined
+        return {
+            columns: [
+                {
+                    name: "Tenant",
+                    key: "tenantName"
+                }, {
+                    name: "Terminal ID",
+                    key: "terminalId"
+                }, {
+                    name: "Channel IP",
+                    key: "externalIP"
+                }, {
+                    name: "Location",
+                    key: "location"
+                }, {
+                    name: "State",
+                    key: "state"
+                }, {
+                    name: "Last Transaction Time",
+                    key: "lastTranTime",
+                    ele: appTableElements.dateTime
+                }, {
+                    name: "Terminal Status",
+                    key: "terminalStatus",
+                    ele: appTableElements.status
+                }
+            ],
+            data: rowData
+        }
+    }, [atmCountDetail, error])
 
     useEffect(() => {
-        if(typeof error !== "undefined") {
+        if (typeof error !== "undefined") {
             toast({
-                status:"error",
-                title: typeof error.message === "undefined"? error:error.message,
-                variant:"left-accent",
-                isClosable:true
+                status: "error",
+                title: typeof error.message === "undefined" ? error : error.message,
+                variant: "left-accent",
+                isClosable: true
             })
         }
     }, [error])
     useEffect(() => {
-        if(typeof atmCountDetail !== "undefined" && typeof atmCountDetail.totalElements !== "undefined" && typeof atmCountDetail.totalPages !== "undefined" && atmCountDetail.totalPages > 1) {
+        if (typeof atmCountDetail !== "undefined" && typeof atmCountDetail.totalElements !== "undefined" && typeof atmCountDetail.totalPages !== "undefined" && atmCountDetail.totalPages > 1) {
             setPaginationProps(atmCountDetail.totalElements)
         }
     }, [atmCountDetail])
@@ -72,7 +79,7 @@ const  ChannelsMonitoringTable:React.FC = () => {
 
 }
 
-const ChannelsMonitoring:FC =() => {
+const ChannelsMonitoring: FC = () => {
     return (
 
         <PaginatorProvider>

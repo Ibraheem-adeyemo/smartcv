@@ -6,7 +6,7 @@ import { TenantAdminView, Paginate} from "../../models";
 import { PaginatorProvider } from "../../provider";
 import { PaginatorContext } from "../../provider/paginator-provider";
 import { useToast } from "@chakra-ui/react";
-import { apiUrlsv1, cookieKeys } from "../../constants";
+import { apiUrlsv1, appTableElements, cookieKeys } from "../../constants";
 import { setCookie } from "../../lib";
 
 
@@ -30,11 +30,11 @@ const BankAdminTable:FC = () => {
             }, {
                 name: "Date Created",
                 key: "createdAt",
-                ele: "datetime"
+                ele: appTableElements.dateTime
             }, {
                 name: "Status",
                 key: "isActive",
-                ele: "status"
+                ele: appTableElements.status
             }
         ],
         actions: [

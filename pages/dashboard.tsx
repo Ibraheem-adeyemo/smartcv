@@ -1,9 +1,11 @@
 import { Flex, Text } from "@chakra-ui/react"
 import { NextPage } from "next"
 import dynamic from 'next/dynamic'
-import React from "react"
+import React, { useContext } from "react"
 import { Authenticated } from "../component/layouts"
+import { filtersToShowDefaultValue } from "../constants"
 import { StatsProvider } from "../provider"
+import { StatsContext } from "../provider/stats-provider"
 const TerminalsPerformance = dynamic(() => import('../component/dashboard/terminals-performance'))
 const SuccessRate = dynamic(() => import('../component/dashboard/success-rate'))
 const ServiceStatus = dynamic(() => import('../component/dashboard/service-status'))
@@ -16,6 +18,8 @@ const UsageMetric = dynamic(() => import('../component/dashboard/usage-metric'))
 const AppBarFilter = dynamic(() => import('../component/stats/app-bar-filter'))
 
 const Dashboard:NextPage = () => {
+  const {setFiltersToShow} = useContext(StatsContext)
+  setFiltersToShow(filtersToShowDefaultValue)
   return (
     <StatsProvider>
       <Authenticated pageHeader={

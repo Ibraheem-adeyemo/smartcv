@@ -29,10 +29,10 @@ const InstitutionFilter:FC = () => {
                             { label: "All", value: "0", selected: selectedTenantCode === "0" },
                             ...map(institutions, (x, i) => ({ label: x.name, value: x.code, selected: x.code === selectedTenantCode }))
                         ]
-                    } label="Institution" onSelected={(e) => changeSelectedTenantCode(e.value)} />
+                    } label="Institution" onSelected={(e) => changeSelectedTenantCode(e.value)} selected />
             }
             {
-                typeof institutions === "undefined" && typeof institutionsError === "undefined" && <SkeletonLoader rows={1} columns={1} width="100px" height="30px" />
+                typeof institutions === "undefined" && typeof institutionsError === "undefined" && <SkeletonLoader rows={1} columns={1} width="100px" height="20px" />
             }
         </>
     )

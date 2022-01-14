@@ -15,24 +15,27 @@ export enum links {
     notFound="/404",
     channelsMonitoring="/channels-monitoring",
     transactionMonitoring="/transaction-monitoring",
-    audit="/audit"
+    audit="/audit",
+    interchangeDisconnection="/interchange-disconnection"
 
 }
 
 export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     atmCount: `${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/count`,
-    atmCountDetails: `${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/count/details/`,
+    atmCountDetails: `${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/count/`,
     atmInService:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/in-service`,
-    atmInServiceDetails:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/in-service/details/`,
+    atmInServiceDetails:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/in-service/`,
     atmInSupervisor:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/supervisor`,
-    atmInSupervisorDetails:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/supervisor/details/`,
+    atmInSupervisorDetails:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/supervisor/`,
     atmOutOfService:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/offline`,
-    atmOutOfServiceDetails:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/offline/details/`,
+    atmOutOfServiceDetails:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/offline/`,
     atmStats:`${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/`,
     audit: `${API_BASE_URL}/${CURRENT_API_VERSION}/audit/`,
     auditByUser:`${API_BASE_URL}/${CURRENT_API_VERSION}/audit/user`,
     createTenantAdmin:`${API_BASE_URL}/${CURRENT_API_VERSION}/user/tenant-admin`,
     interChange:`${API_BASE_URL}/${CURRENT_API_VERSION}/interchange`,
+    interchangeDisconnectionStatus:`${API_BASE_URL}/${CURRENT_API_VERSION}/interchange`,
+    interchangeDisconnectionRequest:`${API_BASE_URL}/${CURRENT_API_VERSION}/interchange`,
     iswAdmin:`/api/get-isw-admins`,
     passportUrl:`${PASSPORT_AUTHORIZE_URL}?client_id=${CLIENT_ID}&scope=${SCOPE}&response_type=${RESPONSE_TYPE}&redirect_uri=`,
     states:`${API_BASE_URL}/${CURRENT_API_VERSION}/location/states`,

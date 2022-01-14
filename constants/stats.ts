@@ -16,5 +16,7 @@ export enum StatsName {
     cashWithdrawal = "Cash Withdrawal",
     quicktellerAirtime = "Quickteller Airtime",
     quicktellerBill = "Quickteller Bill",
-    paycodeWithdrawal = "Paycode Withdrawal"
+    paycodeWithdrawal = "Paycode Withdrawal",
+    totalInService = "Total in Service",
+    totalOutOfService = "Total Out of Service"
 }

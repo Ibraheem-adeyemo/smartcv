@@ -57,7 +57,7 @@ export default function useAuthentication() {
         if (typeof window !== "undefined") {
             if ((typeof user === "undefined" && typeof error !== "undefined") || token === "") {
                 // debugger
-                console.log({AuthenticatedPage})
+                // console.log({AuthenticatedPage})
                 const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
 
                 // debugger

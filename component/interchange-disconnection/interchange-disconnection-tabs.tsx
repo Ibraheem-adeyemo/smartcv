@@ -2,7 +2,7 @@ import { HStack, ButtonGroup, Button } from "@chakra-ui/react";
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { channelsMonitoringContext } from "../../provider/channels-monitoring-provider";
 
-const ChannelsMonitoringTabs: FC = () => {
+const InterchangeDisconnectionTabs: FC = () => {
     const { tabs, modifyTab } = useContext(channelsMonitoringContext)
     const handleTabSelection = (i: number) => {
         // debugger
@@ -15,4 +15,4 @@ const ChannelsMonitoringTabs: FC = () => {
             {tabs.map((x, i, arr) => <Button isActive={x.isSelected as boolean} key={i} px="20px" py="11px" borderTopLeftRadius={i === 0 ? "4px" : "0px"} borderBottomLeftRadius={i === 0 ? "4px" : "0px"} borderTopRightRadius={(i + 1) === arr.length ? "4px" : "0px"} borderBottomRightRadius={(i + 1) === arr.length ? "4px" : "0px"} colorScheme="blue" variant="outline" onClick={(e) => handleTabSelection(i)}>{x.name}</Button>)}
         </ButtonGroup>
 }
-export default ChannelsMonitoringTabs
+export default InterchangeDisconnectionTabs
