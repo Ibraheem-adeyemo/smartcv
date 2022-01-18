@@ -3,7 +3,7 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
-import { apiUrlsv1, appTableElements, cookieKeys, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
 import { PaginatorProvider } from "../../provider";
@@ -68,7 +68,7 @@ const ISWAdminTable:FC = () => {
 
     useEffect(() => {
         if(typeof iswAdmin !== "undefined" && typeof iswAdmin.totalElements !== "undefined") {
-            setCookie(cookieKeys.totalISWAdmin, iswAdmin.totalElements.toString(), 10)
+            setCookie(cookieKeys.totalISWAdmin, iswAdmin.totalElements.toString(), cookiesTimeout.totalISWAdminTimeout)
             setPaginationProps(iswAdmin.totalElements )
         }
     }, [iswAdmin])

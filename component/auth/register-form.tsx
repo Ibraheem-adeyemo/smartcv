@@ -1,7 +1,7 @@
 import { Text, Button, FormControl, FormLabel, Input, useToast, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
-import { cookieKeys, links, notificationMesage } from "../../constants";
+import { cookieKeys, cookiesTimeout, links, notificationMesage } from "../../constants";
 import { setCookie } from "../../lib";
 import useLoading from "../../hooks/loading";
 import { getInterchangeById } from "../../services/v1";
@@ -20,7 +20,7 @@ const RegisterForm:FC = () => {
             const data = await getInterchangeById(interChangeId as string)
             if (typeof data.statusCondition !== "undefined" && +data.statusCondition === 1 && typeof interChangeId !== "undefined") {
                 // debugger
-                setCookie(cookieKeys.interchangeId, interChangeId, 15)
+                setCookie(cookieKeys.interchangeId, interChangeId, cookiesTimeout.interchangeIdTimeout)
                 toast({
                     status: "success",
                     title: notificationMesage.SuccessfulLogin,

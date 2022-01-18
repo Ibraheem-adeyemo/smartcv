@@ -2,7 +2,7 @@ import { CircularProgress, useToast, Flex } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect } from 'react'
-import { cookieKeys, links } from '../constants'
+import { cookieKeys, cookiesTimeout, links } from '../constants'
 import { getCookie, setCookie } from '../lib'
 import { AuthContext } from '../provider/auth-provider'
 
@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     // debugger
     if (typeof window !== "undefined") {
-      if (getCookie("token") === "") {
+      if (getCookie(cookieKeys.token) === "") {
         // setCookie("redirectUrl", router.asPath, 10)
         router.push(links.login)
       }
@@ -28,8 +28,8 @@ const Home: NextPage = () => {
         if (typeof user !== "undefined") {
           // debugger
           if(getCookie(cookieKeys.redirectUrl) !== "") {
-            const redirectUrl = getCookie("redirectUrl")
-            setCookie(cookieKeys.redirectUrl, "", -10)
+            const redirectUrl = getCookie(cookieKeys.redirectUrl)
+            setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
             router.push(redirectUrl)
           } else {
             router.push(links.dashboard)

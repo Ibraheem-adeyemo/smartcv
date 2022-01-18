@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { NextApiResponse } from "next";
 import { getCookie } from ".";
-import { months, notificationMesage } from "../constants";
+import { cookieKeys, months, notificationMesage } from "../constants";
 import { APIResponse } from "../models";
 
 export function getRandomInt(max: number) {
@@ -84,7 +84,7 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
     try {
         // console.log({init});
         // debugger
-        let token = typeof window !== "undefined" ? getCookie("token") : ""
+        let token = typeof window !== "undefined" ? getCookie(cookieKeys.token) : ""
         const response = token !== "" ? await fetch(input, typeof init === "undefined" ? {
             method: "GET",
             headers: {

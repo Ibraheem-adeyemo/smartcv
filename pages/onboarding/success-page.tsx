@@ -4,15 +4,15 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { OnboardingNav } from "../../component/layouts"
 import { SuccessCard } from "../../component/onboarding"
-import { links } from "../../constants"
+import { cookieKeys, links } from "../../constants"
 import { getCookie } from "../../lib"
 
 export default function SuccessPage() {
-    const [status, setStatus] = useState(typeof window !== "undefined" ? getCookie("created-account") : "")
+    const [status, setStatus] = useState(typeof window !== "undefined" ? getCookie(cookieKeys.createdAccount) : "")
     const router = useRouter()
    
     useEffect(() => {
-        setStatus(typeof window !== "undefined" ? getCookie("created-account") : "")
+        setStatus(typeof window !== "undefined" ? getCookie(cookieKeys.createdAccount) : "")
     }, [])
     useEffect(() => {
         if (typeof window !== "undefined") {

@@ -1,5 +1,5 @@
 import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon } from "../../constants";
+import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, AuthenticatedPage, menuNames } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 import { As, Avatar, Button, ComponentWithAs, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
@@ -25,31 +25,31 @@ const AuthenticatedLayout:React.FC<AuthenticatedLayout> = (props: AuthenticatedL
         
     const menuList: MenuListItem[] = [{
         icon: dashboardIcon,
-        name: "Dashboard",
-        link: links.dashboard
+        name: menuNames.dashboard,
+        link: AuthenticatedPage[0]
     }, {
         icon: transactionMonitoringIcon,
-        name: "Transaction Monitoring",
-        link: links.transactionMonitoring
+        name: menuNames.transactionMonitoring,
+        link: AuthenticatedPage[1]
     }, {
         icon: channelsMonitoringIcon,
-        name: "Channels Monitoring",
-        link: links.channelsMonitoring
+        name: menuNames.channelsMonitoring,
+        link: AuthenticatedPage[2]
     }, {
         icon: InterchangeDisconnectionIcon,
-        name: "Interchange Disconnection",
-        link: links.interchangeDisconnection
+        name: menuNames.interchangeDisconnection,
+        link: AuthenticatedPage[3]
     }, {
         icon: userManagementIcon,
-        name: "user Management",
-        link: links.userManagement
+        name: menuNames.userManagement,
+        link: AuthenticatedPage[4]
     }, {
         icon: auditIcon,
-        name: "Audit",
-        link: links.audit
+        name: menuNames.audit,
+        link: AuthenticatedPage[5]
     }, {
         icon: systemSettingsIcon,
-        name: "System Settings",
+        name: menuNames.systemSettings,
         link: ""
     }]
         return <>

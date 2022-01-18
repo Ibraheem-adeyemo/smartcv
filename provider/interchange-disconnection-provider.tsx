@@ -3,9 +3,11 @@ import { interchangeDisconnectionTabs } from "../constants";
 import { useInterchangeDisconnection } from "../hooks";
 import { ComponentWithChildren, interchangeDisconnectionTab } from "../models";
 
-const InterchangeDisconnectionTContext = createContext<ReturnType<typeof useInterchangeDisconnection>>({
+export const InterchangeDisconnectionContext = createContext<ReturnType<typeof useInterchangeDisconnection>>({
     tabs: interchangeDisconnectionTabs as interchangeDisconnectionTab[],
-    modifyTab: () => {}
+    showReconnectionRequestModal:false,
+    modifyTab: () => {},
+    triggerReconnectionRequestModal: () => {}
 })
 
 interface InterchangeDisconnectionTProviderProps extends ComponentWithChildren  {
@@ -14,9 +16,9 @@ interface InterchangeDisconnectionTProviderProps extends ComponentWithChildren  
 
 const InterchangeDisconnectionProvider:FC<InterchangeDisconnectionTProviderProps> = (props: InterchangeDisconnectionTProviderProps) => {
 
-    return <InterchangeDisconnectionTContext.Provider value={useInterchangeDisconnection()}>
+    return <InterchangeDisconnectionContext.Provider value={useInterchangeDisconnection()}>
         {props.children}
-    </InterchangeDisconnectionTContext.Provider>
+    </InterchangeDisconnectionContext.Provider>
 }
 
 export default InterchangeDisconnectionProvider

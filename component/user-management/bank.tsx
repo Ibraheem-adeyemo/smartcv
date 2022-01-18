@@ -3,7 +3,7 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
-import { apiUrlsv1, appTableElements, cookieKeys, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { TenantView, Paginate, UserManagementModal } from "../../models";
 import { PaginatorProvider } from "../../provider";
@@ -93,7 +93,7 @@ const BankTable:FC = () => {
 
     useEffect(() => {
         if (typeof tenant !== "undefined" && typeof tenant.totalElements !== "undefined") {
-            setCookie(cookieKeys.totalTenant, tenant.totalElements.toString(), 10)
+            setCookie(cookieKeys.totalTenant, tenant.totalElements.toString(), cookiesTimeout.totalTenantTimeout)
             setPaginationProps(tenant.totalElements)
         }
     }, [tenant])

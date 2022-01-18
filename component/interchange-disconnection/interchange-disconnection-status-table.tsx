@@ -7,7 +7,7 @@ import { PaginatorProvider } from "../../provider";
 import { PaginatorContext } from "../../provider/paginator-provider";
 import { AppTable } from "../app";
 
-const StatusTable:FC = () => {
+const InterchangeDisconnectionStatusTable:FC = () => {
     
     const toast = useToast()
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
@@ -61,13 +61,12 @@ const StatusTable:FC = () => {
     return (<AppTable<InterchangeDisconnectionStatus> columns={data?.columns} rows={data.data as InterchangeDisconnectionStatus[]} showNumbering />)
 }
 
-const Status: FC = () => {
+const InterchangeDisconnectionStatus: FC = () => {
     return (
-
         <PaginatorProvider>
-            <StatusTable />
+            <InterchangeDisconnectionStatusTable />
         </PaginatorProvider>
     )
 }
 
-export default Status
+export default InterchangeDisconnectionStatusTable

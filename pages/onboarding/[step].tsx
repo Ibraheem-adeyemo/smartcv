@@ -3,7 +3,7 @@ import { Text } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
 import { useCallback, useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { links } from "../../constants";
+import { cookieKeys, links } from "../../constants";
 import { getCookie } from "../../lib";
 
 const CreateBank = dynamic(() => import('../../component/onboarding/create-bank'))
@@ -32,7 +32,7 @@ export default function Step1(props: any) {
 
     useEffect(() => {
         // console.log({stepNumber})
-        if(typeof window !== "undefined" && getCookie("interchangeId") === "") {
+        if(typeof window !== "undefined" && getCookie(cookieKeys.interchangeId) === "") {
             router.push(links.registerOrganization)
         }
     }, [])
@@ -52,7 +52,7 @@ export default function Step1(props: any) {
     }, [step, stepNumber])
     return (
         <>
-            {typeof window !== "undefined" && getCookie("interchangeId") !== "" &&
+            {typeof window !== "undefined" && getCookie(cookieKeys.interchangeId) !== "" &&
                 <Onboarding>
                     <LoadTab index={stepNumber as number} />
                 </Onboarding>

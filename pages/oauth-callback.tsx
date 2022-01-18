@@ -3,7 +3,7 @@ import { useToast, Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import React, { useContext, useEffect } from "react"
-import { links, notificationMesage } from "../constants"
+import { cookieKeys, cookiesTimeout, links, notificationMesage } from "../constants"
 import { getCookie, setCookie } from "../lib"
 import { AuthContext } from "../provider/auth-provider"
 
@@ -19,9 +19,9 @@ const OauthCallback:NextPage = () => {
             // debugger
             loginWithPassport(code as string).then(() => {
                 // debugger 
-                if (getCookie("redirectUrl") !== "") {
-                    const redirectUrl = getCookie("redirectUrl")
-                    setCookie("redirectUrl", "", -10)
+                if (getCookie(cookieKeys.redirectUrl) !== "") {
+                    const redirectUrl = getCookie(cookieKeys.redirectUrl)
+                    setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
                     router.push(redirectUrl)
                 } else {
                     router.push(links.dashboard)

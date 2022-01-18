@@ -2,7 +2,7 @@ import _ from "lodash";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useLoading } from ".";
-import { cookieKeys, links, onboardingTabs } from "../constants";
+import { cookieKeys, cookiesTimeout, links, onboardingTabs } from "../constants";
 import { getCookie, setCookie } from "../lib";
 import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Loading, Onboarding, Step, tenantAdmin } from "../models";
 
@@ -69,7 +69,7 @@ export default function useOnboarding(): UseOnboardingReturn {
     useEffect(() => {
         // debugger
         if (typeof document !== "undefined") {
-            setCookie(cookieKeys.token, "", -60)
+            setCookie(cookieKeys.token, "", cookiesTimeout.timeoutCookie)
         }
         setLoading({ isLoading: true, text: "loading" })
         if (typeof window !== "undefined") {
@@ -85,7 +85,7 @@ export default function useOnboarding(): UseOnboardingReturn {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            const interchangeId = getCookie("interchangeId")
+            const interchangeId = getCookie(cookieKeys.interchangeId)
             if (interchangeId === "") {
                 sessionStorage.removeItem("onboarding")
                 router.push(links.registerOrganization)

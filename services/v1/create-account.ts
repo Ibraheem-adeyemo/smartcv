@@ -1,11 +1,11 @@
-import { apiUrlsv1, cookieKeys, Names, notificationMesage } from "../../constants"
+import { apiUrlsv1, cookieKeys, cookiesTimeout, Names, notificationMesage } from "../../constants"
 import { getCookie, getRandomInt, setCookie } from "../../lib"
 import { Onboarding } from "../../models"
 
 export const createAccountAsync = async (onboarding: Onboarding) => {
     // debugger
     try {
-        const interchangeId = getCookie("interchangeId")
+        const interchangeId = getCookie(cookieKeys.interchangeId)
         if (interchangeId !== "") {
             const body = onboarding
 
@@ -52,7 +52,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
             const data = await response.json()
             if (response.ok || response.status === 200) {
                 if(typeof window !== "undefined")
-                setCookie(cookieKeys.createdAccount, "done", 5)
+                setCookie(cookieKeys.createdAccount, "done", cookiesTimeout.createdAccountTimeout)
                 return data
             }
             else if(typeof data.message !== "undefined") {

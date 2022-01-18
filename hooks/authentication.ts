@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookieKeys, GRANT_TYPE, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
+import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, GRANT_TYPE, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie } from '../lib'
 import { AuthModel, TokenRequestBody } from '../models'
 export default function useAuthentication() {
     // const url = "/api/passport"
     const url = PASSPORT_PROFILE_URL
     const { mutate } = useSWRConfig()
-    const { data: user, mutate: _mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie("token") == "" ? null : url)
+    const { data: user, mutate: _mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie(cookieKeys.token) == "" ? null : url)
     const [countFlag, setCoountFlag] = useState(0)
     // const [user, setUser] = useState<any>()
-    const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie("token") : "")
+    const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie(cookieKeys.token) : "")
 
     const postLoginAction = (token: string) => {
-        setCookie(cookieKeys.token, token, 60)
-        const confirmToken = getCookie("token")
+        setCookie(cookieKeys.token, token, cookiesTimeout.tokenTimeout)
+        const confirmToken = getCookie(cookieKeys.token)
         if (confirmToken !== "") {
             setToken(confirmToken)
         }
     }
     const signOut = () => {
-        setCookie(cookieKeys.token, "", -60)
+        setCookie(cookieKeys.token, "", cookiesTimeout.timeoutCookie)
         const confirmToken = getCookie(cookieKeys.token)
         if (confirmToken === "") {
             setToken("")
@@ -62,7 +62,7 @@ export default function useAuthentication() {
 
                 // debugger
                 if (shouldRedirect) {
-                    setCookie("redirectUrl", window.location.pathname, 10)
+                    setCookie(cookieKeys.redirectUrl, window.location.pathname, cookiesTimeout.redirectUrlTimeout)
                     window.location.href = links.login
                 }
             }
