@@ -8,7 +8,8 @@ export const AuthContext = createContext<ReturnType<typeof useAuthentication>>({
     error:undefined,
     signIn: () => (""),
     signOut: () => (""),
-    loginWithPassport: async (code?: string) =>{}
+    loginWithPassport: async (code: string) =>{},
+    refreshAccessToken:async (refreshToken:string) => {}
 })
 interface AuthProviderProps extends ComponentWithChildren {
 }

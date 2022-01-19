@@ -38,6 +38,7 @@ export default function useFilter() {
     }
 
     const toggleDate = (datesFilter: string) => {
+        // debugger
         switch (datesFilter) {
             case filterDates.today:
                 setIsToday(true)

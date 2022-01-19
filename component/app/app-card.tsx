@@ -2,8 +2,8 @@ import { Box, Flex } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { ComponentWithChildren } from "../../models";
 
-interface AppCardProps extends ComponentWithChildren  {
-    topic: string|JSX.Element
+interface AppCardProps extends ComponentWithChildren {
+    topic: string | JSX.Element | JSX.Element[]
 }
 
 const AppCard: FC<AppCardProps> = (props: AppCardProps) => {

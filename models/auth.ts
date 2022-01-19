@@ -12,3 +12,13 @@ export interface TokenRequestBody {
     grant_type: string,
     code: string
 }
+
+export interface TokenResponsBody {
+    access_token: string,
+    refresh_token: string
+}
+
+export interface RefreshTokenRequestBody {
+    grant_type: string,
+    refresh_token: string
+}

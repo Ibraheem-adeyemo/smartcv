@@ -1,5 +1,5 @@
 import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, AuthenticatedPage, menuNames } from "../../constants";
+import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, AuthenticatedPage, menuNames, cookieKeys, cookiesTimeout } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 import { As, Avatar, Button, ComponentWithAs, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
@@ -7,8 +7,10 @@ import { AuthContext } from "../../provider/auth-provider";
 import { AppLink } from "../app";
 import { useRouter } from "next/router";
 import { ComponentWithChildren } from "../../models";
+import { useIdleTimer } from 'react-idle-timer'
+import { getCookie } from "../../lib";
 
-interface AuthenticatedLayout extends ComponentWithChildren  {
+interface AuthenticatedLayout extends ComponentWithChildren {
     pageHeader: string | JSX.Element
 }
 interface MenuListItem {
@@ -16,42 +18,70 @@ interface MenuListItem {
     name: string,
     link: string
 }
-const AuthenticatedLayout:React.FC<AuthenticatedLayout> = (props: AuthenticatedLayout) => {
-    const { user, signOut, error } = useContext(AuthContext)
+const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: AuthenticatedLayout) => {
+    const { user, signOut, error, refreshAccessToken } = useContext(AuthContext)
     const router = useRouter()
+    const handleOnIdle = (event: any) => {
+        console.log('user is idle', event)
+        console.log('last active', getLastActiveTime())
+    }
+
+    const handleOnActive = (event: any) => {
+        if (typeof window !== "undefined") {
+            const timeLeft = (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60)
+            if (timeLeft > (+getCookie(cookieKeys.tokenExpiresIn) - 5)) {
+                refreshAccessToken(getCookie(cookieKeys.refreshToken))
+            }
+        }
+    }
+
+    const handleOnAction = (event: any) => {
+        const timeLeft = (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60)
+        if (timeLeft > (+getCookie(cookieKeys.tokenExpiresIn) - 5)) {
+            refreshAccessToken(getCookie(cookieKeys.refreshToken))
+        }
+    }
+
+    const { getRemainingTime, getLastActiveTime } = useIdleTimer({
+        timeout: typeof window !== "undefined"? (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60):1000 * 60 * 20,
+        onIdle: handleOnIdle,
+        onActive: handleOnActive,
+        onAction: handleOnAction,
+        debounce: 500
+    })
     // console.log({ session })
 
     const MenuLists = useCallback(() => {
-        
-    const menuList: MenuListItem[] = [{
-        icon: dashboardIcon,
-        name: menuNames.dashboard,
-        link: AuthenticatedPage[0]
-    }, {
-        icon: transactionMonitoringIcon,
-        name: menuNames.transactionMonitoring,
-        link: AuthenticatedPage[1]
-    }, {
-        icon: channelsMonitoringIcon,
-        name: menuNames.channelsMonitoring,
-        link: AuthenticatedPage[2]
-    }, {
-        icon: InterchangeDisconnectionIcon,
-        name: menuNames.interchangeDisconnection,
-        link: AuthenticatedPage[3]
-    }, {
-        icon: userManagementIcon,
-        name: menuNames.userManagement,
-        link: AuthenticatedPage[4]
-    }, {
-        icon: auditIcon,
-        name: menuNames.audit,
-        link: AuthenticatedPage[5]
-    }, {
-        icon: systemSettingsIcon,
-        name: menuNames.systemSettings,
-        link: ""
-    }]
+
+        const menuList: MenuListItem[] = [{
+            icon: dashboardIcon,
+            name: menuNames.dashboard,
+            link: AuthenticatedPage[0]
+        }, {
+            icon: transactionMonitoringIcon,
+            name: menuNames.transactionMonitoring,
+            link: AuthenticatedPage[1]
+        }, {
+            icon: channelsMonitoringIcon,
+            name: menuNames.channelsMonitoring,
+            link: AuthenticatedPage[2]
+        }, {
+            icon: InterchangeDisconnectionIcon,
+            name: menuNames.interchangeDisconnection,
+            link: AuthenticatedPage[3]
+        }, {
+            icon: userManagementIcon,
+            name: menuNames.userManagement,
+            link: AuthenticatedPage[4]
+        }, {
+            icon: auditIcon,
+            name: menuNames.audit,
+            link: AuthenticatedPage[5]
+        }, {
+            icon: systemSettingsIcon,
+            name: menuNames.systemSettings,
+            link: ""
+        }]
         return <>
             {menuList.map((x, i) =>
                 <AppLink key={i} href={x.link ? x.link : "/"} d="flex" gridGap="20px" role="group"
@@ -179,7 +209,7 @@ const AuthenticatedLayout:React.FC<AuthenticatedLayout> = (props: AuthenticatedL
             </GridItem>
             {typeof user === "undefined" && typeof error === "undefined" && <GridItem d="flex" w="100%" alignItems="center" px="50px">  <SkeletonLoader rows={1} width="200px" height="20px" columns={1} /></GridItem>}
             {typeof user !== "undefined" && typeof error === "undefined" &&
-                <GridItem d="flex" w="100%" alignItems="center"> {typeof props.pageHeader === "string"? <Text px="50px" variant="page-header">{props.pageHeader}</Text>:props.pageHeader}</GridItem>
+                <GridItem d="flex" w="100%" alignItems="center"> {typeof props.pageHeader === "string" ? <Text px="50px" variant="page-header">{props.pageHeader}</Text> : props.pageHeader}</GridItem>
             }
 
 

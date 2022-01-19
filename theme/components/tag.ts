@@ -10,9 +10,7 @@ const Tag = {
     // Styles for the visual style variations
     variants: {
         "filter-outline": {
-            borderWidth: "1px",
-            borderColor: "var(--chakra-colors-brand-primary-blue)",
-            borderStyle: "solid",
+            border: "1px solid var(--chakra-colors-brand-primary-blue)",
             bgColor:"brand.light-blue"
         }
     },

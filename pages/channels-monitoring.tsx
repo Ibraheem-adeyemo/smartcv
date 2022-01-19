@@ -25,11 +25,7 @@ const ChannelsMonitoring: NextPage = () => {
                 }>
                     <Flex flexDir="column" gridGap="40px">
                         <Flex flexDir="column" gridGap="33px">
-                            <Flex justifyContent="space-between">
-                                <AppBarFilter />
-
                                 <ChannelsMonitoringSearch />
-                            </Flex>
                             <ChannelsMonitoringStats />
                         </Flex>
                         <ChannelsMonitoringTabs />

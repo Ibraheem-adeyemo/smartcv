@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef, FC } from "react";
+import React, { useMemo, useEffect, FC, useRef } from "react";
 import { Chart, registerables } from 'chart.js';
 import { DonutChartProps } from "../../models";
 import { Canvas } from ".";
@@ -21,7 +21,9 @@ const DonutChart:FC<DonutChartProps> = (props: DonutChartProps) => {
   useEffect(() => {
     // debugger
     Chart.register(...registerables);
-    const cv = canvasRef.current?.getContext('2d') as CanvasRenderingContext2D 
+    if(canvasRef.current){
+      debugger
+    const cv = canvasRef.current.getContext('2d') as CanvasRenderingContext2D 
     const chart = new Chart(cv, {
       type: "doughnut",
       data,
@@ -37,6 +39,7 @@ const DonutChart:FC<DonutChartProps> = (props: DonutChartProps) => {
     return () => {
       chart.destroy()
     }
+  }
     //  chart.options.plugins?.legend?.position = "right"
   }, [])
 

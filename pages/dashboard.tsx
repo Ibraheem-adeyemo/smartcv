@@ -2,19 +2,11 @@ import { Flex, Text } from "@chakra-ui/react"
 import { NextPage } from "next"
 import dynamic from 'next/dynamic'
 import React, { useContext } from "react"
+import { DashboardPage } from "../component/dashboard"
 import { Authenticated } from "../component/layouts"
 import { filtersToShowDefaultValue } from "../constants"
 import { StatsProvider } from "../provider"
 import { StatsContext } from "../provider/stats-provider"
-const TerminalsPerformance = dynamic(() => import('../component/dashboard/terminals-performance'))
-const SuccessRate = dynamic(() => import('../component/dashboard/success-rate'))
-const ServiceStatus = dynamic(() => import('../component/dashboard/service-status'))
-const TerminalsUnderWatch = dynamic(() => import('../component/dashboard/terminals-under-watch'))
-const TopPerforminBanks = dynamic(() => import('../component/dashboard/top-performing-banks'))
-const TopTransactionMetric = dynamic(() => import('../component/dashboard/top-transaction-metric'))
-const TransactionBreakdown = dynamic(() => import('../component/dashboard/transaction-breakdown'))
-const TransactionMetric = dynamic(() => import('../component/dashboard/transaction-metric'))
-const UsageMetric = dynamic(() => import('../component/dashboard/usage-metric'))
 const AppBarFilter = dynamic(() => import('../component/stats/app-bar-filter'))
 
 const Dashboard:NextPage = () => {
@@ -28,36 +20,7 @@ const Dashboard:NextPage = () => {
           <AppBarFilter />
         </Flex>
       }>
-        <Flex gridGap="30px" flexWrap="wrap">
-          <Flex flexGrow={3}>
-            <TerminalsPerformance />
-          </Flex>
-          <Flex flexGrow={1} w="25%">
-            <SuccessRate />
-          </Flex>
-          <Flex flexGrow={1} w="35%">
-            <ServiceStatus />
-          </Flex>
-          <Flex flexGrow={3} >
-            <TerminalsUnderWatch />
-          </Flex>
-          <Flex flexGrow={3}>
-            <TransactionMetric />
-          </Flex>
-          <Flex flexGrow={1}>
-            <UsageMetric />
-          </Flex>
-          <Flex flexGrow={1}>
-            <TransactionBreakdown />
-          </Flex>
-
-          <Flex flexGrow={4} width6="70%">
-            <TopPerforminBanks />
-          </Flex>
-          <Flex flexGrow={1} width="25%">
-            <TopTransactionMetric />
-          </Flex>
-        </Flex>
+        <DashboardPage />
       </Authenticated>
     </StatsProvider>
   )
