@@ -1,9 +1,10 @@
 import { HStack, ButtonGroup, Button } from "@chakra-ui/react";
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { channelsMonitoringContext } from "../../provider/channels-monitoring-provider";
+import { InterchangeDisconnectionContext } from "../../provider/interchange-disconnection-provider";
 
 const InterchangeDisconnectionTabs: FC = () => {
-    const { tabs, modifyTab } = useContext(channelsMonitoringContext)
+    const { tabs, modifyTab } = useContext(InterchangeDisconnectionContext)
     const handleTabSelection = (i: number) => {
         // debugger
         modifyTab({ ...tabs[i], isSelected: true }, i)

@@ -14,10 +14,18 @@ const UserManagementStats:FC = () => {
     const { data: iswAdmin, mutate: _mutateISWAdmin, error: iswAdminError } = useSWR<Paginate<ISWAdminView>>(typeof document !== "undefined" && getCookie(cookieKeys.totalISWAdmin) !== "" ? null : apiUrlsv1.iswAdmin)
     const { data: tenantAdmin, mutate: _mutateTenantAdmin, error: tenantAdminError } = useSWR<Paginate<TenantAdminView>>(typeof document !== "undefined" && getCookie(cookieKeys.totalTenantAdmin) !== "" ? null : apiUrlsv1.tenantAdmin)
     const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<TenantView[]>(typeof document !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? null : apiUrlsv1.tenant)
+    // const [userManagementStats, setUserManagementStats] = useState<UserManagementStat[]>([{
+    //     name: StatsName.createdBanks,
+    //     totalCount: getCookie(cookieKeys.totalTenant)
+    // }, {
+    //     name: StatsName.tenantAdminUser,
+    //     totalCount: getCookie(cookieKeys.totalTenantAdmin)
+    // }, {
+    //     name: StatsName.iSWAdminUser,
+    //     totalCount: getCookie(cookieKeys.totalISWAdmin)
+    // }])
+
     const [userManagementStats, setUserManagementStats] = useState<UserManagementStat[]>([{
-        name: StatsName.createdBanks,
-        totalCount: getCookie(cookieKeys.totalTenant)
-    }, {
         name: StatsName.tenantAdminUser,
         totalCount: getCookie(cookieKeys.totalTenantAdmin)
     }, {

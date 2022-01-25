@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic"
-import { FC, useContext } from "react"
+import { FC, Fragment, useContext } from "react"
 import { interchangeDisconnectionTabsName } from "../../constants/tabs"
 import { InterchangeDisconnectionContext } from "../../provider/interchange-disconnection-provider"
 
@@ -9,15 +9,15 @@ const InterchangeConnectionRequestTable = dynamic(() => import("./interchange-co
 const InterchangeDisconnectionTable: FC = () => {
     const { tabs } = useContext(InterchangeDisconnectionContext)
     return <>
-        {tabs.map(x => {
+        {tabs.map((x, i) => {
             if (x.isSelected) {
                 if (x.name === interchangeDisconnectionTabsName.status) {
-                    return <InterchangeDisconnectionStatusTable />
+                    return <InterchangeDisconnectionStatusTable key={i} />
                 } else if (x.name === interchangeDisconnectionTabsName.connectionRequest) {
-                    return <InterchangeConnectionRequestTable />
+                    return <InterchangeConnectionRequestTable key={i} />
                 }
             }
-            return <></>
+            return <Fragment  key={i}></Fragment>
 
         })}
     </>
