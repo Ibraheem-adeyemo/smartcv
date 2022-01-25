@@ -37,7 +37,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
             </Thead>
             <Tbody>
                 {
-                    props.rows?.map((x: T, i: number) =>
+                    typeof props.rows?.map !== "undefined" && props.rows?.map((x: T, i: number) =>
                         <Tr key={i}>
                             {
                                 showNumbering && (() => {

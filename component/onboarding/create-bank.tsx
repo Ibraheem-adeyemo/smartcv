@@ -6,8 +6,8 @@ import _ from 'lodash'
 import { Tenant, stepsProps, State } from "../../models";
 import useValidator from "../../hooks/validatoin";
 import { useRouter } from "next/router";
-import { OnboardingContext } from "../layouts";
 import useSWR from "swr";
+import { OnboardingContext } from "../../provider/onboarding-provider";
 
 interface CreateBankProps extends stepsProps {
 

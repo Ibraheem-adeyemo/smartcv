@@ -2,7 +2,7 @@ export enum cookieKeys {
     token = "token",
     tokenExpiresIn = "token-expires-in",
     tokenDurationDate = "token-duration-date",
-    interchangeId = "interchangeId",
+    interchangeId = "interchange-id",
     redirectUrl = "redirectUrl",
     createdAccount = "created-account",
     totalTenant = "total-tenant",
@@ -25,4 +25,18 @@ export enum cookiesTimeout {
     redirectUrlTimeout = 10,
     createdAccountTimeout = 5,
     refreshTokenTimeout = 60
+}
+export enum sessionStorageKeys {
+    fromAnotherOrigin = "from-another-origin",
+    fromAnotherOriginSetDate = "from-another-origin-set-date",
+    fromAnotherOriginTimeout = "from-another-origin-timeout",
+    onboarding = 'onboarding',
+    interchangeIdTimeout=15,
+    interchangeIdSetDate="interchange-id-set-date",
+    interchangeId="interchange-id"
+}
+
+export enum sessionStorageTimeout {
+    fromAnotherOriginTimeout = 15,
+    interchangeIdTimeout=15,
 }

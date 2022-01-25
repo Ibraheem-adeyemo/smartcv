@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { notificationMesage, TickIcon } from "../../constants";
 import { Tenant, Onboarding, stepsProps, tenantAdmin } from "../../models";
-import { OnboardingContext } from "../layouts";
+import { OnboardingContext } from "../../provider/onboarding-provider";
 
 interface CreateSuperAdminProps extends stepsProps {
 

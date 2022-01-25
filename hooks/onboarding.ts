@@ -2,7 +2,7 @@ import _ from "lodash";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useLoading } from ".";
-import { cookieKeys, cookiesTimeout, links, onboardingTabs } from "../constants";
+import { cookieKeys, cookiesTimeout, links, onboardingTabs, sessionStorageKeys } from "../constants";
 import { getCookie, setCookie } from "../lib";
 import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo, Loading, Onboarding, Step, tenantAdmin } from "../models";
 
@@ -36,10 +36,10 @@ export const initialOnboardingData: Onboarding = {
     url: ""
 }
 const checkPersistedData = () => {
-    const persistedData = sessionStorage.getItem("onboarding")
+    const persistedData = sessionStorage.getItem(sessionStorageKeys.onboarding)
     if (persistedData === null || typeof persistedData === "undefined") {
 
-        sessionStorage.setItem("onboarding", JSON.stringify(initialOnboardingData))
+        sessionStorage.setItem(sessionStorageKeys.onboarding, JSON.stringify(initialOnboardingData))
         return initialOnboardingData
     } else {
         return JSON.parse(persistedData)
@@ -68,14 +68,14 @@ export default function useOnboarding(): UseOnboardingReturn {
 
     useEffect(() => {
         // debugger
-        if (typeof document !== "undefined") {
+        if (typeof window !== "undefined") {
             setCookie(cookieKeys.token, "", cookiesTimeout.timeoutCookie)
         }
         setLoading({ isLoading: true, text: "loading" })
         if (typeof window !== "undefined") {
             if (typeof isRefresh !== "undefined") {
                 if (isRefresh) {
-                    sessionStorage.removeItem("onboarding")
+                    sessionStorage.removeItem(sessionStorageKeys.onboarding)
                 }
             }
             setOnboarding(checkPersistedData())
@@ -85,23 +85,23 @@ export default function useOnboarding(): UseOnboardingReturn {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            const interchangeId = getCookie(cookieKeys.interchangeId)
-            if (interchangeId === "") {
-                sessionStorage.removeItem("onboarding")
+            const interchangeId = getCookie(cookieKeys.interchangeId) === "" ? window.sessionStorage.getItem(sessionStorageKeys.interchangeId) : getCookie(cookieKeys.interchangeId)
+            if (!interchangeId) {
+                sessionStorage.removeItem(sessionStorageKeys.onboarding)
                 router.push(links.registerOrganization)
             }
         }
         setLoading({ isLoading: true, text: "loading" })
         if (onboarding !== null && typeof onboarding !== "undefined") {
             if (Object.keys(onboarding).length > 1) {
-                sessionStorage.setItem("onboarding", JSON.stringify(onboarding))
+                sessionStorage.setItem(sessionStorageKeys.onboarding, JSON.stringify(onboarding))
             }
         }
         setLoading({ isLoading: false, text: "" })
 
         return () => {
             // setOnboarding(initialData)
-            sessionStorage.removeItem("onboarding")
+            sessionStorage.removeItem(sessionStorageKeys.onboarding)
         }
     }, [onboarding])
 

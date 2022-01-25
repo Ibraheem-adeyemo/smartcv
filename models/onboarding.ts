@@ -51,3 +51,14 @@ export interface PassportLoginCredentials {
     email: string,
     password: string
 }
+
+export interface AllowedApp {
+    name: string,
+    key: string,
+    origin: string
+}
+
+export interface PostMessage {
+    action: string,
+    value?:string
+}

@@ -40,47 +40,54 @@ export const onboardingTabs: Readonly<Step[]> = [
 ]
 
 
-export const channelsMonitoringTabs:Readonly<channelsMonitoringTab[]> = [
+export const channelsMonitoringTabs: Readonly<channelsMonitoringTab[]> = [
     {
-        name:StatsName.atmCount,
-        url:apiUrlsv1.atmCountDetails,
-        isSelected:true
+        name: StatsName.atmCount,
+        url: apiUrlsv1.atmCountDetails,
+        isSelected: true
     }, {
-        name:StatsName.atmInService,
-        url:apiUrlsv1.atmInServiceDetails,
-        isSelected:false
+        name: StatsName.atmInService,
+        url: apiUrlsv1.atmInServiceDetails,
+        isSelected: false
     }, {
-        name:StatsName.atmOutService,
-        url:apiUrlsv1.atmOutOfServiceDetails,
-        isSelected:false
+        name: StatsName.atmOutService,
+        url: apiUrlsv1.atmOutOfServiceDetails,
+        isSelected: false
     }, {
         name: StatsName.atmInSupervisor,
-        url:apiUrlsv1.atmInSupervisorDetails,
-        isSelected:false
+        url: apiUrlsv1.atmInSupervisorDetails,
+        isSelected: false
     }, {
-        name:StatsName.atmInCashJam,
-        url:"",
-        isSelected:false
+        name: StatsName.atmInCashJam,
+        url: "",
+        isSelected: false
     }, {
-        name:StatsName.atmCassetteErrors,
-        url:"",
-        isSelected:false
+        name: StatsName.atmCassetteErrors,
+        url: "",
+        isSelected: false
     }
 ]
 
-export enum interchangeDisconnectionTabsName  {
-    status="Status",
-    connectionRequest="Connection Requestion"
+export enum interchangeDisconnectionTabsName {
+    status = "Status",
+    connectionRequest = "Connection Requestion"
 }
 
-export const interchangeDisconnectionTabs:Readonly<interchangeDisconnectionTab[]> = [
+export const interchangeDisconnectionTabs: Readonly<interchangeDisconnectionTab[]> = [
     {
-        name:interchangeDisconnectionTabsName.status,
-        url:apiUrlsv1.interchangeDisconnectionStatus,
-        isSelected:true
+        name: interchangeDisconnectionTabsName.status,
+        url: apiUrlsv1.interchangeDisconnectionStatus,
+        isSelected: true
     }, {
         name: interchangeDisconnectionTabsName.connectionRequest,
-        url:apiUrlsv1.interchangeDisconnectionRequest,
-        isSelected:false
+        url: apiUrlsv1.interchangeDisconnectionRequest,
+        isSelected: false
     }
 ]
+
+export enum onboardingCrossDomain {
+    loading = "Loading",
+    loaded = "Loaded",
+    confirmKey = "Confirm Key",
+    reconnect ="Reconnect"
+}

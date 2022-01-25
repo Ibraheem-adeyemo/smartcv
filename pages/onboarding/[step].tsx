@@ -1,15 +1,37 @@
-import { Onboarding, OnboardingContext } from "../../component/layouts";
+import { Onboarding } from "../../component/layouts";
 import { Text } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { FC, useCallback, useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { cookieKeys, links } from "../../constants";
+import { cookieKeys, links, sessionStorageKeys } from "../../constants";
 import { getCookie } from "../../lib";
+import { OnboardingProvider } from "../../provider";
+import { OnboardingContext } from "../../provider/onboarding-provider";
+import CrossDomainOnboardingProvider from "../../provider/cross-domain-onboarding-provider";
 
 const CreateBank = dynamic(() => import('../../component/onboarding/create-bank'))
 const CreateSuperAmin = dynamic(() => import('../../component/onboarding/create-super-admin'))
 const InstitutionColors = dynamic(() => import('../../component/onboarding/institution-colors'))
 
+
+interface LoadTabProps {
+    step: string | string[],
+    state: number
+}
+
+const LoadTab: FC<LoadTabProps> = (props: LoadTabProps) => {
+    // debugger
+    switch (`/onboarding/${props.step}`) {
+        case links.createBank:
+            return <CreateBank step={props.state as number} />
+        case links.createSuperAdmin:
+            return <CreateSuperAmin step={props.state as number} />
+        case links.institutionColors:
+            return <InstitutionColors step={props.state as number} />
+        default:
+            return <Text>No Tab was selected</Text>
+    }
+}
 export default function Step1(props: any) {
     const router = useRouter()
     const { step } = router.query
@@ -32,30 +54,25 @@ export default function Step1(props: any) {
 
     useEffect(() => {
         // console.log({stepNumber})
-        if(typeof window !== "undefined" && getCookie(cookieKeys.interchangeId) === "") {
-            router.push(links.registerOrganization)
+        debugger
+        if (typeof window !== "undefined") {
+            debugger
+            const interchange1 = getCookie(cookieKeys.interchangeId)
+            const interchange2 = window.sessionStorage.getItem(sessionStorageKeys.interchangeId)
+            if (!interchange1 && !interchange2)
+                router.push(links.registerOrganization)
         }
     }, [])
-
-    const LoadTab = useCallback(({ index }: { index: number }) => {
-        // debugger
-        switch (`/onboarding/${step}`) {
-            case links.createBank:
-                return <CreateBank step={index as number} />
-            case links.createSuperAdmin:
-                return <CreateSuperAmin step={index as number} />
-            case links.institutionColors:
-                return <InstitutionColors step={index as number} />
-            default:
-                return <Text>No Tab was selected</Text>
-        }
-    }, [step, stepNumber])
     return (
         <>
-            {typeof window !== "undefined" && getCookie(cookieKeys.interchangeId) !== "" &&
-                <Onboarding>
-                    <LoadTab index={stepNumber as number} />
-                </Onboarding>
+            {typeof window !== "undefined" &&
+                <CrossDomainOnboardingProvider>
+                    <OnboardingProvider>
+                        <Onboarding>
+                            <>{typeof stepNumber !== "undefined" && typeof step !== "undefined" && <LoadTab state={stepNumber} step={step} />}</>
+                        </Onboarding>
+                    </OnboardingProvider>
+                </CrossDomainOnboardingProvider>
             }
         </>
     )

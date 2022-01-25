@@ -19,7 +19,7 @@ export enum links {
     interchangeDisconnection="/interchange-disconnection"
 
 }
-
+export const onboardingURL = "http://127.0.0.1:5500" /* (This is the current production url but may change in the future) */
 export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     atmCount: `${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/count`,
     atmCountDetails: `${API_BASE_URL}/${CURRENT_API_VERSION}/monitor/atm/count/`,
@@ -33,7 +33,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     audit: `${API_BASE_URL}/${CURRENT_API_VERSION}/audit/`,
     auditByUser:`${API_BASE_URL}/${CURRENT_API_VERSION}/audit/user`,
     createTenantAdmin:`${API_BASE_URL}/${CURRENT_API_VERSION}/user/tenant-admin`,
-    interChange:`${API_BASE_URL}/${CURRENT_API_VERSION}/interchange`,
+    interChange:`${API_BASE_URL}/${CURRENT_API_VERSION}/interchange/find`,
     interchangeDisconnectionStatus:`${API_BASE_URL}/${CURRENT_API_VERSION}/interchange`,
     interchangeDisconnectionRequest:`${API_BASE_URL}/${CURRENT_API_VERSION}/interchange`,
     iswAdmin:`/api/get-isw-admins`,

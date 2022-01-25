@@ -6,11 +6,11 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from "rea
 import { OnboardingCard } from ".";
 import useValidator from "../../hooks/validatoin";
 import { tenantAdmin } from "../../models";
-import { OnboardingContext } from "../layouts";
 import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 import { notificationMesage, TickIcon } from "../../constants";
 import { comparePassword, validateEmail, validateLowercase, validateNumber, validateUppercase } from "../../lib";
+import { OnboardingContext } from "../../provider/onboarding-provider";
 
 interface PasswordChecker { checker: string, status: boolean, text: string }
 const MobleNoInput = forwardRef((props, ref) => {

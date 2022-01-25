@@ -1,12 +1,13 @@
-import { apiUrlsv1, cookieKeys, cookiesTimeout, Names, notificationMesage } from "../../constants"
+import { apiUrlsv1, cookieKeys, cookiesTimeout, Names, notificationMesage, sessionStorageKeys } from "../../constants"
 import { getCookie, getRandomInt, setCookie } from "../../lib"
 import { Onboarding } from "../../models"
 
 export const createAccountAsync = async (onboarding: Onboarding) => {
     // debugger
     try {
-        const interchangeId = getCookie(cookieKeys.interchangeId)
-        if (interchangeId !== "") {
+        const interchangeId1 = getCookie(cookieKeys.interchangeId)
+        const interchangeId2 = window.sessionStorage.getItem(sessionStorageKeys.interchangeId)
+        if (interchangeId1 !== "" || interchangeId2) {
             const body = onboarding
 
             const requestBody = JSON.stringify({

@@ -22,7 +22,7 @@ const ChannelsMonitoringTable: React.FC = () => {
     if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
         url += `${selectedTenantCode}`
     }
-    url += `/details/`
+    url += `details/`
     const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(url === "" ? null : `${url}?page=${(pageNumber - 1)}&size=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => {
