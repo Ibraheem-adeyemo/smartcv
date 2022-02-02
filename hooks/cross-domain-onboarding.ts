@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { allowedApp, ALLOWED_APPS, links, onboardingCrossDomain, sessionStorageKeys, sessionStorageTimeout } from "../constants";
-import { AllowedApp, PostMessage } from "../models";
+import { AllowedApp, Onboarding, PostMessage } from "../models";
 
 enum intervalKeys {
     fromAnotherOrigin = "from-another-origin",
@@ -92,15 +92,24 @@ export default function useCrossDomainOnboarding() {
             })
         }
     }
-
+ 
     const getSelectedApp = () => {
         reconnect()
         registerSelectedApp()
     }
 
     const reconnect = () => {
-        window.parent.postMessage(`{"action":"${onboardingCrossDomain.reconnect}"}`, origin)
+        postAMessage({"action":"${onboardingCrossDomain.reconnect}"}, origin)
     }
+
+    const postAMessage = (message: PostMessage, origin: string) => {
+        window.parent.postMessage(`${message}`, origin)
+    }
+
+    const completeContract = (onboarding: Onboarding) => {
+
+    }
+
     useEffect(() => {
 
         const readEventMsg = (ev: MessageEvent<any>) => {
@@ -126,7 +135,7 @@ export default function useCrossDomainOnboarding() {
     useEffect(() => {
         if (typeof message !== "undefined" && typeof selectedApp !== "undefined") {
             if (message.action === onboardingCrossDomain.loading) {
-                window.parent.postMessage(`{"action":"${onboardingCrossDomain.loaded}"}`, selectedApp.origin)
+                postAMessage({"action":"${onboardingCrossDomain.loaded}"}, selectedApp.origin)
                 // console.log(message.payload) /* Do something with the data from onboarding portal */
             } else if (message.action === onboardingCrossDomain.confirmKey) {
                 // debugger

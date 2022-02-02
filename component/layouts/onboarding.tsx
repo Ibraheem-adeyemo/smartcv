@@ -99,6 +99,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
                 })
 
                 router.push(links.onboardingSuccessPage)
+                return;
             } else {
                 toast({
                     status: "error",

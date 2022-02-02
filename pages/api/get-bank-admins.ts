@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Banks, Names } from "../../constants";
+import { Tenants, Names } from "../../constants";
 import { getRandomInt } from "../../lib";
 import { TenantAdminView, Paginate } from "../../models";
 
@@ -16,11 +16,19 @@ export default async function GettenantAdmins(req:NextApiRequest, res: NextApiRe
             firstName: Names[nameRandomNumbers[i]].firstName,
             lastName: Names[nameRandomNumbers[i]].lastName,
             email: `${Names[nameRandomNumbers[i]].firstName}.${Names[nameRandomNumbers[i]].lastName}@mailinator.com`,
-            bank: Banks[getRandomInt(Banks.length - 1)],
+            bank: Tenants[getRandomInt(Tenants.length - 1)],
             dateCreated: (new Date()).getDate().toString(),
-            status: getRandomInt(1),
+            status: getRandomInt(1).toString(),
             accountNonExpired:"",
             accountNonLocked:"",
+            createdAt: "",
+            credentialsNonExpired: "",
+            id: 1,
+            isActive: "false",
+            isFirstLogin: "",
+            isLocked: "",
+            tenant: "",
+            role:""
             
         }))
         setTimeout(()=>{}, 3000)
