@@ -3,7 +3,7 @@
 FROM node:16.3.0-alpine as builder
 
 # copy the package.json to install dependencies
-COPY package.json package-lock.json ./
+COPY ./package.json package-lock.json ./
 
 WORKDIR /opt/app/
 # Install the dependencies and make the folder
