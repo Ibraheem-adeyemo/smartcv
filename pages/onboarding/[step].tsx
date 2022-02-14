@@ -9,9 +9,9 @@ import { OnboardingProvider } from "../../provider";
 import { OnboardingContext } from "../../provider/onboarding-provider";
 import CrossDomainOnboardingProvider from "../../provider/cross-domain-onboarding-provider";
 
-const CreateBank = dynamic(() => import('../../component/onboarding/create-bank'))
-const CreateSuperAmin = dynamic(() => import('../../component/onboarding/create-super-admin'))
-const InstitutionColors = dynamic(() => import('../../component/onboarding/institution-colors'))
+const CreateBank = dynamic(() => import('../../component/onboarding/create-bank'), {ssr:false})
+const CreateSuperAmin = dynamic(() => import('../../component/onboarding/create-super-admin'), {ssr:false})
+const InstitutionColors = dynamic(() => import('../../component/onboarding/institution-colors'), {ssr:false})
 
 
 interface LoadTabProps {

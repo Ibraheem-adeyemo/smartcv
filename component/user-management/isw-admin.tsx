@@ -11,7 +11,7 @@ import { PaginatorContext } from "../../provider/paginator-provider";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 import { AppTable } from "../app";
 
-const AddNewUser = dynamic(() => import("./add-new-user"))
+const AddNewUser = dynamic(() => import("./add-new-user"), {ssr:false})
 const ISWAdminTable:FC = () => {
     // console.log({pageNumber})
 

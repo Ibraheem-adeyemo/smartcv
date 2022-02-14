@@ -11,7 +11,7 @@ import { PaginatorContext } from "../../provider/paginator-provider";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 import { AppTable } from "../app";
 
-const AddNewBank = dynamic(() =>import('./add-new-bank'))
+const AddNewBank = dynamic(() =>import('./add-new-bank'), {ssr:false})
 
 const BankTable:FC = () => {
     // console.log({pageNumber})

@@ -9,9 +9,9 @@ import { filtersToShowDefaultValue } from "../constants";
 import { ChannelsMonitoringProvider, StatsProvider } from "../provider";
 import { StatsContext } from "../provider/stats-provider";
 
-const AppBarFilter = dynamic(() => import("../component/stats/app-bar-filter"))
-const ChannelsMonitoringStats = dynamic(() => import("../component/channels-monitoring/channels-monitoring-stats"))
-const ChannelsMonitoringTable = dynamic(() => import("../component/channels-monitoring/channels-monitoring-table"))
+const AppBarFilter = dynamic(() => import("../component/stats/app-bar-filter"), {ssr:false})
+const ChannelsMonitoringStats = dynamic(() => import("../component/channels-monitoring/channels-monitoring-stats"), {ssr:false})
+const ChannelsMonitoringTable = dynamic(() => import("../component/channels-monitoring/channels-monitoring-table"), {ssr:false})
 const ChannelsMonitoring: NextPage = () => {
     const {setFiltersToShow} = useContext(StatsContext)
     setFiltersToShow(filtersToShowDefaultValue)

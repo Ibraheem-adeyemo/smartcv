@@ -11,9 +11,9 @@ interface CreateSuperAdminProps extends stepsProps {
 
 }
 
-const CreateSuperAdminWithExistingSuperAdminAccount = dynamic(() => import('./creat-super-admin-with-existing-passport-account'))
-const CreateSuperAdminWithoutExistingSuperAdminAccount = dynamic(() => import('./creat-super-admin-without-existing-passport-account'))
-const SigninWithPassport = dynamic(() => import('./signin-with-passport'))
+const CreateSuperAdminWithExistingSuperAdminAccount = dynamic(() => import('./creat-super-admin-with-existing-passport-account'), {ssr:false})
+const CreateSuperAdminWithoutExistingSuperAdminAccount = dynamic(() => import('./creat-super-admin-without-existing-passport-account'), {ssr:false})
+const SigninWithPassport = dynamic(() => import('./signin-with-passport'), {ssr:false})
 
 
 

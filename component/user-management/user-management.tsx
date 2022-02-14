@@ -7,9 +7,9 @@ import { userManagementTabsName } from "../../constants";
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 import UserManagementTabAndSearch from "./user-management-tab-and-search";
 
-const Bank = dynamic(() => import("./bank"))
-const BankAdmin = dynamic(() => import("./bank-admin"))
-const ISWAdmin = dynamic(() => import("./isw-admin"))
+const Bank = dynamic(() => import("./bank"), {ssr:false})
+const BankAdmin = dynamic(() => import("./bank-admin"), {ssr:false})
+const ISWAdmin = dynamic(() => import("./isw-admin"), {ssr:false})
 
 const UserManagement:FC = () => {
     const { tabs, handleTabSelection, handleToggleModal, modals } = useContext(UserManagementTabProviderContext)

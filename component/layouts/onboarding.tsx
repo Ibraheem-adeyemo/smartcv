@@ -97,7 +97,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
                     isClosable: true,
                     variant: "left-accent"
                 })
-
+                
                 router.push(links.onboardingSuccessPage)
                 return;
             } else {

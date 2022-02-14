@@ -7,7 +7,7 @@ import { Authenticated } from "../component/layouts"
 import { filtersToShowDefaultValue } from "../constants"
 import { StatsProvider } from "../provider"
 import { StatsContext } from "../provider/stats-provider"
-const AppBarFilter = dynamic(() => import('../component/stats/app-bar-filter'))
+const AppBarFilter = dynamic(() => import('../component/stats/app-bar-filter'), {ssr:false})
 
 const Dashboard:NextPage = () => {
   const {setFiltersToShow} = useContext(StatsContext)

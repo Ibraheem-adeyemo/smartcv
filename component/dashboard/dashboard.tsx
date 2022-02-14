@@ -4,15 +4,15 @@ import { FC, useContext, useEffect, useMemo } from "react"
 import { filterDates } from "../../constants"
 import { StatsContext } from "../../provider/stats-provider"
 
-const TerminalsPerformance = dynamic(() => import('./terminals-performance'))
-const SuccessRate = dynamic(() => import('./success-rate'))
-const ServiceStatus = dynamic(() => import('./service-status'))
-const TerminalsUnderWatch = dynamic(() => import('./terminals-under-watch'))
-const TopPerforminBanks = dynamic(() => import('./top-performing-banks'))
-const TopTransactionMetric = dynamic(() => import('./top-transaction-metric'))
-const TransactionBreakdown = dynamic(() => import('./transaction-breakdown'))
-const TransactionMetric = dynamic(() => import('./transaction-metric'))
-const UsageMetric = dynamic(() => import('./usage-metric'))
+const TerminalsPerformance = dynamic(() => import('./terminals-performance'), {ssr:false})
+const SuccessRate = dynamic(() => import('./success-rate'), {ssr:false})
+const ServiceStatus = dynamic(() => import('./service-status'), {ssr:false})
+const TerminalsUnderWatch = dynamic(() => import('./terminals-under-watch'), {ssr:false})
+const TopPerforminBanks = dynamic(() => import('./top-performing-banks'), {ssr:false})
+const TopTransactionMetric = dynamic(() => import('./top-transaction-metric'), {ssr:false})
+const TransactionBreakdown = dynamic(() => import('./transaction-breakdown'), {ssr:false})
+const TransactionMetric = dynamic(() => import('./transaction-metric'), {ssr:false})
+const UsageMetric = dynamic(() => import('./usage-metric'), {ssr:false})
 const Dashboard:FC = () => {
     const {toggleDate} = useContext(StatsContext)
     useEffect(() => {

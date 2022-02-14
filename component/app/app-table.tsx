@@ -19,7 +19,7 @@ interface ApptableProps<T extends Record<keyof T, T[keyof T]>> {
     showAllAction?: boolean
 }
 
-const AppTableFooter = dynamic(() => import('../app/app-table-footer'))
+const AppTableFooter = dynamic(() => import('../app/app-table-footer'), {ssr:false})
 
 const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false, showAllAction = false, ...props }: ApptableProps<T>) => {
 

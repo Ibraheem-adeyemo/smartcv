@@ -3,8 +3,8 @@ import { FC, Fragment, useContext } from "react"
 import { interchangeDisconnectionTabsName } from "../../constants/tabs"
 import { InterchangeDisconnectionContext } from "../../provider/interchange-disconnection-provider"
 
-const InterchangeDisconnectionStatusTable = dynamic(() => import("./interchange-disconnection-status-table"))
-const InterchangeConnectionRequestTable = dynamic(() => import("./interchange-connection-request-table"))
+const InterchangeDisconnectionStatusTable = dynamic(() => import("./interchange-disconnection-status-table"), {ssr:false})
+const InterchangeConnectionRequestTable = dynamic(() => import("./interchange-connection-request-table"), {ssr:false})
 
 const InterchangeDisconnectionTable: FC = () => {
     const { tabs } = useContext(InterchangeDisconnectionContext)
