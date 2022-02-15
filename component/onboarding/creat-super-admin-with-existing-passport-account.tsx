@@ -61,9 +61,9 @@ const CreateSuperAdminWithExistingSuperAdminAccount:React.FC = () => {
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
             if (typeof onboarding !== "undefined" && typeof steps !== "undefined") {
                 // debugger
-                let step = steps[onboarding.state as number]
-                if (onboarding.state as number - 1 > -1) {
-                    step = steps[onboarding.state as number - 1]
+                let step = steps[onboarding.state]
+                if (onboarding.state - 1 > -1) {
+                    step = steps[onboarding.state - 1]
                 }
                 previousState()
                 router.push(step.url)

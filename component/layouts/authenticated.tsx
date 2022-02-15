@@ -26,7 +26,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
         console.log('last active', getLastActiveTime())
     }
 
-    const handleOnActive = (event: any) => {
+    const handleOnActive = () => {
         if (typeof window !== "undefined") {
             const timeLeft = (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60)
             if (timeLeft > (+getCookie(cookieKeys.tokenExpiresIn) - 5)) {
@@ -35,14 +35,14 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
         }
     }
 
-    const handleOnAction = (event: any) => {
+    const handleOnAction = () => {
         const timeLeft = (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60)
         if (timeLeft > (+getCookie(cookieKeys.tokenExpiresIn) - 5)) {
             refreshAccessToken(getCookie(cookieKeys.refreshToken))
         }
     }
 
-    const { getRemainingTime, getLastActiveTime } = useIdleTimer({
+    const { getLastActiveTime } = useIdleTimer({
         timeout: typeof window !== "undefined"? (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60):1000 * 60 * 20,
         onIdle: handleOnIdle,
         onActive: handleOnActive,

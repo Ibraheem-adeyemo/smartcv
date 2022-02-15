@@ -42,23 +42,23 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
                     case "uppercase":
                         return {
                             ...x,
-                            status: validateUppercase(onboarding.tenantAdmin?.password as string)
+                            status: validateUppercase(onboarding.tenantAdmin?.password)
                         }
 
                     case "lowercase":
                         return {
                             ...x,
-                            status: validateLowercase(onboarding.tenantAdmin?.password as string)
+                            status: validateLowercase(onboarding.tenantAdmin?.password)
                         }
                     case "number":
                         return {
                             ...x,
-                            status: validateNumber(onboarding.tenantAdmin?.password as string)
+                            status: validateNumber(onboarding.tenantAdmin?.password)
                         }
                     case "eightminimum":
                         return {
                             ...x,
-                            status: (onboarding.tenantAdmin?.password as string).length > 7
+                            status: (onboarding.tenantAdmin?.password).length > 7
                         }
                         default:
                         return x
@@ -189,11 +189,11 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
             // debugger
             setOtherValidations(() => {
                 // debugger
-                const pWordCharacterValidations = ((passC as PasswordChecker[])?.filter(x => !(x?.status as boolean)).length) > 0
-                const emailValidation = !validateEmail(onboarding?.tenantAdmin?.email as string)
-                const mobileNoValidation = !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo as string:"")
-                const pwordCompare = !comparePassword(onboarding?.tenantAdmin?.confirmPassword as string, onboarding?.tenantAdmin?.password as string)
-                const isEmpty = ["firstName", "lastName", "mobileNo", "password", "email", "confrimPassword"].filter((val) => (onboarding?.tenantAdmin as tenantAdmin)[val as keyof tenantAdmin] === "").length > 0
+                const pWordCharacterValidations = ((passC as PasswordChecker[])?.filter(x => !(x?.status)).length) > 0
+                const emailValidation = !validateEmail(onboarding?.tenantAdmin?.email)
+                const mobileNoValidation = !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo:"")
+                const pwordCompare = !comparePassword(onboarding?.tenantAdmin?.confirmPassword, onboarding?.tenantAdmin?.password)
+                const isEmpty = ["firstName", "lastName", "mobileNo", "password", "email", "confrimPassword"].filter((val) => (onboarding?.tenantAdmin)[val as keyof tenantAdmin] === "").length > 0
                 return pWordCharacterValidations || emailValidation || mobileNoValidation || pwordCompare || isEmpty
             })
             if(onboarding.tenantAdmin.access_token !== "") {
@@ -254,9 +254,9 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
             if (typeof onboarding !== "undefined" && typeof steps !== "undefined") {
                 // debugger
-                let step = steps[onboarding.state as number]
-                if (onboarding.state as number - 1 > -1) {
-                    step = steps[onboarding.state as number - 1]
+                let step = steps[onboarding.state]
+                if (onboarding.state - 1 > -1) {
+                    step = steps[onboarding.state - 1]
                 }
                 previousState()
                 router.push(step.url)
@@ -287,11 +287,11 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
                 <FormErrorMessage>{validation?.errors.email}</FormErrorMessage>
                 <FormErrorMessage>{!validateEmail(onboarding?.tenantAdmin?.email as string) && validation?.errors.email === "" ? "Invalid email" : ""}</FormErrorMessage>
             </FormControl>
-            <FormControl isRequired id="mobileNo" flexGrow={1} width="35%" isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo as string:"")) && validation?.touched.mobileNo === "touched"}>
+            <FormControl isRequired id="mobileNo" flexGrow={1} width="35%" isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo:"")) && validation?.touched.mobileNo === "touched"}>
                 <FormLabel>Phone Number</FormLabel>
                 <MobleNoInput placeholder="Enter Phone no" name="mobileNo" borderRadius="4px" value={onboarding?.tenantAdmin?.mobileNo} ref={numberRef} onChange={enterSuperAdminMobile} />
                 <FormErrorMessage>{validation?.errors.mobileNo}</FormErrorMessage>
-                <FormErrorMessage>{validation?.errors.mobileNo === ""  && !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo as string:"")? "Invalid number" : ""}</FormErrorMessage>
+                <FormErrorMessage>{validation?.errors.mobileNo === ""  && !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo:"")? "Invalid number" : ""}</FormErrorMessage>
 
             </FormControl>
             <Popover
@@ -304,14 +304,14 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
             >
                 <PopoverTrigger>
 
-                    <FormControl isRequired id="password" flexGrow={1} width="35%" isInvalid={(((passC as PasswordChecker[])?.filter(x => !(x?.status as boolean)).length > 0) || validation?.errors?.password !== "") && validation?.touched.password === "touched"}>
+                    <FormControl isRequired id="password" flexGrow={1} width="35%" isInvalid={(((passC as PasswordChecker[])?.filter(x => !(x?.status)).length > 0) || validation?.errors?.password !== "") && validation?.touched.password === "touched"}>
                         <FormLabel>Password</FormLabel>
                         <Input placeholder="Enter Password" type="password" name="password" ref={passRef} borderRadius="4px" value={onboarding?.tenantAdmin?.password}
                             onBlur={() => closePopOver()}
                             onInput={checkPassworValidity} />
                         <FormErrorMessage>{validation?.errors.password}</FormErrorMessage>
 
-                        <FormErrorMessage> {((passC as PasswordChecker[])?.filter(x => !(x?.status as boolean)).length) > 0 && validation?.errors.password === "" ? ("Your password must be " + passC?.map(x => x.text).join(", ")) : ""}</FormErrorMessage>
+                        <FormErrorMessage> {((passC as PasswordChecker[])?.filter(x => !(x?.status)).length) > 0 && validation?.errors.password === "" ? ("Your password must be " + passC?.map(x => x.text).join(", ")) : ""}</FormErrorMessage>
                     </FormControl>
                 </PopoverTrigger>
                 <PopoverContent bgColor="brand.light-blue" py="25px" px="33px">

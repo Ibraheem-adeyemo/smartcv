@@ -9,7 +9,7 @@ const GroupedBarchart:FC<GroupedBarChartProps> = (props: GroupedBarChartProps) =
     const [minMax, setMinMax] = useState<{ min: number, max: number }>()
     const raw = useMemo(() => {
         const tempPaw: number[] = []
-        props.data.forEach((x, i) => {
+        props.data.forEach((x) => {
             tempPaw.push(...x.data)
         })
         return tempPaw
@@ -21,11 +21,6 @@ const GroupedBarchart:FC<GroupedBarChartProps> = (props: GroupedBarChartProps) =
                 return curr
             return prev
         }, 0)
-        const min = raw.reduce((prev, curr) => {
-            if (prev > curr)
-                return curr
-            return prev
-        }, Number.MAX_VALUE) / 2
 
         setMinMax({ min: 0, max })
         //         const DATA_COUNT = 7;
@@ -53,7 +48,7 @@ const GroupedBarchart:FC<GroupedBarChartProps> = (props: GroupedBarChartProps) =
                         min: minMax?.min,
                         max: minMax?.max,
                         ticks: {
-                            callback: (val, index) => {
+                            callback: (val) => {
                                 const newLabel = shortenNumber(+val).fractionAmount !== Number.MAX_VALUE ? shortenNumber(+val) : { fractionAmount: val, abbrev: "" }
                                 // return raw.indexOf(+val) > -1 ? newLabel.fractionAmount + newLabel.abbrev : ""
                                 return newLabel.fractionAmount+newLabel.abbrev

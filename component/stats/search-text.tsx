@@ -16,7 +16,10 @@ const SearchText:FC<SearchTextProps> = (props:SearchTextProps) => {
                     pointerEvents="none"
                     children={<SearchIcon />}
                 />
-                <Input borderRadius="26px" bgColor="white" placeholder={props.placeHolder} value={text} onChange={e => (e.stopPropagation(), setText(e.target.value), props.handleSearchItem(e.target.value))} />
+                <Input borderRadius="26px" bgColor="white" placeholder={props.placeHolder} value={text} onChange={e => {
+                    e.stopPropagation();
+                    setText(e.target.value); 
+                    props.handleSearchItem(e.target.value)}} />
             </InputGroup>
         </HStack>
     )

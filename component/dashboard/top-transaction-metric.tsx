@@ -16,10 +16,6 @@ const TopTransactionMetri:FC = () => {
         // console.log("waiting")
         const getStats = () => {
 
-            const boxSize = {
-                width: ["400px", "400px", "400px", "100%", "100%", "100%"],
-                heigt: "100%"
-            }
             setLoading(prev => !prev)
             return [
                 {

@@ -9,9 +9,7 @@ import { AppTable } from "../app";
 
 const InterchangeDisconnectionStatusTable:FC = () => {
     
-    const toast = useToast()
-    const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
-    const {mutate} = useSWRConfig()
+    const { pageNumber, countPerPage } = useContext(PaginatorContext)
     const { data: connnectionRequest, mutate:_mutate, error } = useSWR<Paginate<InterchangeDisconnectionStatus>>(`${apiUrlsv1.interchangeDisconnectionRequest}?page=${pageNumber-1}&size=${countPerPage}`)
 
     const data = useMemo(() => ({
@@ -69,4 +67,4 @@ const InterchangeDisconnectionStatus: FC = () => {
     )
 }
 
-export default InterchangeDisconnectionStatusTable
+export default InterchangeDisconnectionStatus

@@ -9,7 +9,7 @@ import { InstitutionColor, InstitutionColorInfo, State, TenantView, UserManageme
 import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
 
 const AddNewBank:FC = () => {
-    const { data: states, error } = useSWR<State[]>(apiUrlsv1.states)
+    const { data: states } = useSWR<State[]>(apiUrlsv1.states)
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
     const { form, formOnChange, refreshForm } = useForm<TenantView>({
         name: "",

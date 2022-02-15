@@ -17,10 +17,10 @@ const LoginForm:FC = () => {
     }, [])
 
     return (
-        <form method="POST" onSubmit={(e: React.FormEvent<HTMLFormElement>) => (
-            e.preventDefault(),
+        <form method="POST" onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
             signIn()
-        )} >
+        }} >
             <Flex flexDir="column" gridGap="20px" px="66px" bg="white" borderRadius="6px" alignItems="center" w="633px" py="42.34px">
                 <Text variant="card-header" size="page-header" >Welcome{user === null || typeof user === "undefined" ? `` : ` ${user?.firstName}`}</Text>
                 <Image src={Images.handShake} boxSize="167px" alt="hand shake" />

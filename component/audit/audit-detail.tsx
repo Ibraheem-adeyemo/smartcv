@@ -15,8 +15,7 @@ const mapData = function <T>(objString: string): T {
                     const { data } = body
                     returnValue = data
                     if ('content' in data) {
-                        const { content } = data
-                        returnValue = content
+                        returnValue = data.content
                     }
                 }
                 return returnValue
@@ -25,14 +24,14 @@ const mapData = function <T>(objString: string): T {
                 returnValue = list
                 return returnValue
             case 'content' in parsedString:
-                const { content } = parsedString
-                returnValue = content
+                returnValue = parsedString.content
                 return returnValue
             default:
                 returnValue = {} as T
                 return returnValue
         }
     } catch (error) {
+        console.error({error})
         throw error
     }
 }
@@ -76,11 +75,11 @@ const DataObjectView = <T extends Record<keyof T, T[keyof T]>>(props: DataArrayV
                 {
                     (() => {
                         let ui
-                        let i = 0
+                        let j = 0
                         for (const key in props.data) {
-                            i++
+                            j++
                             const usedKey = key as keyof (T)
-                            ui = <Tr key={i}>
+                            ui = <Tr key={j}>
                                 <Td>{key}:</Td>
                                 <Td>{props.data[usedKey]}</Td>
                             </Tr>

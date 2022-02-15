@@ -22,14 +22,18 @@ const CustomFilter:FC = () => {
                         <FormControl id="startDate">
                             <FormLabel>Start Date</FormLabel>
                             <InputGroup>
-                                <Input placeholder="DD/MM/YYYY" borderRadius="8px" ref={startDateRef} onClick={(e) =>  {e.stopPropagation(), startDateRef.current?.focus()}} />
+                                <Input placeholder="DD/MM/YYYY" borderRadius="8px" ref={startDateRef} onClick={(e) =>  {
+                                    e.stopPropagation();
+                                    startDateRef.current?.focus()
+                                    }} />
                                 <InputRightElement children={<CalendarIcon />} />
                             </InputGroup>
                         </FormControl>
                         <FormControl id="endDate">
                             <FormLabel>End Date</FormLabel>
                             <InputGroup>
-                                <Input placeholder="DD/MM/YYYY" borderRadius="8px" ref={endDateRef} onClick={(e) =>  {e.stopPropagation(), endDateRef.current?.focus()}} />
+                                <Input placeholder="DD/MM/YYYY" borderRadius="8px" ref={endDateRef} onClick={(e) =>  {e.stopPropagation();
+                                     endDateRef.current?.focus()}} />
                                 <InputRightElement children={<CalendarIcon />} />
                             </InputGroup>
                         </FormControl>

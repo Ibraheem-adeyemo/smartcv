@@ -73,7 +73,8 @@ const RegisterForm: FC = () => {
     return (
         <>
             {!cantVew && (<form method="POST" onSubmit={((e: React.FormEvent<HTMLFormElement>) => {
-                e.preventDefault(), getInterChangebyInterchangeId()
+                e.preventDefault();
+                getInterChangebyInterchangeId()
             })}>
                 <MotionFlex sx={{
                     flexDir: "column",
@@ -116,11 +117,11 @@ const RegisterForm: FC = () => {
                             variants={{
                                 show: {
                                     y: 0,
-                                    transition: { ease: [0.455, 0.03, 0.515, 0.955], duration: 0.85 }
+                                    transition: { duration: 0.85 }
                                 },
                                 hide: {
                                     y: "200%",
-                                    transition: { ease: [0.455, 0.03, 0.515, 0.955], duration: 0.75 }
+                                    transition: { duration: 0.75 }
                                 }
                             }}>
                                 Organization ID</MotionBox></FormLabel>

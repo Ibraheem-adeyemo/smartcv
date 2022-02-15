@@ -50,7 +50,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
 
                 // const report = await fetch(PASSPORT_AUTHORIZE_URL)
                 
-                const response = await fetch(form?.postUrl as string, {
+                const response = await fetch(form?.postUrl, {
                     method: "post",
                     headers: {
                         Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
@@ -116,8 +116,6 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                     postUrl: PASSPORT_TOKEN_URL,
                     completed: true
                 })
-            } else {
-
             }
         }
     }, [canNotSubmit])

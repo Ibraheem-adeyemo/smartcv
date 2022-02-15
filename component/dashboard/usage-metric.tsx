@@ -8,7 +8,7 @@ import { useLoading } from "../../hooks"
 import { StatsContext } from "../../provider/stats-provider"
 
 const UsageMetric:React.FC = () => {
-    const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
+    const { institutions, institutionsError } = useContext(StatsContext)
     const [loading, setLoading] = useLoading({isLoading:true, text:""})
     const [stats, setStats] = useState<StatsA[]>()
 

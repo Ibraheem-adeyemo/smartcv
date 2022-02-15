@@ -90,7 +90,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
         startLoading()
         try {
             if (typeof onboarding !== "undefined") {
-                await createAccountAsync(onboarding as OnboardingModel)
+                await createAccountAsync(onboarding)
                 toast({
                     status: "success",
                     title: notificationMesage.SuccessfulAccountCreation,

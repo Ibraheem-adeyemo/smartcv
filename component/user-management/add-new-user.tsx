@@ -21,7 +21,6 @@ const AddNewUser:FC = () => {
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>(UserManagementModals[0])
     const [loading, changeLoading] = useLoading()
     const [isValidEmail, setIsValidEmail] = useState(false)
-    const [institutionColorModal, SetInstitutionColorModal] = useState(false)
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         e.stopPropagation()
         addField(e.target.id as keyof ISWAdminView)
@@ -32,15 +31,15 @@ const AddNewUser:FC = () => {
 
     }, [])
 
-    const saveUser = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const saveUser = useCallback(() => {
         // debugger
-        changeLoading((prev) => ({ isLoading: true, text: "Creating user" }))
+        changeLoading(() => ({ isLoading: true, text: "Creating user" }))
         handleToggleModal({ ...selectedModal, isSubmitted: !selectedModal.isSubmitted })
-        changeLoading((prev) => ({ isLoading: false, text: "" }))
+        changeLoading(() => ({ isLoading: false, text: "" }))
     }, [form])
     useEffect(() => {
         // debugger
-        const modal = modals.find((x, i) => x.name === UserManagementModalNames.addNewUser) as UserManagementModal
+        const modal = modals.find((x) => x.name === UserManagementModalNames.addNewUser) as UserManagementModal
         setSelectedModal(modal)
     }, [modals])
 

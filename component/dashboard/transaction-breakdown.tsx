@@ -9,7 +9,7 @@ import { AppCard } from "../app"
 import { StatsName } from "../../constants"
 
 const TransactionBreakdown:FC = () => {
-  const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
+  const { institutions, institutionsError } = useContext(StatsContext)
   const [loading, setLoading] = useLoading({isLoading:true, text:""})
   const [stats, setStats] = useState<StatsA[]>()
 

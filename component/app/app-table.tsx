@@ -62,8 +62,6 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                                         if(typeof y.lookUp !== "undefined"){
                                             if(typeof y.ele === "undefined") {
                                                 data = y.lookUp[data]
-                                            } else if(y.ele === "status"){
-
                                             }
                                         }
                                     }

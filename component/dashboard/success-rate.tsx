@@ -6,13 +6,11 @@ import { AppCard } from "../app";
 
 const SuccessRate: FC = () => {
     const [stats, setStats] = useState<StatsB[]>()
-    const [loading, setLoading] = useState(true)
     const getStats = useCallback(() => {
         const boxSize = {
             width: ["261px", "261px", "261px", "261px", "261px", "261px"],
             height: ["159px", "159px", "159px", "159px", "159px", "159px"]
         }
-        setLoading((prev) => !prev)
         return [{
 
             ...boxSize,
