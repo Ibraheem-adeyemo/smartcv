@@ -1,5 +1,6 @@
 FROM node:16-alpine AS deps
-
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
 
@@ -8,9 +9,12 @@ ARG https_proxy
 
 ENV http_proxy ${http_proxy}
 ENV https_proxy ${https_proxy}
-RUN echo ${https_proxy}
 
-RUN npm --proxy="${http_proxy}" install --frozen-lockfile
+RUN npm --proxy=${http_proxy} install --frozen-lockfile
+
+# If using npm with a `package-lock.json` comment out above and use below instead
+# COPY package.json package-lock.json ./ 
+# RUN npm ci
 
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
