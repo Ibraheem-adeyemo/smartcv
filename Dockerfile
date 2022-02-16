@@ -24,7 +24,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ARG http_proxy
-ENV http_proxy ${http_proxy
+ENV http_proxy ${http_proxy}
 
 ARG http_proxy
 ENV https_proxy ${https_proxy}
