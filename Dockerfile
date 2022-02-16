@@ -3,7 +3,7 @@ FROM node:16-alpine AS deps
 # RUN apk add libc6-compat
 # RUN echo $HTTP_PROXY && echo $http_proxy && unset HTTP_PROXY && unset http_proxy && apk add --no-cache libc6-compat
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY . ./
 
 ARG http_proxy
 ARG https_proxy
@@ -20,8 +20,7 @@ ENV https_proxy ${https_proxy}
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY --from=deps /app ./
 
 ARG http_proxy
 ENV http_proxy ${http_proxy}
