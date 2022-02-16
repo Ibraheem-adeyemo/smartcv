@@ -9,11 +9,7 @@ ARG https_proxy
 ENV http_proxy ${http_proxy}
 ENV https_proxy ${https_proxy}
 
-RUN npm --proxy=${http_proxy} install --frozen-lockfile
-
-# If using npm with a `package-lock.json` comment out above and use below instead
-# COPY package.json package-lock.json ./ 
-# RUN npm ci
+CMD npm --proxy=$http_proxy install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
