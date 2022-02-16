@@ -20,4 +20,5 @@ services:
         - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
         - NEXT_PUBLIC_ALLOWED_APPS=${NEXT_PUBLIC_ALLOWED_APPS}
         - http_proxy=${http_proxy}
+        - https_proxy=${https_proxy}
       dockerfile: ./Dockerfile

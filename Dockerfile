@@ -1,18 +1,32 @@
+FROM node:16-alpine AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json yarn.lock ./
 
-# stage1 as builder
-FROM node:16.3.0-alpine as builder
+ARG http_proxy
+ARG https_proxy
 
-# copy the package.json to install dependencies
-COPY ./package.json package-lock.json ./
+ENV http_proxy ${http_proxy}
+ENV https_proxy ${https_proxy}
 
-WORKDIR /opt/app/
-# Install the dependencies and make the folder
-COPY ./node_modules ./opt/app/
+RUN npm --proxy=${http_proxy} install --frozen-lockfile
 
+# If using npm with a `package-lock.json` comment out above and use below instead
+# COPY package.json package-lock.json ./ 
+# RUN npm ci
+
+# Rebuild the source code only when needed
+FROM node:16-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ARG http_proxy
+ENV http_proxy ${http_proxy
 
+ARG http_proxy
+ENV https_proxy ${https_proxy}
 
 ARG NODE_ENV
 ENV NODE_ENV ${NODE_ENV}
@@ -57,7 +71,10 @@ ENV NEXT_PUBLIC_ALLOWED_APPS ${NEXT_PUBLIC_ALLOWED_APPS}
 
 # Build the project and copy the files
 RUN npm run build
-
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED 1
 
 FROM nginx:alpine
 
