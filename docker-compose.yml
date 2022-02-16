@@ -2,7 +2,8 @@ version: '3.4'
 
 services:
   paasui:
-    image: repo.isw.la/paas-ui:${APP_VERSION}.${BUILD_NUMBER}
+    image: repo.isw.la/paas-ui:${APP_VERSION}.${BUILD_NUMBER} 
+    network_mode: "host"
     build:
       context: .
       args:
