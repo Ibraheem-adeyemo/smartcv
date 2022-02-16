@@ -18,7 +18,7 @@ const UserManagement:FC = () => {
     }, [])
     const SelectedTable = useCallback(() => {
         const selectedIndex = _.findIndex(tabs, (x, i) => x.isSelected)
-        // debugger
+      
         if (selectedIndex > -1) {
             switch (tabs[selectedIndex].name) {
                 case userManagementTabsName.bank:

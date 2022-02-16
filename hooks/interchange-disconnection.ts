@@ -26,7 +26,7 @@ export default function useInterchangeDisconnection() {
             setTabs(tab as interchangeDisconnectionTab[])
         } else if (typeof index !== "undefined" && !isNaN(index)) {
             setTabs(prev => {
-                // debugger
+              
                 const data = clone(prev)
                 const selectedIndex = data.findIndex((x) => x.isSelected)
                 if (selectedIndex > -1) {

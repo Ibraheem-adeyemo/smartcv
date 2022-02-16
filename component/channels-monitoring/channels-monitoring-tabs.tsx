@@ -5,7 +5,7 @@ import { channelsMonitoringContext } from "../../provider/channels-monitoring-pr
 const ChannelsMonitoringTabs: FC = () => {
     const { tabs, modifyTab } = useContext(channelsMonitoringContext)
     const handleTabSelection = (i: number) => {
-        // debugger
+      
         modifyTab({ ...tabs[i], isSelected: true }, i)
     }
     useEffect(() => {

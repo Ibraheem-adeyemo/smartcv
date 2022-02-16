@@ -8,13 +8,13 @@ export default function useValidator<T>(compulsoryField?: (keyof T)[]) {
 
     const [data, setData] = useState<Record<keyof T, T[keyof T]>>();
     const [field, setField] = useState<keyof T>();
-    // debugger
+  
     useEffect(() => {
-        // debugger
+      
         if (typeof field !== "undefined") {
             if (field !== "" && typeof data !== "undefined") {
                 setValidation((prev) => {
-                    // debugger
+                  
                     const s = _.clone(prev) as Validation<T>
                     if (typeof s !== "undefined") {
                         s.errors[field] = ""
@@ -37,7 +37,7 @@ export default function useValidator<T>(compulsoryField?: (keyof T)[]) {
                 })
                 if (String(data[field as keyof T]) as string === "") {
                     setValidation((prev) => {
-                        // debugger
+                      
                         const s = _.clone(prev) as Validation<T>
                         if (typeof s !== "undefined") {
 

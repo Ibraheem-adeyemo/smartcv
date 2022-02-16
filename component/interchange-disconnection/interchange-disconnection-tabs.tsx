@@ -5,7 +5,7 @@ import { InterchangeDisconnectionContext } from "../../provider/interchange-disc
 const InterchangeDisconnectionTabs: FC = () => {
     const { tabs, modifyTab } = useContext(InterchangeDisconnectionContext)
     const handleTabSelection = (i: number) => {
-        // debugger
+      
         modifyTab({ ...tabs[i], isSelected: true }, i)
     }
     useEffect(() => {

@@ -28,7 +28,7 @@ const CreateSuperAdminWithExistingSuperAdminAccount:React.FC = () => {
     }, [onboarding?.tenantAdmin])
 
     const createSuperAdmin = useCallback(() => {
-        // debugger
+      
         if (typeof onboarding?.tenantAdmin !== "undefined" && typeof canNotSubmit !== "undefined" && typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
             if (steps.length !== (onboarding.state + 1)) {
                 completeForm("tenantAdmin")
@@ -60,7 +60,7 @@ const CreateSuperAdminWithExistingSuperAdminAccount:React.FC = () => {
     const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
             if (typeof onboarding !== "undefined" && typeof steps !== "undefined") {
-                // debugger
+              
                 let step = steps[onboarding.state]
                 if (onboarding.state - 1 > -1) {
                     step = steps[onboarding.state - 1]

@@ -24,11 +24,11 @@ const RegisterForm: FC = () => {
 
     const getInterChangebyInterchangeId = async () => {
         try {
-            // debugger
+          
             setLoading({ isLoading: true, text: "Confirming" })
             const data = await getInterchangeById(interChangeId as string)
             if (typeof data.statusCondition !== "undefined" && +data.statusCondition === 1 && typeof interChangeId !== "undefined") {
-                // debugger
+              
                 setCookie(cookieKeys.interchangeId, interChangeId, cookiesTimeout.interchangeIdTimeout)
                 if (isOnCrossDomain) {
                     setInterChangeIdData(interChangeId)
@@ -63,7 +63,7 @@ const RegisterForm: FC = () => {
     }
 
     useEffect(() => {
-        // debugger
+      
         sessionStorage.removeItem(sessionStorageKeys.onboarding)
         removeData()
         return () => {

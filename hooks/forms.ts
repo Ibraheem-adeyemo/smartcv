@@ -18,7 +18,7 @@ export default function useForm<T extends Record< keyof T, T[keyof T]>>(initialM
         // console.log({ form })
     }, [form])
     const formOnChange = (value: Record<keyof T & formType, any>) => {
-        // debugger
+      
         setForm((prev) => ({
             ...prev as T & formType,
             ...value

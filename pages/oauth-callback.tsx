@@ -12,13 +12,13 @@ const OauthCallback:NextPage = () => {
     const router = useRouter()
     const toast = useToast()
     useEffect(() => {
-        // debugger
+      
         const url = new URL(`${window.location.protocol}//${window.location.host}${router.asPath}`).search
         const code = new URLSearchParams(url).get("code");
         if (typeof window !== "undefined" && typeof code !== "undefined") {
-            // debugger
+          
             loginWithPassport(code as string).then(() => {
-                // debugger 
+               
                 if (getCookie(cookieKeys.redirectUrl) !== "") {
                     const redirectUrl = getCookie(cookieKeys.redirectUrl)
                     setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
@@ -27,7 +27,7 @@ const OauthCallback:NextPage = () => {
                     router.push(links.dashboard)
                 }
             }).catch((err) => {
-                // debugger
+              
                 typeof err !== "undefined" ?
                     toast({
                         status: "error",

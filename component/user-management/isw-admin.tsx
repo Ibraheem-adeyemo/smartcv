@@ -77,11 +77,11 @@ const ISWAdminTable:FC = () => {
 
     useEffect(() => {
         
-        // debugger
+      
         const selectedModal = modals.some(x => x.isSubmitted)
         if(selectedModal) {
             mutateData(() => {
-                // debugger
+              
                 mutate(`${apiUrlsv1.iswAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
                 handleToggleModal()
             })

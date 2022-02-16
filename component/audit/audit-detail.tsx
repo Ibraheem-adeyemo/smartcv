@@ -48,9 +48,9 @@ const DataArrayView = <T extends Record<keyof T, T[keyof T]>>(props: DataArrayVi
                     {
                         (() => {
                             let ui
-                            let i = 0
+                            let j = 0
                             for (const key in x) {
-                                i++
+                                j++
                                 const usedKey = key as keyof (T)
                                 ui = <Tr key={i}>
                                     <Td>{key}:</Td>
@@ -75,9 +75,9 @@ const DataObjectView = <T extends Record<keyof T, T[keyof T]>>(props: DataArrayV
                 {
                     (() => {
                         let ui
-                        let j = 0
+                        let k = 0
                         for (const key in props.data) {
-                            j++
+                            k++
                             const usedKey = key as keyof (T)
                             ui = <Tr key={j}>
                                 <Td>{key}:</Td>

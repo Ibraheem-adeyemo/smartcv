@@ -32,13 +32,13 @@ const AddNewUser:FC = () => {
     }, [])
 
     const saveUser = useCallback(() => {
-        // debugger
+      
         changeLoading(() => ({ isLoading: true, text: "Creating user" }))
         handleToggleModal({ ...selectedModal, isSubmitted: !selectedModal.isSubmitted })
         changeLoading(() => ({ isLoading: false, text: "" }))
     }, [form])
     useEffect(() => {
-        // debugger
+      
         const modal = modals.find((x) => x.name === UserManagementModalNames.addNewUser) as UserManagementModal
         setSelectedModal(modal)
     }, [modals])

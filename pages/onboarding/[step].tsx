@@ -20,14 +20,14 @@ interface LoadTabProps {
 }
 
 const LoadTab: FC<LoadTabProps> = (props: LoadTabProps) => {
-    // debugger
+  
     switch (`/onboarding/${props.step}`) {
         case links.createBank:
-            return <CreateBank step={props.state as number} />
+            return <CreateBank step={props.state} />
         case links.createSuperAdmin:
-            return <CreateSuperAmin step={props.state as number} />
+            return <CreateSuperAmin step={props.state} />
         case links.institutionColors:
-            return <InstitutionColors step={props.state as number} />
+            return <InstitutionColors step={props.state} />
         default:
             return <Text>No Tab was selected</Text>
     }
@@ -37,7 +37,7 @@ export default function Step1(props: any) {
     const { step } = router.query
     const { steps } = useContext(OnboardingContext)
     const [stepNumber, setStepNumber] = useState<number>()
-    // debugger
+  
     useEffect(() => {
         // debbuger
         if (typeof steps !== "undefined" && typeof step !== "undefined") {
@@ -54,9 +54,9 @@ export default function Step1(props: any) {
 
     useEffect(() => {
         // console.log({stepNumber})
-        debugger
+      
         if (typeof window !== "undefined") {
-            debugger
+          
             const interchange1 = getCookie(cookieKeys.interchangeId)
             const interchange2 = window.sessionStorage.getItem(sessionStorageKeys.interchangeId)
             if (!interchange1 && !interchange2)

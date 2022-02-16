@@ -60,7 +60,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                 })
                 const data = (await response.json()) as tenantAdmin
                 if (response.ok || response.status === 200 || response.status === 201) {
-                    // debugger
+                  
                     props.setUserAuthority(data)
                 } else {
                     throw {
@@ -75,7 +75,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                 isLoading: false
             })
         } catch (error: any) {
-            // debugger
+          
             // console.log({error})
             if (typeof error.data !== "undefined") {
                 toast({
@@ -122,7 +122,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
 
     useEffect(() => {
         setData(form)
-        // debugger
+      
         if (typeof form !== "undefined") {
             const data = Object.keys(initialLogin).map(x => form[(x as keyof PassportLoginCredentials)])
             const filteredData = data.filter(x => x === "").length
@@ -140,7 +140,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
 
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         e.stopPropagation()
-        // debugger
+      
         const ele = (e.target as HTMLInputElement | HTMLSelectElement)
         setField(ele.id as keyof PassportLoginCredentials)
         const value = ele.value

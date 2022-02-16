@@ -35,7 +35,7 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
     const checkFieldValidityOnLoad = (passwordConditions: PasswordChecker[] ) => {
         
         if(typeof onboarding?.tenantAdmin !== "undefined") {
-            // debugger
+          
             if( typeof onboarding.tenantAdmin.password !== "undefined" && onboarding.tenantAdmin.password !== "") {
                const b = passwordConditions.map((x) => {
                 switch (x.checker) {
@@ -67,7 +67,7 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
                
                setPassC(b)
             }else {
-                // debugger
+              
                 setPassC(passwordConditions)
             }
         } else {
@@ -92,7 +92,7 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
     }
 
     const enterSuperAdminMobile =(val: string) => {
-        // debugger
+      
         setField("mobileNo" as keyof tenantAdmin)
         addInfo("tenantAdmin", "mobileNo", val)
     }
@@ -100,35 +100,37 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
     const checkPassworValidity = (e:React.FormEvent<HTMLInputElement>) => {
         e.stopPropagation()
         openPopOver()
-        passC?.forEach((x) => {
-            switch (x.checker) {
-                case "uppercase":
-                    setPassC(prev => prev?.map((y) => y.checker === "uppercase" ? ({
-                        ...y,
-                        status: validateUppercase((e.target as HTMLInputElement).value)
-                    }) : y))
+        if(passC){
+            passC.forEach((x) => {
+                switch (x.checker) {
+                    case "uppercase":
+                        setPassC(prev => prev?.map((y) => y.checker === "uppercase" ? ({
+                            ...y,
+                            status: validateUppercase((e.target as HTMLInputElement).value)
+                        }) : y))
 
-                    break;
-                case "lowercase":
-                    setPassC(prev => prev?.map((y) => y.checker === "lowercase" ? ({
-                        ...y,
-                        status: validateLowercase((e.target as HTMLInputElement).value)
-                    }) : y))
-                    break
-                case "number":
-                    setPassC(prev => prev?.map((y) => y.checker === "number" ? ({
-                        ...y,
-                        status: validateNumber((e.target as HTMLInputElement).value)
-                    }) : y))
-                    break
-                case "eightminimum":
-                    setPassC(prev => prev?.map((y) => y.checker === "eightminimum" ? ({
-                        ...y,
-                        status: (e.target as HTMLInputElement).value.length > 7
-                    }) : y))
-                    break;
-            }
-        })
+                        break;
+                    case "lowercase":
+                        setPassC(prev => prev?.map((y) => y.checker === "lowercase" ? ({
+                            ...y,
+                            status: validateLowercase((e.target as HTMLInputElement).value)
+                        }) : y))
+                        break
+                    case "number":
+                        setPassC(prev => prev?.map((y) => y.checker === "number" ? ({
+                            ...y,
+                            status: validateNumber((e.target as HTMLInputElement).value)
+                        }) : y))
+                        break
+                    case "eightminimum":
+                        setPassC(prev => prev?.map((y) => y.checker === "eightminimum" ? ({
+                            ...y,
+                            status: (e.target as HTMLInputElement).value.length > 7
+                        }) : y))
+                        break;
+                }
+            })
+        }
         addData(e)
         // openPopOver()
         // var passwordOk = rules.every(function (r) { return r.test(password) });
@@ -163,13 +165,13 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
     const addData = useCallback((e: React.FormEvent<HTMLInputElement | HTMLSelectElement> | Event) => {
         if (typeof e.stopPropagation !== "undefined")
             e.stopPropagation()
-        // debugger
+      
         const ele = (e.target as HTMLInputElement | HTMLSelectElement)
         setField(ele.name as keyof tenantAdmin)
         const value = ele.value.toString()
-        // debugger
+      
         if (ele.name === "password") {
-            // debugger
+          
             // ele.focus()
         }
         addInfo("tenantAdmin", ele.name as keyof tenantAdmin, value)
@@ -183,12 +185,12 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
     }, [ ])
 
     useEffect(() => {
-        // debugger
+      
         setData(() => onboarding?.tenantAdmin as tenantAdmin)
         if (typeof onboarding?.tenantAdmin !== "undefined") {
-            // debugger
+          
             setOtherValidations(() => {
-                // debugger
+              
                 const pWordCharacterValidations = ((passC as PasswordChecker[])?.filter(x => !(x?.status)).length) > 0
                 const emailValidation = !validateEmail(onboarding?.tenantAdmin?.email)
                 const mobileNoValidation = !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo:"")
@@ -201,7 +203,7 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
             }
         }
         return () => {
-            // debugger
+          
             // if(typeof onboarding?.tenantAdmin !== "undefined") {
             //     setData( () => undefined)
             // }
@@ -209,9 +211,9 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
 
     }, [onboarding?.tenantAdmin])
     useEffect(() => {
-        // debugger
+      
         if (typeof otherValidations !== "undefined") {
-            // debugger
+          
             if (otherValidations) {
                 setCanNotSubmit(true)
             } else {
@@ -223,7 +225,7 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
         }
     }, [otherValidations])
     const createSuperAdmin = useCallback(() => {
-        // debugger
+      
         if (typeof otherValidations !== "undefined" && typeof canNotSubmit !== "undefined") {
             if (!otherValidations && !canNotSubmit) {
                 toast({
@@ -253,7 +255,7 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
     const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
             if (typeof onboarding !== "undefined" && typeof steps !== "undefined") {
-                // debugger
+              
                 let step = steps[onboarding.state]
                 if (onboarding.state - 1 > -1) {
                     step = steps[onboarding.state - 1]

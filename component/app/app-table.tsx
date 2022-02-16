@@ -42,7 +42,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                             {
                                 showNumbering && (() => {
                                     let sn = i + 1
-                                    // debugger
+                                  
                                     if (typeof pageNumber !== "undefined") {
                                         const c = countPerPage * pageNumber
                                         sn = sn + (c - countPerPage)
@@ -54,10 +54,10 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                                 map(props.columns, ((y, j) => {
                                     const columns = (y.key).split(",") as (keyof T)[];
                                     let data = get(x, columns[0])
-                                    // debugger
+                                  
                                     if (columns.length > 1) {
 
-                                        // debugger
+                                      
                                         data = reduce(columns, (acc: unknown, curr) => acc === "" ? get(x, curr) : acc + " " + get(x, curr), "") as T[keyof T]
                                         if(typeof y.lookUp !== "undefined"){
                                             if(typeof y.ele === "undefined") {
@@ -79,7 +79,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                                                         case appTableElements.image:
                                                             return <Image src={typeof data === "undefined" || data === null ? Images.defaultCompanyLogo : "data:image/jpg;base64," + data as unknown as string} onError={() => Images.defaultCompanyLogo} height="45px" width="auto" />
                                                         case appTableElements.status:
-                                                            // debugger
+                                                          
                                                             return <HStack spacing="11px">{+data === 1 ? <><DotIcon color="green" /> <Text> { typeof y.lookUp === "undefined"? 'Active': y.lookUp[+data]}</Text></> : <><DotIcon color="red" /> <Text>{ typeof y.lookUp === "undefined"? 'Not Active': y.lookUp[+data]}</Text></>
                                                             }</HStack>
                                                         case appTableElements.dateTime:

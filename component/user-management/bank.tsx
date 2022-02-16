@@ -100,11 +100,11 @@ const BankTable:FC = () => {
 
     useEffect(() => {
         
-        // debugger
+      
         const selectedModal = modals.some(x => x.isSubmitted)
         if(selectedModal) {
             mutateData(() => {
-                // debugger
+              
                 mutate(`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`)
                 handleToggleModal()
             })

@@ -9,7 +9,7 @@ export default function useChannelsMonitoring () {
     const { data: institutions, mutate, error:institutionsError } = useSWR<TenantView[]>(apiUrl)
 
     const changeSelectedTenantCode = (tenantCode:string) => {
-        // debugger
+      
         setSelectedTenantCode(tenantCode)
     }
 

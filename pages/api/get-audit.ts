@@ -5,7 +5,7 @@ import { getRandomInt } from "../../lib";
 import { AuditView } from "../../models";
 
 export default async function GettenantAdmins(req:NextApiRequest, res: NextApiResponse) {
-    // debugger
+  
     try {
         const randNum = getRandomInt(Number.length)
         const audit:AuditView[] = range(8).map((x, i) => ({

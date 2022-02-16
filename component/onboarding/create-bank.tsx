@@ -26,10 +26,10 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
     // }, [steps])
     const { validation, addField, inputData } = useValidator<Tenant>()
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Event) => {
-        // debugger
+      
         if(typeof e.stopPropagation !== "undefined")
         e.stopPropagation()
-        // debugger
+      
         const ele = (e.target as HTMLInputElement | HTMLSelectElement)
         addField(ele.id as keyof Tenant)
         let value = ""
@@ -43,7 +43,7 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
             if (file.length > 0) {
                 reader.readAsDataURL(file[0] as Blob)
                 reader.onload = () => {
-                    // debugger
+                  
                     value = reader.result?.toString() as string
                     addField(ele.id as keyof Tenant)
                     addInfo("tenant", ele.id as keyof Tenant, value)
@@ -66,11 +66,11 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
     }, [error])
 
     useEffect(() => {
-        // debugger
+      
 
         if (typeof onboarding?.tenant !== "undefined") {
             inputData(onboarding.tenant)
-            // debugger
+          
             if (Object.values(onboarding.tenant).some((val) => val as string === "")) {
                 setCanNotSubmit(true)
             } else {
@@ -82,7 +82,7 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
         }
 
         return () => {
-            // debugger
+          
             // if(typeof onboarding?.tenant !== "undefined") {
             //     setData( () => undefined)
             // }
@@ -91,7 +91,7 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
     }, [onboarding?.tenant])
 
     const createBank = useCallback((e) => {
-        // debugger
+      
         if (typeof onboarding?.tenant !== "undefined" && typeof canNotSubmit !== "undefined") {
             if (!Object.values(onboarding.tenant).some((val) => val as string === "") && !canNotSubmit) {
                 toast({
@@ -177,11 +177,13 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
                         {onboarding?.tenant?.logo !== "" &&
 
                             <><Badge pos="absolute" borderRadius="full"><CloseButton onClick={(e) => {
-                                // debugger
+                              
                                 const s = new Event('change');
-                                (fileRef.current as HTMLInputElement).value = ""
-                                fileRef.current?.addEventListener('change', addData)
-                                fileRef.current?.dispatchEvent(s)
+                                if(fileRef.current){
+                                    fileRef.current.value = ""
+                                    fileRef.current.addEventListener('change', addData)
+                                    fileRef.current.dispatchEvent(s)
+                                }
                             }} /></Badge>
                                 <Image src={onboarding?.tenant?.logo} h="127px" /></>}
                     </Box>

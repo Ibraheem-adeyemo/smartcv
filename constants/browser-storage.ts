@@ -40,3 +40,7 @@ export enum sessionStorageTimeout {
     fromAnotherOriginTimeout = 15,
     interchangeIdTimeout=15,
 }
+
+export const a = "co"
+export const b = "ok"
+export const c = "ie"

@@ -5,7 +5,7 @@ import { getRandomInt } from "../../lib";
 import { TenantView, Paginate } from "../../models";
 
 export default async function GetBanks(req:NextApiRequest, res: NextApiResponse) {
-    // debugger
+  
     try {
         // const token = await getToken({req, secret: SECRET})
         const {page, countPerPage} = req.query

@@ -19,10 +19,10 @@ const DonutChart:FC<DonutChartProps> = (props: DonutChartProps) => {
   }), [props.backgroundColor, props.chartTitle, props.data, props.labels])
 
   useEffect(() => {
-    // debugger
+  
     Chart.register(...registerables);
     if(canvasRef.current){
-      debugger
+    
     const cv = canvasRef.current.getContext('2d') as CanvasRenderingContext2D 
     const chart = new Chart(cv, {
       type: "doughnut",

@@ -24,7 +24,7 @@ export default function useFilter() {
     }
 
     const changeSelectedTenantCode = (tenantCode: string) => {
-        // debugger
+      
         setSelectedTenantCode(tenantCode)
     }
 
@@ -38,7 +38,7 @@ export default function useFilter() {
     }
 
     const toggleDate = (datesFilter: string) => {
-        // debugger
+      
         switch (datesFilter) {
             case filterDates.today:
                 setIsToday(true)

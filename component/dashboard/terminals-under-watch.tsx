@@ -70,7 +70,7 @@ const TerminalsUnderWatch:FC<TerminalsUnderWatchProps> = (props: TerminalsUnderW
       })
     }
 
-    // debugger
+  
     if ((typeof institutions === "undefined" && typeof institutionsError === "undefined") || (typeof atmInSupervisor === "undefined" && typeof atmInSupervisorError === "undefined")) {
       setLoading({ isLoading: true, text: "" })
     } else {

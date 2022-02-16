@@ -13,7 +13,7 @@ export default function Onboarding(props:any) {
         if((typeof onboarding === "undefined" || onboarding === null) && typeof steps !== "undefined") {
             router.push(steps[0].url)
         } else if(typeof onboarding !== "undefined" && onboarding !== null && typeof steps !== "undefined") {
-            router.push( steps[onboarding?.state as number].url)
+            router.push( steps[onboarding?.state].url)
         }
         setLoading(prev => !prev)
     }, []) 

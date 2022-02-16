@@ -36,7 +36,7 @@ const UserManagementTabProvider:FC<UserManagementTabProviderProps> = (props: Use
     }
 
     const handleToggleModal = (modalInstance?: UserManagementModal) => {
-        // debugger
+      
         if(typeof  modalInstance !== "undefined") {
             setModals((prev) => map(prev, (x) => x.name === modalInstance.name?({...x, ...modalInstance}): x))
         } else {

@@ -10,7 +10,7 @@ const LoginForm:FC = () => {
     const { user, signIn, signOut } = useContext(AuthContext)
 
     useEffect(() => {
-        // debugger
+      
         if (typeof window !== "undefined") {
             setCookie(cookieKeys.token, "", cookiesTimeout.timeoutCookie)
         }

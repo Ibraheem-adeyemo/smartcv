@@ -67,7 +67,7 @@ export default function useOnboarding(): UseOnboardingReturn {
     const [loading, setLoading] = useLoading({ isLoading: false, text: "" })
 
     useEffect(() => {
-        // debugger
+      
         if (typeof window !== "undefined") {
             setCookie(cookieKeys.token, "", cookiesTimeout.timeoutCookie)
         }
@@ -116,7 +116,7 @@ export default function useOnboarding(): UseOnboardingReturn {
         setLoading({ isLoading: false, text: "" })
     }
     const addInfo = (onboardingKey: keyof Onboarding, stepKey: keyof Tenant | keyof tenantAdmin | keyof InstitutionColorInfo, value: any) => {
-        // debugger
+      
         setOnboarding(prev => {
 
             const data: Onboarding = _.clone(prev)
@@ -147,7 +147,7 @@ export default function useOnboarding(): UseOnboardingReturn {
         setOnboarding(prev => (
             {
                 ...prev,
-                state: (prev.state as number) + 1,
+                state: (prev.state) + 1,
                 [onboardingKey]: {
                     ...prev[onboardingKey] as Tenant | tenantAdmin | InstitutionColorInfo,
                     completed: true
@@ -159,7 +159,7 @@ export default function useOnboarding(): UseOnboardingReturn {
         setOnboarding(prev => (
             {
                 ...prev,
-                state: typeof state === "undefined" ? (prev.state as number) : state,
+                state: typeof state === "undefined" ? (prev.state) : state,
                 [onboardingKey]: {
                     ...data
                 }
@@ -170,7 +170,7 @@ export default function useOnboarding(): UseOnboardingReturn {
         setOnboarding(prev => (
             {
                 ...prev,
-                state: (prev.state as number) - 1
+                state: (prev.state) - 1
             }))
     }
 

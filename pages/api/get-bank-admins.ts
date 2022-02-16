@@ -5,7 +5,7 @@ import { getRandomInt } from "../../lib";
 import { TenantAdminView, Paginate } from "../../models";
 
 export default async function GettenantAdmins(req:NextApiRequest, res: NextApiResponse) {
-    // debugger
+  
     try {
         // const token = await getToken({req, secret: SECRET})
         const {page, countPerPage} = req.query

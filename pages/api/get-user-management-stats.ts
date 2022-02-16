@@ -4,7 +4,7 @@ import { getRandomInt } from "../../lib";
 
 export async function GetUserManagementStats(eq: NextApiRequest, res: NextApiResponse) {
     try {
-        // debugger
+      
         const data = [
             {
                 name: UserManagementStatsName.createdBanks,

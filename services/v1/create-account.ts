@@ -3,7 +3,7 @@ import { getCookie, getRandomInt, setCookie } from "../../lib"
 import { Onboarding } from "../../models"
 
 export const createAccountAsync = async (onboarding: Onboarding) => {
-    // debugger
+  
     try {
         const interchangeId1 = getCookie(cookieKeys.interchangeId)
         const interchangeId2 = window.sessionStorage.getItem(sessionStorageKeys.interchangeId)
@@ -65,7 +65,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
             throw new Error("You need to login with your Organization ID")
         }
     } catch (error: any) {
-        // debugger
+      
         throw error
     }
 }

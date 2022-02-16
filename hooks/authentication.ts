@@ -52,7 +52,7 @@ export default function useAuthentication() {
 
 
     useEffect(() => {
-        // debugger
+      
         if (typeof window !== "undefined") {
 
             if (getCookie(cookieKeys.token) === "") {
@@ -67,11 +67,11 @@ export default function useAuthentication() {
 
         if (typeof window !== "undefined") {
             if ((typeof user === "undefined" && typeof error !== "undefined") || token === "") {
-                // debugger
+              
                 // console.log({AuthenticatedPage})
                 const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
 
-                // debugger
+              
                 if (shouldRedirect) {
                     setCookie(cookieKeys.redirectUrl, window.location.pathname, cookiesTimeout.redirectUrlTimeout)
                     window.location.href = links.login
@@ -81,7 +81,7 @@ export default function useAuthentication() {
     }, [token])
 
     const loginWithPassport = async (code: string) => {
-        // debugger
+      
         // if (typeof code !== "undefined") {
             const body = {
                 client_id: CLIENT_ID,
@@ -102,7 +102,7 @@ export default function useAuthentication() {
                     },
                     body: urlencoded
                 })
-                // debugger
+              
                 if (typeof response !== "undefined") {
                     postLoginAction(response.access_token, response.refresh_token)
                     mutate(url)
@@ -119,7 +119,7 @@ export default function useAuthentication() {
         //                 "Content-Type": "application/x-www-form-urlencoded"
         //             },
         //         })
-        //         // debugger
+        //       
         //         if (typeof response !== "undefined") {
         //             postLoginAction(response.access_token)
         //             mutate(url)
@@ -150,7 +150,7 @@ export default function useAuthentication() {
                 },
                 body: urlencoded
             })
-            // debugger
+          
             if (typeof response !== "undefined") {
                 postLoginAction(response.access_token, response.refresh_token)
                 mutate(url)

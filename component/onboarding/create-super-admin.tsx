@@ -27,7 +27,7 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
     const toast = useToast()
     
     const setUserAuthority = (user: tenantAdmin) => {
-        // debugger
+      
         // setAuthenticatedUser(user)
         onCloseModal()
         resetForm("tenantAdmin", user)
@@ -60,7 +60,7 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
     }, [onboarding?.tenantAdmin])
     useEffect(() => {
         if (typeof onboarding !== "undefined" && typeof steps !== "undefined" && typeof props.step !== "undefined") {
-            // debugger
+          
             let step = steps[props.step]
             if (props.step - 1 > -1) {
                 step = steps[props.step - 1]

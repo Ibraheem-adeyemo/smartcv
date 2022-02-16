@@ -50,7 +50,7 @@ const AddNewBank:FC = () => {
             if (file.length > 0) {
                 reader.readAsDataURL(file[0] as Blob)
                 reader.onload = () => {
-                    // debugger
+                  
                     value = reader.result?.toString() as string
                     addField(ele.id as keyof TenantView)
                     formOnChange({ "logo": value })
@@ -69,7 +69,7 @@ const AddNewBank:FC = () => {
     function setHeaderColor(e: React.FormEvent<HTMLInputElement>) {
 
         e.stopPropagation()
-        // debugger
+      
         institutionColorAddField("headerColor")
         institutionColorFormOnChange({"headerColor":(e.target as HTMLInputElement).value})
     }
@@ -87,13 +87,13 @@ const AddNewBank:FC = () => {
     }
 
     const saveBank = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-        // debugger
+      
         changeLoading((prev) => ({ isLoading: true, text: "Creating bank" }))
         handleToggleModal({ ...selectedModal, isSubmitted: !selectedModal.isSubmitted })
         changeLoading((prev) => ({ isLoading: false, text: "" }))
     }, [form])
     useEffect(() => {
-        // debugger
+      
         const modal = modals.find((x, i) => x.name === UserManagementModalNames.addNewBank) as UserManagementModal
         setSelectedModal(modal)
     }, [modals])
@@ -162,7 +162,9 @@ const AddNewBank:FC = () => {
                                         display: "none"
                                     }} border="dotted" onChange={addData} />
                                     <Button border="1px dashed" borderColor="brand.mutext-text" w="100%" bgColor="white" px="70px" py="9px" onClick={() => {
-                                        fileRef.current?.click()
+                                        if(fileRef.current){
+                                            fileRef.current.click()
+                                        }
                                     }}>
                                         <Flex gridGap="29px">
                                             <Image src={`${Images.imageUpload}`} h="46px" w="47px" />
@@ -179,11 +181,13 @@ const AddNewBank:FC = () => {
                                         {form.logo !== "" &&
 
                                             <><Badge pos="absolute" borderRadius="full"><CloseButton onClick={(e) => {
-                                                // debugger
+                                              
                                                 const s = new Event('change');
-                                                (fileRef.current as HTMLInputElement).value = ""
-                                                fileRef.current?.addEventListener('change', addData)
-                                                fileRef.current?.dispatchEvent(s)
+                                                if(fileRef.current){
+                                                    fileRef.current.value = ""
+                                                    fileRef.current.addEventListener('change', addData)
+                                                    fileRef.current.dispatchEvent(s)
+                                                }
                                             }} /></Badge>
                                                 <Image src={form.logo} h="127px" w="auto" /></>}
                                     </Box>
@@ -220,7 +224,9 @@ const AddNewBank:FC = () => {
                                                         <Flex bgColor="brand.muted-background" border={ typeof institutionColorValidation?.touched !== "undefined" && institutionColorValidation?.touched.headerColor === "touched" && !validateHexColor( institutionColorForm?.headerColor as string) ? "1px solid red" : "unset"} borderRadius="8px" w="100%" alignItems="center" px="12px" py="16px">
                                                             <Button bgColor={institutionColorForm?.headerColor} w="40px" h="16px" borderRadius="8px" onClick={
                                                                 () => {
-                                                                    headerColorRef.current?.click()
+                                                                    if(headerColorRef.current){
+                                                                        headerColorRef.current.click()
+                                                                    }
                                                                 }
                                                             }>
                                                                 <Input bgColor={headerColorRef.current?.value} visibility="hidden" ref={headerColorRef} onChange={setHeaderColor} name="headerColor" type="color" w="40px" h="16px" borderRadius="8px" value={institutionColorForm?.headerColor} />
@@ -232,7 +238,9 @@ const AddNewBank:FC = () => {
                                                         <Flex bgColor="brand.muted-background" borderRadius="8px" border={typeof institutionColorValidation?.touched !== "undefined" && institutionColorValidation?.touched.buttonColor === "touched" && !validateHexColor( institutionColorForm?.buttonColor as string) ? "1px solid red" : "unset"} w="100%" alignItems="center" px="12px" py="16px">
                                                             <Button bgColor={institutionColorForm?.buttonColor} w="40px" h="16px" borderRadius="8px" onClick={
                                                                 () => {
-                                                                    buttonColorRef.current?.click()
+                                                                    if(buttonColorRef.current){
+                                                                        buttonColorRef.current.click()
+                                                                    }
                                                                 }
                                                             }>
                                                                 <Input visibility="hidden" type="color" name="buttonColor" w="40px" ref={buttonColorRef} onChange={setButtonColor} h="16px" borderRadius="8px" value={institutionColorForm?.buttonColor} />
@@ -244,7 +252,9 @@ const AddNewBank:FC = () => {
                                                         <Flex bgColor="brand.muted-background" borderRadius="8px" w="100%" border={typeof institutionColorValidation?.touched !== "undefined" && institutionColorValidation?.touched.headerColor === "touched" && !validateHexColor( institutionColorForm?.sidebarColor as string) ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
                                                             <Button bgColor={institutionColorForm?.sidebarColor} w="40px" h="16px" borderRadius="8px" onClick={
                                                                 () => {
-                                                                    sidebarColorRef.current?.click()
+                                                                    if(sidebarColorRef.current){
+                                                                        sidebarColorRef.current.click()
+                                                                    }
                                                                 }
                                                             }>
                                                                 <Input visibility="hidden" ref={sidebarColorRef} name="sidebarColor" onChange={setSidebarColor} type="color" w="40px" h="16px" borderRadius="8px" value={institutionColorForm?.sidebarColor} />

@@ -26,7 +26,7 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
     const [dropdownContent, setDropdownContent] = useState<DropdownContent[]>()
     const [query, setQuery] = useState<string>()
     useEffect(() => {
-        // debugger
+      
         setDropdownContent(props.data.map((x, i) => (
             typeof x === "string" ? {
                 label: x,
@@ -60,11 +60,11 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
 
     useEffect(() => {
         if (typeof dropdownContent !== "undefined" && dropdownContent.length > 0) {
-            // debugger
+          
             const selectedItem = find(dropdownContent, (content) => content.selected)
             if (typeof selectedItem !== "undefined") {
                 if (typeof props.onSelected !== "undefined") {
-                    // debugger
+                  
                     props.onSelected(selectedItem)
                 }
             }

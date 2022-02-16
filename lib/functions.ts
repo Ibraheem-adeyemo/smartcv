@@ -13,7 +13,7 @@ export function shortenNumber(amount: number) {
     if (!isNaN(amount)) {
         const length = String(amount).length
         t = _.reduce(g, (prev, curr) => {
-            // debugger
+          
             const fractionAmount = amount / curr.value
             const sp = String(fractionAmount).split(".")
             if (String(sp[0]).length <= 3) {
@@ -83,7 +83,7 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
 
     try {
         // console.log({init});
-        // debugger
+      
         let token = typeof window !== "undefined" ? getCookie(cookieKeys.token) : ""
         const response = token !== "" ? await fetch(input, typeof init === "undefined" ? {
             method: "GET",
@@ -92,7 +92,7 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
             }
         } : init) : await fetch(input, init);
         const data = await response.json() as APIResponse<T>
-        // debugger
+      
         if (response.ok) {
             if (typeof data.data !== "undefined") {
                 return data.data as T;
@@ -101,7 +101,7 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
             }
         }
         else if (typeof data !== "undefined") {
-            // debugger
+          
             if (typeof data.message !== "undefined") {
                 throw data.message
             } else {

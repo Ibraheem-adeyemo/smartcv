@@ -52,14 +52,14 @@ interface LoadAvatarProps {
 
 const LoadAvatar: FC<LoadAvatarProps> = (props: LoadAvatarProps) => {
     // let loadTab;
-    // debugger
+  
     if (typeof window !== "undefined") {
-        // debugger
+      
         if (props.state === props.onboarding?.state) {
             return <Avatar name={`${props.state + 1}`} bgColor="brand.muted-blue"></Avatar>
         } else {
             const tab = props.onboarding[props.step.key as keyof OnboardingModel] as Tenant | tenantAdmin | InstitutionColorInfo
-            // debugger
+          
             if (tab.completed) {
                 return <Avatar bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
             }
@@ -86,7 +86,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
 
     const createAccount = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // debugger
+      
         startLoading()
         try {
             if (typeof onboarding !== "undefined") {
@@ -110,7 +110,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
             }
             stopLoading()
         } catch (error: any) {
-            // debugger
+          
             if (typeof error.message !== "undefined" || typeof error !== "undefined") {
                 toast({
                     status: "error",

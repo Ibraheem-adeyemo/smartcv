@@ -49,7 +49,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
 
     useEffect(() => {
         if (typeof onboarding !== "undefined" && typeof steps !== "undefined" && typeof props.step !== "undefined") {
-            // debugger
+          
             let step = steps[props.step]
             if (props.step - 1 > -1) {
                 step = steps[props.step - 1]
@@ -60,7 +60,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
             }
 
             if (typeof onboarding?.institutionColorInfo !== "undefined") {
-                if (["headerColor", "buttonColor", "sidebarColor"].filter(x => (onboarding?.institutionColorInfo as InstitutionColorInfo)[x as keyof InstitutionColorInfo] === "").length > 0) {
+                if (["headerColor", "buttonColor", "sidebarColor"].filter(x => onboarding?.institutionColorInfo[x as keyof InstitutionColorInfo] === "").length > 0) {
 
                     setInitTialColorProps()
                 }
@@ -84,7 +84,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
     const addData = useCallback((e: React.FormEvent<HTMLInputElement | HTMLSelectElement> | Event) => {
         if (typeof e.stopPropagation !== "undefined")
             e.stopPropagation()
-        // debugger
+      
         const ele = (e.target as HTMLInputElement | HTMLSelectElement)
         // setField(ele.name as keyof SuperAdminInfo)
         const value = ele.value.toString()
@@ -98,10 +98,10 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
     const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
             if (typeof onboarding !== "undefined" && typeof steps !== "undefined") {
-                // debugger
-                let step = steps[onboarding.state as number]
-                if (onboarding.state as number - 1 > -1) {
-                    step = steps[onboarding.state as number - 1]
+              
+                let step = steps[onboarding.state]
+                if (onboarding.state - 1 > -1) {
+                    step = steps[onboarding.state - 1]
                 }
                 previousState()
                 router.push(step.url)
@@ -131,7 +131,9 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                     <Flex bgColor="brand.muted-background" border={(typeof validation !== "undefined" && validation[0] !== "") ? "1px solid red" : "unset"} borderRadius="8px" w="100%" alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.headerColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
-                                headerColorRef.current?.click()
+                                if(headerColorRef.current){
+                                    headerColorRef.current.click()
+                                }
                             }
                         }>
                             <Input bgColor={headerColorRef.current?.value} visibility="hidden" ref={headerColorRef} onChange={addData} name="headerColor" type="color" w="40px" h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.headerColor} />
@@ -143,7 +145,9 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                     <Flex bgColor="brand.muted-background" borderRadius="8px" border={(typeof validation !== "undefined" && validation[2] !== "") ? "1px solid red" : "unset"} w="100%" alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.buttonColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
-                                buttonColorRef.current?.click()
+                                if(buttonColorRef.current){
+                                    buttonColorRef.current.click()
+                                }
                             }
                         }>
                             <Input visibility="hidden" type="color" name="buttonColor" w="40px" ref={buttonColorRef} onChange={addData} h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.buttonColor} />
@@ -155,7 +159,9 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                     <Flex bgColor="brand.muted-background" borderRadius="8px" w="100%" border={(typeof validation !== "undefined" && validation[1] !== "") ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.sidebarColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
-                                sidebarColorRef.current?.click()
+                                if( sidebarColorRef.current){
+                                    sidebarColorRef.current.click()
+                                }
                             }
                         }>
                             <Input visibility="hidden" ref={sidebarColorRef} name="sidebarColor" onChange={addData} type="color" w="40px" h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.sidebarColor} />

@@ -33,7 +33,7 @@ export default function useCrossDomainOnboarding() {
     const validateKeyAndSetData = () => {
         if (message?.value === selectedApp?.key) {
             const go = new URL(selectedApp?.origin as string)
-            // debugger
+          
             // setCookie(cookieKeys.fromAnotherOrigin, selectApp.origin, cookiesTimeout.fromAnotherOriginTimeout, go.host)
             window.sessionStorage.setItem(sessionStorageKeys.fromAnotherOrigin, selectedApp?.key as string)
             window.sessionStorage.setItem(sessionStorageKeys.fromAnotherOriginSetDate, (new Date()).toString())
@@ -53,7 +53,7 @@ export default function useCrossDomainOnboarding() {
             setIsOnInterval(prev => {
                 const intervals = prev
                 const currentInterval = { key: intervalKeys.interchangeId, interval: setInterval(() => {
-                    // debugger
+                  
                     // window.top?.location.reload()
                     window.sessionStorage.removeItem(sessionStorageKeys.interchangeId)
                     window.sessionStorage.removeItem(sessionStorageKeys.interchangeIdSetDate)
@@ -113,7 +113,7 @@ export default function useCrossDomainOnboarding() {
     useEffect(() => {
 
         const readEventMsg = (ev: MessageEvent<any>) => {
-            // debugger
+          
             setisOnCrossDomain(false)
             if (ev.data && allowedApp.some((x) => x.origin === ev.origin)) {
                 const message = JSON.parse(ev.data) as PostMessage
@@ -122,9 +122,9 @@ export default function useCrossDomainOnboarding() {
             }
         }
 
-        // ?debugger
+        
         if (typeof window !== "undefined") {
-            // debugger
+          
             window.addEventListener("message", readEventMsg)
         }
         return () => {
@@ -138,14 +138,14 @@ export default function useCrossDomainOnboarding() {
                 postAMessage({"action":"${onboardingCrossDomain.loaded}"}, selectedApp.origin)
                 // console.log(message.payload) /* Do something with the data from onboarding portal */
             } else if (message.action === onboardingCrossDomain.confirmKey) {
-                // debugger
+              
                 validateKeyAndSetData()
                 setisOnCrossDomain(true)
                 setIsOnInterval((prev) => {
                     const intervals = prev
                     const currentInterval = {
                         key: intervalKeys.fromAnotherOrigin, interval: setInterval(() => {
-                            // debugger
+                          
                             // window.top?.location.reload()
                             reconnect()
                         }, sessionStorageTimeout.fromAnotherOriginTimeout * 1000 * 60)

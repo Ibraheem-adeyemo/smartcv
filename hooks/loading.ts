@@ -15,7 +15,7 @@ export default function useLoading(initialData?: Loading) : UseLoadingReturn {
     },[])
 
     const changeLoading = (callback:defaultCallback<Loading> | Loading) => {
-        // debugger
+      
         setLoading(callback)
     }
     return [loading, changeLoading]

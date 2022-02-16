@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function usePagination<T extends Record<keyof T, T[keyof T]>>(initialCountPerPage: number) {
     // console.log({totalNumber, initialCountPerPage})
-    // debugger
+  
 
     const initialIndex = 1
     const [pageNumber, setPageNumber] = useState(initialIndex)
@@ -33,7 +33,7 @@ export default function usePagination<T extends Record<keyof T, T[keyof T]>>(ini
 
     useEffect(() => {
         setTotalPageNumber((prev) => {
-            // debugger
+          
             if (typeof totalNumber !== "undefined" && typeof countPerPage !== "undefined") {
                 const division = Math.floor(totalNumber / countPerPage)
                 if (totalNumber % countPerPage == 0) {
@@ -49,7 +49,7 @@ export default function usePagination<T extends Record<keyof T, T[keyof T]>>(ini
 
 
     const setPaginationProps = (totalNumber: number) => {
-        // debugger
+      
         setTotalNumber(totalNumber)
     
     }

@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   }, [])
 
   useEffect(() => {
-    // debugger
+  
     if (typeof window !== "undefined") {
       if (getCookie(cookieKeys.token) === "") {
         // setCookie("redirectUrl", router.asPath, 10)
@@ -28,7 +28,7 @@ const Home: NextPage = () => {
       }
       else if (typeof user !== "undefined" || typeof error !== "undefined") {
         if (typeof user !== "undefined") {
-          // debugger
+        
           if (getCookie(cookieKeys.redirectUrl) !== "") {
             const redirectUrl = getCookie(cookieKeys.redirectUrl)
             setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)

@@ -16,7 +16,7 @@ const AuditExport: NextComponentType = () => {
 
     return (
         <Button variant="primary-button" px="53px" py="8px" onClick={()=> {
-            // debugger
+          
             if(typeof auditView !== "undefined"){
                 const keynames = filter(map(columns, (x) => x.name), (x) => x !== "")
                 
