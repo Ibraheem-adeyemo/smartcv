@@ -5,7 +5,7 @@ import React, { useContext } from "react";
 import { ChannelsMonitoringTabs } from "../src/component/channels-monitoring";
 import ChannelsMonitoringSearch from "../src/component/channels-monitoring/channels-monitoring-search.";
 import { Authenticated } from "../src/component/layouts";
-import { filtersToShowDefaultValue } from "../constants";
+import { filtersToShowDefaultValue } from "../src/constants";
 import { ChannelsMonitoringProvider, StatsProvider } from "../src/provider";
 import { StatsContext } from "../src/provider/stats-provider";
 
