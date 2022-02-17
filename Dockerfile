@@ -80,6 +80,15 @@ FROM nginx:alpine
 
 #!/bin/sh
 
+ARG http_proxy
+ENV http_proxy ${http_proxy}
+
+ARG http_proxy
+ENV https_proxy ${https_proxy}
+
+ARG NODE_ENV
+ENV NODE_ENV ${NODE_ENV}
+
 COPY ./public/.nginx/nginx.conf /etc/nginx/nginx.conf
 
 ## Remove default nginx index page
