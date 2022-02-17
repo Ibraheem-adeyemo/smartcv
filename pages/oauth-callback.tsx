@@ -3,8 +3,8 @@ import { useToast, Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import React, { useContext, useEffect } from "react"
-import { cookieKeys, cookiesTimeout, links, notificationMesage } from "../constants"
-import { getCookie, setCookie } from "../lib"
+import { cookieKeys, cookiesTimeout, links, notificationMesage } from "../src/constants"
+import { getCookie, setCookie } from "../src/lib"
 import { AuthContext } from "../src/provider/auth-provider"
 
 const OauthCallback:NextPage = () => {

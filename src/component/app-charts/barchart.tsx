@@ -2,7 +2,7 @@ import { Chart, registerables } from "chart.js";
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import { GroupedBarChartProps } from "../../models";
 import { Canvas } from ".";
-import { shortenNumber } from "../../src/lib";
+import { shortenNumber } from "../../lib";
 
 const GroupedBarchart:FC<GroupedBarChartProps> = (props: GroupedBarChartProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
