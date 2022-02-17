@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { FC, useContext, useMemo } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, appTableElements } from "../../constants";
-import { InterchangeDisconnectionRequest, InterchangeDisconnectionStatus, Paginate, TenantView } from "../../models";
+import { InterchangeDisconnectionRequest, InterchangeDisconnectionStatus as InterchangeDisconnectionStatusModdel, Paginate, TenantView } from "../../models";
 import { PaginatorProvider } from "../../provider";
 import { PaginatorContext } from "../../provider/paginator-provider";
 import { AppTable } from "../app";
@@ -10,7 +10,7 @@ import { AppTable } from "../app";
 const InterchangeDisconnectionStatusTable:FC = () => {
     
     const { pageNumber, countPerPage } = useContext(PaginatorContext)
-    const { data: connnectionRequest, mutate:_mutate, error } = useSWR<Paginate<InterchangeDisconnectionStatus>>(`${apiUrlsv1.interchangeDisconnectionRequest}?page=${pageNumber-1}&size=${countPerPage}`)
+    const { data: connnectionRequest, mutate:_mutate, error } = useSWR<Paginate<InterchangeDisconnectionStatusModdel>>(`${apiUrlsv1.interchangeDisconnectionRequest}?page=${pageNumber-1}&size=${countPerPage}`)
 
     const data = useMemo(() => ({
         columns: [{
@@ -54,9 +54,9 @@ const InterchangeDisconnectionStatusTable:FC = () => {
                 color:"red"
             }
         ],
-        data: typeof connnectionRequest === "undefined" && typeof error === "undefined" ? undefined: (typeof connnectionRequest !== "undefined" && typeof error === "undefined" )?  connnectionRequest.content as InterchangeDisconnectionStatus[]:[]
+        data: typeof connnectionRequest === "undefined" && typeof error === "undefined" ? undefined: (typeof connnectionRequest !== "undefined" && typeof error === "undefined" )?  connnectionRequest.content as InterchangeDisconnectionStatusModdel[]:[]
     }), [connnectionRequest, error])
-    return (<AppTable<InterchangeDisconnectionStatus> columns={data?.columns} rows={data.data as InterchangeDisconnectionStatus[]} showNumbering />)
+    return (<AppTable<InterchangeDisconnectionStatusModdel> columns={data?.columns} rows={data.data as InterchangeDisconnectionStatusModdel[]} showNumbering />)
 }
 
 const InterchangeDisconnectionStatus: FC = () => {
