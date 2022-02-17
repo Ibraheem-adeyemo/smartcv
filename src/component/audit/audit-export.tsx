@@ -5,9 +5,9 @@ import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import React, { useContext } from "react";
-import { appDate } from "../../src/lib";
+import { appDate } from "../../lib";
 import { AuditView } from "../../models";
-import { AuditContext } from "../../src/provider/audit-provider";
+import { AuditContext } from "../../provider/audit-provider";
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 

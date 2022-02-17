@@ -1,8 +1,8 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Table, Tbody, Tr, Td, Flex } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Table, Tr, Td, Flex } from "@chakra-ui/react";
 import React, { FC, useContext } from "react";
-import { apiUrlsv1, API_BASE_URL, UserManagementModalNames } from "../../src/constants";
+import { apiUrlsv1, API_BASE_URL, UserManagementModalNames } from "../../constants";
 import { ATMCount, ATMStats, AuditView } from "../../models";
-import { AuditContext } from "../../src/provider/audit-provider";
+import { AuditContext } from "../../provider/audit-provider";
 const mapData = function <T>(objString: string): T {
     try {
         const parsedString = JSON.parse(objString)
@@ -79,7 +79,7 @@ const DataObjectView = <T extends Record<keyof T, T[keyof T]>>(props: DataArrayV
                         for (const key in props.data) {
                             k++
                             const usedKey = key as keyof (T)
-                            ui = <Tr key={j}>
+                            ui = <Tr key={k}>
                                 <Td>{key}:</Td>
                                 <Td>{props.data[usedKey]}</Td>
                             </Tr>
