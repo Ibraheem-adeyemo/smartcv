@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx next build && npx next export",
+    "build": "next build && next export",
     "build:isw": "env-cmd -f .env.production.local npm run build",
     "build:liveserver": "env-cmd -f .env.liveserver.local npm run build",
     "start": "next start",
