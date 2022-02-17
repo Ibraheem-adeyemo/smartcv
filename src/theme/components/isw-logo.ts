@@ -1,4 +1,4 @@
-import { Images } from "../../constants"
+import { Images } from "../../src/constants"
 
 const ISWLogo = {
     // Styles for the base style

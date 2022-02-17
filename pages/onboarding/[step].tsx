@@ -1,17 +1,17 @@
-import { Onboarding } from "../../component/layouts";
+import { Onboarding } from "../../src/component/layouts";
 import { Text } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
 import { FC, useCallback, useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { cookieKeys, links, sessionStorageKeys } from "../../constants";
-import { getCookie } from "../../lib";
-import { OnboardingProvider } from "../../provider";
-import { OnboardingContext } from "../../provider/onboarding-provider";
-import CrossDomainOnboardingProvider from "../../provider/cross-domain-onboarding-provider";
+import { cookieKeys, links, sessionStorageKeys } from "../../src/constants";
+import { getCookie } from "../../src/lib";
+import { OnboardingProvider } from "../../src/provider";
+import { OnboardingContext } from "../../src/provider/onboarding-provider";
+import CrossDomainOnboardingProvider from "../../src/provider/cross-domain-onboarding-provider";
 
-const CreateBank = dynamic(() => import('../../component/onboarding/create-bank'), {ssr:false})
-const CreateSuperAmin = dynamic(() => import('../../component/onboarding/create-super-admin'), {ssr:false})
-const InstitutionColors = dynamic(() => import('../../component/onboarding/institution-colors'), {ssr:false})
+const CreateBank = dynamic(() => import('../../src/component/onboarding/create-bank'), {ssr:false})
+const CreateSuperAmin = dynamic(() => import('../../src/component/onboarding/create-super-admin'), {ssr:false})
+const InstitutionColors = dynamic(() => import('../../src/component/onboarding/institution-colors'), {ssr:false})
 
 
 interface LoadTabProps {

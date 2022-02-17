@@ -2,10 +2,10 @@ import { Center, Flex, VStack } from "@chakra-ui/layout"
 import { CircularProgress } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
-import { OnboardingNav } from "../../component/layouts"
-import { SuccessCard } from "../../component/onboarding"
-import { cookieKeys, links } from "../../constants"
-import { getCookie } from "../../lib"
+import { OnboardingNav } from "../../src/component/layouts"
+import { SuccessCard } from "../../src/component/onboarding"
+import { cookieKeys, links } from "../../src/constants"
+import { getCookie } from "../../src/lib"
 
 export default function SuccessPage() {
     const [status, setStatus] = useState(typeof window !== "undefined" ? getCookie(cookieKeys.createdAccount) : "")

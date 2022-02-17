@@ -1,10 +1,10 @@
 import { Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import React, { } from "react"
-import { LoginForm } from "../component/auth"
-import { InterswitchLogo } from "../component/custom-component"
-import { NonAuthenticated } from "../component/layouts"
-import MissionStatement from "../component/mission-statement"
+import { LoginForm } from "../src/component/auth"
+import { InterswitchLogo } from "../src/component/custom-component"
+import { NonAuthenticated } from "../src/component/layouts"
+import MissionStatement from "../src/component/mission-statement"
 
 
 const Login:NextPage = () => {

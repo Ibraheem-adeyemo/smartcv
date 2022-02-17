@@ -1,5 +1,5 @@
 import { NextPage } from "next"
-import { Authenticated } from "../component/layouts"
+import { Authenticated } from "../src/component/layouts"
 
 const TransactionsMonitoring:NextPage = () => {
     return (

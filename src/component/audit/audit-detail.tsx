@@ -1,8 +1,8 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Table, Tbody, Tr, Td, Flex } from "@chakra-ui/react";
 import React, { FC, useContext } from "react";
-import { apiUrlsv1, API_BASE_URL, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, API_BASE_URL, UserManagementModalNames } from "../../src/constants";
 import { ATMCount, ATMStats, AuditView } from "../../models";
-import { AuditContext } from "../../provider/audit-provider";
+import { AuditContext } from "../../src/provider/audit-provider";
 const mapData = function <T>(objString: string): T {
     try {
         const parsedString = JSON.parse(objString)

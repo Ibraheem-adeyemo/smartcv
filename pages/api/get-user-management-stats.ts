@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { UserManagementStatsName } from "../../constants";
-import { getRandomInt } from "../../lib";
+import { UserManagementStatsName } from "../../src/constants";
+import { getRandomInt } from "../../src/lib";
 
 export async function GetUserManagementStats(eq: NextApiRequest, res: NextApiResponse) {
     try {

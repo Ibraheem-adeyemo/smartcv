@@ -1,7 +1,7 @@
 import { range } from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
-import { branches, modules, Names, Tenants } from "../../constants";
-import { getRandomInt } from "../../lib";
+import { branches, modules, Names, Tenants } from "../../src/constants";
+import { getRandomInt } from "../../src/lib";
 import { AuditView } from "../../models";
 
 export default async function GettenantAdmins(req:NextApiRequest, res: NextApiResponse) {

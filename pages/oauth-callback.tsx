@@ -5,7 +5,7 @@ import { useRouter } from "next/router"
 import React, { useContext, useEffect } from "react"
 import { cookieKeys, cookiesTimeout, links, notificationMesage } from "../constants"
 import { getCookie, setCookie } from "../lib"
-import { AuthContext } from "../provider/auth-provider"
+import { AuthContext } from "../src/provider/auth-provider"
 
 const OauthCallback:NextPage = () => {
     const { loginWithPassport } = useContext(AuthContext)

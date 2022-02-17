@@ -1,11 +1,11 @@
 import { Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import React from "react"
-import { RegisterForm } from "../component/auth"
-import { InterswitchLogo } from "../component/custom-component"
-import { NonAuthenticated } from "../component/layouts"
-import MissionStatement from "../component/mission-statement"
-import { CrossDomainOnboardingProvider } from "../provider"
+import { RegisterForm } from "../src/component/auth"
+import { InterswitchLogo } from "../src/component/custom-component"
+import { NonAuthenticated } from "../src/component/layouts"
+import MissionStatement from "../src/component/mission-statement"
+import { CrossDomainOnboardingProvider } from "../src/provider"
 
 
 const Register: NextPage = () => {

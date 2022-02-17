@@ -1,7 +1,7 @@
 import { NextPage } from "next";
-import { InterchangeDisconnectionAppBar, InterchangeDisconnectionTabs, InterchangeDisconnectionTable } from "../component/interchange-disconnection";
-import AuthenticatedLayout from "../component/layouts/authenticated";
-import InterchangeDisconnectionProvider from "../provider/interchange-disconnection-provider";
+import { InterchangeDisconnectionAppBar, InterchangeDisconnectionTabs, InterchangeDisconnectionTable } from "../src/component/interchange-disconnection";
+import AuthenticatedLayout from "../src/component/layouts/authenticated";
+import InterchangeDisconnectionProvider from "../src/provider/interchange-disconnection-provider";
 
 
 const InterchangeDisconnection: NextPage = () => {

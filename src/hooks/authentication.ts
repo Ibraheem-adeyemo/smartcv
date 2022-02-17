@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, PASSPORT_AUTHORIZE_URL, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, RESPONSE_TYPE, SCOPE, SECRET } from '../constants'
+import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie } from '../lib'
 import { AuthModel, RefreshTokenRequestBody, TokenRequestBody, TokenResponsBody } from '../models'
 export default function useAuthentication() {
@@ -8,7 +8,7 @@ export default function useAuthentication() {
     const url = PASSPORT_PROFILE_URL
     const { mutate } = useSWRConfig()
     const { data: user, mutate: _mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie(cookieKeys.token) == "" ? null : url)
-    const [countFlag, setCoountFlag] = useState(0)
+   
     // const [user, setUser] = useState<any>()
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie(cookieKeys.token) : "")
 

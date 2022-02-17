@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Banks, Names, Roles, SECRET } from "../../constants";
-import { getRandomInt } from "../../lib";
+import { Banks, Names, Roles, SECRET } from "../../src/constants";
+import { getRandomInt } from "../../src/lib";
 import { ISWAdminView, Paginate } from "../../models";
 
 export default async function ISWAdmin(req:NextApiRequest, res: NextApiResponse) {

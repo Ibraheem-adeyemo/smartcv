@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Tenants, Names } from "../../constants";
-import { getRandomInt } from "../../lib";
+import { Tenants, Names } from "../../src/constants";
+import { getRandomInt } from "../../src/lib";
 import { TenantAdminView, Paginate } from "../../models";
 
 export default async function GettenantAdmins(req:NextApiRequest, res: NextApiResponse) {

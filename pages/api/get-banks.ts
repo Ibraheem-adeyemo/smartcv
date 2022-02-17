@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Tenants } from "../../constants";
-import { getRandomInt } from "../../lib";
+import { Tenants } from "../../src/constants";
+import { getRandomInt } from "../../src/lib";
 import { TenantView, Paginate } from "../../models";
 
 export default async function GetBanks(req:NextApiRequest, res: NextApiResponse) {

@@ -4,10 +4,10 @@ import _, { get, map, range, reduce } from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
-import { appTableElements, DotIcon, Images } from "../../constants";
-import { appDate } from "../../lib";
+import { appTableElements, DotIcon, Images } from "../../src/constants";
+import { appDate } from "../../src/lib";
 import { Action, Column } from "../../models";
-import { PaginatorContext } from "../../provider/paginator-provider";
+import { PaginatorContext } from "../../src/provider/paginator-provider";
 import SkeletonLoader from "../skeleton-loader";
 
 

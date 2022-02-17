@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse, NextPage } from "next"
-import { UserManagement as UserManagementComponent } from "../component/user-management"
-import { Authenticated } from "../component/layouts"
-import UserManagementTabProvider from "../provider/user-management-tab-provider"
+import { UserManagement as UserManagementComponent } from "../src/component/user-management"
+import { Authenticated } from "../src/component/layouts"
+import UserManagementTabProvider from "../src/provider/user-management-tab-provider"
 import {Text} from "@chakra-ui/react"
 const UserManagement:NextPage = () => {
 

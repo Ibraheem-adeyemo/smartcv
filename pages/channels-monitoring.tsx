@@ -2,16 +2,16 @@ import { Flex, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import React, { useContext } from "react";
-import { ChannelsMonitoringTabs } from "../component/channels-monitoring";
-import ChannelsMonitoringSearch from "../component/channels-monitoring/channels-monitoring-search.";
-import { Authenticated } from "../component/layouts";
+import { ChannelsMonitoringTabs } from "../src/component/channels-monitoring";
+import ChannelsMonitoringSearch from "../src/component/channels-monitoring/channels-monitoring-search.";
+import { Authenticated } from "../src/component/layouts";
 import { filtersToShowDefaultValue } from "../constants";
-import { ChannelsMonitoringProvider, StatsProvider } from "../provider";
-import { StatsContext } from "../provider/stats-provider";
+import { ChannelsMonitoringProvider, StatsProvider } from "../src/provider";
+import { StatsContext } from "../src/provider/stats-provider";
 
-const AppBarFilter = dynamic(() => import("../component/stats/app-bar-filter"), {ssr:false})
-const ChannelsMonitoringStats = dynamic(() => import("../component/channels-monitoring/channels-monitoring-stats"), {ssr:false})
-const ChannelsMonitoringTable = dynamic(() => import("../component/channels-monitoring/channels-monitoring-table"), {ssr:false})
+const AppBarFilter = dynamic(() => import("../src/component/stats/app-bar-filter"), {ssr:false})
+const ChannelsMonitoringStats = dynamic(() => import("../src/component/channels-monitoring/channels-monitoring-stats"), {ssr:false})
+const ChannelsMonitoringTable = dynamic(() => import("../src/component/channels-monitoring/channels-monitoring-table"), {ssr:false})
 const ChannelsMonitoring: NextPage = () => {
     const {setFiltersToShow} = useContext(StatsContext)
     setFiltersToShow(filtersToShowDefaultValue)
