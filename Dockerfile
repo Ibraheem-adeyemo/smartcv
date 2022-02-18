@@ -12,7 +12,6 @@ ARG NODE_ENV
 ENV NODE_ENV ${NODE_ENV}
 
 COPY ./public/.nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./out dest
 ## Remove default nginx index page
 RUN rm -rf /usr/share/nginx/html/*
 
