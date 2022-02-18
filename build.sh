@@ -10,6 +10,8 @@ npm install --save-dev eslint-config-next@11.1.2
 
 npm install
 
+npm run build
+
 docker-compose up -d
 
 docker-compose push paasui
