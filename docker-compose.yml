@@ -3,6 +3,8 @@ version: '3.4'
 services:
   paasui:
     image: repo.isw.la/paas-ui:1.90 
+    ports:
+      - "3000:80"
     network_mode: "host"
     build:
       context: .
