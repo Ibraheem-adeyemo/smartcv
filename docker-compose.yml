@@ -24,4 +24,6 @@ services:
         - NEXT_PUBLIC_ALLOWED_APPS=${NEXT_PUBLIC_ALLOWED_APPS}
         - http_proxy=${http_proxy}
         - https_proxy=${https_proxy}
+        - HTTP_PROXY=${HTTP_PROXY}
+        - HTTPS_PROXY=${HTTPS_PROXY}
       dockerfile: ./Dockerfile
