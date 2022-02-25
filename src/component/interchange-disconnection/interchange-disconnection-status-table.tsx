@@ -10,7 +10,7 @@ import { AppTable } from "../app";
 const InterchangeDisconnectionStatusTable:FC = () => {
     
     const { pageNumber, countPerPage } = useContext(PaginatorContext)
-    const { data: connnectionRequest, mutate:_mutate, error } = useSWR<Paginate<InterchangeDisconnectionStatusModdel>>(`${apiUrlsv1.interchangeDisconnectionRequest}?page=${pageNumber-1}&size=${countPerPage}`)
+    const { data: connnectionRequest, mutate:_mutate, error } = useSWR<Paginate<InterchangeDisconnectionStatusModdel>>(`${apiUrlsv1.interchangeDisconnectionStatus}?page=${pageNumber-1}&size=${countPerPage}`)
 
     const data = useMemo(() => ({
         columns: [{

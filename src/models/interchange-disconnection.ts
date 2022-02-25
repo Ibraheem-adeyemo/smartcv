@@ -1,19 +1,24 @@
 import { Tab } from ".";
 
 export interface InterchangeDisconnectionStatus {
-    timee: string,
-    status:string,
-    tenant:string
+    node: string,
+    statusCondition: string,
+    tenantName: string,
+    host: string,
+    commandPort: number,
+    tenantCode: string
 }
 
 export interface InterchangeDisconnectionRequest {
-    dateSent:string,
-    tenant:string,
-    disconnectionTime:string,
-    requester: string,
-    status: string
+    id: string,
+    tenantName: string,
+    tenantCode: string,
+    register: string,
+    command: string,
+    interchange: string,
+    verdict: string,
+    datetime: null
 }
-
 
 export interface interchangeDisconnectionTab extends Tab {
     url: string

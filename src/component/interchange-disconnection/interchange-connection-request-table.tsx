@@ -10,6 +10,7 @@ import { AppTable } from "../app";
 const InterchangeConnectionRequestTable: FC = () => {
 
     const { pageNumber, countPerPage } = useContext(PaginatorContext)
+    
     const { data: connnectionRequest, mutate: _mutate, error } = useSWR<Paginate<InterchangeDisconnectionRequest>>(`${apiUrlsv1.interchangeDisconnectionRequest}?page=${pageNumber - 1}&size=${countPerPage}`)
 
     const data = useMemo(() => ({
@@ -30,8 +31,7 @@ const InterchangeConnectionRequestTable: FC = () => {
             key: "status",
             ele: appTableElements.status,
             lookUp: ["Accepted", "Rejected"]
-        }
-        ],
+        }],
         actions: [
             {
                 name: "Accept",
@@ -54,12 +54,8 @@ const InterchangeConnectionRequestTable: FC = () => {
                 color: "red"
             }
         ],
-        data: typeof connnectionRequest === "undefined" && typeof error === "undefined" ? undefined : (typeof connnectionRequest !== "undefined" && typeof error === "undefined") ? connnectionRequest.content as InterchangeDisconnectionRequest[] : []
+        data: connnectionRequest && error ? undefined : (connnectionRequest && error) ? connnectionRequest.content as InterchangeDisconnectionRequest[] : []
     }), [connnectionRequest, error])
-
-
-
-
     return (<AppTable<InterchangeDisconnectionRequest> columns={data?.columns} rows={data.data as InterchangeDisconnectionRequest[]} showNumbering />)
 }
 

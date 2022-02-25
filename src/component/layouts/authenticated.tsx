@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { ComponentWithChildren } from "../../models";
 import { useIdleTimer } from 'react-idle-timer'
 import { getCookie } from "../../lib";
+import { MotionFlex } from "../framer/motion-flex";
 
 interface AuthenticatedLayout extends ComponentWithChildren {
     pageHeader: string | JSX.Element
@@ -152,11 +153,14 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                         <MenuButton as={Button} variant="just-text">
                             <Flex gridGap="42px" alignItems="center">
 
-                                {typeof user === "undefined" && typeof error === "undefined" && <> <SkeletonLoader rows={1} width="100px" height="15px" columns={1} /> <SkeletonCircle size="25" /></>}
-                                {typeof user !== "undefined" && typeof error === "undefined" &&
-                                    <><Text size="dropdown-text" variant="dropdown-text-header"> Hello, {user?.firstName}</Text>
-
-                                        <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" /> </>
+                            {typeof user === "undefined" && typeof error === "undefined" &&<> 
+                                    <SkeletonLoader rows={1} width="100px" height="15px" columns={1} />
+                                    <SkeletonCircle size="25" />
+                                </>}
+                                { typeof user !== "undefined" && typeof error === "undefined" && <MotionFlex >
+                                    <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {user?.firstName}</Text>
+                                    <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" /> 
+                                </MotionFlex>
                                 }
 
                             </Flex>
@@ -164,8 +168,8 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                         <MenuList d="flex" gridGap="1px" flexDir="column" px="18px" pt="22px">
                             <MenuItem as={Flex} gridGap="11px" alignItems="center">
 
-                                {typeof user === "undefined" && typeof error === "undefined" && <SkeletonCircle size="25" />}
-                                {typeof user !== "undefined" && typeof error === "undefined" && <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" />}
+                                {!user && !error && <SkeletonCircle size="25" />}
+                                {user && !error && <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" />}
                                 <Flex flexDir="column" gridGap="1px">
                                     {typeof user !== "undefined" && typeof error === "undefined" &&
                                         <>
@@ -174,7 +178,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                                         </>
                                     }
 
-                                    {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={2} width="100px" height="15px" columns={1} />}
+                                    {!user && !error && <SkeletonLoader rows={2} width="100px" height="15px" columns={1} />}
 
                                 </Flex>
                             </MenuItem>
@@ -186,7 +190,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                             </MenuItem>
                             <MenuDivider />
                             <MenuItem onClick={() => signOut()}>
-                                {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={1} width="100px" height="15px" columns={1} />}
+                                {!user && typeof error === "undefined" && <SkeletonLoader rows={1} width="100px" height="15px" columns={1} />}
                                 {typeof user !== "undefined" && typeof error === "undefined" && <Text size="dropdown-tes">Signout</Text>}
                             </MenuItem>
                             <MenuDivider />

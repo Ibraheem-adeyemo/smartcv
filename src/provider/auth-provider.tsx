@@ -3,6 +3,7 @@ import { useAuthentication } from "../hooks";
 import { ComponentWithChildren } from "../models";
 
 export const AuthContext = createContext<ReturnType<typeof useAuthentication>>({
+    userDetail: undefined,
     user: undefined,
     token: "",
     error:undefined,

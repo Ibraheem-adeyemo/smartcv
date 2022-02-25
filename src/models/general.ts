@@ -42,6 +42,7 @@ export interface apiUrlsv1Model {
     audit: string,
     auditByUser:string,
     createTenantAdmin: string,
+    getUserDetail: string,
     interChange: string,
     interchangeDisconnectionRequest:string,
     interchangeDisconnectionStatus:string,

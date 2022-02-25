@@ -6,6 +6,53 @@ export interface AuthModel {
     access_token: string
 }
 
+interface Tenant {
+    id: number,
+    name: string,
+    color: string,
+    code: string,
+    domain: string,
+    slogan: string,
+    image: string,
+    location: string,
+    address: string,
+    branch: string,
+    isActive: string
+}
+
+interface Permission {
+    id: number,
+    name: string,
+    description: string,
+    iswSuperAdmin: boolean
+
+}
+
+interface Role {
+    id: number,
+    name: string,
+    permissions: Permission[],
+    tenantCode: string
+
+}
+export interface UserModel {
+    createdAt: string,
+    updatedAt: string,
+    id: number,
+    username: string,
+    email: string,
+    isActive: string,
+    isLocked: string,
+    isFirstLogin: string,
+    credentialsNonExpired: string,
+    accountNonExpired: string,
+    accountNonLocked: string,
+    tenant: Tenant,
+    role: Role
+}
+
+
+
 export interface TokenRequestBody {
     client_id: string,
     redirect_uri: string,
