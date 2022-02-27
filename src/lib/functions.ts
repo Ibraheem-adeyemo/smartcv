@@ -2,6 +2,7 @@ import _ from "lodash";
 import { NextApiResponse } from "next";
 import { getCookie } from ".";
 import { cookieKeys, months, notificationMesage } from "../constants";
+import { amountAbbrevications } from "../constants/figures";
 import { APIResponse } from "../models";
 
 export function getRandomInt(max: number) {
@@ -9,10 +10,9 @@ export function getRandomInt(max: number) {
 }
 export function shortenNumber(amount: number) {
     let t = { fractionAmount: Number.MAX_VALUE, abbrev: "" }
-    const g = [{ abbrev: "T", value: 1000000000000 }, { abbrev: "B", value: 1000000000 }, { abbrev: "M", value: 1000000 }, { abbrev: "K", value: 1000 }]
     if (!isNaN(amount)) {
         const length = String(amount).length
-        t = _.reduce(g, (prev, curr) => {
+        t = _.reduce(amountAbbrevications, (prev, curr) => {
           
             const fractionAmount = amount / curr.value
             const sp = String(fractionAmount).split(".")
