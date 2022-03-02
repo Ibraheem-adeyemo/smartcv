@@ -8,9 +8,7 @@ import { appTableElements, DotIcon, Images } from "../../constants";
 import { appDate } from "../../lib";
 import { Action, Column } from "../../models";
 import { PaginatorContext } from "../../providers/paginator-provider";
-import { MotionImage } from "../framer/motion-image";
-import { MotionTable, MotionTbody, MotionTd, MotionThead, MotionTr } from "../framer/motion-table";
-import { MotionText } from "../framer/motion-text";
+import { MotionImage, MotionTable, MotionTbody, MotionTd, MotionText, MotionThead, MotionTr } from "../framer";
 import SkeletonLoader from "../skeleton-loader";
 
 

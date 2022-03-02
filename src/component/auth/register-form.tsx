@@ -7,11 +7,7 @@ import useLoading from "../../hooks/loading";
 import { getInterchangeById } from "../../services/v1";
 import { AppLink } from "../app";
 import { CrossDomainOnboardingContext } from "../../providers/cross-domain-onboarding-provider";
-import { MotionFlex } from "../framer/motion-flex";
-import { MotionButton } from "../framer/motion-button";
-import { MotionBox } from "../framer/motion-box";
-
-
+import { MotionBox, MotionButton, MotionFlex } from "../framer";
 
 const RegisterForm: FC = () => {
 
@@ -158,7 +154,6 @@ const RegisterForm: FC = () => {
                                 opacity: 1
                             }
                         }}
-
                         >
                             Submit
                         </MotionButton>

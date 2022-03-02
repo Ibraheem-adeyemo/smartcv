@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { ComponentWithChildren } from "../../models";
 import { useIdleTimer } from 'react-idle-timer'
 import { getCookie } from "../../lib";
-import { MotionFlex } from "../framer/motion-flex";
+import { MotionFlex } from "../framer";
 
 interface AuthenticatedLayout extends ComponentWithChildren {
     pageHeader: string | JSX.Element

@@ -1,4 +1,4 @@
-import { Badge, Box, Flex, Text, Button, FormControl, FormLabel, Input, Image, FormErrorMessage, CloseButton, useToast, Select } from "@chakra-ui/react";
+import { Badge, Box, Flex, Text, Button, FormControl, FormLabel, Input, Image, FormErrorMessage, CloseButton, useToast, Select, transition } from "@chakra-ui/react";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
 import { apiUrlsv1, Images, notificationMesage } from "../../constants";
@@ -8,6 +8,7 @@ import useValidator from "../../hooks/validatoin";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { OnboardingContext } from "../../providers/onboarding-provider";
+import { MotionFormLabel } from "../framer";
 
 interface CreateBankProps extends stepsProps {
 
@@ -124,38 +125,48 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
     </Flex>
     return (
         <OnboardingCard cardTitle={cardTitle} cardFooter={cardFooter}>
-            <Flex gridColumnGap="21px" gridRowGap="32px" flexWrap="wrap" >
+            <Flex gridColumnGap="21px" gridRowGap="32px" flexWrap="wrap" variant={{
+                hide: {
+                    opacity: 1,
+                    transition: {
+                        duration: 0.3
+                    }
+                },
+                show: {
+                    opacity: 0
+                }
+            }} >
                 <FormControl isRequired id="name" flexGrow={1} width="35%" isInvalid={validation?.errors?.name !== "" && validation?.touched.name === "touched"}>
-                    <FormLabel>Bank Name</FormLabel>
+                    <MotionFormLabel><Text>Bank Name</Text></MotionFormLabel>
 
                     <Input placeholder="Enter Bank Name" borderRadius="4px" value={onboarding?.tenant?.name} onChange={addData} />
                     <FormErrorMessage>{validation?.errors.name}</FormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="tenantCode" flexGrow={1} width="35%" isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
-                    <FormLabel>Bank ID</FormLabel>
+                    <MotionFormLabel>Bank ID</MotionFormLabel>
                     <Input placeholder="Enter Bank ID" borderRadius="4px" value={onboarding?.tenant?.tenantCode} onChange={addData} />
                     <FormErrorMessage>{validation?.errors.tenantCode}</FormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="branch" flexGrow={1} width="35%" isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
-                    <FormLabel>Bank Branch</FormLabel>
+                    <MotionFormLabel>Bank Branch</MotionFormLabel>
 
                     <Input placeholder="Enter Bank Branch" borderRadius="4px" value={onboarding?.tenant?.branch} onChange={addData} />
                     <FormErrorMessage>{validation?.errors.branch}</FormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="location" flexGrow={1} width="35%" isInvalid={validation?.errors?.location !== "" && validation?.touched.location === "touched"}>
-                    <FormLabel>Bank LocatIon</FormLabel>
+                    <MotionFormLabel>Bank LocatIon</MotionFormLabel>
                     <Select borderRadius="4px" value={onboarding?.tenant?.location} onChange={addData} placeholder="Select a state">
                         {states?.map((x, i) =><option key={i} value={x.id}>{x.name}</option>)}
                     </Select>
                     <FormErrorMessage>{validation?.errors.location}</FormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="address" flexGrow={2} width="100%" isInvalid={validation?.errors?.address !== "" && validation?.touched.address === "touched"}>
-                    <FormLabel>Bank Address</FormLabel>
+                    <MotionFormLabel>Bank Address</MotionFormLabel>
                     <Input placeholder="Enter Bank Address" borderRadius="4px" value={onboarding?.tenant?.address} onChange={addData} />
                     <FormErrorMessage>{validation?.errors.address}</FormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="logo" width="15%" flexGrow={1} isInvalid={validation?.errors?.logo !== "" && validation?.touched.logo === "touched"}>
-                    <FormLabel>Upload a Bank Logo</FormLabel>
+                    <MotionFormLabel>Upload a Bank Logo</MotionFormLabel>
                     <Input placeholder="Enter Bank Address" ref={fileRef} borderRadius="4px" type="file" sx={{
                         display: "none"
                     }} border="dotted" onChange={addData} />

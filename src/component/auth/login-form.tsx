@@ -5,9 +5,7 @@ import React, { FC, useContext, useEffect } from "react";
 import { cookieKeys, cookiesTimeout, Images, links } from "../../constants";
 import { AuthContext } from "../../providers/auth-provider";
 import { setCookie } from "../../lib";
-import { MotionFlex } from '../framer/motion-flex';
-import { MotionBox } from '../framer/motion-box';
-import { MotionImage } from '../framer/motion-image';
+import { MotionBox, MotionFlex, MotionImage } from '../framer';
 
 const LoginForm: FC = () => {
     const { user, signIn, signOut } = useContext(AuthContext)

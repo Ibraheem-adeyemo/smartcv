@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 
 export type defaultCallback<T> = (prev: T) => T
 
@@ -11,7 +12,7 @@ export interface State {
 }
 
 export interface ComponentWithChildren {
-    children: JSX.Element | JSX.Element[]
+    children: JSX.Element | JSX.Element[] | ReactNode
 }
 
 export interface Column {

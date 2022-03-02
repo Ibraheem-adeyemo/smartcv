@@ -1,9 +1,7 @@
 import { Flex, Text, List, ListItem, Avatar } from "@chakra-ui/react"
 import React, { FC, memo, useMemo } from "react"
 import { TickIcon } from "../constants"
-import { MotionFlex } from "./framer/motion-flex"
-import { MotionList, MotionListItem } from "./framer/motion-list"
-import { MotionText } from "./framer/motion-text"
+import { MotionFlex, MotionList, MotionListItem, MotionText } from "./framer"
 
 const MissionStatement:FC =  memo(() => {
     const missionStatement = [{
