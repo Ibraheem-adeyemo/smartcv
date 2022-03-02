@@ -1,8 +1,7 @@
 import _ from "lodash";
 import { NextApiResponse } from "next";
 import { getCookie } from ".";
-import { cookieKeys, months, notificationMesage } from "../constants";
-import { amountAbbrevications } from "../constants/figures";
+import { cookieKeys, months, notificationMesage, amountAbbrevications } from "../constants";
 import { APIResponse } from "../models";
 
 export function getRandomInt(max: number) {

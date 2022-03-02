@@ -61,7 +61,6 @@ const InterchangeConnectionRequestTable: FC = () => {
 
 const InterchangeConnectionRequest: FC = () => {
     return (
-
         <PaginatorProvider>
             <InterchangeConnectionRequestTable />
         </PaginatorProvider>
