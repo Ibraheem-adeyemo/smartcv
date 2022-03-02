@@ -2,7 +2,7 @@ import { Flex } from "@chakra-ui/react"
 import dynamic from "next/dynamic"
 import { FC, useContext, useEffect, useMemo } from "react"
 import { filterDates } from "../../constants"
-import { StatsContext } from "../../provider/stats-provider"
+import { StatsContext } from "../../providers/stats-provider"
 
 const TerminalsPerformance = dynamic(() => import('./terminals-performance'), {ssr:false})
 const SuccessRate = dynamic(() => import('./success-rate'), {ssr:false})

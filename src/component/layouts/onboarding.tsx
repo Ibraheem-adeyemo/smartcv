@@ -7,8 +7,8 @@ import { Tenant, InstitutionColorInfo, Onboarding as OnboardingModel, Step, tena
 import { createAccountAsync } from "../../services/v1";
 import { OnboardingNav } from '.'
 import _ from "lodash";
-import { OnboardingContext } from "../../provider/onboarding-provider";
-import { CrossDomainOnboardingContext } from "../../provider/cross-domain-onboarding-provider";
+import { OnboardingContext } from "../../providers/onboarding-provider";
+import { CrossDomainOnboardingContext } from "../../providers/cross-domain-onboarding-provider";
 interface OnboardingProps extends ComponentWithChildren {
 }
 const OnboardingLink = forwardRef((props, ref) => {

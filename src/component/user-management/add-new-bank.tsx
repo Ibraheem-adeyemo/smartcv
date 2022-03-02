@@ -6,7 +6,7 @@ import { apiUrlsv1, Images, PickerIcon, UserManagementModalNames, UserManagement
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { validateHexColor } from "../../lib";
 import { InstitutionColor, InstitutionColorInfo, State, TenantView, UserManagementModal } from "../../models";
-import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
+import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
 
 const AddNewBank:FC = () => {
     const { data: states } = useSWR<State[]>(apiUrlsv1.states)

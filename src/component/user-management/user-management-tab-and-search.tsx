@@ -2,7 +2,7 @@ import { HStack, ButtonGroup, Button} from "@chakra-ui/react";
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { UserManagementSearch } from ".";
 import { UserManagementModals, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
-import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
+import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
 
 const UserManagementTabAndSearch:FC = () => {
     const { tabs, handleTabSelection, handleToggleModal } = useContext(UserManagementTabProviderContext)

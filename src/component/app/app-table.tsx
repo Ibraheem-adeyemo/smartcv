@@ -7,7 +7,7 @@ import { IoEllipsisVerticalOutline } from 'react-icons/io5'
 import { appTableElements, DotIcon, Images } from "../../constants";
 import { appDate } from "../../lib";
 import { Action, Column } from "../../models";
-import { PaginatorContext } from "../../provider/paginator-provider";
+import { PaginatorContext } from "../../providers/paginator-provider";
 import { MotionImage } from "../framer/motion-image";
 import { MotionTable, MotionTbody, MotionTd, MotionThead, MotionTr } from "../framer/motion-table";
 import { MotionText } from "../framer/motion-text";

@@ -7,7 +7,7 @@ import { Tenant, stepsProps, State } from "../../models";
 import useValidator from "../../hooks/validatoin";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { OnboardingContext } from "../../provider/onboarding-provider";
+import { OnboardingContext } from "../../providers/onboarding-provider";
 
 interface CreateBankProps extends stepsProps {
 

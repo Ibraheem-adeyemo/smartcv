@@ -4,7 +4,7 @@ import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
 import { StatsA } from "../../models"
 import { AppCard } from "../app"
-import { StatsContext } from "../../provider/stats-provider"
+import { StatsContext } from "../../providers/stats-provider"
 import { useLoading } from "../../hooks"
 import { StatsName } from "../../constants"
 

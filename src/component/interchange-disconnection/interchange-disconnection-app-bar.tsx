@@ -1,7 +1,7 @@
 import { Button, Flex } from "@chakra-ui/react";
 import { FC, useContext } from "react";
-import { InterchangeDisconnectionContext } from "../../provider/interchange-disconnection-provider";
-import { StatsContext } from "../../provider/stats-provider";
+import { InterchangeDisconnectionContext } from "../../providers/interchange-disconnection-provider";
+import { StatsContext } from "../../providers/stats-provider";
 import AppBarFilter from "../stats/app-bar-filter";
 
 const InterchangeDisconnectionAppBar: FC = () => {

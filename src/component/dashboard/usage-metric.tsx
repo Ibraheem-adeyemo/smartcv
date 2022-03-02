@@ -5,7 +5,7 @@ import { StatsA } from "../../models"
 import { AppCard } from "../app"
 import { Text } from '@chakra-ui/react'
 import { useLoading } from "../../hooks"
-import { StatsContext } from "../../provider/stats-provider"
+import { StatsContext } from "../../providers/stats-provider"
 
 const UsageMetric:React.FC = () => {
     const { institutions, institutionsError } = useContext(StatsContext)

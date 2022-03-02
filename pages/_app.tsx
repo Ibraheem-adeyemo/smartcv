@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
 import React from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
-import { AuthProvider } from '../src/provider'
+import { AuthProvider } from '../src/providers'
 import theme from "../src/theme"
 import { SWRConfig } from 'swr'
 import { fetchJson } from '../src/lib'

@@ -1,6 +1,6 @@
 import { Modal, ModalBody, ModalCloseButton, ModalContent, Text, ModalOverlay, Button, Flex } from "@chakra-ui/react";
 import { FC, useContext } from "react";
-import { InterchangeDisconnectionContext } from "../../provider/interchange-disconnection-provider";
+import { InterchangeDisconnectionContext } from "../../providers/interchange-disconnection-provider";
 import { AppCard } from "../app";
 
 const RequestConnectionModal: FC = () => {

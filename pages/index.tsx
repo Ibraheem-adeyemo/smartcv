@@ -6,7 +6,7 @@ import React, { useContext, useEffect } from 'react'
 import { MotionFlex } from '../src/component/framer/motion-flex'
 import { cookieKeys, cookiesTimeout, links } from '../src/constants'
 import { getCookie, setCookie } from '../src/lib'
-import { AuthContext } from '../src/provider/auth-provider'
+import { AuthContext } from '../src/providers/auth-provider'
 const Home: NextPage = () => {
   const { user, token, error } = useContext(AuthContext)
   const router = useRouter()

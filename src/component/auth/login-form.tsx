@@ -3,7 +3,7 @@ import NextLink from 'next/link'
 import { Image, Text, Button, Flex, Link } from "@chakra-ui/react";
 import React, { FC, useContext, useEffect } from "react";
 import { cookieKeys, cookiesTimeout, Images, links } from "../../constants";
-import { AuthContext } from "../../provider/auth-provider";
+import { AuthContext } from "../../providers/auth-provider";
 import { setCookie } from "../../lib";
 import { MotionFlex } from '../framer/motion-flex';
 import { MotionBox } from '../framer/motion-box';

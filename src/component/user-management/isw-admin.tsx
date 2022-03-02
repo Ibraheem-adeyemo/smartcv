@@ -6,9 +6,9 @@ import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
-import { PaginatorProvider } from "../../provider";
-import { PaginatorContext } from "../../provider/paginator-provider";
-import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
+import { PaginatorProvider } from "../../providers";
+import { PaginatorContext } from "../../providers/paginator-provider";
+import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
 import { AppTable } from "../app";
 
 const AddNewUser = dynamic(() => import("./add-new-user"), {ssr:false})

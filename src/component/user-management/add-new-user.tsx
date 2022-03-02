@@ -3,7 +3,7 @@ import { Button, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, 
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { ISWAdminView, UserManagementModal } from "../../models";
 import { Roles, UserManagementModalNames, UserManagementModals } from "../../constants";
-import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
+import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
 import { validateEmail } from "../../lib";
 import _ from "lodash";
 

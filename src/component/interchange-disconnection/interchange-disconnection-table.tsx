@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic"
 import { FC, Fragment, useContext } from "react"
 import { interchangeDisconnectionTabsName } from "../../constants/tabs"
-import { InterchangeDisconnectionContext } from "../../provider/interchange-disconnection-provider"
+import { InterchangeDisconnectionContext } from "../../providers/interchange-disconnection-provider"
 
 const InterchangeDisconnectionStatusTable = dynamic(() => import("./interchange-disconnection-status-table"), {ssr:false})
 const InterchangeConnectionRequestTable = dynamic(() => import("./interchange-connection-request-table"), {ssr:false})

@@ -3,7 +3,7 @@ import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links
 import { InterswitchLogo } from "../custom-component";
 import { As, Avatar, Button, ComponentWithAs, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
-import { AuthContext } from "../../provider/auth-provider";
+import { AuthContext } from "../../providers/auth-provider";
 import { AppLink } from "../app";
 import { useRouter } from "next/router";
 import { ComponentWithChildren } from "../../models";

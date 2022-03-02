@@ -2,7 +2,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, Modal
 import React, { FC, useContext } from "react";
 import { apiUrlsv1, API_BASE_URL, UserManagementModalNames } from "../../constants";
 import { ATMCount, ATMStats, AuditView } from "../../models";
-import { AuditContext } from "../../provider/audit-provider";
+import { AuditContext } from "../../providers/audit-provider";
 const mapData = function <T>(objString: string): T {
     try {
         const parsedString = JSON.parse(objString)

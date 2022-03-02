@@ -3,12 +3,12 @@ import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { Paginate, ATMCountDetail } from "../../models";
-import { PaginatorProvider } from "../../provider";
-import { PaginatorContext } from "../../provider/paginator-provider";
+import { PaginatorProvider } from "../../providers";
+import { PaginatorContext } from "../../providers/paginator-provider";
 import { apiUrlsv1, appTableElements } from "../../constants";
 import { useToast } from "@chakra-ui/react";
-import { channelsMonitoringContext } from "../../provider/channels-monitoring-provider";
-import { StatsContext } from "../../provider/stats-provider";
+import { channelsMonitoringContext } from "../../providers/channels-monitoring-provider";
+import { StatsContext } from "../../providers/stats-provider";
 
 
 const ChannelsMonitoringTable: React.FC = () => {

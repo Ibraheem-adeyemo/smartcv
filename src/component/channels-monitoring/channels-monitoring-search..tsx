@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import React, { FC, useContext, useMemo } from "react";
 import { filterDates } from "../../constants";
-import { StatsContext } from "../../provider/stats-provider";
+import { StatsContext } from "../../providers/stats-provider";
 import { SearchText } from "../stats";
 import AppBarFilter from "../stats/app-bar-filter";
 

@@ -5,9 +5,9 @@ import { FC, useCallback, useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { cookieKeys, links, sessionStorageKeys } from "../../src/constants";
 import { getCookie } from "../../src/lib";
-import { OnboardingProvider } from "../../src/provider";
-import { OnboardingContext } from "../../src/provider/onboarding-provider";
-import CrossDomainOnboardingProvider from "../../src/provider/cross-domain-onboarding-provider";
+import { OnboardingProvider } from "../../src/providers";
+import { OnboardingContext } from "../../src/providers/onboarding-provider";
+import CrossDomainOnboardingProvider from "../../src/providers/cross-domain-onboarding-provider";
 
 const CreateBank = dynamic(() => import('../../src/component/onboarding/create-bank'), {ssr:false})
 const CreateSuperAmin = dynamic(() => import('../../src/component/onboarding/create-super-admin'), {ssr:false})

@@ -1,7 +1,7 @@
 import { Flex, Link } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { links } from "../../constants";
-import { CrossDomainOnboardingContext } from "../../provider/cross-domain-onboarding-provider";
+import { CrossDomainOnboardingContext } from "../../providers/cross-domain-onboarding-provider";
 import { AppLink } from "../app";
 import { InterswitchLogo } from "../custom-component";
 

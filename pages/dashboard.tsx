@@ -5,8 +5,8 @@ import React, { useContext } from "react"
 import { DashboardPage } from "../src/component/dashboard"
 import { Authenticated } from "../src/component/layouts"
 import { filtersToShowDefaultValue } from "../src/constants"
-import { StatsProvider } from "../src/provider"
-import { StatsContext } from "../src/provider/stats-provider"
+import { StatsProvider } from "../src/providers"
+import { StatsContext } from "../src/providers/stats-provider"
 const AppBarFilter = dynamic(() => import('../src/component/stats/app-bar-filter'), {ssr:false})
 
 const Dashboard:NextPage = () => {

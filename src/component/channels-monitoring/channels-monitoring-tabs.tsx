@@ -1,6 +1,6 @@
 import { HStack, ButtonGroup, Button } from "@chakra-ui/react";
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
-import { channelsMonitoringContext } from "../../provider/channels-monitoring-provider";
+import { channelsMonitoringContext } from "../../providers/channels-monitoring-provider";
 
 const ChannelsMonitoringTabs: FC = () => {
     const { tabs, modifyTab } = useContext(channelsMonitoringContext)

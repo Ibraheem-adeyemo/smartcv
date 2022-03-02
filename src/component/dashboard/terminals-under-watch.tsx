@@ -7,7 +7,7 @@ import { useLoading } from "../../hooks";
 import { apiUrlsv1, StatsName } from "../../constants";
 import useSWR from "swr";
 import { ATMInSupervisor, Paginate } from "../../models";
-import { StatsContext } from "../../provider/stats-provider";
+import { StatsContext } from "../../providers/stats-provider";
 import { useToast, Text } from "@chakra-ui/react";
 import _, { sumBy } from "lodash";
 

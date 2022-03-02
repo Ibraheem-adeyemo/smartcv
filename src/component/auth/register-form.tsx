@@ -6,7 +6,7 @@ import { setCookie } from "../../lib";
 import useLoading from "../../hooks/loading";
 import { getInterchangeById } from "../../services/v1";
 import { AppLink } from "../app";
-import { CrossDomainOnboardingContext } from "../../provider/cross-domain-onboarding-provider";
+import { CrossDomainOnboardingContext } from "../../providers/cross-domain-onboarding-provider";
 import { MotionFlex } from "../framer/motion-flex";
 import { MotionButton } from "../framer/motion-button";
 import { MotionBox } from "../framer/motion-box";

@@ -3,7 +3,7 @@ import _, { map } from "lodash"
 import React, { FC, useContext, useEffect } from "react"
 import { SearchFilter } from "."
 import { SkeletonLoader } from ".."
-import { StatsContext } from "../../provider/stats-provider"
+import { StatsContext } from "../../providers/stats-provider"
 
 const InstitutionFilter:FC = () => {
     const {selectedTenantCode, institutions, institutionsError, changeSelectedTenantCode} = useContext(StatsContext)

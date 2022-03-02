@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import React, { FC, useCallback, useContext, useEffect } from "react";
 import { UserManagementStats } from ".";
 import { userManagementTabsName } from "../../constants";
-import { UserManagementTabProviderContext } from "../../provider/user-management-tab-provider";
+import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
 import UserManagementTabAndSearch from "./user-management-tab-and-search";
 
 const Bank = dynamic(() => import("./bank"), {ssr:false})

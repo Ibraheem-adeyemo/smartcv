@@ -5,7 +5,7 @@ import { RegisterForm } from "../src/component/auth"
 import { InterswitchLogo } from "../src/component/custom-component"
 import { NonAuthenticated } from "../src/component/layouts"
 import MissionStatement from "../src/component/mission-statement"
-import { CrossDomainOnboardingProvider } from "../src/provider"
+import { CrossDomainOnboardingProvider } from "../src/providers"
 
 
 const Register: NextPage = () => {

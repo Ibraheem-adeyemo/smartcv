@@ -3,8 +3,8 @@ import { FC, useContext, useMemo } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, appTableElements } from "../../constants";
 import { InterchangeDisconnectionRequest, Paginate, TenantView } from "../../models";
-import { PaginatorProvider } from "../../provider";
-import { PaginatorContext } from "../../provider/paginator-provider";
+import { PaginatorProvider } from "../../providers";
+import { PaginatorContext } from "../../providers/paginator-provider";
 import { AppTable } from "../app";
 
 const InterchangeConnectionRequestTable: FC = () => {
