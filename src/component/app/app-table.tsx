@@ -226,10 +226,10 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                         </MotionTr>)
                 }
                 {
-                    typeof props.rows === "undefined" && map(range(8), () =>
-                        <MotionTr>
+                    typeof props.rows === "undefined" && map(range(8), (z, i) =>
+                        <MotionTr key={i}>
                             {
-                                typeof props.columns !== "undefined" && map(props.columns, (x, i) => <Td key={i}><SkeletonLoader rows={1} columns={1} width="60px" height="10px" /></Td>)
+                                typeof props.columns !== "undefined" && map(props.columns, (x, j) => <Td key={j}><SkeletonLoader rows={1} columns={1} width="60px" height="10px" /></Td>)
                             }
                         </MotionTr>
                     )

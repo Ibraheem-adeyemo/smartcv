@@ -44,12 +44,9 @@ const TopPerforminBanks :FC= ()  => {
         ]
     }, [])
     useEffect(() => {
-        // console.log("waiting")
-        setTimeout(() => {
+        
             setStats(getStats())
-
-        }, 10000);
-    }, [getStats])
+    }, [])
     return <AppCard topic={
         <Flex justifyContent="space-between" textAlign="center">
             <Flex flexDir="column" justifySelf="flex-start">

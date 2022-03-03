@@ -1,8 +1,7 @@
-import { useToast } from "@chakra-ui/react";
 import { FC, useContext, useMemo } from "react";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 import { apiUrlsv1, appTableElements } from "../../constants";
-import { InterchangeDisconnectionRequest, InterchangeDisconnectionStatus as InterchangeDisconnectionStatusModdel, Paginate, TenantView } from "../../models";
+import { InterchangeDisconnectionStatus as InterchangeDisconnectionStatusModdel, Paginate } from "../../models";
 import { PaginatorProvider } from "../../providers";
 import { PaginatorContext } from "../../providers/paginator-provider";
 import { AppTable } from "../app";
@@ -14,22 +13,25 @@ const InterchangeDisconnectionStatusTable:FC = () => {
 
     const data = useMemo(() => ({
         columns: [{
-                name: "Date Sent",
-                key: "dateSent"
-            }, {
                 name: "Bank",
                 key: "tenantName"
             }, {
-                name: "Disconnection Time",
-                key: "disconnectionTime."
+                name: "Bank Id",
+                key: "tenantCode"
             }, {
-                name: "Requested User",
-                key: "requester"
+                name: "Host",
+                key: "host"
+            }, {
+                name: "Node",
+                key: "node"
+            }, {
+                name: "Command Port",
+                key: "commandPort"
             }, {
                 name: "Status",
-                key: "status",
+                key: "statusCondition",
                 ele: appTableElements.status,
-                lookUp:["Accepted", "Rejected"]
+                lookUp:["Not Active", "Active"]
             }
         ],
         actions: [

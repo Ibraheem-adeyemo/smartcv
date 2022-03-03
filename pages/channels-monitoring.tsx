@@ -9,11 +9,11 @@ import { filtersToShowDefaultValue } from "../src/constants";
 import { ChannelsMonitoringProvider, StatsProvider } from "../src/providers";
 import { StatsContext } from "../src/providers/stats-provider";
 
-const AppBarFilter = dynamic(() => import("../src/component/stats/app-bar-filter"), {ssr:false})
-const ChannelsMonitoringStats = dynamic(() => import("../src/component/channels-monitoring/channels-monitoring-stats"), {ssr:false})
-const ChannelsMonitoringTable = dynamic(() => import("../src/component/channels-monitoring/channels-monitoring-table"), {ssr:false})
+const AppBarFilter = dynamic(() => import("../src/component/stats/app-bar-filter"), { ssr: false })
+const ChannelsMonitoringStats = dynamic(() => import("../src/component/channels-monitoring/channels-monitoring-stats"), { ssr: false })
+const ChannelsMonitoringTable = dynamic(() => import("../src/component/channels-monitoring/channels-monitoring-table"), { ssr: false })
 const ChannelsMonitoring: NextPage = () => {
-    const {setFiltersToShow} = useContext(StatsContext)
+    const { setFiltersToShow } = useContext(StatsContext)
     setFiltersToShow(filtersToShowDefaultValue)
     return (
         <ChannelsMonitoringProvider>
@@ -25,7 +25,7 @@ const ChannelsMonitoring: NextPage = () => {
                 }>
                     <Flex flexDir="column" gridGap="40px">
                         <Flex flexDir="column" gridGap="33px">
-                                <ChannelsMonitoringSearch />
+                            <ChannelsMonitoringSearch />
                             <ChannelsMonitoringStats />
                         </Flex>
                         <ChannelsMonitoringTabs />

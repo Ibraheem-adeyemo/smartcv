@@ -7,7 +7,9 @@ import { StatsContext } from "../../providers/stats-provider";
 const AppBarFilter: FC = () => {
     const { showCustom, ShowTenant, showToday, showThisWeek, showThisMonth, showThisYear, isToday, isThisWeek, isThisMonth, isThisYear, toggleDate } = useContext(StatsContext)
     return (
-        <Flex alignItems="center" gridGap="17px">
+        <Flex alignItems="center" gridGap="17px" sx={{
+            flexWrap: "wrap"
+        }}>
             {ShowTenant && <InstitutionFilter />}
             {showToday && isToday && <Tag variant={"outline"} colorScheme={"brand"} bgColor={"brand.light-blue"}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.today}</Text></Tag>}
             {showToday && !isToday && <Tag cursor={"pointer"} onClick={() => toggleDate(filterDates.today)}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.today}</Text></Tag>}

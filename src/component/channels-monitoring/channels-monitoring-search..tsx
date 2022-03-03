@@ -11,7 +11,10 @@ const ChannelsMonitoringSearch: FC = () => {
         toggleDate(filterDates.today)
     },[])
     return (
-        <Flex justifyContent="space-between">
+        <Flex justifyContent="space-between" sx={{
+            flexWrap: "wrap",
+            gridGap: "20px"
+        }} >
             <AppBarFilter />
 
             <SearchText placeHolder="" searchText={searchText} handleSearchItem={handleSearchText} />

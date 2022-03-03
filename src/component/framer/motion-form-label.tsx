@@ -1,4 +1,4 @@
-import { FormLabel, Text } from "@chakra-ui/react";
+import { Box, FormLabel, Text } from "@chakra-ui/react";
 import { MotionText } from ".";
 import { ComponentWithChildren } from "../../models";
 
@@ -8,7 +8,7 @@ import { ComponentWithChildren } from "../../models";
 export const MotionFormLabel = (props: ComponentWithChildren) => {
     return (
         <FormLabel>
-            <Text sx={{
+            <Box as={"span"} sx={{
                 display: "inline-block",
                 overflow: "hidden"
             }}>
@@ -30,7 +30,7 @@ export const MotionFormLabel = (props: ComponentWithChildren) => {
                     }
                 }}
                 >{props.children}</MotionText>
-            </Text>
+            </Box>
         </FormLabel>
     )
 }

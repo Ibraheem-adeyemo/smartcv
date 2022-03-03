@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useSWR from "swr";
 import { apiUrlsv1, filterDates, filtersToShowDefaultValue } from "../constants";
-import { setFiltersToShowProps, TenantView } from "../models";
+import { Paginate, setFiltersToShowProps, TenantView } from "../models";
 
 export default function useFilter() {
     const [selectedTenantCode, setSelectedTenantCode] = useState("0")
@@ -16,7 +16,7 @@ export default function useFilter() {
     const [showThisYear, setShowThisYear] = useState(true)
     const [showCustom, setShowCustom] = useState(true)
     const apiUrl = typeof window !== "undefined" ? apiUrlsv1.tenant : null
-    const { data: institutions, mutate, error: institutionsError } = useSWR<TenantView[]>(apiUrl)
+    const { data: institutions, mutate, error: institutionsError } = useSWR<Paginate<TenantView>>(apiUrl)
     const [searchText, setSearchText] = useState("")
 
     const handleSearchText = (searchText: string) => {
@@ -79,7 +79,7 @@ export default function useFilter() {
         isThisYear,
         searchText,
         selectedTenantCode,
-        institutions,
+        institutions: institutions? institutions.content:undefined,
         institutionsError,
         ShowTenant,
         showToday,

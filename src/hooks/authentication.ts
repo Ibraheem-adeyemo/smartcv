@@ -52,7 +52,7 @@ export default function useAuthentication() {
     }, [])
 
     useEffect(() => {
-        debugger
+        // debugger
         if(typeof userDetailError !== "undefined" && window) {
             signOut()
         }

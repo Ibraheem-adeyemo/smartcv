@@ -35,7 +35,28 @@ const PaginatorProvider:FC<TableProviderProps> = (props: TableProviderProps) => 
         gotoPage,
         setPaginationProps
     }}>
-        <Box w="100%" bgColor="white" borderRadius="6px" boxShadow="0px 4px 15px rgba(0, 0, 0, 0.05)">
+        <Box   sx={{
+            w:"100%",
+            bgColor:"white",
+            borderRadius:"6px",
+            boxShadow:"0px 4px 15px rgba(0, 0, 0, 0.05)",
+            overflow: "auto"
+        }}
+        animate="show"
+        initial="hide"
+        variants={{
+            hide: {
+                opacity: 0
+            },
+            show: {
+                opaciity: 1,
+                transition: {
+                    delayChildren: 0.4,
+                    duration: 0.2
+                }
+            }
+        }}
+        >
         {props.children}
         </Box>
     </PaginatorContext.Provider>

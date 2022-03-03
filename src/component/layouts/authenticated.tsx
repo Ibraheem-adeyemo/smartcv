@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { memo, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, AuthenticatedPage, menuNames, cookieKeys, cookiesTimeout } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 import { As, Avatar, Button, ComponentWithAs, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { ComponentWithChildren } from "../../models";
 import { useIdleTimer } from 'react-idle-timer'
 import { getCookie } from "../../lib";
-import { MotionFlex } from "../framer";
+import { MotionFlex, MotionText } from "../framer";
 
 interface AuthenticatedLayout extends ComponentWithChildren {
     pageHeader: string | JSX.Element
@@ -19,7 +19,7 @@ interface MenuListItem {
     name: string,
     link: string
 }
-const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: AuthenticatedLayout) => {
+const AuthenticatedLayout: React.FC<AuthenticatedLayout> = memo((props: AuthenticatedLayout) => {
     const { user, signOut, error, refreshAccessToken } = useContext(AuthContext)
     const router = useRouter()
     const handleOnIdle = (event: any) => {
@@ -44,7 +44,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
     }
 
     const { getLastActiveTime } = useIdleTimer({
-        timeout: typeof window !== "undefined"? (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60):1000 * 60 * 20,
+        timeout: typeof window !== "undefined" ? (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60) : 1000 * 60 * 20,
         onIdle: handleOnIdle,
         onActive: handleOnActive,
         onAction: handleOnAction,
@@ -52,7 +52,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
     })
     // console.log({ session })
 
-    const MenuLists = useCallback(() => {
+    const MenuLists = useMemo(() => {
 
         const menuList: MenuListItem[] = [{
             icon: dashboardIcon,
@@ -85,45 +85,57 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
         }]
         return <>
             {menuList.map((x, i) =>
-                <AppLink key={i} href={x.link ? x.link : "/"} d="flex" gridGap="20px" role="group"
-                    display="flex"
-                    pl="13.9px"
-                    pr="13px"
-                    py="8px"
-                    w="fit-content"
-                    alignItems="center"
-                    borderRadius="4px"
-                    cursor="pointer"
-                    _active={{
-                        outline: "none"
-                    }}
-                    _focus={{
-                        outline: "none"
-                    }}
-                    bgColor={x.link === router.asPath ? "brand.light-blue" : ""}
-                    _hover={{
-                        bgColor: "brand.light-blue",
-                        cursor: "pointer"
-                    }}
-                    fontSize={["16px", "16px", "16px", "16px", "16px", "20px"]}
-                >
-                    <Icon as={x.icon} _groupHover={{
-                        color: "brand.primary-blue"
-                    }}
-                        color={x.link === router.asPath ? "brand.primary-blue" : ""}
-                        h="23px"
-                        w="23px"
-                    />
-                    <Text color="brand.muted">{x.name}</Text>
-                </AppLink>)}
+                <MotionText color="brand.muted" animate="show" initial="hide"
+                key={i}
+                variants={{
+                    show: {
+                        x:0,
+                        opacity: 1,
+                        transition: {
+                            duration: 0.4,
+                            delay: i * 0.4
+                        }
+                    },
+                    hide: {
+                        x: -200,
+                        opacity: 0
+                    }
+                }}>
+                    <AppLink href={x.link ? x.link : "/"} d="flex" gridGap="20px" role="group"
+                        display="flex"
+                        pl="13.9px"
+                        pr="13px"
+                        py="8px"
+                        w="fit-content"
+                        alignItems="center"
+                        borderRadius="4px"
+                        cursor="pointer"
+                        _active={{
+                            outline: "none"
+                        }}
+                        _focus={{
+                            outline: "none"
+                        }}
+                        bgColor={x.link === router.asPath ? "brand.light-blue" : ""}
+                        _hover={{
+                            bgColor: "brand.light-blue",
+                            cursor: "pointer"
+                        }}
+                        fontSize={"16px"}
+                    >
+                        <Icon as={x.icon} _groupHover={{
+                            color: "brand.primary-blue"
+                        }}
+                            color={x.link === router.asPath ? "brand.primary-blue" : ""}
+                            h="23px"
+                            w="23px"
+                        />
+                        {x.name}
+                    </AppLink>
+                </MotionText>)}
         </>
     }, [])
 
-    useEffect(() => {
-        // setTimeout(() => {
-        //     setLoading((prev) => !prev)
-        // }, 1000)
-    }, [])
 
     return (
         <Grid
@@ -153,13 +165,13 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                         <MenuButton as={Button} variant="just-text">
                             <Flex gridGap="42px" alignItems="center">
 
-                            {typeof user === "undefined" && typeof error === "undefined" &&<> 
+                                {typeof user === "undefined" && typeof error === "undefined" && <>
                                     <SkeletonLoader rows={1} width="100px" height="15px" columns={1} />
                                     <SkeletonCircle size="25" />
                                 </>}
-                                { typeof user !== "undefined" && typeof error === "undefined" && <MotionFlex >
+                                {typeof user !== "undefined" && typeof error === "undefined" && <MotionFlex >
                                     <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {user?.firstName}</Text>
-                                    <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" /> 
+                                    <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" />
                                 </MotionFlex>
                                 }
 
@@ -209,7 +221,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                 overflowX="auto"
             >
                 {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={5} width="300px" columns={1} />}
-                {typeof user !== "undefined" && typeof error === "undefined" && <MenuLists />}
+                {typeof user !== "undefined" && typeof error === "undefined" && MenuLists }
             </GridItem>
             {typeof user === "undefined" && typeof error === "undefined" && <GridItem d="flex" w="100%" alignItems="center" px="50px">  <SkeletonLoader rows={1} width="200px" height="20px" columns={1} /></GridItem>}
             {typeof user !== "undefined" && typeof error === "undefined" &&
@@ -235,5 +247,5 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                 </GridItem>
             }
         </Grid>)
-}
+})
 export default AuthenticatedLayout

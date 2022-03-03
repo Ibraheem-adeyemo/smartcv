@@ -8,6 +8,7 @@ import { PickerIcon } from "../../constants";
 import { validateHexColor } from "../../lib";
 import { Onboarding, tenantAdmin, InstitutionColorInfo, Step } from "../../models";
 import { OnboardingContext } from "../../providers/onboarding-provider";
+import { AnimatedText } from "../framer";
 interface InstitutionColorsProps {
     step: number
 }
@@ -127,7 +128,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                     </Flex>
                 </Flex>
                 <VStack spacing='8px'>
-                    <Text color="muted-text" textAlign="left" w="100%">Enter the hex code or use the colour picker</Text>
+                    <AnimatedText color="muted-text" textAlign="left" w="100%">Enter the hex code or use the colour picker</AnimatedText>
                     <Flex bgColor="brand.muted-background" border={(typeof validation !== "undefined" && validation[0] !== "") ? "1px solid red" : "unset"} borderRadius="8px" w="100%" alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.headerColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
@@ -141,7 +142,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                         <Input placeholder="Header colour eg. #04257F" border="0" bgColor="brand.muted-background" value={onboarding?.institutionColorInfo?.headerColor} onInput={setHeaderColor} />
                         <PickerIcon />
                     </Flex>
-                    <Text color="red">{(typeof validation !== "undefined" && validation[0] !== "") ? validation[0] : ""}</Text>
+                    <AnimatedText color="red">{(typeof validation !== "undefined" && validation[0] !== "") ? validation[0] : ""}</AnimatedText>
                     <Flex bgColor="brand.muted-background" borderRadius="8px" border={(typeof validation !== "undefined" && validation[2] !== "") ? "1px solid red" : "unset"} w="100%" alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.buttonColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
@@ -155,7 +156,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                         <Input placeholder="Buttons & links colour eg. #04257F" border="0" value={onboarding?.institutionColorInfo?.buttonColor} bgColor="brand.muted-background" onInput={setButtonColor} />
                         <PickerIcon />
                     </Flex>
-                    <Text color="red">{(typeof validation !== "undefined" && validation[2] !== "") ? validation[2] : ""}</Text>
+                    <AnimatedText color="red">{(typeof validation !== "undefined" && validation[2] !== "") ? validation[2] : ""}</AnimatedText>
                     <Flex bgColor="brand.muted-background" borderRadius="8px" w="100%" border={(typeof validation !== "undefined" && validation[1] !== "") ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.sidebarColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
@@ -169,7 +170,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                         <Input placeholder="Side menu & accents eg. #04257F" value={onboarding?.institutionColorInfo?.sidebarColor} border="0" bgColor="brand.muted-background" onInput={setSidebarColor} />
                         <PickerIcon />
                     </Flex>
-                    <Text color="red">{(typeof validation !== "undefined" && validation[1] !== "") ? validation[1] : ""}</Text>
+                    <AnimatedText color="red">{(typeof validation !== "undefined" && validation[1] !== "") ? validation[1] : ""}</AnimatedText>
                 </VStack>
             </Flex>
         </OnboardingCard>
