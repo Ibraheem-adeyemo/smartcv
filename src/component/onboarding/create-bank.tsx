@@ -1,4 +1,4 @@
-import { Badge, Box, Flex, Text, Button, FormControl, FormLabel, Input, Image, FormErrorMessage, CloseButton, useToast, Select, transition } from "@chakra-ui/react";
+import { Badge, Box, Flex, Text, Button, FormControl, Input, Image, FormErrorMessage, CloseButton, useToast, Select } from "@chakra-ui/react";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { OnboardingCard } from ".";
 import { apiUrlsv1, Images, notificationMesage } from "../../constants";
@@ -8,7 +8,7 @@ import useValidator from "../../hooks/validatoin";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { OnboardingContext } from "../../providers/onboarding-provider";
-import { MotionFormLabel } from "../framer";
+import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
 
 interface CreateBankProps extends stepsProps {
 
@@ -140,30 +140,30 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
                     <MotionFormLabel><Text>Bank Name</Text></MotionFormLabel>
 
                     <Input placeholder="Enter Bank Name" borderRadius="4px" value={onboarding?.tenant?.name} onChange={addData} />
-                    <FormErrorMessage>{validation?.errors.name}</FormErrorMessage>
+                    <MotionFormErrorMessage>{validation?.errors.name}</MotionFormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="tenantCode" flexGrow={1} width="35%" isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
                     <MotionFormLabel>Bank ID</MotionFormLabel>
                     <Input placeholder="Enter Bank ID" borderRadius="4px" value={onboarding?.tenant?.tenantCode} onChange={addData} />
-                    <FormErrorMessage>{validation?.errors.tenantCode}</FormErrorMessage>
+                    <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="branch" flexGrow={1} width="35%" isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
                     <MotionFormLabel>Bank Branch</MotionFormLabel>
 
                     <Input placeholder="Enter Bank Branch" borderRadius="4px" value={onboarding?.tenant?.branch} onChange={addData} />
-                    <FormErrorMessage>{validation?.errors.branch}</FormErrorMessage>
+                    <MotionFormErrorMessage>{validation?.errors.branch}</MotionFormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="location" flexGrow={1} width="35%" isInvalid={validation?.errors?.location !== "" && validation?.touched.location === "touched"}>
                     <MotionFormLabel>Bank LocatIon</MotionFormLabel>
                     <Select borderRadius="4px" value={onboarding?.tenant?.location} onChange={addData} placeholder="Select a state">
                         {states?.map((x, i) =><option key={i} value={x.id}>{x.name}</option>)}
                     </Select>
-                    <FormErrorMessage>{validation?.errors.location}</FormErrorMessage>
+                    <MotionFormErrorMessage>{validation?.errors.location}</MotionFormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="address" flexGrow={2} width="100%" isInvalid={validation?.errors?.address !== "" && validation?.touched.address === "touched"}>
                     <MotionFormLabel>Bank Address</MotionFormLabel>
                     <Input placeholder="Enter Bank Address" borderRadius="4px" value={onboarding?.tenant?.address} onChange={addData} />
-                    <FormErrorMessage>{validation?.errors.address}</FormErrorMessage>
+                    <MotionFormErrorMessage>{validation?.errors.address}</MotionFormErrorMessage>
                 </FormControl>
                 <FormControl isRequired id="logo" width="15%" flexGrow={1} isInvalid={validation?.errors?.logo !== "" && validation?.touched.logo === "touched"}>
                     <MotionFormLabel>Upload a Bank Logo</MotionFormLabel>
@@ -181,7 +181,7 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
                             </Flex>
                         </Flex>
                     </Button>
-                    <FormErrorMessage>{validation?.errors.logo}</FormErrorMessage>
+                    <MotionFormErrorMessage>{validation?.errors.logo}</MotionFormErrorMessage>
                 </FormControl>
                 <FormControl id="logo" w="25%" flexGrow={1} >
                     <Box w="fit-content">

@@ -2,7 +2,7 @@ import _, { xor } from "lodash";
 import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
-import { Paginate, ATMCountDetail } from "../../models";
+import { Paginate, ATMCountDetail, Column } from "../../models";
 import { PaginatorProvider } from "../../providers";
 import { PaginatorContext } from "../../providers/paginator-provider";
 import { apiUrlsv1, appTableElements } from "../../constants";
@@ -51,9 +51,10 @@ const ChannelsMonitoringTable: React.FC = () => {
                 }, {
                     name: "Terminal Status",
                     key: "terminalStatus",
-                    ele: appTableElements.status
+                    ele: appTableElements.status,
+                    lookUp: ["Active", "Not Active"]
                 }
-            ],
+            ] as Column[],
             data: rowData
         }
     }, [atmCountDetail, error])

@@ -1,6 +1,6 @@
-import { Icon, Menu, MenuButton, MenuItem, MenuList, Tfoot, Thead, Button, Image, HStack, Text } from "@chakra-ui/react";
-import { Table, Tbody, Td, Tr } from "@chakra-ui/table";
-import _, { delay, get, map, range, reduce } from "lodash";
+import { Icon, Menu, MenuButton, MenuItem, MenuList, Tfoot, Button, HStack, Text } from "@chakra-ui/react";
+import { Td, Tr } from "@chakra-ui/table";
+import _, { get, map, range, reduce } from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
@@ -8,7 +8,7 @@ import { appTableElements, DotIcon, Images } from "../../constants";
 import { appDate } from "../../lib";
 import { Action, Column } from "../../models";
 import { PaginatorContext } from "../../providers/paginator-provider";
-import { MotionImage, MotionTable, MotionTbody, MotionTd, MotionText, MotionThead, MotionTr } from "../framer";
+import { AnimatedText, MotionImage, MotionTable, MotionTbody, MotionTd, MotionThead, MotionTr } from "../framer";
 import SkeletonLoader from "../skeleton-loader";
 
 
@@ -36,15 +36,11 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                 show: {
                     opacity: 1,
                     transition: {
-                        when: "beforeChildren",
-                        staggerChildren: 0.5
+                        delayChildren: 0.4
                     }
                 },
                 hide: {
                     opacity: 0,
-                    transition: {
-                        when: "afterChildren",
-                    }
                 }
             }} >
             <MotionThead sx={{
@@ -56,14 +52,10 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
 
                     show: {
                         transition: {
-                            when: "beforeChildren",
-                            staggerChildren: 0.3
+                            delayChildren: 0.3
                         }
                     },
                     hide: {
-                        transition: {
-                            when: "afterChildren",
-                        }
                     }
                 }}
             >
@@ -114,15 +106,11 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                     show: {
                         opacity: 1,
                         transition: {
-                            when: "beforeChildren",
-                            staggerChildren: 0.5
+                            delayChildren: 0.4
                         }
                     },
                     hide: {
-                        opacity: 0,
-                        transition: {
-                            when: "afterChildren",
-                        }
+                        opacity: 0
                     }
                 }}
             >
@@ -138,7 +126,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                                 },
                                 show: {
                                     y:0, transition: {
-                                        delay: i* 0.2
+                                        duration: 0.2
                                     },
                                     opacity: 1
                                 }
@@ -202,11 +190,11 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                                                             return <HStack spacing="11px">{+data === 1 ? <><DotIcon color="green" /> <Text> {typeof y.lookUp === "undefined" ? 'Active' : y.lookUp[+data]}</Text></> : <><DotIcon color="red" /> <Text>{typeof y.lookUp === "undefined" ? 'Not Active' : y.lookUp[+data]}</Text></>
                                                             }</HStack>
                                                         case appTableElements.dateTime:
-                                                            return <MotionText>{appDate(data)}</MotionText>
+                                                            return <AnimatedText>{appDate(data)}</AnimatedText>
                                                         case appTableElements.date:
-                                                            return <MotionText>{appDate(data, false)}</MotionText>
+                                                            return <AnimatedText>{appDate(data, false)}</AnimatedText>
                                                         default:
-                                                            return <MotionText>{data}</MotionText>
+                                                            return <AnimatedText>{data}</AnimatedText>
                                                     }
                                                 }
                                                 return data

@@ -7,6 +7,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { OnboardingCard } from ".";
 import { notificationMesage } from "../../constants";
 import { OnboardingContext } from "../../providers/onboarding-provider";
+import { MotionFormLabel } from "../framer";
 
 
 const CreateSuperAdminWithExistingSuperAdminAccount:React.FC = () => {
@@ -75,22 +76,22 @@ const CreateSuperAdminWithExistingSuperAdminAccount:React.FC = () => {
 
         <Flex gridColumnGap="21px" gridRowGap="32px" flexWrap="wrap" >
             <FormControl isRequired flexGrow={1} width="35%">
-                <FormLabel>First Name</FormLabel>
+                <MotionFormLabel>First Name</MotionFormLabel>
 
                 <Input placeholder="Jane" borderRadius="4px" value={onboarding?.tenantAdmin?.firstName} disabled={true} />
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%" >
-                <FormLabel>Last name</FormLabel>
+                <MotionFormLabel>Last name</MotionFormLabel>
                 <Input placeholder="Doe" borderRadius="4px" value={onboarding?.tenantAdmin?.lastName} disabled={true} />
 
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%">
-                <FormLabel>Email Address</FormLabel>
+                <MotionFormLabel>Email Address</MotionFormLabel>
 
                 <Input placeholder="janedoe@gmail.com" borderRadius="4px" value={onboarding?.tenantAdmin?.email} disabled={true} />
             </FormControl>
             <FormControl isRequired flexGrow={1} width="35%" >
-                <FormLabel>Phone Number</FormLabel>
+                <MotionFormLabel>Phone Number</MotionFormLabel>
                 <Input placeholder="Enter Phone no" borderRadius="4px" value={onboarding?.tenantAdmin?.mobileNo} disabled={true} />
 
             </FormControl>

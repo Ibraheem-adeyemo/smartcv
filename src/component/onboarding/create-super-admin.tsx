@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { notificationMesage, TickIcon } from "../../constants";
 import { Tenant, Onboarding, stepsProps, tenantAdmin } from "../../models";
 import { OnboardingContext } from "../../providers/onboarding-provider";
+import { MotionAccordion, MotionAccordionItem } from "../framer";
 
 interface CreateSuperAdminProps extends stepsProps {
 
@@ -86,8 +87,31 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
 
     return (
         <>
-            <Accordion d="flex" flexDir="column" gridGap="24px" w="100%" index={accordionindex} onChange={(n) => setAccordionindex(n as number)}>
-                <AccordionItem w="100%" bgColor="white">
+            <MotionAccordion d="flex" flexDir="column" gridGap="24px" w="100%" index={accordionindex} onChange={(n) => setAccordionindex(n as number)} animate="show" initial="hide" variants={{
+                show: {
+                    opacity: 1,
+                    transition: {
+                        staggerChildren: 0.5
+                    }
+                },
+                hide: {
+
+                }
+            }}>
+                <MotionAccordionItem w="100%" bgColor="white" animate="show" initial="hide" variants={{
+                    show: {
+                        x: 100,
+                        opacity: 1,
+                        transition: {
+                            duration: 0.4,
+                            
+                        }
+                    },
+                    hide: {
+                        x: 0,
+                        opacity: 0
+                    }
+                }}>
                     {({ isExpanded }) => {
                         return <>
                             <AccordionButton onClick={() => setOpenModal(() => isExpanded ? false : true)}  py="34px" >
@@ -108,9 +132,22 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
                             </AccordionPanel>
                         </>
                     }}
-                </AccordionItem>
+                </MotionAccordionItem>
 
-                <AccordionItem w="100%" bgColor="white">
+                <MotionAccordionItem w="100%" bgColor="white" animate="show" initial="hide" variants={{
+                    show: {
+                        x: 100,
+                        opacity: 1,
+                        transition: {
+                            duration: 0.4,
+                            delay: 0.6
+                        }
+                    },
+                    hide: {
+                        x: 0,
+                        opacity: 0
+                    }
+                }}>
                     {({ isExpanded }) => (
                         <>
                             <AccordionButton w="100%"  py="34px">
@@ -132,8 +169,8 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
                             </AccordionPanel>
                         </>
                     )}
-                </AccordionItem>
-            </Accordion>
+                </MotionAccordionItem>
+            </MotionAccordion>
             { openModal && <SigninWithPassport openModal={openModal as boolean} onCloseModal={onCloseModal} setUserAuthority={setUserAuthority} />}
         </>
     )

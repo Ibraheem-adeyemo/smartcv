@@ -1,13 +1,13 @@
-import { FormLabel, Text } from "@chakra-ui/react";
+import { FormErrorMessage, FormLabel, Text } from "@chakra-ui/react";
 import { MotionText } from ".";
 import { ComponentWithChildren } from "../../models";
 
 
 // const MotionFormLabel = motion<FormLabelProps>(Label)
 
-export const MotionFormLabel = (props: ComponentWithChildren) => {
+export const MotionFormErrorMessage = (props: ComponentWithChildren) => {
     return (
-        <FormLabel>
+        <FormErrorMessage>
             <Text sx={{
                 display: "inline-block",
                 overflow: "hidden"
@@ -29,8 +29,8 @@ export const MotionFormLabel = (props: ComponentWithChildren) => {
                         opacity: 0
                     }
                 }}
-                >{props.children}</MotionText>
+                ><FormErrorMessage>{props.children}</FormErrorMessage></MotionText>
             </Text>
-        </FormLabel>
+        </FormErrorMessage>
     )
 }

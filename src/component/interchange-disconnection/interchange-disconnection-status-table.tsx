@@ -24,7 +24,7 @@ const InterchangeDisconnectionStatusTable:FC = () => {
                 key: "disconnectionTime."
             }, {
                 name: "Requested User",
-                key: "requestedUser"
+                key: "requester"
             }, {
                 name: "Status",
                 key: "status",

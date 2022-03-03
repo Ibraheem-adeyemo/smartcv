@@ -3,6 +3,8 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { CLIENT_ID, PASSPORT_TOKEN_URL, SCOPE, SECRET } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { PassportLoginCredentials, tenantAdmin } from "../../models";
+import { AnimatedText, MotionFormErrorMessage, MotionFormLabel } from "../framer";
+import { MotionModal } from "../framer/motion-modal";
 
 type onClose = () => void
 const voidfunc = () => {
@@ -150,24 +152,36 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
 
     return (
 
-        <Modal isOpen={typeof props.openModal !== "undefined" ? props.openModal : false} onClose={typeof props.onCloseModal !== "undefined" ? props.onCloseModal : voidfunc}>
+        <MotionModal isOpen={typeof props.openModal !== "undefined" ? props.openModal : false} onClose={typeof props.onCloseModal !== "undefined" ? props.onCloseModal : voidfunc} animate="show" initial="hide"
+        variants={{
+            show: {
+                opacity: 1,
+                transition: {
+                    duration: 0.4
+                }
+            },
+            hide: {
+                opacity: 0,
+            }
+        }}
+        >
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Login with your Interswitch Passport Account</ModalHeader>
+                <ModalHeader><AnimatedText>Login with your Interswitch Passport Account</AnimatedText></ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Text>Use your Interswitch Passport account to create super admin</Text>
+                    <AnimatedText>Use your Interswitch Passport account to create super admin</AnimatedText>
                     <Flex gridGap="32px" flexDir="column" >
                         <FormControl isRequired id="email" width="100%" isInvalid={validation?.errors?.email !== "" && validation?.touched.email === "touched"}>
-                            <FormLabel>email</FormLabel>
+                            <MotionFormLabel>email</MotionFormLabel>
 
                             <Input placeholder="janedoe@gmail.com" type="email" borderRadius="4px" value={form?.email} onChange={addData} />
-                            <FormErrorMessage>{validation?.errors.email}</FormErrorMessage>
+                            <MotionFormErrorMessage>{validation?.errors.email}</MotionFormErrorMessage>
                         </FormControl>
                         <FormControl isRequired id="password" width="100%" isInvalid={validation?.errors?.password !== "" && validation?.touched.password === "touched"}>
-                            <FormLabel>Password</FormLabel>
+                            <MotionFormLabel>Password</MotionFormLabel>
                             <Input placeholder="Enter your password" type="password" borderRadius="4px" value={form?.password} onChange={addData} />
-                            <FormErrorMessage>{validation?.errors.password}</FormErrorMessage>
+                            <MotionFormErrorMessage>{validation?.errors.password}</MotionFormErrorMessage>
 
                         </FormControl>
                     </Flex>
@@ -178,7 +192,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                     <Button variant="primary-button" px="75px" py="8px" disabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} isLoading={spin?.isLoading} loadingText={typeof spin?.text === "undefined" ? "loading" : spin.text} onClick={confirmUser}>Next</Button>
                 </ModalFooter>
             </ModalContent>
-        </Modal>
+        </MotionModal>
     )
 }
 

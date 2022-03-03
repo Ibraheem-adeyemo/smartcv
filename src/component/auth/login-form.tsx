@@ -6,6 +6,7 @@ import { cookieKeys, cookiesTimeout, Images, links } from "../../constants";
 import { AuthContext } from "../../providers/auth-provider";
 import { setCookie } from "../../lib";
 import { MotionBox, MotionFlex, MotionImage } from '../framer';
+import { AppLink } from '../app';
 
 const LoginForm: FC = () => {
     const { user, signIn, signOut } = useContext(AuthContext)
@@ -176,7 +177,8 @@ const LoginForm: FC = () => {
                 >
                     <MotionFlex sx={{
                         flexWrap: "wrap",
-                        gridGap: "1px"
+                        gridGap: "4px",
+                        alignItems: "center"
                     }}
                     
                     initial="hide"
@@ -193,7 +195,7 @@ const LoginForm: FC = () => {
                     }}
                     >
                         <Text> Not on boarded yet?</Text>
-                        <NextLink href={links.registerOrganization}><Link href={links.registerOrganization}>Register</Link></NextLink>
+                        <AppLink href={links.registerOrganization}  color="brand.primary-blue" >Register</AppLink>
                     </MotionFlex>
                 </MotionBox>
             </MotionFlex>

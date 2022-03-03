@@ -13,7 +13,7 @@ export interface InterchangeDisconnectionRequest {
     id: string,
     tenantName: string,
     tenantCode: string,
-    register: string,
+    requester: string,
     command: string,
     interchange: string,
     verdict: string,
