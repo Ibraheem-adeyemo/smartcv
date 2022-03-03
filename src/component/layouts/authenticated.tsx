@@ -19,7 +19,7 @@ interface MenuListItem {
     name: string,
     link: string
 }
-const AuthenticatedLayout: React.FC<AuthenticatedLayout> = memo((props: AuthenticatedLayout) => {
+const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: AuthenticatedLayout) => {
     const { user, signOut, error, refreshAccessToken } = useContext(AuthContext)
     const router = useRouter()
     const handleOnIdle = (event: any) => {
@@ -52,7 +52,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = memo((props: Authenti
     })
     // console.log({ session })
 
-    const MenuLists = useMemo(() => {
+    const MenuLists = memo(() => {
 
         const menuList: MenuListItem[] = [{
             icon: dashboardIcon,
@@ -86,42 +86,47 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = memo((props: Authenti
         return <>
             {menuList.map((x, i) =>
                 <MotionText color="brand.muted" animate="show" initial="hide"
-                key={i}
-                variants={{
-                    show: {
-                        x:0,
-                        opacity: 1,
-                        transition: {
-                            duration: 0.4,
-                            delay: i * 0.4
+                    sx={{
+                        mx: ["auto", "auto", "auto", 0, 0, 0]
+                    }}
+                    key={i}
+                    variants={{
+                        show: {
+                            x: 0,
+                            opacity: 1,
+                            transition: {
+                                duration: 0.4,
+                                delay: i * 0.4
+                            }
+                        },
+                        hide: {
+                            x: -200,
+                            opacity: 0
                         }
-                    },
-                    hide: {
-                        x: -200,
-                        opacity: 0
-                    }
-                }}>
+                    }}>
                     <AppLink href={x.link ? x.link : "/"} d="flex" gridGap="20px" role="group"
-                        display="flex"
-                        pl="13.9px"
-                        pr="13px"
-                        py="8px"
-                        w="fit-content"
-                        alignItems="center"
-                        borderRadius="4px"
-                        cursor="pointer"
                         _active={{
                             outline: "none"
                         }}
                         _focus={{
                             outline: "none"
                         }}
-                        bgColor={x.link === router.asPath ? "brand.light-blue" : ""}
                         _hover={{
                             bgColor: "brand.light-blue",
                             cursor: "pointer"
                         }}
-                        fontSize={"16px"}
+                        sx={{
+                            fontSize: "16px",
+                            bgColor: x.link === router.asPath ? "brand.light-blue" : "",
+                            display: "flex",
+                            pl: "13.9px",
+                            pr: "13px",
+                            py: "8px",
+                            w: "fit-content",
+                            alignItems: "center",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                        }}
                     >
                         <Icon as={x.icon} _groupHover={{
                             color: "brand.primary-blue"
@@ -130,18 +135,22 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = memo((props: Authenti
                             h="23px"
                             w="23px"
                         />
-                        {x.name}
+                        <Text sx={{
+                            opacity: [0, 0, 0, 1, 1, 1],
+                            display: ["none", "none", "none", "inline-block", "inline-block", "inline-block"],
+                            textAlign:"left"
+                        }} >{x.name}</Text>
                     </AppLink>
                 </MotionText>)}
         </>
-    }, [])
+    })
 
 
     return (
         <Grid
             h={"100vh"}
             templateRows={"[row1-start] 89px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] "}
-            templateColumns={["274px auto", "274px auto", "274px auto", "274px auto", "274px auto", "374px auto"]}
+            templateColumns={["74px auto", "74px auto", "74px auto", "274px auto", "274px auto", "374px auto"]}
             templateAreas={`
             "header header" 
             "sidebar pageHeader" 
@@ -217,11 +226,12 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = memo((props: Authenti
                 gridGap="36.5px"
                 pt="48px"
                 flexDir="column"
-                ml="40px"
+                ml={[0, 0, 0, "40px", "40px", "40px"]}
+
                 overflowX="auto"
             >
                 {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={5} width="300px" columns={1} />}
-                {typeof user !== "undefined" && typeof error === "undefined" && MenuLists }
+                {typeof user !== "undefined" && typeof error === "undefined" && <MenuLists />}
             </GridItem>
             {typeof user === "undefined" && typeof error === "undefined" && <GridItem d="flex" w="100%" alignItems="center" px="50px">  <SkeletonLoader rows={1} width="200px" height="20px" columns={1} /></GridItem>}
             {typeof user !== "undefined" && typeof error === "undefined" &&
@@ -247,5 +257,5 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = memo((props: Authenti
                 </GridItem>
             }
         </Grid>)
-})
+}
 export default AuthenticatedLayout

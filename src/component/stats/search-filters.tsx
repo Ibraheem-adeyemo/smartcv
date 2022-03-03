@@ -3,6 +3,7 @@ import { Box, Text, Menu, MenuButton, MenuList, MenuItem, Input, Button } from "
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import _, { debounce, find } from 'lodash';
 import { DropdownIcon } from "../../constants";
+import { AnimatedText } from "../framer";
 
 
 const debouncedFetchData = debounce((query: string, cb: ResultFromSearch, data: DropdownContent[]) => {
@@ -73,7 +74,7 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
     return (
         <Menu onOpen={() => setTimeout(() => ref.current?.focus(), 500)} >
             <MenuButton as={Button} h="26px" p="12px" rightIcon={<DropdownIcon />} borderWidth={selected ? '1px' : '0px'} borderStyle={selected ? 'bold' : ''} borderColor={selected ? 'var(--chakra-colors-brand-primary-blue)' : ''}  >
-                <Text size="dropdown-text" variant="dropdown-text-header" color={selected ? 'brand.primary-blue' : ''}>{props.label}: {dropdownContent?.find(x => x.selected)?.label}</Text>
+                <AnimatedText size="dropdown-text" variant="dropdown-text-header" color={selected ? 'brand.primary-blue' : ''}>{props.label}: {dropdownContent?.find(x => x.selected)?.label}</AnimatedText>
             </MenuButton>
             <MenuList maxH="334px" overflowY="auto" maxW="204px">
                 <MenuItem closeOnSelect={false} onClick={() => ref.current?.focus()} as={Box}>
@@ -88,7 +89,7 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
                             } : x)))
                     }} /></MenuItem>
                 {dropdownContent?.map((x, i) => <MenuItem key={i} onClick={(e) => pickItem(x)}>
-                    <Text size="dropdown-text">{x.label}</Text>
+                    <AnimatedText size="dropdown-text">{x.label}</AnimatedText>
                 </MenuItem>)}
             </MenuList>
         </Menu>

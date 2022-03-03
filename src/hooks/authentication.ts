@@ -80,6 +80,7 @@ export default function useAuthentication() {
 
                 if (shouldRedirect) {
                     setCookie(cookieKeys.redirectUrl, window.location.pathname, cookiesTimeout.redirectUrlTimeout)
+                   
                     window.location.href = links.login
                 }
             }
