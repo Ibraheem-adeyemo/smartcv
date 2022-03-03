@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, PASSPORT_PROFILE_URL, PASSPORT_TOKEN_URL, REDIRECT_URI, SECRET } from '../constants'
+import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie } from '../lib'
 import { AuthModel, RefreshTokenRequestBody, TokenRequestBody, TokenResponsBody, UserModel } from '../models'
 export default function useAuthentication() {
     // const url = "/api/passport"
-    const url = PASSPORT_PROFILE_URL
+    const url = apiUrlsv1.passporProfileUrl
     const { mutate } = useSWRConfig()
     const { data: user, mutate: _mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie(cookieKeys.token) == "" ? null : url)
     const { data: userDetail, mutate: _userDetailMutate, error:userDetailError } = useSWR<UserModel>(!user ? null : `${apiUrlsv1.getUserDetail}/${user.email}`)
@@ -38,7 +38,7 @@ export default function useAuthentication() {
     }
 
     const signIn = () => {
-        window.location.href = `${apiUrlsv1.passportUrl}${window.location.protocol}//${window.location.host}/${REDIRECT_URI}`
+        window.location.href = `${apiUrlsv1.passportUrl}${window.location.protocol}//${window.location.host}/${links.oauthCallback}`
         // loginWithPassport()
     }
 
@@ -93,7 +93,7 @@ export default function useAuthentication() {
         // if (typeof code !== "undefined") {
         const body = {
             client_id: CLIENT_ID,
-            redirect_uri: `${window.location.protocol}//${window.location.host}/${REDIRECT_URI}`,
+            redirect_uri: `${window.location.protocol}//${window.location.host}/${links.oauthCallback}`,
             grant_type: grantTypes.authorizationCode,
             code: code
         }
@@ -102,7 +102,7 @@ export default function useAuthentication() {
             urlencoded.append(x, body[x as keyof TokenRequestBody])
         }
         try {
-            const response = await fetchJson<TokenResponsBody>(PASSPORT_TOKEN_URL, {
+            const response = await fetchJson<TokenResponsBody>(apiUrlsv1.passportTokenUrl, {
                 method: "POST",
                 headers: {
                     Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
@@ -150,7 +150,7 @@ export default function useAuthentication() {
             urlencoded.append(x, body[x as keyof RefreshTokenRequestBody])
         }
         try {
-            const response = await fetchJson<TokenResponsBody>(PASSPORT_TOKEN_URL, {
+            const response = await fetchJson<TokenResponsBody>(apiUrlsv1.passportTokenUrl, {
                 method: "POST",
                 headers: {
                     Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,

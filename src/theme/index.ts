@@ -21,6 +21,12 @@ const breakpoints = createBreakpoints({
   xl: "80em",
   "2xl": "96em",
 })
+
+/*
+  300px: From 0em upwards
+  400px: From 30em upwards
+  500px: From 48em upwards
+*/
 const overrides = {
     styles,
     colors,

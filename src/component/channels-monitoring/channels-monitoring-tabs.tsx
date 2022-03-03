@@ -1,4 +1,3 @@
-import { HStack, ButtonGroup, Button } from "@chakra-ui/react";
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { channelsMonitoringContext } from "../../providers/channels-monitoring-provider";
 import { MotionButton, MotionButtonGroup } from "../framer";

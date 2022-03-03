@@ -1,11 +1,11 @@
-import _, { xor } from "lodash";
+import _ from "lodash";
 import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { Paginate, ATMCountDetail, Column } from "../../models";
 import { PaginatorProvider } from "../../providers";
 import { PaginatorContext } from "../../providers/paginator-provider";
-import { apiUrlsv1, appTableElements } from "../../constants";
+import { appTableElements } from "../../constants";
 import { useToast } from "@chakra-ui/react";
 import { channelsMonitoringContext } from "../../providers/channels-monitoring-provider";
 import { StatsContext } from "../../providers/stats-provider";
