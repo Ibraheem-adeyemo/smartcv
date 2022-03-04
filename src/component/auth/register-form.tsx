@@ -80,7 +80,8 @@ const RegisterForm: FC = () => {
                     borderRadius: "6px",
                     alignItems: "center",
                     w: "633px",
-                    py: "36px"
+                    py: "36px",
+                    mx: "auto"
                 }}
                     initial="hide"
                     animate="show"

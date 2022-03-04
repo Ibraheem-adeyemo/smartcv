@@ -30,7 +30,8 @@ const LoginForm: FC = () => {
                 borderRadius: "6px",
                 alignItems: "center",
                 w: "633px",
-                py: "42.34px"
+                py: "42.34px",
+                mx:"auto"
             }}
                 initial="hide"
                 animate="show"

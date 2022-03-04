@@ -7,18 +7,27 @@ import { NonAuthenticated } from "../src/component/layouts"
 import MissionStatement from "../src/component/mission-statement"
 
 
-const Login:NextPage = () => {
+const Login: NextPage = () => {
 
 
 
     return (
-        <NonAuthenticated>
 
-            <Flex flexDir="column" px="147px" gridGap="102.61px" py="34.5px">
+        <NonAuthenticated>
+            <Flex sx={{
+                flexDir: "column",
+                px: ["80px", "80px", "80px", "100px", "147px", "147px",],
+                gridGap: ["30px", "30px", "30px", "30px", "102.61px", "102.61px"],
+                py: "34.5px"
+            }}>
                 <Flex>
                     <InterswitchLogo variant="inverted" alt="Interswitch Logo" />
                 </Flex>
-                <Flex gridGap="99px">
+                <Flex sx={{
+                    gridGap: ["30px", "30px", "30px", "50px", "99px", "99px"],
+                    flexDir: ["column", "column", "column", "column", "row", "row",]
+                }}
+                >
                     <MissionStatement />
                     <LoginForm />
                 </Flex>

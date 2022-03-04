@@ -122,7 +122,6 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                             pl: "13.9px",
                             pr: "13px",
                             py: "8px",
-                            w: "fit-content",
                             alignItems: "center",
                             borderRadius: "4px",
                             cursor: "pointer",
@@ -137,8 +136,9 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                         />
                         <Text sx={{
                             opacity: [0, 0, 0, 1, 1, 1],
+                            fontSize: ["10px", "10px", "10px", "10px", "16px", "16px"],
                             display: ["none", "none", "none", "inline-block", "inline-block", "inline-block"],
-                            textAlign:"left"
+                            textAlign: "left"
                         }} >{x.name}</Text>
                     </AppLink>
                 </MotionText>)}
@@ -149,8 +149,13 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
     return (
         <Grid
             h={"100vh"}
-            templateRows={"[row1-start] 89px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] "}
-            templateColumns={["74px auto", "74px auto", "74px auto", "274px auto", "274px auto", "374px auto"]}
+            templateRows={["[row1-start] 50px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
+                "[row1-start] 50px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
+                "[row1-start] 50px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
+                "[row1-start] 69px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
+                "[row1-start] 89px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
+                "[row1-start] 89px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",]}
+            templateColumns={["74px auto", "74px auto", "74px auto", "274px auto", "356px auto", "374px auto"]}
             templateAreas={`
             "header header" 
             "sidebar pageHeader" 
@@ -166,7 +171,10 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
             >
                 <Flex
                     borderBottom="0.5px solid #7F91A8"
-                    h="89px">
+                    sx={{
+                        h:"100%"
+                        }}
+                    >
                     <InterswitchLogo variant="sidbar-logo" />
                 </Flex>
                 <Flex alignItems="center" pr="39px">
@@ -178,8 +186,10 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                                     <SkeletonLoader rows={1} width="100px" height="15px" columns={1} />
                                     <SkeletonCircle size="25" />
                                 </>}
-                                {typeof user !== "undefined" && typeof error === "undefined" && <MotionFlex >
-                                    <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {user?.firstName}</Text>
+                                {typeof user !== "undefined" && typeof error === "undefined" && <MotionFlex gridGap="12px" >
+                                    <Text size="dropdown-text" variant="dropdown-text-header" sx={{
+                                        my: "auto"
+                                    }} > Hello, {user?.firstName}</Text>
                                     <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" />
                                 </MotionFlex>
                                 }
@@ -227,6 +237,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                 pt="48px"
                 flexDir="column"
                 ml={[0, 0, 0, "40px", "40px", "40px"]}
+                pr={[0, 0, 0, "40px", "40px", "40px"]}
 
                 overflowX="auto"
             >
@@ -235,7 +246,9 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
             </GridItem>
             {typeof user === "undefined" && typeof error === "undefined" && <GridItem d="flex" w="100%" alignItems="center" px="50px">  <SkeletonLoader rows={1} width="200px" height="20px" columns={1} /></GridItem>}
             {typeof user !== "undefined" && typeof error === "undefined" &&
-                <GridItem d="flex" w="100%" alignItems="center"> {typeof props.pageHeader === "string" ? <Text px="50px" variant="page-header">{props.pageHeader}</Text> : props.pageHeader}</GridItem>
+                <GridItem d="flex" w="100%" alignItems="center"> {typeof props.pageHeader === "string" ? <Text sx={{ 
+                    px:["20px","20px","20px","30px","50px","50px"]
+                }} variant="page-header">{props.pageHeader}</Text> : props.pageHeader}</GridItem>
             }
 
 
@@ -245,12 +258,13 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                 py="30px"> <SkeletonLoader rows={1} height="100%" width="100%" columns={1} /></Flex>}
             {typeof user !== "undefined" && typeof error === "undefined" &&
                 <GridItem
-                    gridArea="main"
-                    pl="50px"
-                    pr="55px"
-                    py="30px"
-                    bgColor="brand.main_page"
-                    overflowY="auto"
+                    sx={{
+                        gridArea:"main",
+                        px:["20px","20px","20px","30px","50px","50px"],
+                        py:"30px",
+                        bgColor:"brand.main_page",
+                        overflowY:"auto"
+                    }}
                 >
                     {props.children}
 

@@ -8,16 +8,16 @@ const Text = {
     // Styles for the size variations
     sizes: {
       "card-header": {
-        fontSize: "18px",
+        fontSize: ["14px","14px","14px","16px","18px","18px"],
       },
       "stat-header":{
-        fontSize: "16px"
+        fontSize: ["14px","14px","14px","14px","16px","16px"]
       },
       "page-header": {
-        fontSize:"23px"
+        fontSize:["18px","18px","18px","20px","23px","23px"]
       },
       "dropdown-text": {
-        fontSize:"14px"
+        fontSize:["12px", "12px", "12px", "14px", "14px", "14px"]
       },
       "tag-text": {
         fontSize:"12px"
