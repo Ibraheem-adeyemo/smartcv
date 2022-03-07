@@ -3,7 +3,7 @@ import { UserManagementModal } from "../models";
 
 export enum UserManagementModalNames {
     addNewUser="Add New User",
-    addNewBank="Add New User"
+    addNewBank="Add New Bank"
 }
 
 export enum UserManagementTriggerButtons {

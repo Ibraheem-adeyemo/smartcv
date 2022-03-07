@@ -1,3 +1,5 @@
+import { TenantView } from ".";
+
 export interface AuthModel {
     id: string,
     firstName: string,
@@ -47,7 +49,7 @@ export interface UserModel {
     credentialsNonExpired: string,
     accountNonExpired: string,
     accountNonLocked: string,
-    tenant: Tenant,
+    tenant: TenantView,
     role: Role
 }
 

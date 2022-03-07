@@ -92,11 +92,11 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
         addInstitutionColorInfo(ele, value)
     }, [onboarding?.institutionColorInfo])
 
-    const cardTitle = <Flex flexDir="column" gridGap="5px">
+    const cardTitle = <Flex flexDir="column" gap="5px">
         <Text variant="card-header" size="page-header" >Institution Colors</Text>
         <Text color="muted-text">Select the colour scheme for the institution’s dashboard. Choose a colour for the header, CTAs and accents.</Text>
     </Flex>
-    const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
+    const cardFooter = <Flex w="100%" justifyContent="right" gap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
             if (typeof onboarding !== "undefined" && typeof steps !== "undefined") {
               
@@ -112,15 +112,15 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
     </Flex>
     return (
         <OnboardingCard cardTitle={cardTitle} cardFooter={cardFooter}>
-            <Flex flexDir="column" gridGap="25px" w={"475px"}>
-                <Flex w="100%" h="262px" flexDir="column" bgColor={"#F3F5F6"} gridGap="26px" borderRadius="6px">
+            <Flex flexDir="column" gap="25px" w={"475px"}>
+                <Flex w="100%" h="262px" flexDir="column" bgColor={"#F3F5F6"} gap="26px" borderRadius="6px">
                     <Skeleton speed={0} w="100%" h="26px" bgColor={onboarding?.institutionColorInfo?.headerColor} />
-                    <Flex flexDir="column" gridGap="39px" pl="26px" pr="20px">
-                        <Flex gridGap="29px">
-                            <Flex flexDir="column" gridGap="13px">
+                    <Flex flexDir="column" gap="39px" pl="26px" pr="20px">
+                        <Flex gap="29px">
+                            <Flex flexDir="column" gap="13px">
                                 {range(0, 3).map((x) => <Skeleton key={x} speed={0} bgColor={onboarding?.institutionColorInfo?.sidebarColor} w="92px" h="13px" borderRadius="8px" />)}
                             </Flex>
-                            <Flex flexDir="column" gridGap="13px">
+                            <Flex flexDir="column" gap="13px">
                                 {range(0, 4).map((x) => <Skeleton key={x} speed={0} w="289px" bgColor="#E1E6ED" h="14px" borderRadius="8px" />)}
                             </Flex>
                         </Flex>

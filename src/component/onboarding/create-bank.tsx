@@ -119,7 +119,7 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
     }, [canNotSubmit, onboarding, steps])
 
     const cardTitle = <Flex><Text>Create Bank</Text></Flex>
-    const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
+    const cardFooter = <Flex w="100%" justifyContent="right" gap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => typeof changeIsRefresh !== "undefined" && changeIsRefresh((_prev) => true)}>Cancel</Button>
         <Button variant="primary-button" px="115px" py="8px" isDisabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} onClick={createBank}  isLoading={loading.isLoading} loadingText={loading.text}>Next</Button>
     </Flex>
@@ -173,9 +173,9 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
                     <Button border="1px dashed" borderColor="brand.mutext-text" w="100%" bgColor="white" px="70px" py="9px" onClick={() => {
                         fileRef.current?.click()
                     }}>
-                        <Flex gridGap="29px">
+                        <Flex gap="29px">
                             <Image src={`${Images.imageUpload}`} h="46px" w="47px" />
-                            <Flex flexDir="column" gridGap="4px" justifyContent="center">
+                            <Flex flexDir="column" gap="4px" justifyContent="center">
                                 <Text color="brand.muted-text" size="dropdown-text">Browse File</Text>
                                 <Text color="brand.muted-text" size="tiny-text">File format: JPG, PNG</Text>
                             </Flex>

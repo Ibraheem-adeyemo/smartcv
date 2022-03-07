@@ -44,6 +44,7 @@ const PaginatorProvider:FC<TableProviderProps> = (props: TableProviderProps) => 
         }}
         animate="show"
         initial="hide"
+        exit="hide"
         variants={{
             hide: {
                 opacity: 0

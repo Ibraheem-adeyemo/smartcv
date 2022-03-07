@@ -12,7 +12,7 @@ const Audit: NextPage = () => {
 
     return <AuditProvider>
         <Authenticated pageHeader={"Audit"}>
-            <Flex flexDir="column" gridGap="24px">
+            <Flex flexDir="column" gap="24px">
                 <Flex justifyContent="space-between">
                     <AuditSearch />
                     <AuditExport />

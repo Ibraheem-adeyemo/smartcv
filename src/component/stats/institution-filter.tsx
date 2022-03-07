@@ -1,13 +1,26 @@
 import { useToast } from "@chakra-ui/react"
 import _, { map } from "lodash"
-import React, { FC, useContext, useEffect } from "react"
+import React, { FC, useContext, useEffect, useState } from "react"
 import { SearchFilter } from "."
 import { SkeletonLoader } from ".."
+import { superAdmin } from "../../constants"
+import {  TenantView } from "../../models"
+import { AuthContext } from "../../providers/auth-provider"
 import { StatsContext } from "../../providers/stats-provider"
 
 const InstitutionFilter:FC = () => {
     const {selectedTenantCode, institutions, institutionsError, changeSelectedTenantCode} = useContext(StatsContext)
     const toast = useToast()
+    const [tenants, setTenant] = useState<TenantView[]>()
+    const {userDetail} = useContext(AuthContext)
+    useEffect(() => {
+        if(userDetail?.role.name === superAdmin) {
+            setTenant(institutions)
+        } else if(userDetail) {
+            
+            setTenant([userDetail.tenant])
+        }
+    }, [])
     useEffect(() => {
         if (typeof institutionsError !== "undefined") {
             toast({
@@ -21,18 +34,18 @@ const InstitutionFilter:FC = () => {
 
     return (
         <>
-            { typeof institutions !== "undefined" &&
+            { typeof tenants !== "undefined" &&
                 <SearchFilter
-                    data={
+                    data={ tenants.length > 1?
 
                         [
                             { label: "All", value: "0", selected: selectedTenantCode === "0" },
-                            ...map(institutions, (x, i) => ({ label: x.name, value: x.code, selected: x.code === selectedTenantCode }))
-                        ]
+                            ...map(tenants, (x, i) => ({ label: x.name, value: x.code, selected: x.code === selectedTenantCode }))
+                        ]:[...map(tenants, (x, i) => ({ label: x.name, value: x.code, selected: x.code === selectedTenantCode }))]
                     } label="Institution" onSelected={(e) => changeSelectedTenantCode(e.value)} selected />
             }
             {
-                typeof institutions === "undefined" && typeof institutionsError === "undefined" && <SkeletonLoader rows={1} columns={1} width="100px" height="20px" />
+                typeof tenants === "undefined" && typeof institutionsError === "undefined" && <SkeletonLoader rows={1} columns={1} width="100px" height="20px" />
             }
         </>
     )

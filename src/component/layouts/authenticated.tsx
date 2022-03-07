@@ -104,7 +104,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                             opacity: 0
                         }
                     }}>
-                    <AppLink href={x.link ? x.link : "/"} d="flex" gridGap="20px" role="group"
+                    <AppLink href={x.link ? x.link : "/"} d="flex" gap="20px" role="group"
                         _active={{
                             outline: "none"
                         }}
@@ -180,13 +180,13 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                 <Flex alignItems="center" pr="39px">
                     <Menu>
                         <MenuButton as={Button} variant="just-text">
-                            <Flex gridGap="42px" alignItems="center">
+                            <Flex gap="42px" alignItems="center">
 
                                 {typeof user === "undefined" && typeof error === "undefined" && <>
                                     <SkeletonLoader rows={1} width="100px" height="15px" columns={1} />
                                     <SkeletonCircle size="25" />
                                 </>}
-                                {typeof user !== "undefined" && typeof error === "undefined" && <MotionFlex gridGap="12px" >
+                                {typeof user !== "undefined" && typeof error === "undefined" && <MotionFlex gap="12px" >
                                     <Text size="dropdown-text" variant="dropdown-text-header" sx={{
                                         my: "auto"
                                     }} > Hello, {user?.firstName}</Text>
@@ -196,12 +196,12 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
 
                             </Flex>
                         </MenuButton>
-                        <MenuList d="flex" gridGap="1px" flexDir="column" px="18px" pt="22px">
-                            <MenuItem as={Flex} gridGap="11px" alignItems="center">
+                        <MenuList d="flex" gap="1px" flexDir="column" px="18px" pt="22px">
+                            <MenuItem as={Flex} gap="11px" alignItems="center">
 
                                 {!user && !error && <SkeletonCircle size="25" />}
                                 {user && !error && <Avatar name={user?.firstName === null ? "" : `${user?.firstName} ${user?.lastName}`} src="" />}
-                                <Flex flexDir="column" gridGap="1px">
+                                <Flex flexDir="column" gap="1px">
                                     {typeof user !== "undefined" && typeof error === "undefined" &&
                                         <>
                                             <Text size="dropdown-text" variant="dropdown-text-header"> Hello, {user?.firstName}</Text>
@@ -233,7 +233,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                 gridArea="sidebar"
                 boxShadow="1px 0px 0px rgba(0, 0, 0, 0.15)"
                 display="flex"
-                gridGap="36.5px"
+                gap="36.5px"
                 pt="48px"
                 flexDir="column"
                 ml={[0, 0, 0, "40px", "40px", "40px"]}

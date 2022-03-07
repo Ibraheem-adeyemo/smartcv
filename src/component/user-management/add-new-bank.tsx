@@ -1,16 +1,21 @@
-import { Image, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex, FormControl, FormLabel, Input, FormErrorMessage, Select, ModalFooter, HStack, Button, Badge, Box, CloseButton, Skeleton, VStack, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from "@chakra-ui/react";
+import { Image, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex, FormControl, FormLabel, Input, FormErrorMessage, Select, ModalFooter, HStack, Button, Badge, Box, CloseButton, Skeleton, VStack, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, useToast } from "@chakra-ui/react";
+import { AnimatePresence } from "framer-motion";
 import _, { map, range } from "lodash";
 import React, { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { apiUrlsv1, Images, PickerIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { validateHexColor } from "../../lib";
-import { InstitutionColor, InstitutionColorInfo, State, TenantView, UserManagementModal } from "../../models";
+import { InstitutionColor, InstitutionColorInfo, State, TenantInput, TenantView, UserManagementModal } from "../../models";
 import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
+import { createTenantAsync } from "../../services/v1";
+import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
+import { MotionModal } from "../framer/motion-modal";
 
 const AddNewBank:FC = () => {
     const { data: states } = useSWR<State[]>(apiUrlsv1.states)
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
+    const toast = useToast()
     const { form, formOnChange, refreshForm } = useForm<TenantView>({
         name: "",
         image: "",
@@ -86,10 +91,25 @@ const AddNewBank:FC = () => {
         institutionColorFormOnChange({"sidebarColor":(e.target as HTMLInputElement).value})
     }
 
-    const saveBank = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-      
+    const saveBank = useCallback(async(e: React.MouseEvent<HTMLButtonElement>) => {
         changeLoading((prev) => ({ isLoading: true, text: "Creating bank" }))
+      try {
+        await createTenantAsync(
+            {
+                ...form,
+                color: {
+                    ...institutionColorForm
+        }} as unknown as TenantInput)
+      } catch (error: any) {
+          toast({
+            status: "error",
+            title: typeof error.message === "undefined" ? error : error.message,
+            isClosable: true,
+            variant: "left-accent"
+          })
+      }
         handleToggleModal({ ...selectedModal, isSubmitted: !selectedModal.isSubmitted })
+        // console.log()
         changeLoading((prev) => ({ isLoading: false, text: "" }))
     }, [form])
     useEffect(() => {
@@ -118,9 +138,19 @@ const AddNewBank:FC = () => {
         }
     }, [institutionColorForm])
     return (
-        <>
+        <AnimatePresence>
             {typeof form !== "undefined" && <form>
-                {typeof selectedModal !== "undefined" && <Modal scrollBehavior="inside" size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
+                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={{
+                    hide: {
+                        opacity: 0
+                    },
+                    show: {
+                        opacity: 1,
+                        transition: {
+                            duration: 0.4
+                        }
+                    }                 
+                }} scrollBehavior="inside" size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
                     <ModalOverlay />
                     <ModalContent bgColor="white" px="18px">
                         <ModalHeader>{UserManagementModalNames.addNewBank}</ModalHeader>
@@ -128,36 +158,36 @@ const AddNewBank:FC = () => {
                         <ModalBody>
                             <Flex gridColumnGap="21px" gridRowGap="32px" flexWrap="wrap" >
                                 <FormControl isRequired id="name" flexGrow={1} width="50%" isInvalid={validation?.errors?.name !== "" && validation?.touched.name === "touched"}>
-                                    <FormLabel>Bank Name</FormLabel>
+                                    <MotionFormLabel>Bank Name</MotionFormLabel>
 
                                     <Input placeholder="Enter Bank Name" borderRadius="4px" value={form.name} onChange={addData} />
-                                    <FormErrorMessage>{validation?.errors.name}</FormErrorMessage>
+                                    <MotionFormErrorMessage>{validation?.errors.name}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="tenantCode" flexGrow={1} width="35%" isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
-                                    <FormLabel>Bank ID</FormLabel>
+                                    <MotionFormLabel>Bank ID</MotionFormLabel>
                                     <Input placeholder="Enter Bank ID" borderRadius="4px" value={form.tenantCode} onChange={addData} />
-                                    <FormErrorMessage>{validation?.errors.tenantCode}</FormErrorMessage>
+                                    <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="branch" flexGrow={1} width="35%" isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
-                                    <FormLabel>Bank Branch</FormLabel>
+                                    <MotionFormLabel>Bank Branch</MotionFormLabel>
 
                                     <Input placeholder="Enter Bank Branch" borderRadius="4px" value={form.branch} onChange={addData} />
-                                    <FormErrorMessage>{validation?.errors.branch}</FormErrorMessage>
+                                    <MotionFormErrorMessage>{validation?.errors.branch}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="location" flexGrow={1} width="35%" isInvalid={validation?.errors?.location !== "" && validation?.touched.location === "touched"}>
-                                    <FormLabel>Bank Locatoin</FormLabel>
+                                    <MotionFormLabel>Bank Locatoin</MotionFormLabel>
                                     <Select borderRadius="4px" value={form.location} onChange={addData} placeholder="Select a state">
                                         {states?.map((x, i) => <option key={i} value={x.id}>{x.name}</option>)}
                                     </Select>
-                                    <FormErrorMessage>{validation?.errors.location}</FormErrorMessage>
+                                    <MotionFormErrorMessage>{validation?.errors.location}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="address" flexGrow={2} width="100%" isInvalid={validation?.errors?.address !== "" && validation?.touched.address === "touched"}>
-                                    <FormLabel>Bank Address</FormLabel>
+                                    <MotionFormLabel>Bank Address</MotionFormLabel>
                                     <Input placeholder="Enter Bank Address" borderRadius="4px" value={form.address} onChange={addData} />
-                                    <FormErrorMessage>{validation?.errors.address}</FormErrorMessage>
+                                    <MotionFormErrorMessage>{validation?.errors.address}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="logo" width="15%" flexGrow={1} isInvalid={validation?.errors?.logo !== "" && validation?.touched.logo === "touched"}>
-                                    <FormLabel>Upload a Bank Logo</FormLabel>
+                                    <MotionFormLabel>Upload a Bank Logo</MotionFormLabel>
                                     <Input placeholder="Enter Bank Address" ref={fileRef} borderRadius="4px" type="file" sx={{
                                         display: "none"
                                     }} border="dotted" onChange={addData} />
@@ -166,15 +196,15 @@ const AddNewBank:FC = () => {
                                             fileRef.current.click()
                                         }
                                     }}>
-                                        <Flex gridGap="29px">
+                                        <Flex gap="29px">
                                             <Image src={`${Images.imageUpload}`} h="46px" w="47px" />
-                                            <Flex flexDir="column" gridGap="4px" justifyContent="center">
+                                            <Flex flexDir="column" gap="4px" justifyContent="center">
                                                 <Text color="brand.muted-text" size="dropdown-text">Browse File</Text>
                                                 <Text color="brand.muted-text" size="tiny-text">File format: JPG, PNG</Text>
                                             </Flex>
                                         </Flex>
                                     </Button>
-                                    <FormErrorMessage>{validation?.errors.logo}</FormErrorMessage>
+                                    <MotionFormErrorMessage>{validation?.errors.logo}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl id="logo" w="25%" flexGrow={1} >
                                     <Box w="fit-content">
@@ -204,15 +234,15 @@ const AddNewBank:FC = () => {
                                                 </AccordionButton>
                                             </h2>
                                             <AccordionPanel pb={4}>
-                                                <Flex flexDir="column" gridGap="25px" w={"475px"}>
-                                                    <Flex w="100%" h="262px" flexDir="column" bgColor={"#F3F5F6"} gridGap="26px" borderRadius="6px">
+                                                <Flex flexDir="column" gap="25px" w={"475px"}>
+                                                    <Flex w="100%" h="262px" flexDir="column" bgColor={"#F3F5F6"} gap="26px" borderRadius="6px">
                                                         <Skeleton speed={0} w="100%" h="26px" bgColor={institutionColorForm?.headerColor} />
-                                                        <Flex flexDir="column" gridGap="39px" pl="26px" pr="20px">
-                                                            <Flex gridGap="29px">
-                                                                <Flex flexDir="column" gridGap="13px">
+                                                        <Flex flexDir="column" gap="39px" pl="26px" pr="20px">
+                                                            <Flex gap="29px">
+                                                                <Flex flexDir="column" gap="13px">
                                                                     {map(range(0, 3), (x) => <Skeleton key={x} speed={0} bgColor={institutionColorForm?.sidebarColor} w="92px" h="13px" borderRadius="8px" />)}
                                                                 </Flex>
-                                                                <Flex flexDir="column" gridGap="13px">
+                                                                <Flex flexDir="column" gap="13px">
                                                                     {map(range(0, 4), (x) => <Skeleton key={x} speed={0} w="289px" bgColor="#E1E6ED" h="14px" borderRadius="8px" />)}
                                                                 </Flex>
                                                             </Flex>
@@ -279,10 +309,11 @@ const AddNewBank:FC = () => {
                             </HStack>
                         </ModalFooter>
                     </ModalContent>
-                </Modal>}
+                </MotionModal>}
             </form>
             }
-        </>)
+
+        </AnimatePresence>)
 }
 
 export default AddNewBank

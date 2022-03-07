@@ -24,7 +24,7 @@ const Stat:FC<StatProps> = (props: StatProps) => {
         opacity: 0,
       }
     }}>
-      <MotionFlex mt="13px" ml="19px" mb="18px" mr="65.36" gridGap="16px" flexDir="column" h="89%" animate="show" initial="hide" variants={{
+      <MotionFlex mt="13px" ml="19px" mb="18px" mr="65.36" gap="16px" flexDir="column" h="89%" animate="show" initial="hide" variants={{
       show: {
         opacity: 1,
         transition: {
@@ -48,7 +48,7 @@ const Stat:FC<StatProps> = (props: StatProps) => {
               {props.prefix}{val}{props.suffix}
             </AnimatedText>
           </Flex>
-          {/* <Flex w="100%" justifyContent="flex-start" gridGap="6.4px" >
+          {/* <Flex w="100%" justifyContent="flex-start" gap="6.4px" >
             <Icon as={BsArrowUpCircle} fill={props.status} flexGrow={1} />
             <Text fontSize="13px" flexGrow={2}>
               {props.percentage}

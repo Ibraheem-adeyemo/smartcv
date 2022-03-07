@@ -14,14 +14,14 @@ const Register: NextPage = () => {
             <Flex sx={{
                 flexDir: "column",
                 px: ["80px", "80px", "80px", "100px", "147px", "147px", ], 
-                gridGap: ["30px", "30px", "30px", "30px", "102.61px", "102.61px"],
+                gap: ["30px", "30px", "30px", "30px", "102.61px", "102.61px"],
                 py: "34.5px"
             }}>
                 <Flex>
                     <InterswitchLogo variant="inverted" alt="Interswitch Logo" />
                 </Flex>
                 <Flex sx={{
-                    gridGap: ["30px", "30px", "30px", "50px", "99px", "99px"],
+                    gap: ["30px", "30px", "30px", "50px", "99px", "99px"],
                     flexDir: ["column","column","column","column","row","row",]
                 }}
                 >

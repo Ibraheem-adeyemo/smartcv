@@ -5,7 +5,7 @@ import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
-import { TenantView, Paginate, UserManagementModal } from "../../models";
+import { TenantView, Paginate, UserManagementModal, Column } from "../../models";
 import { PaginatorProvider } from "../../providers";
 import { PaginatorContext } from "../../providers/paginator-provider";
 import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
@@ -45,9 +45,10 @@ const BankTable:FC = () => {
             }, {
                 name: "Status",
                 key: "isActive",
-                ele: appTableElements.status
+                ele: appTableElements.status,
+                lookUp: ["Not Active", "Active"]
             }
-        ],
+        ] as Column[],
         actions: [
             {
                 name: "Edit",
@@ -77,7 +78,7 @@ const BankTable:FC = () => {
                 }
             },
         ],
-        data: typeof tenant === "undefined" && typeof error === "undefined" ? tenant: (typeof tenant !== "undefined" && typeof error === "undefined" )?  tenant as unknown as TenantView[]:[]
+        data: typeof tenant === "undefined" && typeof error === "undefined" ? tenant: (typeof tenant !== "undefined" && typeof error === "undefined" )?  tenant.content as TenantView[]:[]
     }), [tenant, error])
 
     useEffect(() => {

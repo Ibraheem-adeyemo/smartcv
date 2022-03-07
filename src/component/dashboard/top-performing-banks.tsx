@@ -53,7 +53,7 @@ const TopPerforminBanks :FC= ()  => {
                 <Text variant="card-header" size="card-header">What are the top performing 5 banks</Text>
                 <Text variant="small-muted-text" textAlign="left">By Transaction Volume and Value</Text>
             </Flex>
-            <Flex gridGap="17px" h="26px" alignSelf="center">
+            <Flex gap="17px" h="26px" alignSelf="center">
                 <Tag><Text size="tag-text">week</Text></Tag>
                 <Tag><Text size="tag-text">month</Text></Tag>
                 <Tag><Text size="tag-text">Custom</Text><DropdownIcon /></Tag>
@@ -63,7 +63,7 @@ const TopPerforminBanks :FC= ()  => {
         {!loading ?
             <>
                 {stats?.map((x, i) => <Barchart key={i} {...x} />)}
-            </> : <SkeletonLoader rows={1} columns={5} width="10px" height="200px" gridGap="30px" />}
+            </> : <SkeletonLoader rows={1} columns={5} width="10px" height="200px" gap="30px" />}
     </AppCard>
 }
 export default  TopPerforminBanks

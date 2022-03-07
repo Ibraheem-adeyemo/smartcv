@@ -253,7 +253,7 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
         }
     }, [canNotSubmit, onboarding?.state, onboarding?.tenantAdmin, steps])
 
-    const cardFooter = <Flex w="100%" justifyContent="right" gridGap="20px" >
+    const cardFooter = <Flex w="100%" justifyContent="right" gap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
             if (typeof onboarding !== "undefined" && typeof steps !== "undefined") {
               
@@ -320,8 +320,8 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
                 <PopoverContent bgColor="brand.light-blue" py="25px" px="33px">
                     <PopoverHeader fontWeight="semibold"><Text variant="card-header" fontSize="18px"> Password Requirements</Text> </PopoverHeader>
                     <PopoverArrow bgColor="brand.light-blue" />
-                    <PopoverBody d="flex" flexDir="column" gridGap="16.5px" alignItems="flex-start" pt="19.5px">
-                        {passC?.map((x, i) => <Flex key={i} gridGap="14px" alignItems="center">{x.status ? (
+                    <PopoverBody d="flex" flexDir="column" gap="16.5px" alignItems="flex-start" pt="19.5px">
+                        {passC?.map((x, i) => <Flex key={i} gap="14px" alignItems="center">{x.status ? (
                             <Avatar boxSize="18px" bgColor="brand.success" icon={<TickIcon color="white" />}></Avatar>
                         ) : (
                             <Avatar boxSize="18px" showBorder borderColor="var(--chakra-colors-brand-muted)" name=" " bgColor="brand.light-blue"></Avatar>

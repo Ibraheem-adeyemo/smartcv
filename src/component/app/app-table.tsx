@@ -4,6 +4,7 @@ import _, { get, map, range, reduce } from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
+import { delayChildren, verticalPosition } from "../../animations";
 import { appTableElements, DotIcon, Images } from "../../constants";
 import { appDate } from "../../lib";
 import { Action, Column } from "../../models";
@@ -31,33 +32,13 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
         <MotionTable
             animate="show"
             initial="hide"
-            variants={{
-
-                show: {
-                    opacity: 1,
-                    transition: {
-                        delayChildren: 0.4
-                    }
-                },
-                hide: {
-                    opacity: 0,
-                }
-            }} >
+            variants={delayChildren} >
             <MotionThead sx={{
                 overflow: "hidden",
             }}
                 animate="show"
                 initial="hide"
-                variants={{
-
-                    show: {
-                        transition: {
-                            delayChildren: 0.3
-                        }
-                    },
-                    hide: {
-                    }
-                }}
+                variants={delayChildren}
             >
                 <MotionTr
                     sx={{
@@ -66,16 +47,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                     }}
                     animate="show"
                     initial="show"
-                    variants={{
-                        show: {
-                            opacity: 1,
-                            y: 0,
-                        },
-                        hide: {
-                            opacity: 0,
-                            y: "200%"
-                        }
-                    }}
+                    variants={verticalPosition}
                 >
                     {showNumbering && <MotionTd sx={{
                         fontSize: "13px", py: "19px", borderTopLeftRadius: "6px"

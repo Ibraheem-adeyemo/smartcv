@@ -87,7 +87,7 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
 
     return (
         <>
-            <MotionAccordion d="flex" flexDir="column" gridGap="24px" w="100%" index={accordionindex} onChange={(n) => setAccordionindex(n as number)} animate="show" initial="hide" variants={{
+            <MotionAccordion d="flex" flexDir="column" gap="24px" w="100%" index={accordionindex} onChange={(n) => setAccordionindex(n as number)} animate="show" initial="hide" variants={{
                 show: {
                     opacity: 1,
                     transition: {
@@ -115,7 +115,7 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
                     {({ isExpanded }) => {
                         return <>
                             <AccordionButton onClick={() => setOpenModal(() => isExpanded ? false : true)}  py="34px" >
-                                <Flex gridGap="17px" alignItems="center" justifyContent="flex-start" w="100%">
+                                <Flex gap="17px" alignItems="center" justifyContent="flex-start" w="100%">
                                     {isExpanded ? (
                                         <Avatar boxSize="26px" bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
                                     ) : (
@@ -151,7 +151,7 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
                     {({ isExpanded }) => (
                         <>
                             <AccordionButton w="100%"  py="34px">
-                                <Flex gridGap="17px" alignItems="center" justifyContent="flex-start" w="100%">
+                                <Flex gap="17px" alignItems="center" justifyContent="flex-start" w="100%">
                                     {isExpanded ? (
                                         <Avatar boxSize="26px" bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
                                     ) : (

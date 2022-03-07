@@ -63,7 +63,7 @@ const TransactionMetric:FC = () => {
                 <>
                     {stats?.map((x, i) => <Stat key={i} {...x} />)}
                 </> :
-                <SkeletonLoader rows={3} columns={3} width="200px" height="10px" gridGap="30px" />
+                <SkeletonLoader rows={3} columns={3} width="200px" height="10px" gap="30px" />
             }
         </AppCard>)
 }

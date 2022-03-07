@@ -171,7 +171,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                 <ModalCloseButton />
                 <ModalBody>
                     <AnimatedText>Use your Interswitch Passport account to create super admin</AnimatedText>
-                    <Flex gridGap="32px" flexDir="column" >
+                    <Flex gap="32px" flexDir="column" >
                         <FormControl isRequired id="email" width="100%" isInvalid={validation?.errors?.email !== "" && validation?.touched.email === "touched"}>
                             <MotionFormLabel>email</MotionFormLabel>
 
@@ -187,7 +187,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                     </Flex>
                 </ModalBody>
 
-                <ModalFooter d="flex" w="100%" justifyContent="right" gridGap="20px" >
+                <ModalFooter d="flex" w="100%" justifyContent="right" gap="20px" >
                     <Button variant="muted-primary-button" px="45px" py="8px" onClick={typeof props.onCloseModal !== "undefined" ? props.onCloseModal : voidfunc} >Cancel</Button>
                     <Button variant="primary-button" px="75px" py="8px" disabled={typeof canNotSubmit !== "undefined" ? canNotSubmit : true} isLoading={spin?.isLoading} loadingText={typeof spin?.text === "undefined" ? "loading" : spin.text} onClick={confirmUser}>Next</Button>
                 </ModalFooter>

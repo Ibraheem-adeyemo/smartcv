@@ -8,7 +8,7 @@ import { MotionFlex } from "../framer";
 const AppBarFilter: FC = () => {
     const { showCustom, ShowTenant, showToday, showThisWeek, showThisMonth, showThisYear, isToday, isThisWeek, isThisMonth, isThisYear, toggleDate } = useContext(StatsContext)
     return (
-        <MotionFlex alignItems="center" gridGap="17px" sx={{
+        <MotionFlex alignItems="center" gap="17px" sx={{
             flexWrap: "wrap"
         }}
         animate="show"
@@ -26,7 +26,7 @@ const AppBarFilter: FC = () => {
             }
         }}
         >
-            {ShowTenant && <InstitutionFilter />}
+            {ShowTenant && <InstitutionFilter  />}
             {showToday && isToday && <Tag variant={"outline"} colorScheme={"brand"} bgColor={"brand.light-blue"}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.today}</Text></Tag>}
             {showToday && !isToday && <Tag cursor={"pointer"} onClick={() => toggleDate(filterDates.today)}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.today}</Text></Tag>}
             {showThisWeek && isThisWeek && <Tag variant={"outline"} colorScheme={"brand"} bgColor={"brand.light-blue"}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.thisWeek}</Text></Tag>}

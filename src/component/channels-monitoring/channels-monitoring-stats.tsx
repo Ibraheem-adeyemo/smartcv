@@ -6,7 +6,7 @@ import { ServiceStatus, TerminalsUnderWatch } from "../dashboard";
 const ChannelsMonitoringStats:FC = () => {
 
   return (
-    <Flex gridGap="20px" flexWrap="wrap">
+    <Flex gap="20px" flexWrap="wrap">
       <Flex flexGrow={1} width="35%">
         <ServiceStatus />
       </Flex>

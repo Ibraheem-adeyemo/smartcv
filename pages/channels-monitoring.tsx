@@ -1,4 +1,5 @@
 import { Flex, Text } from "@chakra-ui/react";
+import { AnimatePresence } from "framer-motion";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import React, { useContext } from "react";
@@ -23,13 +24,15 @@ const ChannelsMonitoring: NextPage = () => {
                         <Text variant="page-header" size="page-header">Channels Monitoring</Text>
                     </Flex>
                 }>
-                    <Flex flexDir="column" gridGap="40px">
-                        <Flex flexDir="column" gridGap="33px">
+                    <Flex flexDir="column" gap="40px">
+                        <Flex flexDir="column" gap="33px">
                             <ChannelsMonitoringSearch />
                             <ChannelsMonitoringStats />
                         </Flex>
                         <ChannelsMonitoringTabs />
-                        <ChannelsMonitoringTable />
+                        <AnimatePresence>
+                            <ChannelsMonitoringTable />
+                        </AnimatePresence>
                     </Flex>
                 </Authenticated>
             </StatsProvider>

@@ -23,7 +23,7 @@ const Span = chakra('span', {
     baseStyle: {
         display: "flex",
         flexDirection: "column",
-        gridGap: "8px",
+        gap: "8px",
         alignItems: "center"
     },
 })
@@ -133,14 +133,14 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
     }, [steps, step])
 
     return (
-        <Flex h="100vh" flexDir="column" gridGap="59px" >
+        <Flex h="100vh" flexDir="column" gap="59px" >
             <OnboardingNav />
-            <Flex mx="306px" gridGap="33px" flexDirection="column" h="100%">
+            <Flex mx="306px" gap="33px" flexDirection="column" h="100%">
 
                 { !cantVew && <form method="post" onSubmit={createAccount} >
 
-                    <Flex gridGap="33px" flexDirection="column">
-                        <Flex gridGap={onboarding?.state as number > 0 ? `13px` : `100px`} alignItems="center" justifyContent="space-around">
+                    <Flex gap="33px" flexDirection="column">
+                        <Flex gap={onboarding?.state as number > 0 ? `13px` : `100px`} alignItems="center" justifyContent="space-around">
                             {steps?.map((x, i, arr) =>
                                 <Fragment key={i}>
                                     <QuestionDivider i={i} arr={arr} />

@@ -15,7 +15,7 @@ const MissionStatement:FC =  memo(() => {
         missionText: "We are positioned as an industry expert with a dedicated request for all your needs and support"
     }]
     return (
-        <Flex flexDir="column" gridGap="26px">
+        <Flex flexDir="column" gap="26px">
             <MotionFlex
                 sx={{
                     overflow: "hidden",
@@ -59,7 +59,7 @@ const MissionStatement:FC =  memo(() => {
             </MotionFlex>
             <MotionList
                 sx={{
-                    gridGap: "54px",
+                    gap: "54px",
                     d: "flex",
                     flexDir: "column",
                 }}
@@ -84,7 +84,7 @@ const MissionStatement:FC =  memo(() => {
                 {missionStatement.map((x, i) =>
                     <MotionListItem key={i}
                         sx={{
-                            gridGap: "21px",
+                            gap: "21px",
                             display: "flex"
                         }}
                         layout
@@ -96,7 +96,7 @@ const MissionStatement:FC =  memo(() => {
                         }}
                     >
                         <Avatar bgColor="white" icon={<TickIcon boxSize="19.8px" color="#4B4B4B" />} />
-                        <Flex flexDir="column" color="white" gridGap="18px">
+                        <Flex flexDir="column" color="white" gap="18px">
                             <Text color="white" variant="card-header" size="page-header">{x.missionHead}</Text>
                             <Text color="brand.inverted-muted">{x.missionText}</Text>
                         </Flex>

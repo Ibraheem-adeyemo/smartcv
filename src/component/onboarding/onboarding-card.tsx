@@ -1,5 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React, { useMemo } from "react";
+import { appear, delayChildren, verticalPosition } from "../../animations";
 import { ComponentWithChildren } from "../../models";
 import { MotionBox, MotionFlex } from "../framer";
 
@@ -11,22 +12,13 @@ const OnboardingCard: React.FC<OnboardingCardProps> = (props: OnboardingCardProp
     const cardTitle = useMemo(() => props.cardTitle, [])
     return (
         <MotionFlex sx={{
-            px: "49px", py: "30px", gridGap: "25px", bgColor: "white", flexDir: "column", w: "100%"
+            px: "49px", py: "30px", gap: "25px", bgColor: "white", flexDir: "column", w: "100%"
         }}
 
             animate="show"
             initial="hide"
-            variants={{
-                show: {
-                    opacity: 1,
-                    transition: {
-                        delayChildren: 0.5
-                    }
-                },
-                hide: {
-                    opacity: 0
-                }
-            }}
+            variants={delayChildren}
+            exit="hide"
         >
             <Box sx={{
                 display: "inline-block",
@@ -37,29 +29,10 @@ const OnboardingCard: React.FC<OnboardingCardProps> = (props: OnboardingCardProp
 
                 initial="hide"
                 animate="show"
-                variants={{
-                    hide: {
-                        opacity: 0,
-                        y: "200%",
-                    },
-                    show: {
-                        opacity: 1,
-                        y: 0
-                    }
-                }}
+                variants={verticalPosition}
             ><Flex>{cardTitle}</Flex></MotionBox></Box>
             {props.children}
-            <MotionFlex variants={{
-                show: {
-                    opacity: 1,
-                    transition: {
-                        duration: 0.4
-                    }
-                },
-                hide: {
-                    opacity: 0
-                }
-            }}>
+            <MotionFlex variants={appear}>
                 {props.cardFooter}
             </MotionFlex>
         </MotionFlex>

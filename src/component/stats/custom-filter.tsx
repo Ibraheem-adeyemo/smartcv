@@ -14,11 +14,11 @@ const CustomFilter:FC = () => {
             </MenuButton>
             <MenuList>
                 <MenuItem></MenuItem>
-                <MenuItem closeOnSelect={false} onClick={(e)=>e.stopPropagation()} bgColor="white" _hover={{bgColor:"white"}} isFocusable={false} as={Flex} flexDir="column" gridGap="14px" p="17px">
+                <MenuItem closeOnSelect={false} onClick={(e)=>e.stopPropagation()} bgColor="white" _hover={{bgColor:"white"}} isFocusable={false} as={Flex} flexDir="column" gap="14px" p="17px">
 
 
                     <Text size="dropdown-text" variant="dropdown-text-header">Custom Filter</Text>
-                    <Flex flexDir="column" gridGap="17px">
+                    <Flex flexDir="column" gap="17px">
                         <FormControl id="startDate">
                             <FormLabel>Start Date</FormLabel>
                             <InputGroup>
@@ -44,7 +44,7 @@ const CustomFilter:FC = () => {
                             </InputGroup>
                         </FormControl>
                     </Flex>
-                    <Flex gridGap="34px" mt="6px" mb="5px">
+                    <Flex gap="34px" mt="6px" mb="5px">
                         <Button variant="just-text">Cancel</Button>
                         <Button variant="primary-button">Apply</Button>
                     </Flex>

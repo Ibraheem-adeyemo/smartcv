@@ -13,7 +13,7 @@ const ChannelsMonitoringSearch: FC = () => {
     return (
         <Flex justifyContent="space-between" sx={{
             flexWrap: "wrap",
-            gridGap: "20px"
+            gap: "20px"
         }} >
             <AppBarFilter />
 

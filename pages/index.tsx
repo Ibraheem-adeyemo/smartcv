@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect } from 'react'
+import { appear } from '../src/animations'
 import { MotionFlex } from '../src/component/framer/'
 import { cookieKeys, cookiesTimeout, links } from '../src/constants'
 import { getCookie, setCookie } from '../src/lib'
@@ -55,18 +56,7 @@ const Home: NextPage = () => {
     }}
     initial="hide"
     animate="show"
-      variants={{
-        show: {
-          opacity: 1,
-          transition: {
-            delay: 0.2,
-            duration: 0.5
-          }
-        },
-        hide: {
-          opacity: 0
-        }
-      }}
+      variants={appear}
     >
       {token == "" && <CircularProgress isIndeterminate color="brand.primary-blue" size="120px" sx={{
         margin: "auto"

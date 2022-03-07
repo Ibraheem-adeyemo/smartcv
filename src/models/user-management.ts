@@ -28,18 +28,18 @@ export interface TenantAdminView {
     isFirstLogin: string
     isLocked: string,
     tenant: TenantView,
-    role:Role
+    role: Role
 }
 
 export interface Role {
-    id:number,
-    name:string,
+    id: number,
+    name: string,
     permissions: string[],
-    tenantCode:string
+    tenantCode: string
 }
 
 export interface userManagementTab extends Tab {
-    
+
 }
 
 export interface ISWAdminView {
@@ -67,4 +67,8 @@ export interface InstitutionColor {
     headerColor: string,
     sidebarColor: string,
     buttonColor: string
+}
+
+export interface TenantInput extends TenantView {
+    color: InstitutionColor
 }

@@ -20,7 +20,7 @@ const Dashboard:FC = () => {
     },[])
     return(
         
-        <Flex gridGap="30px" flexWrap="wrap">
+        <Flex gap="30px" flexWrap="wrap">
           <Flex flexGrow={3}>
             <TerminalsPerformance />
           </Flex>

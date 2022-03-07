@@ -1,12 +1,13 @@
 import { map } from "lodash"
 import { debounce } from "lodash"
-import { createContext, FC, useState } from "react"
-import { UserManagementModals, userManagementTabs } from "../constants"
+import { createContext, FC, useContext, useEffect, useState } from "react"
+import { superAdmin, UserManagementModals, userManagementTabsAdmin, userManagementTabsSuperAdmin } from "../constants"
 import { ComponentWithChildren, UserManagementModal } from "../models"
+import { AuthContext } from "./auth-provider"
 
 export const UserManagementTabProviderContext = createContext({
     searchText: "",
-    tabs: userManagementTabs,
+    tabs: userManagementTabsAdmin,
     modals: UserManagementModals,
     handleTabSelection: (index: number) => { },
     handleSearchItem: debounce((searchText: string) => { }, 500),
@@ -19,10 +20,15 @@ interface UserManagementTabProviderProps extends ComponentWithChildren  {
 }
 const UserManagementTabProvider:FC<UserManagementTabProviderProps> = (props: UserManagementTabProviderProps) => {
 
-    const [tabs, setTabs] = useState(userManagementTabs)
+    const [tabs, setTabs] = useState(userManagementTabsAdmin)
     const [searchText, setSearchText] = useState("")
     const [modals, setModals] = useState(UserManagementModals)
-
+    const {userDetail} = useContext(AuthContext)
+    useEffect(() => {
+        if(userDetail && userDetail.role.name === superAdmin) {
+            setTabs(userManagementTabsSuperAdmin)
+        }
+    }, [userDetail])
     const handleTabSelection = (index: number) => {
         setTabs(prev => prev.map((x, i) => i === index ? { ...x, isSelected: true } : { ...x, isSelected: false }))
     }

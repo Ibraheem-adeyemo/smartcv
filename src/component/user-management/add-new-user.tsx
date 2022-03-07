@@ -6,8 +6,10 @@ import { Roles, UserManagementModalNames, UserManagementModals } from "../../con
 import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
 import { validateEmail } from "../../lib";
 import _ from "lodash";
+import { MotionModal } from "../framer/motion-modal";
+import { AnimatePresence } from "framer-motion";
 
-const AddNewUser:FC = () => {
+const AddNewUser: FC = () => {
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
     const { form, formOnChange, refreshForm } = useForm<ISWAdminView>({
         firstName: "",
@@ -32,13 +34,13 @@ const AddNewUser:FC = () => {
     }, [])
 
     const saveUser = useCallback(() => {
-      
+
         changeLoading(() => ({ isLoading: true, text: "Creating user" }))
         handleToggleModal({ ...selectedModal, isSubmitted: !selectedModal.isSubmitted })
         changeLoading(() => ({ isLoading: false, text: "" }))
     }, [form])
     useEffect(() => {
-      
+
         const modal = modals.find((x) => x.name === UserManagementModalNames.addNewUser) as UserManagementModal
         setSelectedModal(modal)
     }, [modals])
@@ -58,9 +60,19 @@ const AddNewUser:FC = () => {
 
 
     return (
-        <>
+        <AnimatePresence>
             {typeof form !== "undefined" && <form>
-                {typeof selectedModal !== "undefined" && <Modal size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
+                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={{
+                    hide: {
+                        opacity: 0,
+                        transition: {
+                            duration: 0.4
+                        }
+                    },
+                    show: {
+                        opacity: 1
+                    }                 
+                }} size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
                     <ModalOverlay />
                     <ModalContent bgColor="white" px="48px">
                         <ModalHeader>{UserManagementModalNames.addNewUser}</ModalHeader>
@@ -91,10 +103,7 @@ const AddNewUser:FC = () => {
                                     </Select>
                                     <FormErrorMessage>{validation?.errors.role}</FormErrorMessage>
                                 </FormControl>
-                                <FormControl>
-                                    <Button>Add Institution Colors</Button>
-                                </FormControl>
-                                
+
                             </Flex>
                         </ModalBody>
                         <ModalFooter>
@@ -104,11 +113,10 @@ const AddNewUser:FC = () => {
                             </HStack>
                         </ModalFooter>
                     </ModalContent>
-                </Modal>}
-
+                </MotionModal>}
             </form>
             }
-        </>)
+        </AnimatePresence>)
 }
 
 export default AddNewUser

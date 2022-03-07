@@ -52,7 +52,7 @@ const ChannelsMonitoringTable: React.FC = () => {
                     name: "Terminal Status",
                     key: "terminalStatus",
                     ele: appTableElements.status,
-                    lookUp: ["Active", "Not Active"]
+                    lookUp: ["Not Active", "Active"]
                 }
             ] as Column[],
             data: rowData

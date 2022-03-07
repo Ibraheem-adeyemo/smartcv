@@ -8,10 +8,10 @@ export enum userManagementTabsName {
     iSWAdmin = "ISW Admin"
 }
 
-export const userManagementTabs: Readonly<userManagementTab[]> = [
+export const userManagementTabsSuperAdmin: Readonly<userManagementTab[]> = [
     {
         name: userManagementTabsName.bank,
-        isSelected: false
+        isSelected: true,
     }, {
         name: userManagementTabsName.tenantAdmin,
         isSelected: false
@@ -19,6 +19,11 @@ export const userManagementTabs: Readonly<userManagementTab[]> = [
         name: userManagementTabsName.iSWAdmin,
         isSelected: false
     }
+]
+export const userManagementTabsAdmin: Readonly<userManagementTab[]> = [{
+    name: userManagementTabsName.tenantAdmin,
+    isSelected: true
+}
 ]
 export const onboardingTabs: Readonly<Step[]> = [
     {
@@ -89,5 +94,5 @@ export enum onboardingCrossDomain {
     loading = "Loading",
     loaded = "Loaded",
     confirmKey = "Confirm Key",
-    reconnect ="Reconnect"
+    reconnect = "Reconnect"
 }

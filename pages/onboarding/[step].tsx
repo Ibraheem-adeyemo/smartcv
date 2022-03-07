@@ -8,6 +8,7 @@ import { getCookie } from "../../src/lib";
 import { OnboardingProvider } from "../../src/providers";
 import { OnboardingContext } from "../../src/providers/onboarding-provider";
 import CrossDomainOnboardingProvider from "../../src/providers/cross-domain-onboarding-provider";
+import { AnimatePresence } from "framer-motion";
 
 const CreateBank = dynamic(() => import('../../src/component/onboarding/create-bank'), {ssr:false})
 const CreateSuperAmin = dynamic(() => import('../../src/component/onboarding/create-super-admin'), {ssr:false})
@@ -69,7 +70,7 @@ export default function Step1(props: any) {
                 <CrossDomainOnboardingProvider>
                     <OnboardingProvider>
                         <Onboarding>
-                            <>{typeof stepNumber !== "undefined" && typeof step !== "undefined" && <LoadTab state={stepNumber} step={step} />}</>
+                            <AnimatePresence>{typeof stepNumber !== "undefined" && typeof step !== "undefined" && <LoadTab state={stepNumber} step={step} />}</AnimatePresence>
                         </Onboarding>
                     </OnboardingProvider>
                 </CrossDomainOnboardingProvider>

@@ -8,6 +8,7 @@ import { getInterchangeById } from "../../services/v1";
 import { AppLink } from "../app";
 import { CrossDomainOnboardingContext } from "../../providers/cross-domain-onboarding-provider";
 import { MotionBox, MotionButton, MotionFlex } from "../framer";
+import { appear, staggerChildrenWithDuration, verticalPosition } from "../../animations";
 
 const RegisterForm: FC = () => {
 
@@ -74,7 +75,7 @@ const RegisterForm: FC = () => {
             })}>
                 <MotionFlex sx={{
                     flexDir: "column",
-                    gridGap: "36px",
+                    gap: "36px",
                     px: "66px",
                     bg: "white",
                     borderRadius: "6px",
@@ -85,19 +86,7 @@ const RegisterForm: FC = () => {
                 }}
                     initial="hide"
                     animate="show"
-                    variants={{
-                        show: {
-                            opacity: 1,
-                            transition: {
-                                duration: 0.2,
-                                delay: 0.2,
-                                when: "afterChildren"
-                            }
-                        },
-                        hide: {
-                            opacity: 0
-                        }
-                    }}
+                    variants={staggerChildrenWithDuration}
                 >
                     <Text variant="card-header" size="page-header" >Register</Text>
                     <FormControl id="organizationId">
@@ -111,16 +100,7 @@ const RegisterForm: FC = () => {
                             }} 
                             initial="hide"
                             animate="show"
-                            variants={{
-                                show: {
-                                    y: 0,
-                                    transition: { duration: 0.85 }
-                                },
-                                hide: {
-                                    y: "200%",
-                                    transition: { duration: 0.75 }
-                                }
-                            }}>
+                            variants={verticalPosition}>
                                 Organization ID</MotionBox></FormLabel>
                         <Input placeholder="XYZ1278IO" borderRadius="4px" onInput={(e) => {
                             e.stopPropagation()
@@ -128,17 +108,8 @@ const RegisterForm: FC = () => {
                             setInterChangeId(ele.value)
                         }} />
                     </FormControl>
-                    <MotionFlex flexDir="column" gridGap="15px" w="100%" alignItems="center"
-                        variants={{
-                            open: {
-                                opacity: "1",
-                                transition: {duration: 0.6}
-                            },
-                            close: {
-                                opacity: "0",
-                                transition: {duration: 0.6}
-                            }
-                        }}
+                    <MotionFlex flexDir="column" gap="15px" w="100%" alignItems="center"
+                        variants={appear}
                         animate="open"
                         initial="close"
                     >
@@ -147,14 +118,7 @@ const RegisterForm: FC = () => {
                             py: "12px"
                         }}
                         
-                        variants={{
-                            hide: {
-                                opacity: 0
-                            },
-                            show: {
-                                opacity: 1
-                            }
-                        }}
+                        variants={appear}
                         >
                             Submit
                         </MotionButton>
@@ -170,16 +134,7 @@ const RegisterForm: FC = () => {
                                 }}
                                 initial="hide"
                                 animate="show"
-                                variants={{
-                                    show: {
-                                        y: 0,
-                                        transition: { duration: 0.85 }
-                                    },
-                                    hide: {
-                                        y: "200%",
-                                        transition: { duration: 0.75 }
-                                    }
-                                }}
+                                variants={verticalPosition}
                             >
                                 <AppLink href={links.login} color="brand.primary-blue" >Back to Login</AppLink>
                             </MotionBox>
@@ -187,7 +142,7 @@ const RegisterForm: FC = () => {
                     </MotionFlex>
                 </MotionFlex>
             </form>)}
-            {cantVew && <Flex flexDir="column" gridGap="36px" px="66px" bg="white" borderRadius="6px" alignItems="center" w="633px" py="36px"><Text variant="card-header" size="page-header">You can't view This page</Text></Flex>}
+            {cantVew && <Flex flexDir="column" gap="36px" px="66px" bg="white" borderRadius="6px" alignItems="center" w="633px" py="36px"><Text variant="card-header" size="page-header">You can't view This page</Text></Flex>}
         </>
     )
 }
