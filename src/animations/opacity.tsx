@@ -10,6 +10,9 @@ export const appear: Variants = {
     },
     hide: {
         opacity: 0,
+        transition: {
+            duration: 0.4
+        }
     }
 }
 interface apperWithDimensionsPros {
@@ -28,6 +31,9 @@ export const apperWithDimensions = ({width="fit-content", height="fit-content"}:
     hide: {
         opacity:0,
         height: 0,
-        width: 0
+        width: 0,
+        transition: {
+            duration: 0.4
+        }
     }
 })

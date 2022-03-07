@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React, { createContext, FC } from "react";
+import { delayChildren } from "../animations";
 import { usePagination } from "../hooks";
 import { ComponentWithChildren } from "../models";
 
@@ -45,18 +46,7 @@ const PaginatorProvider:FC<TableProviderProps> = (props: TableProviderProps) => 
         animate="show"
         initial="hide"
         exit="hide"
-        variants={{
-            hide: {
-                opacity: 0
-            },
-            show: {
-                opaciity: 1,
-                transition: {
-                    delayChildren: 0.4,
-                    duration: 0.2
-                }
-            }
-        }}
+        variants={delayChildren}
         >
         {props.children}
         </Box>

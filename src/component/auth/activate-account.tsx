@@ -2,7 +2,7 @@ import { CircularProgress } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { FC } from "react"
 import useSWR from "swr"
-import { appear, apperWithDimensions, delayChildren, staggerChildrenWithDuration } from "../../animations"
+import { appear, apperWithDimensions, delayChildren } from "../../animations"
 import { Images } from "../../constants"
 import { APIResponse } from "../../models"
 import { AnimatedText, MotionFlex, MotionImage } from "../framer"
@@ -26,14 +26,16 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
             animate="show"
             variants={delayChildren}>
             <MotionImage src={Images.onboardingSuccess} boxSize="134px" animate="show" initial="hide" variants={apperWithDimensions({ width: "134px", height: "134px" })} />
-            <MotionFlex sx={{
+            {data && <><MotionFlex sx={{
                 flexDir: "column",
                 gap: "20px"
             }}
                 variants={delayChildren}>
                 <AnimatedText variant="card-header" size="card-header">Account Activation Complete</AnimatedText>
                 <AnimatedText variant="">Your Account has been activated successfully</AnimatedText>
-            </MotionFlex>
+            </MotionFlex></>}
+
+            {error && <AnimatedText sx={{ color: 'red' }}>Can't activate account</AnimatedText>}
 
             {!data && !error && <MotionFlex sx={{
                 height: "100vh"

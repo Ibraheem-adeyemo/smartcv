@@ -32,14 +32,17 @@ export const staggerChildren: Variants = {
 }
 
 export const delayChildren: Variants = {
-
+    hide: {
+        opacity: 0,
+        transition: {
+            duration: 0.2
+        }
+    },
     show: {
         opacity: 1,
         transition: {
-            delayChildren: 0.4
+            delayChildren: 0.4,
+            duration: 0.2
         }
-    },
-    hide: {
-        opacity: 0,
     }
 }
