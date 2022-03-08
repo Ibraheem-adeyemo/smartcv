@@ -7,8 +7,9 @@ import { Tenant, stepsProps, State } from "../../models";
 import useValidator from "../../hooks/validatoin";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { OnboardingContext } from "../../providers/onboarding-provider";
-import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
+import { OnboardingContext } from "../../providers";
+import { MotionFormErrorMessage, MotionFormLabel, MotionImage } from "../framer";
+import { AnimatePresence } from "framer-motion";
 
 interface CreateBankProps extends stepsProps {
 
@@ -196,7 +197,7 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
                                     fileRef.current.dispatchEvent(s)
                                 }
                             }} /></Badge>
-                                <Image src={onboarding?.tenant?.logo} h="127px" /></>}
+                                <MotionImage src={onboarding?.tenant?.logo} h="127px" /></>}
                     </Box>
                 </FormControl>
             </Flex>

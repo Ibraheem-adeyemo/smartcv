@@ -2,11 +2,10 @@ import { Flex, Text } from "@chakra-ui/react"
 import { NextPage } from "next"
 import dynamic from 'next/dynamic'
 import React, { useContext } from "react"
-import { DashboardPage } from "../src/component/dashboard"
+import { Dashboard as DashboardPage  } from "../src/component/dashboard"
 import { Authenticated } from "../src/component/layouts"
 import { filtersToShowDefaultValue } from "../src/constants"
-import { StatsProvider } from "../src/providers"
-import { StatsContext } from "../src/providers/stats-provider"
+import { StatsProvider, StatsContext } from "../src/providers"
 const AppBarFilter = dynamic(() => import('../src/component/stats/app-bar-filter'), {ssr:false})
 
 const Dashboard:NextPage = () => {

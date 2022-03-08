@@ -2,7 +2,7 @@ import { Flex, Tag, Text } from "@chakra-ui/react";
 import React, { FC, useContext } from "react";
 import { InstitutionFilter, CustomFilter } from ".";
 import { filterDates } from "../../constants";
-import { StatsContext } from "../../providers/stats-provider";
+import { StatsContext } from "../../providers";
 import { MotionFlex } from "../framer";
 
 const AppBarFilter: FC = () => {

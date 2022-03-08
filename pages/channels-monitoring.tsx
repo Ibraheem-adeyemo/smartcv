@@ -8,7 +8,7 @@ import ChannelsMonitoringSearch from "../src/component/channels-monitoring/chann
 import { Authenticated } from "../src/component/layouts";
 import { filtersToShowDefaultValue } from "../src/constants";
 import { ChannelsMonitoringProvider, StatsProvider } from "../src/providers";
-import { StatsContext } from "../src/providers/stats-provider";
+import { StatsContext } from "../src/providers";
 
 const AppBarFilter = dynamic(() => import("../src/component/stats/app-bar-filter"), { ssr: false })
 const ChannelsMonitoringStats = dynamic(() => import("../src/component/channels-monitoring/channels-monitoring-stats"), { ssr: false })

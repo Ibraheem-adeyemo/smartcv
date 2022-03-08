@@ -1,16 +1,10 @@
-import createBank from "./create-bank";
-import onboardingCard from "./onboarding-card";
-import createSuperAdminWithExistingSuperAdminAccount from "./creat-super-admin-with-existing-passport-account";
-import createSuperAdminWithoutExistingSuperAdminAccount from "./creat-super-admin-without-existing-passport-account";
-import signinWithPassport from "./signin-with-passport";
-import createSuperAdmin  from "./create-super-admin";
-import successCard from "./success-card";
+import CreateBank from "./create-bank";
+import OnboardingCard from "./onboarding-card";
+import CreateSuperAdminWithExistingSuperAdminAccount from "./creat-super-admin-with-existing-passport-account";
+import CceateSuperAdminWithoutExistingSuperAdminAccount from "./creat-super-admin-without-existing-passport-account";
+import SigninWithPassport from "./signin-with-passport";
+import CreateSuperAdmin from "./create-super-admin";
+import SuccessCard from "./success-card";
 
 
-export const CreateBank =  createBank 
-export const OnboardingCard = onboardingCard
-export const CreateSuperAdminWithExistingSuperAdminAccount = createSuperAdminWithExistingSuperAdminAccount
-export const CceateSuperAdminWithoutExistingSuperAdminAccount = createSuperAdminWithoutExistingSuperAdminAccount
-export const SigninWithPassport = signinWithPassport
-export const CreateSuperAdmin = createSuperAdmin
-export const SuccessCard = successCard
+export { CreateBank, OnboardingCard, CreateSuperAdminWithExistingSuperAdminAccount, CceateSuperAdminWithoutExistingSuperAdminAccount, SigninWithPassport, CreateSuperAdmin, SuccessCard }

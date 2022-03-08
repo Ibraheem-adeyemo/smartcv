@@ -5,7 +5,7 @@ import React from "react";
 import AuditExport from "../src/component/audit/audit-export";
 import AuditSearch from "../src/component/audit/audit-search";
 import { Authenticated } from "../src/component/layouts";
-import AuditProvider from "../src/providers/audit-provider";
+import {AuditProvider} from "../src/providers";
 const AuditTable = dynamic(() => import("../src/component/audit/audit-table"), {ssr:false})
 const AuditDetail = dynamic(() => import("../src/component/audit/audit-detail"), {ssr:false})
 const Audit: NextPage = () => {

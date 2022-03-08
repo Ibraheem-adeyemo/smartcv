@@ -7,7 +7,7 @@ import { OnboardingCard } from ".";
 import { PickerIcon } from "../../constants";
 import { validateHexColor } from "../../lib";
 import { Onboarding, tenantAdmin, InstitutionColorInfo, Step } from "../../models";
-import { OnboardingContext } from "../../providers/onboarding-provider";
+import { OnboardingContext } from "../../providers";
 import { AnimatedText } from "../framer";
 interface InstitutionColorsProps {
     step: number

@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
-import { channelsMonitoringContext } from "../../providers/channels-monitoring-provider";
+import { channelsMonitoringContext } from "../../providers";
 import { MotionButton, MotionButtonGroup } from "../framer";
 
 const ChannelsMonitoringTabs: FC = () => {

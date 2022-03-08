@@ -6,9 +6,7 @@ import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { TenantView, Paginate, UserManagementModal, Column } from "../../models";
-import { PaginatorProvider } from "../../providers";
-import { PaginatorContext } from "../../providers/paginator-provider";
-import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
+import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext } from "../../providers";
 import { AppTable } from "../app";
 
 const AddNewBank = dynamic(() =>import('./add-new-bank'), {ssr:false})

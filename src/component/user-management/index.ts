@@ -1,20 +1,12 @@
 
-import bankAdmin from './bank-admin'
-import bank from './bank'
-import iSWAdmin from './isw-admin'
-import userManagementSearch from './user-management-search'
-import userManagementTabAndSearch from './user-management-tab-and-search'
-import userManagement from './user-management'
-import addNewUser from './add-new-user'
-import addNewBank from './add-new-bank'
-import userManagementStats from './user-management-stats'
+import BankAdmin from './bank-admin'
+import Bank from './bank'
+import ISWAdmin from './isw-admin'
+import UserManagementSearch from './user-management-search'
+import UserManagementTabAndSearch from './user-management-tab-and-search'
+import UserManagement from './user-management'
+import AddNewUser from './add-new-user'
+import AddNewBank from './add-new-bank'
+import UserManagementStats from './user-management-stats'
 
-export const BankAdmin = bankAdmin
-export const Bank = bank
-export const ISWAdmin = iSWAdmin
-export const UserManagementSearch = userManagementSearch
-export const UserManagementTabAndSearch = userManagementTabAndSearch
-export const UserManagement = userManagement
-export const AddNewUser = addNewUser
-export const AddNewBank = addNewBank
-export const UserManagementStats = userManagementStats
+export { BankAdmin, Bank, ISWAdmin, UserManagementSearch, UserManagementTabAndSearch, UserManagement, AddNewUser, AddNewBank, UserManagementStats }

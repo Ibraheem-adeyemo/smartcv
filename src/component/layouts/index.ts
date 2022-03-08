@@ -1,9 +1,6 @@
-import  nonAuthenticated  from "./non-authenticated";
-import  authenticated  from "./authenticated";
-import onboarding from "./onboarding";
-import onboardingNav from "./onboardning-nav";
+import  NonAuthenticated  from "./non-authenticated";
+import  Authenticated  from "./authenticated";
+import Onboarding from "./onboarding";
+import OnboardingNav from "./onboardning-nav";
 
-export const NonAuthenticated  = nonAuthenticated
-export const Authenticated  = authenticated
-export const Onboarding = onboarding
-export const OnboardingNav = onboardingNav
+export { NonAuthenticated, Authenticated, Onboarding, OnboardingNav}

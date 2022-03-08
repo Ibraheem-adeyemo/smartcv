@@ -30,7 +30,6 @@ export interface TenantAdminView {
     tenant: TenantView,
     role: Role
 }
-
 export interface Role {
     id: number,
     name: string,
@@ -71,4 +70,34 @@ export interface InstitutionColor {
 
 export interface TenantInput extends TenantView {
     color: InstitutionColor
+}
+
+export interface BankAdmin {
+    firstName: string,
+    lastName: string,
+    username: string,
+    email: string,
+    tenantCode: string
+}
+
+export interface CreateTenantReponseModel {
+    id: number,
+    name: string,
+    color: string
+    code: TenantColor,
+    domain: string,
+    slogan: string,
+    logo: string,
+    location: string,
+    address: string,
+    branch: string,
+    isActive: string
+
+}
+
+export interface TenantColor {
+    id: number,
+    headerColor: string,
+    sidebarColour: string,
+    buttonColor: string
 }

@@ -5,9 +5,7 @@ import { FC, useCallback, useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { cookieKeys, links, sessionStorageKeys } from "../../src/constants";
 import { getCookie } from "../../src/lib";
-import { OnboardingProvider } from "../../src/providers";
-import { OnboardingContext } from "../../src/providers/onboarding-provider";
-import CrossDomainOnboardingProvider from "../../src/providers/cross-domain-onboarding-provider";
+import { OnboardingProvider, OnboardingContext, CrossDomainOnboardingProvider } from "../../src/providers";
 import { AnimatePresence } from "framer-motion";
 
 const CreateBank = dynamic(() => import('../../src/component/onboarding/create-bank'), {ssr:false})

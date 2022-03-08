@@ -1,12 +1,8 @@
 
-import customFilter from "./custom-filter";
-import institutionFilter from "./institution-filter";
-import searchFilter from './search-filters'
-import stat from './stat'
-import searchText from './search-text'
+import CustomFilter from "./custom-filter";
+import InstitutionFilter from "./institution-filter";
+import SearchFilter from './search-filters'
+import Stat from './stat'
+import SearchText from './search-text'
 
-export const CustomFilter = customFilter 
-export const InstitutionFilter = institutionFilter
-export const SearchFilter = searchFilter
-export const SearchText = searchText
-export const Stat = stat
+export{ CustomFilter, InstitutionFilter, SearchFilter, SearchText,  Stat}

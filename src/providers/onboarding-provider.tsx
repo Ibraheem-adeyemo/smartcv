@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import { createContext, FC } from "react"
 import { onboardingTabs } from "../constants"
 import { useOnboarding } from "../hooks"
 import { ComponentWithChildren, Step } from "../models"
@@ -16,7 +16,7 @@ export const OnboardingContext = createContext<ReturnType<typeof useOnboarding>>
         startLoading: () => (""),
         stopLoading: () => ("")
     })
-const OnboardingProvider = (props: ComponentWithChildren) => {
+const OnboardingProvider: FC<ComponentWithChildren> = (props: ComponentWithChildren) => {
     return <OnboardingContext.Provider value={{...useOnboarding()}}>
         {props.children}
     </OnboardingContext.Provider>

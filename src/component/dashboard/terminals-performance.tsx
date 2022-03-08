@@ -6,7 +6,7 @@ import { apiUrlsv1, StatsName } from "../../constants";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
 import { ATMCount, Paginate } from "../../models";
-import { StatsContext } from "../../providers/stats-provider";
+import { StatsContext } from "../../providers"
 import { AppCard } from "../app";
 import { SkeletonLoader } from "..";
 import { Stat } from "../stats";

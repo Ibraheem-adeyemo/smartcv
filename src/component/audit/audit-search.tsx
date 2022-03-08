@@ -1,5 +1,5 @@
 import React, { FC, useContext } from "react";
-import { AuditContext } from "../../providers/audit-provider";
+import { AuditContext } from "../../providers";
 import { SearchText } from "../stats";
 
 

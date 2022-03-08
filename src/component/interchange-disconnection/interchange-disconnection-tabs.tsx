@@ -1,6 +1,6 @@
 import { ButtonGroup, Button } from "@chakra-ui/react";
 import React, { FC, useContext, useEffect } from "react";
-import { InterchangeDisconnectionContext } from "../../providers/interchange-disconnection-provider";
+import { InterchangeDisconnectionContext } from "../../providers";
 
 const InterchangeDisconnectionTabs: FC = () => {
     const { tabs, modifyTab } = useContext(InterchangeDisconnectionContext)

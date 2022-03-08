@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { apiUrlsv1, AvatarIcon, CapitolIcon, cookieKeys, StatsName } from "../../constants";
 import { getCookie } from "../../lib";
 import { ISWAdminView, Paginate, TenantAdminView, TenantView, UserManagementStat } from "../../models";
-import { AuthContext } from "../../providers/auth-provider";
+import { AuthContext } from "../../providers";
 import { AppCard } from "../app";
 import SkeletonLoader from "../skeleton-loader";
 

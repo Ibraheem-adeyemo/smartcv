@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { OnboardingCard } from ".";
 import { notificationMesage } from "../../constants";
-import { OnboardingContext } from "../../providers/onboarding-provider";
+import { OnboardingContext } from "../../providers";
 import { MotionFormLabel } from "../framer";
 
 

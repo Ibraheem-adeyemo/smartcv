@@ -10,11 +10,12 @@ import 'react-phone-number-input/style.css'
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 import { notificationMesage, TickIcon } from "../../constants";
 import { comparePassword, validateEmail, validateLowercase, validateNumber, validateUppercase } from "../../lib";
-import { OnboardingContext } from "../../providers/onboarding-provider";
+import { OnboardingContext } from "../../providers";
 import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
+import { AnimatePresence } from "framer-motion";
 
 interface PasswordChecker { checker: string, status: boolean, text: string }
-const MobleNoInput = forwardRef((props, ref) => {
+const MobileNoInput = forwardRef((props, ref) => {
     return <Input as={PhoneInput} defaultCountry="NG" {...props} ref={ref} />
 })
 const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
@@ -285,14 +286,13 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
             </FormControl>
             <FormControl isRequired id="email" flexGrow={1} width="35%" isInvalid={(!validateEmail(onboarding?.tenantAdmin?.email as string) || validation?.errors?.email !== "") && validation?.touched.email === "touched"}>
                 <MotionFormLabel>Email Address</MotionFormLabel>
-
                 <Input placeholder="janedoe@gmail.com" name="email" type="email" borderRadius="4px" value={onboarding?.tenantAdmin?.email} onInput={addData} />
                 <MotionFormErrorMessage>{validation?.errors.email}</MotionFormErrorMessage>
                 <MotionFormErrorMessage>{!validateEmail(onboarding?.tenantAdmin?.email as string) && validation?.errors.email === "" ? "Invalid email" : ""}</MotionFormErrorMessage>
             </FormControl>
             <FormControl isRequired id="mobileNo" flexGrow={1} width="35%" isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo:"")) && validation?.touched.mobileNo === "touched"}>
                 <MotionFormLabel>Phone Number</MotionFormLabel>
-                <MobleNoInput placeholder="Enter Phone no" name="mobileNo" borderRadius="4px" value={onboarding?.tenantAdmin?.mobileNo} ref={numberRef} onChange={enterSuperAdminMobile} />
+                <MobileNoInput placeholder="Enter Phone no" name="mobileNo" borderRadius="4px" value={onboarding?.tenantAdmin?.mobileNo} ref={numberRef} onChange={enterSuperAdminMobile} />
                 <MotionFormErrorMessage>{validation?.errors.mobileNo}</MotionFormErrorMessage>
                 <MotionFormErrorMessage>{validation?.errors.mobileNo === ""  && !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo:"")? "Invalid number" : ""}</MotionFormErrorMessage>
 
@@ -313,7 +313,6 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
                             onBlur={() => closePopOver()}
                             onInput={checkPassworValidity} />
                         <MotionFormErrorMessage>{validation?.errors.password}</MotionFormErrorMessage>
-
                         <MotionFormErrorMessage> {((passC as PasswordChecker[])?.filter(x => !(x?.status)).length) > 0 && validation?.errors.password === "" ? ("Your password must be " + passC?.map(x => x.text).join(", ")) : ""}</MotionFormErrorMessage>
                     </FormControl>
                 </PopoverTrigger>
@@ -334,7 +333,6 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
                 <Input type="password" placeholder="Confirm Password" name="confirmPassword" borderRadius="4px" value={onboarding?.tenantAdmin?.confirmPassword} onInput={addData} />
                 <MotionFormErrorMessage>{validation?.errors.confirmPassword}</MotionFormErrorMessage>
                 <MotionFormErrorMessage>{!comparePassword(onboarding?.tenantAdmin?.confirmPassword as string, onboarding?.tenantAdmin?.password as string) && validation?.errors.confirmPassword == "" ? "Confirm password does not match with password" : ""}</MotionFormErrorMessage>
-
             </FormControl>
         </Flex>
     </OnboardingCard>)

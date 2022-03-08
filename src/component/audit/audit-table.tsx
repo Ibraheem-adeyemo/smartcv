@@ -3,11 +3,9 @@ import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { Paginate, ATMCountDetail, AuditView, Action } from "../../models";
-import { PaginatorProvider } from "../../providers";
-import { PaginatorContext } from "../../providers/paginator-provider";
+import { PaginatorProvider, PaginatorContext, AuditContext } from "../../providers";
 import { useToast } from "@chakra-ui/react";
 import { apiUrlsv1 } from "../../constants";
-import { AuditContext } from "../../providers/audit-provider";
 
 
 const AuditTable:FC = () => {

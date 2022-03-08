@@ -9,7 +9,7 @@ import { apiUrlsv1 } from "../../constants";
 import { Paginate, ATMInService } from "../../models";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
-import { StatsContext } from "../../providers/stats-provider";
+import { StatsContext } from "../../providers";
 
 interface ServiceStatusProps {
   title?: string

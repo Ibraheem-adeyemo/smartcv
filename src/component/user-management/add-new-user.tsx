@@ -1,13 +1,16 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
-import { ISWAdminView, UserManagementModal } from "../../models";
+import { BankAdmin, ISWAdminView, UserManagementModal } from "../../models";
 import { Roles, UserManagementModalNames, UserManagementModals } from "../../constants";
-import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
+import { UserManagementTabProviderContext } from "../../providers";
 import { validateEmail } from "../../lib";
 import _ from "lodash";
 import { MotionModal } from "../framer/motion-modal";
 import { AnimatePresence } from "framer-motion";
+import { createBankAdmin } from "../../services/v1";
+import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
+import { appear } from "../../animations";
 
 const AddNewUser: FC = () => {
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
@@ -33,9 +36,16 @@ const AddNewUser: FC = () => {
 
     }, [])
 
-    const saveUser = useCallback(() => {
+    const saveUser = useCallback(async () => {
 
         changeLoading(() => ({ isLoading: true, text: "Creating user" }))
+        try {
+            if(form) {
+                await createBankAdmin(form as unknown as BankAdmin)
+            }
+        } catch (error) {
+            
+        }
         handleToggleModal({ ...selectedModal, isSubmitted: !selectedModal.isSubmitted })
         changeLoading(() => ({ isLoading: false, text: "" }))
     }, [form])
@@ -62,17 +72,7 @@ const AddNewUser: FC = () => {
     return (
         <AnimatePresence>
             {typeof form !== "undefined" && <form>
-                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={{
-                    hide: {
-                        opacity: 0,
-                        transition: {
-                            duration: 0.4
-                        }
-                    },
-                    show: {
-                        opacity: 1
-                    }                 
-                }} size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
+                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={appear} size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
                     <ModalOverlay />
                     <ModalContent bgColor="white" px="48px">
                         <ModalHeader>{UserManagementModalNames.addNewUser}</ModalHeader>
@@ -80,28 +80,28 @@ const AddNewUser: FC = () => {
                         <ModalBody>
                             <Flex gridRowGap="23px" gridColumnGap="32px" flexWrap="wrap" >
                                 <FormControl isRequired id="firstName" flexGrow={1} width="35%" isInvalid={validation?.errors?.firstName !== "" && validation?.touched.firstName === "touched"}>
-                                    <FormLabel>First Name</FormLabel>
+                                    <MotionFormLabel>First Name</MotionFormLabel>
 
                                     <Input placeholder="Enter First Name" borderRadius="4px" value={form?.firstName} onChange={addData} />
-                                    <FormErrorMessage>{validation?.errors.firstName}</FormErrorMessage>
+                                    <MotionFormErrorMessage>{validation?.errors.firstName}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="lastName" flexGrow={1} width="35%" isInvalid={validation?.errors?.lastName !== "" && validation?.touched.lastName === "touched"}>
-                                    <FormLabel>Last Name</FormLabel>
+                                    <MotionFormLabel>Last Name</MotionFormLabel>
                                     <Input placeholder="Enter Last name" borderRadius="4px" value={form?.lastName} onChange={addData} />
-                                    <FormErrorMessage>{validation?.errors.lastName}</FormErrorMessage>
+                                    <MotionFormErrorMessage>{validation?.errors.lastName}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="email" flexGrow={1} width="35%" isInvalid={(!isValidEmail || validation?.errors?.email !== "") && validation?.touched.email === "touched"}>
-                                    <FormLabel>Email Address</FormLabel>
+                                    <MotionFormLabel>Email Address</MotionFormLabel>
                                     <Input placeholder="Enter Email Address" borderRadius="4px" value={form?.email} type="email" onChange={addData} />
-                                    <FormErrorMessage>{validation?.errors.email}</FormErrorMessage>
-                                    {!isValidEmail && validation?.errors?.email === "" && <FormErrorMessage>Email is Invalid !</FormErrorMessage>}
+                                    <MotionFormErrorMessage>{validation?.errors.email}</MotionFormErrorMessage>
+                                    <MotionFormErrorMessage>Email is Invalid !</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="role" flexGrow={1} width="35%" isInvalid={validation?.errors?.role !== "" && validation?.touched.role === "touched"}>
-                                    <FormLabel>Role</FormLabel>
+                                    <MotionFormLabel>Role</MotionFormLabel>
                                     <Select placeholder="Select Role" borderRadius="4px" value={form?.role} onChange={addData}>
                                         {_.map(Roles, (x: string, i) => <option key={i} value={x}>{x}</option>)}
                                     </Select>
-                                    <FormErrorMessage>{validation?.errors.role}</FormErrorMessage>
+                                    <MotionFormErrorMessage>{validation?.errors.role}</MotionFormErrorMessage>
                                 </FormControl>
 
                             </Flex>

@@ -5,8 +5,7 @@ import { SearchFilter } from "."
 import { SkeletonLoader } from ".."
 import { superAdmin } from "../../constants"
 import {  TenantView } from "../../models"
-import { AuthContext } from "../../providers/auth-provider"
-import { StatsContext } from "../../providers/stats-provider"
+import { AuthContext, StatsContext } from "../../providers"
 
 const InstitutionFilter:FC = () => {
     const {selectedTenantCode, institutions, institutionsError, changeSelectedTenantCode} = useContext(StatsContext)

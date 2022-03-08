@@ -2,8 +2,7 @@ import { FC, useContext, useMemo } from "react";
 import useSWR from "swr";
 import { apiUrlsv1, appTableElements } from "../../constants";
 import { InterchangeDisconnectionStatus as InterchangeDisconnectionStatusModdel, Paginate } from "../../models";
-import { PaginatorProvider } from "../../providers";
-import { PaginatorContext } from "../../providers/paginator-provider";
+import { PaginatorProvider, PaginatorContext } from "../../providers";
 import { AppTable } from "../app";
 
 const InterchangeDisconnectionStatusTable:FC = () => {

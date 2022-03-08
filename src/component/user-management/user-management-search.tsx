@@ -1,5 +1,5 @@
 import React, { FC, useContext } from "react";
-import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
+import { UserManagementTabProviderContext } from "../../providers";
 import { SearchText } from "../stats";
 
 

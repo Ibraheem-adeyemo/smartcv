@@ -1,7 +1,5 @@
-import barchart from './barchart'
-import canvas from './canvas'
-import donutChart from './donutchart'
+import Barchart from './barchart'
+import Canvas from './canvas'
+import DonutChart from './donutchart'
 
-export const Barchart = barchart
-export const Canvas = canvas
-export const DonutChart = donutChart
+export { Barchart, Canvas, DonutChart }

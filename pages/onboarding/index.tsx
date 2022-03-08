@@ -1,7 +1,7 @@
 import { Flex, CircularProgress } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import { OnboardingContext } from "../../src/providers/onboarding-provider";
+import { OnboardingContext } from "../../src/providers";
 
 export default function Onboarding(props:any) {
     const [loading, setLoading] = useState(true)

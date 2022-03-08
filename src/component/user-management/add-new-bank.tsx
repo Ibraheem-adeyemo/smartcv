@@ -3,13 +3,14 @@ import { AnimatePresence } from "framer-motion";
 import _, { map, range } from "lodash";
 import React, { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
+import { appear } from "../../animations";
 import { apiUrlsv1, Images, PickerIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { validateHexColor } from "../../lib";
 import { InstitutionColor, InstitutionColorInfo, State, TenantInput, TenantView, UserManagementModal } from "../../models";
-import { UserManagementTabProviderContext } from "../../providers/user-management-tab-provider";
+import { UserManagementTabProviderContext } from "../../providers";
 import { createTenantAsync } from "../../services/v1";
-import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
+import { AnimatedText, MotionFormErrorMessage, MotionFormLabel } from "../framer";
 import { MotionModal } from "../framer/motion-modal";
 
 const AddNewBank:FC = () => {
@@ -140,23 +141,14 @@ const AddNewBank:FC = () => {
     return (
         <AnimatePresence>
             {typeof form !== "undefined" && <form>
-                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={{
-                    hide: {
-                        opacity: 0
-                    },
-                    show: {
-                        opacity: 1,
-                        transition: {
-                            duration: 0.4
-                        }
-                    }                 
-                }} scrollBehavior="inside" size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
+                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={appear} scrollBehavior="inside" size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
                     <ModalOverlay />
                     <ModalContent bgColor="white" px="18px">
                         <ModalHeader>{UserManagementModalNames.addNewBank}</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                             <Flex gridColumnGap="21px" gridRowGap="32px" flexWrap="wrap" >
+                            
                                 <FormControl isRequired id="name" flexGrow={1} width="50%" isInvalid={validation?.errors?.name !== "" && validation?.touched.name === "touched"}>
                                     <MotionFormLabel>Bank Name</MotionFormLabel>
 
@@ -166,7 +158,7 @@ const AddNewBank:FC = () => {
                                 <FormControl isRequired id="tenantCode" flexGrow={1} width="35%" isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
                                     <MotionFormLabel>Bank ID</MotionFormLabel>
                                     <Input placeholder="Enter Bank ID" borderRadius="4px" value={form.tenantCode} onChange={addData} />
-                                    <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
+                                   <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="branch" flexGrow={1} width="35%" isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
                                     <MotionFormLabel>Bank Branch</MotionFormLabel>
@@ -250,7 +242,7 @@ const AddNewBank:FC = () => {
                                                         </Flex>
                                                     </Flex>
                                                     <VStack spacing='8px'>
-                                                        <Text color="muted-text" textAlign="left" w="100%">Enter the hex code or use the colour picker</Text>
+                                                        <AnimatedText color="muted-text" textAlign="left" w="100%">Enter the hex code or use the colour picker</AnimatedText>
                                                         <Flex bgColor="brand.muted-background" border={ typeof institutionColorValidation?.touched !== "undefined" && institutionColorValidation?.touched.headerColor === "touched" && !validateHexColor( institutionColorForm?.headerColor as string) ? "1px solid red" : "unset"} borderRadius="8px" w="100%" alignItems="center" px="12px" py="16px">
                                                             <Button bgColor={institutionColorForm?.headerColor} w="40px" h="16px" borderRadius="8px" onClick={
                                                                 () => {

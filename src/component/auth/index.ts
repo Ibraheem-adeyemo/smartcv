@@ -1,6 +1,5 @@
 
-import loginForm from "./login-form";
-import registerForm from "./register-form";
+import LoginForm from "./login-form";
+import RegisterForm from "./register-form";
 
-export const LoginForm = loginForm
-export const RegisterForm = registerForm
+export { LoginForm, RegisterForm }

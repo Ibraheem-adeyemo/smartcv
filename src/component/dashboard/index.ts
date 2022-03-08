@@ -1,15 +1,16 @@
-import terminalsPerformance from "./terminals-performance";
-import successRate from "./success-rate";
-import serviceStatus from "./service-status";
-import terminalsUnderWatch from "./terminals-under-watch";
-import topPerforminBanks from "./top-performing-banks";
-import topTransactionMetric from "./top-transaction-metric";
+import TerminalsPerformance from "./terminals-performance";
+import SuccessRate from "./success-rate";
+import ServiceStatus from "./service-status";
+import TerminalsUnderWatch from "./terminals-under-watch";
+import TopPerforminBanks from "./top-performing-banks";
+import TopTransactionMetric from "./top-transaction-metric";
 import Dashboard from "./dashboard";
-
-export const ServiceStatus = serviceStatus
-export const SuccessRate = successRate
-export const TerminalsPerformance = terminalsPerformance
-export const TerminalsUnderWatch = terminalsUnderWatch
-export const TopPerforminBanks = topPerforminBanks
-export const TopTransactionMetric = topTransactionMetric
-export const DashboardPage = Dashboard
+export {
+    Dashboard,
+    TopTransactionMetric,
+    TopPerforminBanks,
+    TerminalsUnderWatch,
+    ServiceStatus,
+    SuccessRate,
+    TerminalsPerformance
+}

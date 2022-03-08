@@ -7,7 +7,7 @@ import { appear } from '../src/animations'
 import { MotionFlex } from '../src/component/framer/'
 import { cookieKeys, cookiesTimeout, links } from '../src/constants'
 import { getCookie, setCookie } from '../src/lib'
-import { AuthContext } from '../src/providers/auth-provider'
+import { AuthContext } from '../src/providers'
 const Home: NextPage = () => {
   const { user, token, error } = useContext(AuthContext)
   const router = useRouter()

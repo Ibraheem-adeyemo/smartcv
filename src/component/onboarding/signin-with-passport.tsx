@@ -1,6 +1,7 @@
-import { Modal, ModalOverlay, ModalContent, ModalBody, ModalHeader, ModalCloseButton, Button, ModalFooter, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, useToast } from "@chakra-ui/react";
+import { ModalOverlay, ModalContent, ModalBody, ModalHeader, ModalCloseButton, Button, ModalFooter, Flex, FormControl, Input, useToast } from "@chakra-ui/react";
+import { AnimatePresence } from "framer-motion";
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { CLIENT_ID, PASSPORT_TOKEN_URL, SCOPE, SECRET } from "../../constants";
+import { apiUrlsv1, CLIENT_ID, SECRET } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { PassportLoginCredentials, tenantAdmin } from "../../models";
 import { AnimatedText, MotionFormErrorMessage, MotionFormLabel } from "../framer";
@@ -43,7 +44,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                     grant_type: "password",
                     username: form.email,
                     password: form.password,
-                    scope: SCOPE
+                    scope: "profile"
                 }
                 const urlencoded = new URLSearchParams();
                 Object.keys(body).forEach((x) => {
@@ -115,7 +116,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                 // debbuger
                 // console.log({ PASSPORT_TOKEN_URL })
                 setForm({
-                    postUrl: PASSPORT_TOKEN_URL,
+                    postUrl: apiUrlsv1.passportTokenUrl,
                     completed: true
                 })
             }
@@ -182,7 +183,6 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                             <MotionFormLabel>Password</MotionFormLabel>
                             <Input placeholder="Enter your password" type="password" borderRadius="4px" value={form?.password} onChange={addData} />
                             <MotionFormErrorMessage>{validation?.errors.password}</MotionFormErrorMessage>
-
                         </FormControl>
                     </Flex>
                 </ModalBody>

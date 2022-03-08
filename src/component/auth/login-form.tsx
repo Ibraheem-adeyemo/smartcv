@@ -2,7 +2,7 @@
 import { Text, Button } from "@chakra-ui/react";
 import React, { FC, useContext, useEffect } from "react";
 import { cookieKeys, cookiesTimeout, Images, links } from "../../constants";
-import { AuthContext } from "../../providers/auth-provider";
+import { AuthContext } from "../../providers";
 import { setCookie } from "../../lib";
 import { MotionBox, MotionFlex, MotionImage } from '../framer';
 import { AppLink } from '../app';

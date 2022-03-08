@@ -1,22 +1,12 @@
-import UseAudit from "./audit";
-import UseAuthentication from "./authentication";
-import UseFilter from './filter';
-import UseForm from "./forms";
-import UseLoading from "./loading";
-import UseOnboarding, { initialOnboardingData as y } from "./onboarding";
-import UsePagination from "./pagination";
-import UseValidator from "./validatoin";
-import UseInterchangeDisconnection from "./interchange-disconnection";
-import UseCrossDomainOnboarding from "./cross-domain-onboarding";
+import useAudit from "./audit";
+import useAuthentication from "./authentication";
+import useFilter from './filter';
+import useForm from "./forms";
+import useLoading from "./loading";
+import useOnboarding, { initialOnboardingData} from "./onboarding";
+import usePagination from "./pagination";
+import useValidator from "./validatoin";
+import useInterchangeDisconnection from "./interchange-disconnection";
+import useCrossDomainOnboarding from "./cross-domain-onboarding";
 
-export const useAudit = UseAudit
-export const useAuthentication = UseAuthentication
-export const useFilter = UseFilter
-export const useForm = UseForm
-export const useLoading = UseLoading
-export const useOnboarding = UseOnboarding
-export const initialOnboardingData = y
-export const usePagination = UsePagination
-export const useValidator = UseValidator
-export const useInterchangeDisconnection = UseInterchangeDisconnection
-export const useCrossDomainOnboarding = UseCrossDomainOnboarding
+export { useAudit, useAuthentication, useFilter, useForm , useLoading, useOnboarding, initialOnboardingData, usePagination, useValidator, useInterchangeDisconnection, useCrossDomainOnboarding }

@@ -3,7 +3,7 @@ import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, links
 import { InterswitchLogo } from "../custom-component";
 import { As, Avatar, Button, ComponentWithAs, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
-import { AuthContext } from "../../providers/auth-provider";
+import { AuthContext } from "../../providers";
 import { AppLink } from "../app";
 import { useRouter } from "next/router";
 import { ComponentWithChildren } from "../../models";
@@ -148,20 +148,24 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
 
     return (
         <Grid
-            h={"100vh"}
-            templateRows={["[row1-start] 50px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
-                "[row1-start] 50px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
-                "[row1-start] 50px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
-                "[row1-start] 69px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
-                "[row1-start] 89px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",
-                "[row1-start] 89px [row1-end row2-start] 66px [row2-end row3-start] auto [row3-end] ",]}
-            templateColumns={["74px auto", "74px auto", "74px auto", "274px auto", "356px auto", "374px auto"]}
-            templateAreas={`
-            "header header" 
-            "sidebar pageHeader" 
-            "sidebar main"`
-            }
-            backgroundColor="white"
+            sx={{
+                gridTemplateRows:[
+                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] "
+                ],
+                    gridTemplateColumns: ["11vw 89vw", "11vw 89vw", "11vw 89vw", "274px auto", "356px auto", "374px auto"],
+                    transition: "gridTemplateColumns 0.5s",
+                gridTemplateAreas: `
+                "header header" 
+                "sidebar pageHeader" 
+                "sidebar main"`,
+                backgroundColor:"white",
+                position: "relative"
+            }}
         >
             <GridItem
                 gridArea="header"
@@ -171,9 +175,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
             >
                 <Flex
                     borderBottom="0.5px solid #7F91A8"
-                    sx={{
-                        h:"100%"
-                        }}
+                    sx={{ h:"100%" }}
                     >
                     <InterswitchLogo variant="sidbar-logo" />
                 </Flex>
@@ -230,16 +232,41 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
                 </Flex>
             </GridItem>
             <GridItem
-                gridArea="sidebar"
-                boxShadow="1px 0px 0px rgba(0, 0, 0, 0.15)"
-                display="flex"
-                gap="36.5px"
-                pt="48px"
-                flexDir="column"
-                ml={[0, 0, 0, "40px", "40px", "40px"]}
-                pr={[0, 0, 0, "40px", "40px", "40px"]}
+                sx={{
+                    gridArea:"sidebar",
+                    boxShadow:"1px 0px 0px rgba(0, 0, 0, 0.15)",
+                    display:"flex",
+                    gap:"36.5px",
+                    pt:"48px",
+                    flexDir:"column",
+                    ml:[0, 0, 0, "40px", "40px", "40px"],
+                    pr:[0, 0, 0, "40px", "40px", "40px"],
+                    position:"relative",
+                    overflowX:"auto",
+                    transition: "width .5s",
+                    "&:hover": {
+                        transition: "width .5s",
+                        zIndex: 10,
+                        left: 0,
+                        bottom:0,
+                        top: 0,
+                        width: ["250px","250px","250px","inherit","inherit","inherit",],
+                        background: "white",
+                        "&>p": {
+                            mx:0,
+                            mr:"auto",
+                            transition: "display .5s 1s opacity .5s 1s",
+                            "&>a>p": {
+                                opacity: 1,
+                                display: "inline-block",
+                                transition: "display .5s 1s opacity .5s 1s",
+                                fontSize: ["14px","14px","14px", "initial", "initial", "initial"],
+                            } 
+                        }
 
-                overflowX="auto"
+                    }
+                }}
+                
             >
                 {typeof user === "undefined" && typeof error === "undefined" && <SkeletonLoader rows={5} width="300px" columns={1} />}
                 {typeof user !== "undefined" && typeof error === "undefined" && <MenuLists />}

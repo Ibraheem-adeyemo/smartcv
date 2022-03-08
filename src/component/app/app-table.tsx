@@ -8,7 +8,7 @@ import { delayChildren, verticalPosition } from "../../animations";
 import { appTableElements, DotIcon, Images } from "../../constants";
 import { appDate } from "../../lib";
 import { Action, Column } from "../../models";
-import { PaginatorContext } from "../../providers/paginator-provider";
+import { PaginatorContext } from "../../providers";
 import { AnimatedText, MotionImage, MotionTable, MotionTbody, MotionTd, MotionThead, MotionTr } from "../framer";
 import SkeletonLoader from "../skeleton-loader";
 

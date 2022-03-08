@@ -1,5 +1,5 @@
 import { apiUrlsv1, cookieKeys, cookiesTimeout, Names, notificationMesage, sessionStorageKeys } from "../../constants"
-import { getCookie, getRandomInt, setCookie } from "../../lib"
+import { fetchJson, getCookie, getRandomInt, setCookie } from "../../lib"
 import { Onboarding } from "../../models"
 
 export const createAccountAsync = async (onboarding: Onboarding) => {
@@ -37,8 +37,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
                 }
                 // ...body.institutionColorInfo,
             })
-            const url = apiUrlsv1.createTenantAdmin
-            const response = await fetch(url, {
+            const data = await fetchJson<any>(apiUrlsv1.createTenantAdmin, {
                 method: "post",
                 headers: {
                     "Content-Type": "application/json"
@@ -50,16 +49,13 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
             //     status: 200,
             //     json: async () => JSON.parse(requestBody)
             // }
-            const data = await response.json()
-            if (response.ok || response.status === 200) {
-                if(typeof window !== "undefined")
+            // const data = await response.json()
+            // if (response.ok || response.status === 200) {
+            if(typeof data !== "undefined"){
                 setCookie(cookieKeys.createdAccount, "done", cookiesTimeout.createdAccountTimeout)
                 return data
-            }
-            else if(typeof data.message !== "undefined") {
-                throw data.message
             } else {
-                throw notificationMesage.AnErrorOccurred
+                throw new Error(notificationMesage.AnErrorOccurred)
             }
         } else {
             throw new Error("You need to login with your Organization ID")
