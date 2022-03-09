@@ -20,7 +20,7 @@ const TerminalsPerformance:FC = () => {
     
     if(userDetail.role.name !== appRoles.superAdmin){
       url = `${apiUrlsv1.atmCount}/${userDetail.tenant.code}`
-    } else {
+    } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
       url = `${apiUrlsv1.atmCount}/${selectedTenantCode}`
     }
   }
@@ -69,7 +69,7 @@ const TerminalsPerformance:FC = () => {
         isClosable: true
       })
     }
-    debugger
+    // debugger
     if ((typeof totalATMCount === "undefined" && typeof totalATMCountError === "undefined")) {
       setLoading({ isLoading: true, text: "" })
     } else {

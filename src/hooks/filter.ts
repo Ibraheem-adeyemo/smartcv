@@ -81,7 +81,7 @@ export default function useFilter(user?: UserModel) {
         isThisYear,
         searchText,
         selectedTenantCode,
-        institutions: institutions? institutions.content:(user?.role.name === appRoles.superAdmin)? [user.tenant]:undefined,
+        institutions: institutions? institutions.content:( user && user?.role.name !== appRoles.superAdmin)? [user.tenant]:undefined,
         institutionsError,
         ShowTenant,
         showToday,

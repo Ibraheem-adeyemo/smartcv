@@ -26,7 +26,7 @@ const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
     if(userDetail.role.name !== appRoles.superAdmin) {
       atmInServiceurl = `${apiUrlsv1.atmInService}/${userDetail.tenant.code}`
       atmOutOfServiceurl = `${apiUrlsv1.atmOutOfService}/${userDetail.tenant.code}`
-    } else {
+    } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
       atmInServiceurl = `${apiUrlsv1.atmInService}/${selectedTenantCode}`
       atmOutOfServiceurl = `${apiUrlsv1.atmOutOfService}/${selectedTenantCode}`
     }

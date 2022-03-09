@@ -23,7 +23,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = (props: TerminalsUnder
 
     if (userDetail.role.name !== appRoles.superAdmin) {
       atmInSupervisorUrl = `${apiUrlsv1.atmInSupervisor}/${userDetail.tenant.code}`
-    } else {
+    } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
       atmInSupervisorUrl = `${apiUrlsv1.atmInSupervisor}/${selectedTenantCode}`
     }
   }

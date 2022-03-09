@@ -19,7 +19,7 @@ const ChannelsMonitoringTable: React.FC = () => {
     if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
         if(userDetail.role.name !== appRoles.superAdmin){
             url = `${url}${userDetail.tenant.code}`
-          } else {
+          } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
             url = `${url}${selectedTenantCode}`
           }
     }
