@@ -1,8 +1,9 @@
-import { Flex, Text } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import dynamic from 'next/dynamic'
 import React, { useContext } from "react"
 import { Dashboard as DashboardPage  } from "../src/component/dashboard"
+import { AnimatedText } from "../src/component/framer"
 import { Authenticated } from "../src/component/layouts"
 import { filtersToShowDefaultValue } from "../src/constants"
 import { StatsProvider, StatsContext } from "../src/providers"
@@ -15,7 +16,7 @@ const Dashboard:NextPage = () => {
     <StatsProvider>
       <Authenticated pageHeader={
         <Flex w="100%" flexWrap="wrap" justifyContent="space-between" px="50px" alignItems="center">
-          <Text variant="page-header" size="page-header">User Dashboard</Text>
+          <AnimatedText variant="page-header" size="page-header">User Dashboard</AnimatedText>
           <AppBarFilter />
         </Flex>
       }>

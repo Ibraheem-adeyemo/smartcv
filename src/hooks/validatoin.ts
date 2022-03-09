@@ -12,16 +12,15 @@ export default function useValidator<T>(compulsoryField?: (keyof T)[]) {
     useEffect(() => {
       
         if (typeof field !== "undefined") {
-            if (field !== "" && typeof data !== "undefined") {
+            if ((field !== "" && Array.isArray(data) && (data as number[]).length > 0) || (field !== "" && typeof data !== "undefined")) {
                 setValidation((prev) => {
-                  
+                    // debugger
                     const s = _.clone(prev) as Validation<T>
                     if (typeof s !== "undefined") {
                         s.errors[field] = ""
                         s.touched[field] = "touched"
                     }
                     else {
-                        
                         return {
                             errors: {
                                 [field as keyof (T | formType)]:""
@@ -36,8 +35,8 @@ export default function useValidator<T>(compulsoryField?: (keyof T)[]) {
 
                 })
                 if (String(data[field as keyof T]) as string === "") {
-                    setValidation((prev) => {
-                      
+                    setValidation((prev) => {   
+                        // debugger
                         const s = _.clone(prev) as Validation<T>
                         if (typeof s !== "undefined") {
 
@@ -56,6 +55,30 @@ export default function useValidator<T>(compulsoryField?: (keyof T)[]) {
                             } as Validation<T>
                         }
                     })
+                }
+                if( Array.isArray(data[field as keyof T])) {
+                    if((data[field as keyof T] as unknown as number[]).length === 0) {
+                        setValidation((prev) => {
+                      
+                            const s = _.clone(prev) as Validation<T>
+                            if (typeof s !== "undefined") {
+    
+                                s.errors[field as keyof T] = "This field canot be empty" as any
+                                s.touched[field as keyof T] = "touched" as any
+    
+                                return s
+                            } else {
+                                return {
+                                    errors: {
+                                        [field as keyof T]: "This field canot be empty" as any
+                                    },
+                                    touched: {
+                                        [field as keyof T]: "touched" as any
+                                    }
+                                } as Validation<T>
+                            }
+                        })
+                    }
                 }
             }
         }

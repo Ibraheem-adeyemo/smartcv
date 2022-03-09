@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
-import { BankAdmin, ISWAdminView, UserManagementModal } from "../../models";
+import { BankAdmin, ISWAdminView, RoleModel, UserManagementModal } from "../../models";
 import { Roles, UserManagementModalNames, UserManagementModals } from "../../constants";
-import { UserManagementTabProviderContext } from "../../providers";
+import { AuthContext, UserManagementTabProviderContext } from "../../providers";
 import { validateEmail } from "../../lib";
 import _ from "lodash";
 import { MotionModal } from "../framer/motion-modal";
@@ -13,16 +13,16 @@ import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
 import { appear } from "../../animations";
 
 const AddNewUser: FC = () => {
+    const {userDetail} = useContext(AuthContext)
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
     const { form, formOnChange, refreshForm } = useForm<ISWAdminView>({
         firstName: "",
         lastName: "",
         status: "",
         email: "",
-        role: "",
         dateCreated: ""
     })
-    const { validation, addField, inputData, validateAllCompulsoryFields } = useValidator<ISWAdminView>(["firstName", "lastName", "role", "email"])
+    const { validation, addField, inputData, validateAllCompulsoryFields } = useValidator<ISWAdminView>(["firstName", "lastName", "email"])
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>(UserManagementModals[0])
     const [loading, changeLoading] = useLoading()
     const [isValidEmail, setIsValidEmail] = useState(false)
@@ -41,7 +41,7 @@ const AddNewUser: FC = () => {
         changeLoading(() => ({ isLoading: true, text: "Creating user" }))
         try {
             if(form) {
-                await createBankAdmin(form as unknown as BankAdmin)
+                await createBankAdmin({...form, tenantCode: userDetail?.tenant.code} as unknown as BankAdmin)
             }
         } catch (error) {
             
@@ -96,14 +96,6 @@ const AddNewUser: FC = () => {
                                     <MotionFormErrorMessage>{validation?.errors.email}</MotionFormErrorMessage>
                                     <MotionFormErrorMessage>Email is Invalid !</MotionFormErrorMessage>
                                 </FormControl>
-                                <FormControl isRequired id="role" flexGrow={1} width="35%" isInvalid={validation?.errors?.role !== "" && validation?.touched.role === "touched"}>
-                                    <MotionFormLabel>Role</MotionFormLabel>
-                                    <Select placeholder="Select Role" borderRadius="4px" value={form?.role} onChange={addData}>
-                                        {_.map(Roles, (x: string, i) => <option key={i} value={x}>{x}</option>)}
-                                    </Select>
-                                    <MotionFormErrorMessage>{validation?.errors.role}</MotionFormErrorMessage>
-                                </FormControl>
-
                             </Flex>
                         </ModalBody>
                         <ModalFooter>

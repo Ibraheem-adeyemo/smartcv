@@ -5,6 +5,7 @@ import { BankAdmin, UserModel } from "../../models"
 export const  createBankAdmin = async (bankAdmin: BankAdmin) => {
     try {
         if(bankAdmin) {
+            bankAdmin.username = bankAdmin.email
             const token = getCookie("token")
             const s = await fetchJson<UserModel>(apiUrlsv1.user, {
                 headers: {

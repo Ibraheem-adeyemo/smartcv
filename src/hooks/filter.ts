@@ -15,6 +15,7 @@ export default function useFilter() {
     const [showThisMonth, setShowThisMonth] = useState(true)
     const [showThisYear, setShowThisYear] = useState(true)
     const [showCustom, setShowCustom] = useState(true)
+    // debugger
     const apiUrl = typeof window !== "undefined" ? apiUrlsv1.tenant : null
     const { data: institutions, mutate, error: institutionsError } = useSWR<Paginate<TenantView>>(apiUrl)
     const [searchText, setSearchText] = useState("")

@@ -9,13 +9,14 @@ import { apiUrlsv1 } from "../../constants";
 import { Paginate, ATMInService } from "../../models";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
-import { StatsContext } from "../../providers";
+import { AuthContext, StatsContext } from "../../providers";
 
 interface ServiceStatusProps {
   title?: string
 }
 
 const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
+  const {token} = useContext(AuthContext)
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let atmInServiceurl = apiUrlsv1.atmInService
   let atmOutOfServiceurl = apiUrlsv1.atmOutOfService
@@ -23,8 +24,11 @@ const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
     atmInServiceurl += `/${selectedTenantCode}`
     atmOutOfServiceurl += `/${selectedTenantCode}`
   }
-  const { data: totalATMInService, mutate: _totalATMInServiceMutate, error: totalATMInServiceError } = useSWR<Paginate<ATMInService>>(atmInServiceurl)
-  const { data: totalATMOutOfService, mutate: _totalATMOutOfServiceMutate, error: totalATMOutOfServiceError } = useSWR<Paginate<ATMInService>>(atmOutOfServiceurl)
+  atmInServiceurl = token? atmInServiceurl:""
+  atmOutOfServiceurl = token? apiUrlsv1.atmOutOfService:""
+
+  const { data: totalATMInService, mutate: _totalATMInServiceMutate, error: totalATMInServiceError } = useSWR<Paginate<ATMInService>>(atmInServiceurl? atmInServiceurl:null)
+  const { data: totalATMOutOfService, mutate: _totalATMOutOfServiceMutate, error: totalATMOutOfServiceError } = useSWR<Paginate<ATMInService>>(atmOutOfServiceurl?atmOutOfServiceurl:null)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "" })
   const [stats, setStats] = useState<StatsA[]>()
   const toast = useToast()

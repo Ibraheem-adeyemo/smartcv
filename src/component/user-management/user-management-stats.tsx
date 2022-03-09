@@ -11,10 +11,13 @@ import SkeletonLoader from "../skeleton-loader";
 
 const UserManagementStats: FC = () => {
     // const { data: userManagementStats, mutate, error } = useSWR<UserManagementStat[]>('/api/get-user-management-stats')
-    const  {userDetail} = useContext(AuthContext)
-    const { data: iswAdmin, mutate: _mutateISWAdmin, error: iswAdminError } = useSWR<Paginate<ISWAdminView>>(typeof document !== "undefined" && getCookie(cookieKeys.totalISWAdmin) !== "" ? null : null) /* add the url to get iswadmin admin in the second null of the ternary operator */
-    const { data: tenantAdmin, mutate: _mutateTenantAdmin, error: tenantAdminError } = useSWR<Paginate<TenantAdminView>>(typeof document !== "undefined" && getCookie(cookieKeys.totalTenantAdmin) !== "" ? null : apiUrlsv1.tenantAdmin)
-    const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<TenantView[]>(typeof document !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? null : apiUrlsv1.tenant)
+    const  {userDetail, token} = useContext(AuthContext)
+    const iswAdminUrl = token?(typeof window !== "undefined" && getCookie(cookieKeys.totalISWAdmin) !== "" ? null : null):null
+    const tenantAdminurl = token?(typeof window !== "undefined" && getCookie(cookieKeys.totalTenantAdmin) !== "" ? null : apiUrlsv1.tenantAdmin):null
+    const tenanturl= token?(typeof window !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? null : apiUrlsv1.tenant):null
+    const { data: iswAdmin, mutate: _mutateISWAdmin, error: iswAdminError } = useSWR<Paginate<ISWAdminView>>(iswAdminUrl) /* add the url to get iswadmin admin in the second null of the ternary operator */
+    const { data: tenantAdmin, mutate: _mutateTenantAdmin, error: tenantAdminError } = useSWR<Paginate<TenantAdminView>>(tenantAdminurl)
+    const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<TenantView[]>(tenanturl)
     
     const [userManagementStats, setUserManagementStats] = useState<UserManagementStat[]>([{
         name: StatsName.createdBanks,

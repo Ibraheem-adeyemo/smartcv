@@ -3,22 +3,23 @@ import { useToast, Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import React, { useContext, useEffect } from "react"
+import { AnimatedText } from "../src/component/framer"
 import { cookieKeys, cookiesTimeout, links, notificationMesage } from "../src/constants"
 import { getCookie, setCookie } from "../src/lib"
 import { AuthContext } from "../src/providers"
 
-const OauthCallback:NextPage = () => {
+const OauthCallback: NextPage = () => {
     const { loginWithPassport } = useContext(AuthContext)
     const router = useRouter()
     const toast = useToast()
     useEffect(() => {
-      
+
         const url = new URL(`${window.location.protocol}//${window.location.host}${router.asPath}`).search
         const code = new URLSearchParams(url).get("code");
         if (typeof window !== "undefined" && typeof code !== "undefined") {
-          
+
             loginWithPassport(code as string).then(() => {
-               
+
                 if (getCookie(cookieKeys.redirectUrl) !== "") {
                     const redirectUrl = getCookie(cookieKeys.redirectUrl)
                     setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
@@ -27,7 +28,7 @@ const OauthCallback:NextPage = () => {
                     router.push(links.dashboard)
                 }
             }).catch((err) => {
-              
+
                 typeof err !== "undefined" ?
                     toast({
                         status: "error",
@@ -46,8 +47,15 @@ const OauthCallback:NextPage = () => {
         }
     }, [])
     return (
-        <Flex height="100vh">
-            <CircularProgress isIndeterminate color="brand.primary-blue" sx={{margin:"auto"}} size="120px" />
+        <Flex sx={{
+            height: "100vh",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDir:"column",
+            gap:"40px"
+        }}>
+            <CircularProgress isIndeterminate color="brand.primary-blue" size="120px" />
+            <AnimatedText variant="page-header" size="page-header">Authenticating user...</AnimatedText>
         </Flex>
     )
 }

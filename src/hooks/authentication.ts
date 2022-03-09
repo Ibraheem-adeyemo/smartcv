@@ -38,7 +38,7 @@ export default function useAuthentication() {
     }
 
     const signIn = () => {
-        window.location.href = `${apiUrlsv1.passportUrl}${window.location.protocol}//${window.location.host}/${links.oauthCallback}`
+        window.location.href = `${apiUrlsv1.passportUrl}${window.location.protocol}//${window.location.host}${links.oauthCallback}`
         // loginWithPassport()
     }
 
@@ -94,7 +94,7 @@ export default function useAuthentication() {
         // if (typeof code !== "undefined") {
         const body = {
             client_id: CLIENT_ID,
-            redirect_uri: `${window.location.protocol}//${window.location.host}/${links.oauthCallback}`,
+            redirect_uri: `${window.location.protocol}//${window.location.host}${links.oauthCallback}`,
             grant_type: grantTypes.authorizationCode,
             code: code
         }

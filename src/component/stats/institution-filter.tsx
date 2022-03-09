@@ -13,13 +13,14 @@ const InstitutionFilter:FC = () => {
     const [tenants, setTenant] = useState<TenantView[]>()
     const {userDetail} = useContext(AuthContext)
     useEffect(() => {
+        // debugger
         if(userDetail?.role.name === superAdmin) {
             setTenant(institutions)
         } else if(userDetail) {
             
             setTenant([userDetail.tenant])
         }
-    }, [])
+    }, [institutions, userDetail])
     useEffect(() => {
         if (typeof institutionsError !== "undefined") {
             toast({

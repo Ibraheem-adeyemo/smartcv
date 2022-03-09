@@ -1,16 +1,17 @@
 import { useToast } from "@chakra-ui/react";
 import { FC, useContext, useMemo } from "react";
 import useSWR, { useSWRConfig } from "swr";
-import { apiUrlsv1, appTableElements } from "../../constants";
+import { apiUrlsv1, appTableElements, appRoles, superAdmin } from "../../constants";
 import { Column, InterchangeDisconnectionRequest, Paginate, TenantView } from "../../models";
-import { PaginatorProvider, PaginatorContext } from "../../providers";
+import { PaginatorProvider, PaginatorContext, AuthContext } from "../../providers";
 import { AppTable } from "../app";
 
 const InterchangeConnectionRequestTable: FC = () => {
-
+    const { token, userDetail } = useContext(AuthContext)
+    const isAdmin = userDetail && userDetail.role.name === appRoles.superAdmin
     const { pageNumber, countPerPage } = useContext(PaginatorContext)
-    
-    const { data: connnectionRequest, mutate: _mutate, error } = useSWR<Paginate<InterchangeDisconnectionRequest>>(`${apiUrlsv1.interchangeDisconnectionRequest}?page=${pageNumber - 1}&size=${countPerPage}`)
+    const url = token && userDetail ? `${apiUrlsv1.interchangeDisconnectionRequest}${!isAdmin?"/"+ userDetail.tenant.code:""}?page=${pageNumber - 1}&size=${countPerPage}` : null
+    const { data: connnectionRequest, mutate: _mutate, error } = useSWR<Paginate<InterchangeDisconnectionRequest>>(url)
 
     const data = useMemo(() => ({
         columns: [{

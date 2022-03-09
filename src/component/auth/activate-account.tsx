@@ -1,10 +1,11 @@
 import { CircularProgress } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { FC } from "react"
+import { FC, useContext } from "react"
 import useSWR from "swr"
 import { appear, apperWithDimensions, delayChildren } from "../../animations"
 import { Images } from "../../constants"
 import { APIResponse } from "../../models"
+import { AuthContext } from "../../providers"
 import { AnimatedText, MotionFlex, MotionImage } from "../framer"
 
 interface ActivateAccountProps {
@@ -13,8 +14,9 @@ interface ActivateAccountProps {
 
 const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) => {
     const router = useRouter()
-
-    const { data, error } = useSWR<APIResponse<any>>(props.activationCode ? "" : null)
+    const {token} = useContext(AuthContext)
+    const url = props.activationCode
+    const { data, error } = useSWR<APIResponse<any>>(url)
 
 
     return (

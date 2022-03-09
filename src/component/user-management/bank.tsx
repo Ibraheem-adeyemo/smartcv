@@ -6,7 +6,7 @@ import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { TenantView, Paginate, UserManagementModal, Column } from "../../models";
-import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext } from "../../providers";
+import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext, AuthContext } from "../../providers";
 import { AppTable } from "../app";
 
 const AddNewBank = dynamic(() =>import('./add-new-bank'), {ssr:false})
@@ -14,10 +14,12 @@ const AddNewBank = dynamic(() =>import('./add-new-bank'), {ssr:false})
 const BankTable:FC = () => {
     // console.log({pageNumber})
     const toast = useToast()
+    const {token} = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
     const {mutate} = useSWRConfig()
-    const { data: tenant, mutate:_mutate, error } = useSWR<Paginate<TenantView>>(`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`)
+    const url = token?`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`:null
+    const { data: tenant, mutate:_mutate, error } = useSWR<Paginate<TenantView>>(url)
 
     const data = useMemo(() => ({
         columns: [

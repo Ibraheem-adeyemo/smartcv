@@ -6,16 +6,18 @@ import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { ISWAdminView, Paginate, UserManagementModal } from "../../models";
-import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext } from "../../providers";
+import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext, AuthContext } from "../../providers";
 import { AppTable } from "../app";
+import AddNewRole from "./add-new-role";
 
 const AddNewUser = dynamic(() => import("./add-new-user"), {ssr:false})
 const ISWAdminTable:FC = () => {
     // console.log({pageNumber})
-
+    const {token} = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const {mutate} = useSWRConfig()
-    const { data: iswAdmin, mutate:_mutate, error } = useSWR<Paginate<ISWAdminView>>(`${apiUrlsv1.iswAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
+    const url = token? `url ${apiUrlsv1.iswAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`:null
+    const { data: iswAdmin, mutate:_mutate, error } = useSWR<Paginate<ISWAdminView>>(null)
     const toast = useToast()
     
     const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
@@ -97,7 +99,8 @@ const ISWAdmin:FC = () => {
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>()
 
     useEffect(() => {
-        const modal = modals.find((x, i) => x.name === UserManagementModalNames.addNewUser)
+        const modal = modals.find((x, i) => (x.name === UserManagementModalNames.addNewUser || x.name === UserManagementModalNames.addNewRole) && x.isOpen )
+        // debugger
         setSelectedModal(modal)
     }, [modals])
 
@@ -106,7 +109,8 @@ const ISWAdmin:FC = () => {
         <PaginatorProvider>
             <>
                 <ISWAdminTable />
-                {typeof selectedModal !== "undefined" && selectedModal.isOpen ? <AddNewUser /> : <></>}
+            {typeof selectedModal !== "undefined" && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewUser && <AddNewUser />}
+            {typeof selectedModal !== "undefined" && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewRole && <AddNewRole />}
             </>
         </PaginatorProvider>
     )

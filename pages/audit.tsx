@@ -5,12 +5,12 @@ import React from "react";
 import AuditExport from "../src/component/audit/audit-export";
 import AuditSearch from "../src/component/audit/audit-search";
 import { Authenticated } from "../src/component/layouts";
-import {AuditProvider} from "../src/providers";
-const AuditTable = dynamic(() => import("../src/component/audit/audit-table"), {ssr:false})
-const AuditDetail = dynamic(() => import("../src/component/audit/audit-detail"), {ssr:false})
+import { AuditProvider } from "../src/providers";
+const AuditTable = dynamic(() => import("../src/component/audit/audit-table"), { ssr: false })
+const AuditDetail = dynamic(() => import("../src/component/audit/audit-detail"), { ssr: false })
 const Audit: NextPage = () => {
 
-    return <AuditProvider>
+    return (<AuditProvider>
         <Authenticated pageHeader={"Audit"}>
             <Flex flexDir="column" gap="24px">
                 <Flex justifyContent="space-between">
@@ -21,7 +21,7 @@ const Audit: NextPage = () => {
             </Flex>
             <AuditDetail />
         </Authenticated>
-    </AuditProvider>
+    </AuditProvider>)
 }
 
 export default Audit

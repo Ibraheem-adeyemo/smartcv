@@ -1,12 +1,14 @@
 import _ from "lodash";
-import React, { FC, useContext, useEffect, useMemo } from "react";
+import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
-import { TenantAdminView, Paginate} from "../../models";
-import { PaginatorProvider, PaginatorContext } from "../../providers";
+import { TenantAdminView, Paginate, UserManagementModal} from "../../models";
+import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext } from "../../providers";
 import { useToast } from "@chakra-ui/react";
-import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout } from "../../constants";
+import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
+import { AddNewBank, AddNewUser } from ".";
+import AddNewRole from "./add-new-role";
 
 
 const BankAdminTable:FC = () => {
@@ -91,10 +93,20 @@ const BankAdminTable:FC = () => {
 }
 
 const TenantAdmin:FC = () => {
+    const { modals } = useContext(UserManagementTabProviderContext)
+    const [selectedModal, setSelectedModal] = useState<UserManagementModal>()
+
+    useEffect(() => {
+        const modal = modals.find((x, i) => (x.name === UserManagementModalNames.addNewUser || x.name === UserManagementModalNames.addNewRole) && x.isOpen )
+        setSelectedModal(modal)
+    }, [modals])
+
     return (
 
         <PaginatorProvider>
             <BankAdminTable />
+            {typeof selectedModal !== "undefined" && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewUser && <AddNewUser />}
+            {typeof selectedModal !== "undefined" && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewRole && <AddNewRole />}
         </PaginatorProvider>
     )
 }

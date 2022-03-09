@@ -42,6 +42,7 @@ export interface apiUrlsv1Model {
     atmStats: string,
     audit: string,
     auditByUser: string,
+    createRole:string,
     createTenantAdmin: string,
     getUserDetail: string,
     interChange: string,

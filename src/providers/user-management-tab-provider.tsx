@@ -12,20 +12,20 @@ export const UserManagementTabProviderContext = createContext({
     handleTabSelection: (index: number) => { },
     handleSearchItem: debounce((searchText: string) => { }, 500),
     handleToggleModal: (modalInstance?: UserManagementModal) => { },
-    mutateData:(callBack: () => void) => {""}
+    mutateData: (callBack: () => void) => { "" }
 })
 
-interface UserManagementTabProviderProps extends ComponentWithChildren  {
-    
+interface UserManagementTabProviderProps extends ComponentWithChildren {
+
 }
-const UserManagementTabProvider:FC<UserManagementTabProviderProps> = (props: UserManagementTabProviderProps) => {
+const UserManagementTabProvider: FC<UserManagementTabProviderProps> = (props: UserManagementTabProviderProps) => {
 
     const [tabs, setTabs] = useState(userManagementTabsAdmin)
     const [searchText, setSearchText] = useState("")
     const [modals, setModals] = useState(UserManagementModals)
-    const {userDetail} = useContext(AuthContext)
+    const { userDetail } = useContext(AuthContext)
     useEffect(() => {
-        if(userDetail && userDetail.role.name === superAdmin) {
+        if (userDetail && userDetail.role.name === superAdmin) {
             setTabs(userManagementTabsSuperAdmin)
         }
     }, [userDetail])
@@ -42,9 +42,9 @@ const UserManagementTabProvider:FC<UserManagementTabProviderProps> = (props: Use
     }
 
     const handleToggleModal = (modalInstance?: UserManagementModal) => {
-      
-        if(typeof  modalInstance !== "undefined") {
-            setModals((prev) => map(prev, (x) => x.name === modalInstance.name?({...x, ...modalInstance}): x))
+
+        if (typeof modalInstance !== "undefined") {
+            setModals((prev) => map(prev, (x) => x.name === modalInstance.name ? ({ ...x, ...modalInstance }) : {...x, isOpen: false}))
         } else {
             setModals(UserManagementModals)
         }

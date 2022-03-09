@@ -41,10 +41,14 @@ export interface userManagementTab extends Tab {
 
 }
 
+export interface CreateRoleModel {
+    name: string,
+    tenantCode: string,
+    permissionIds: number[] 
+}
 export interface ISWAdminView {
     firstName: string,
     lastName: string,
-    role: string,
     email: string,
     dateCreated: string,
     status: string
@@ -100,4 +104,9 @@ export interface TenantColor {
     headerColor: string,
     sidebarColour: string,
     buttonColor: string
+}
+
+export interface RoleModel {
+    value: number,
+    name: string
 }

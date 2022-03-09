@@ -7,7 +7,7 @@ import { useLoading } from "../../hooks";
 import { apiUrlsv1, StatsName } from "../../constants";
 import useSWR from "swr";
 import { ATMInSupervisor, Paginate } from "../../models";
-import { StatsContext } from "../../providers";
+import { AuthContext, StatsContext } from "../../providers";
 import { useToast, Text } from "@chakra-ui/react";
 import _, { sumBy } from "lodash";
 
@@ -16,12 +16,14 @@ interface TerminalsUnderWatchProps {
 }
 
 const TerminalsUnderWatch:FC<TerminalsUnderWatchProps> = (props: TerminalsUnderWatchProps) => {
+  const {token} = useContext(AuthContext)
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let atmInSupervisorUrl = apiUrlsv1.atmInSupervisor
   if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
     atmInSupervisorUrl += `${atmInSupervisorUrl}/${selectedTenantCode}`
   }
-  const { data: atmInSupervisor, mutate: _mutate, error: atmInSupervisorError } = useSWR<Paginate<ATMInSupervisor>>(atmInSupervisorUrl)
+  atmInSupervisorUrl = token?atmInSupervisorUrl:""
+  const { data: atmInSupervisor, mutate: _mutate, error: atmInSupervisorError } = useSWR<Paginate<ATMInSupervisor>>(atmInSupervisorUrl?atmInSupervisorUrl:null)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "" })
   const [stats, setStats] = useState<StatsA[]>()
   const toast = useToast()

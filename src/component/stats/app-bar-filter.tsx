@@ -1,6 +1,7 @@
 import { Flex, Tag, Text } from "@chakra-ui/react";
 import React, { FC, useContext } from "react";
 import { InstitutionFilter, CustomFilter } from ".";
+import { delayChildren } from "../../animations";
 import { filterDates } from "../../constants";
 import { StatsContext } from "../../providers";
 import { MotionFlex } from "../framer";
@@ -13,18 +14,7 @@ const AppBarFilter: FC = () => {
         }}
         animate="show"
         initial="hide"
-        variants={{
-            show: {
-                opacity: 1,
-                transition:{
-                    delayChildren: 0.4,
-                    duration: 0.4
-                }
-            },
-            hide:{
-                opacity: 0
-            }
-        }}
+        variants={delayChildren}
         >
             {ShowTenant && <InstitutionFilter  />}
             {showToday && isToday && <Tag variant={"outline"} colorScheme={"brand"} bgColor={"brand.light-blue"}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.today}</Text></Tag>}

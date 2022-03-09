@@ -20,10 +20,11 @@ export const userManagementTabsSuperAdmin: Readonly<userManagementTab[]> = [
         isSelected: false
     }
 ]
-export const userManagementTabsAdmin: Readonly<userManagementTab[]> = [{
-    name: userManagementTabsName.tenantAdmin,
-    isSelected: true
-}
+export const userManagementTabsAdmin: Readonly<userManagementTab[]> = [
+    {
+        name: userManagementTabsName.tenantAdmin,
+        isSelected: true
+    }
 ]
 export const onboardingTabs: Readonly<Step[]> = [
     {

@@ -1,14 +1,16 @@
 import { FC, useContext, useMemo } from "react";
 import useSWR from "swr";
-import { apiUrlsv1, appTableElements } from "../../constants";
+import { apiUrlsv1, appRoles, appTableElements } from "../../constants";
 import { InterchangeDisconnectionStatus as InterchangeDisconnectionStatusModdel, Paginate } from "../../models";
-import { PaginatorProvider, PaginatorContext } from "../../providers";
+import { PaginatorProvider, PaginatorContext, AuthContext } from "../../providers";
 import { AppTable } from "../app";
 
 const InterchangeDisconnectionStatusTable:FC = () => {
-    
+    const { token, userDetail} = useContext(AuthContext)
     const { pageNumber, countPerPage } = useContext(PaginatorContext)
-    const { data: connnectionRequest, mutate:_mutate, error } = useSWR<Paginate<InterchangeDisconnectionStatusModdel>>(`${apiUrlsv1.interchangeDisconnectionStatus}?page=${pageNumber-1}&size=${countPerPage}`)
+    const isAdmin = userDetail && userDetail.role.name === appRoles.superAdmin
+    const url = token && userDetail?`${apiUrlsv1.interchangeDisconnectionStatus}${!isAdmin?"/"+userDetail.tenant.code:""}?page=${pageNumber-1}&size=${countPerPage}`:null
+    const { data: connnectionRequest, mutate:_mutate, error } = useSWR<Paginate<InterchangeDisconnectionStatusModdel>>(url)
 
     const data = useMemo(() => ({
         columns: [{

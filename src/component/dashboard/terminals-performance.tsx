@@ -6,18 +6,20 @@ import { apiUrlsv1, StatsName } from "../../constants";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
 import { ATMCount, Paginate } from "../../models";
-import { StatsContext } from "../../providers"
+import { AuthContext, StatsContext } from "../../providers"
 import { AppCard } from "../app";
 import { SkeletonLoader } from "..";
 import { Stat } from "../stats";
 
 const TerminalsPerformance:FC = () => {
+  const {token} = useContext(AuthContext)
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let url = apiUrlsv1.atmCount
   if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
     url += `/${selectedTenantCode}`
   }
-  const { data: totalATMCount, mutate: _mutate, error: totalATMCountError } = useSWR<Paginate<ATMCount>>(url)
+  url = token? url:""
+  const { data: totalATMCount, mutate: _mutate, error: totalATMCountError } = useSWR<Paginate<ATMCount>>(token?url:null)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "Loading" })
   const [stats, setStats] = useState<StatsA[]>()
   const toast = useToast()

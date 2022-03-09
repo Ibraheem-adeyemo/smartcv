@@ -150,12 +150,12 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
         <Grid
             sx={{
                 gridTemplateRows:[
-                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
-                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
-                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
-                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
-                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] ",
-                    "[row1-start] 11vh [row1-end row2-start] 13vh [row2-end row3-start] 76vh [row3-end] "
+                    "[row1-start] 11vh [row1-end row2-start] 9vh [row2-end row3-start] 80vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 9vh [row2-end row3-start] 80vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 9vh [row2-end row3-start] 80vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 9vh [row2-end row3-start] 80vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 11vh [row2-end row3-start] 78vh [row3-end] ",
+                    "[row1-start] 11vh [row1-end row2-start] 11vh [row2-end row3-start] 78vh [row3-end] "
                 ],
                     gridTemplateColumns: ["11vw 89vw", "11vw 89vw", "11vw 89vw", "274px auto", "356px auto", "374px auto"],
                     transition: "gridTemplateColumns 0.5s",

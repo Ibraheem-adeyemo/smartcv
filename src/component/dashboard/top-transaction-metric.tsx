@@ -6,6 +6,7 @@ import DropdownSearchFilter from "../stats/search-filters";
 import { months } from "../../constants";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
+import { AnimatedText } from "../framer";
 
 const TopTransactionMetri:FC = () => {
     const Filter = useMemo(() => DropdownSearchFilter, [])
@@ -47,7 +48,7 @@ const TopTransactionMetri:FC = () => {
     }, [])
     return <AppCard topic={
         <Flex>
-            <Text variant="card-header" size="card-header">Total Transction Metric</Text>
+            <AnimatedText variant="card-header" size="card-header">Total Transction Metric</AnimatedText>
             <Flex>
                 <Filter label="Month" data={months.map((x, i) => ({ value: i, label: x, selected: i === 0 ? true : false }))} />
             </Flex>

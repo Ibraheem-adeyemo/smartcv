@@ -3,14 +3,14 @@ import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { Paginate, ATMCountDetail, Column } from "../../models";
-import { PaginatorProvider, PaginatorContext,channelsMonitoringContext, StatsContext } from "../../providers";
+import { PaginatorProvider, PaginatorContext,channelsMonitoringContext, StatsContext, AuthContext } from "../../providers";
 import { appTableElements } from "../../constants";
 import { useToast } from "@chakra-ui/react";
 
 
 const ChannelsMonitoringTable: React.FC = () => {
     // console.log({pageNumber})
-
+    const {token} = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { selectedTenantCode } = useContext(StatsContext)
     const { tabs } = useContext(channelsMonitoringContext)
@@ -20,6 +20,7 @@ const ChannelsMonitoringTable: React.FC = () => {
         url += `${selectedTenantCode}`
     }
     url += `details/`
+    url = token?url: ""
     const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(url === "" ? null : `${url}?page=${(pageNumber - 1)}&size=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => {

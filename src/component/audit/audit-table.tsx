@@ -2,8 +2,8 @@ import _ from "lodash";
 import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
-import { Paginate, ATMCountDetail, AuditView, Action } from "../../models";
-import { PaginatorProvider, PaginatorContext, AuditContext } from "../../providers";
+import { Paginate, AuditView, Action } from "../../models";
+import { PaginatorProvider, PaginatorContext, AuditContext, AuthContext } from "../../providers";
 import { useToast } from "@chakra-ui/react";
 import { apiUrlsv1 } from "../../constants";
 
@@ -11,6 +11,7 @@ import { apiUrlsv1 } from "../../constants";
 const AuditTable:FC = () => {
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
+    const { token } = useContext(AuthContext)
     const { searchText, changeAuditView, columns, toggleDetailsModal, changeAuditInfo} = useContext(AuditContext)
     let url = `${apiUrlsv1.audit}?page=${pageNumber-1}&size=${countPerPage}`
     
@@ -18,7 +19,7 @@ const AuditTable:FC = () => {
         url =`${apiUrlsv1.auditByUser}/${searchText}?page=${pageNumber-1}&size=${countPerPage}` 
     }
     
-    const { data: auditView, mutate: _mutate, error } = useSWR<Paginate<AuditView>>(url)
+    const { data: auditView, mutate: _mutate, error } = useSWR<Paginate<AuditView>>(token? url : null)
     const toast = useToast()
     const data = useMemo(() => ({
         columns,
