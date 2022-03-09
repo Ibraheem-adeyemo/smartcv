@@ -5,7 +5,7 @@ import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 import useSWR from "swr";
-import { apiUrlsv1 } from "../../constants";
+import { apiUrlsv1, appRoles } from "../../constants";
 import { Paginate, ATMInService } from "../../models";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
@@ -16,16 +16,23 @@ interface ServiceStatusProps {
 }
 
 const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
-  const {token} = useContext(AuthContext)
+  const {token, userDetail} = useContext(AuthContext)
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let atmInServiceurl = apiUrlsv1.atmInService
   let atmOutOfServiceurl = apiUrlsv1.atmOutOfService
-  if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
-    atmInServiceurl += `/${selectedTenantCode}`
-    atmOutOfServiceurl += `/${selectedTenantCode}`
+  // debugger
+  if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+    
+    if(userDetail.role.name !== appRoles.superAdmin) {
+      atmInServiceurl = `${apiUrlsv1.atmInService}/${userDetail.tenant.code}`
+      atmOutOfServiceurl = `${apiUrlsv1.atmOutOfService}/${userDetail.tenant.code}`
+    } else {
+      atmInServiceurl = `${apiUrlsv1.atmInService}/${selectedTenantCode}`
+      atmOutOfServiceurl = `${apiUrlsv1.atmOutOfService}/${selectedTenantCode}`
+    }
   }
-  atmInServiceurl = token? atmInServiceurl:""
-  atmOutOfServiceurl = token? apiUrlsv1.atmOutOfService:""
+  atmInServiceurl = token && userDetail? atmInServiceurl:""
+  atmOutOfServiceurl = token && userDetail? atmOutOfServiceurl:""
 
   const { data: totalATMInService, mutate: _totalATMInServiceMutate, error: totalATMInServiceError } = useSWR<Paginate<ATMInService>>(atmInServiceurl? atmInServiceurl:null)
   const { data: totalATMOutOfService, mutate: _totalATMOutOfServiceMutate, error: totalATMOutOfServiceError } = useSWR<Paginate<ATMInService>>(atmOutOfServiceurl?atmOutOfServiceurl:null)
@@ -80,12 +87,12 @@ const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
       })
     }
 
-    if ((typeof institutions === "undefined" && typeof institutionsError === "undefined") || (typeof totalATMInService === "undefined" && typeof totalATMInServiceError === "undefined") || (typeof totalATMOutOfService === "undefined" && typeof totalATMOutOfServiceError === "undefined")) {
+    if ((typeof totalATMInService === "undefined" && typeof totalATMInServiceError === "undefined") || (typeof totalATMOutOfService === "undefined" && typeof totalATMOutOfServiceError === "undefined")) {
       setLoading({ isLoading: true, text: "" })
     } else {
       setLoading({ isLoading: false, text: "" })
     }
-  }, [totalATMInService, totalATMOutOfService, totalATMInServiceError, totalATMOutOfServiceError, institutions, institutionsError])
+  }, [totalATMInService, totalATMOutOfService, totalATMInServiceError, totalATMOutOfServiceError])
 
   return (
     <AppCard topic={<Text variant="card-header" size="card-header"> {typeof props.title !== "undefined" && props.title !== "" ? props.title : "What is our service"}</Text>}>

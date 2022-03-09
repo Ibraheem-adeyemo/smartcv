@@ -4,7 +4,7 @@ import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 import { useLoading } from "../../hooks";
-import { apiUrlsv1, StatsName } from "../../constants";
+import { apiUrlsv1, appRoles, StatsName } from "../../constants";
 import useSWR from "swr";
 import { ATMInSupervisor, Paginate } from "../../models";
 import { AuthContext, StatsContext } from "../../providers";
@@ -12,18 +12,23 @@ import { useToast, Text } from "@chakra-ui/react";
 import _, { sumBy } from "lodash";
 
 interface TerminalsUnderWatchProps {
-  title?:string
+  title?: string
 }
 
-const TerminalsUnderWatch:FC<TerminalsUnderWatchProps> = (props: TerminalsUnderWatchProps) => {
-  const {token} = useContext(AuthContext)
+const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = (props: TerminalsUnderWatchProps) => {
+  const { token, userDetail } = useContext(AuthContext)
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let atmInSupervisorUrl = apiUrlsv1.atmInSupervisor
-  if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
-    atmInSupervisorUrl += `${atmInSupervisorUrl}/${selectedTenantCode}`
+  if (userDetail && (userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+
+    if (userDetail.role.name !== appRoles.superAdmin) {
+      atmInSupervisorUrl = `${apiUrlsv1.atmInSupervisor}/${userDetail.tenant.code}`
+    } else {
+      atmInSupervisorUrl = `${apiUrlsv1.atmInSupervisor}/${selectedTenantCode}`
+    }
   }
-  atmInSupervisorUrl = token?atmInSupervisorUrl:""
-  const { data: atmInSupervisor, mutate: _mutate, error: atmInSupervisorError } = useSWR<Paginate<ATMInSupervisor>>(atmInSupervisorUrl?atmInSupervisorUrl:null)
+  atmInSupervisorUrl = token && userDetail ? atmInSupervisorUrl : ""
+  const { data: atmInSupervisor, mutate: _mutate, error: atmInSupervisorError } = useSWR<Paginate<ATMInSupervisor>>(atmInSupervisorUrl ? atmInSupervisorUrl : null)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "" })
   const [stats, setStats] = useState<StatsA[]>()
   const toast = useToast()
@@ -31,7 +36,7 @@ const TerminalsUnderWatch:FC<TerminalsUnderWatchProps> = (props: TerminalsUnderW
   useEffect(() => {
     // console.log("waiting")
 
-    const getStats = () : StatsA[]  => {
+    const getStats = (): StatsA[] => {
 
       const boxSize = {
         width: ["224px", "224px", "224px", "224px", "229px", "229px"],
@@ -72,13 +77,13 @@ const TerminalsUnderWatch:FC<TerminalsUnderWatchProps> = (props: TerminalsUnderW
       })
     }
 
-  
-    if ((typeof institutions === "undefined" && typeof institutionsError === "undefined") || (typeof atmInSupervisor === "undefined" && typeof atmInSupervisorError === "undefined")) {
+
+    if ((typeof atmInSupervisor === "undefined" && typeof atmInSupervisorError === "undefined")) {
       setLoading({ isLoading: true, text: "" })
     } else {
       setLoading({ isLoading: false, text: "" })
     }
-  }, [atmInSupervisor, atmInSupervisorError, institutions, institutionsError])
+  }, [atmInSupervisor, atmInSupervisorError])
   return (
     <AppCard topic={<Text variant="card-header" size="card-header">{typeof props.title !== "undefined" && props.title !== "" ? props.title : "What Terminals are under watch"}</Text>}>
 

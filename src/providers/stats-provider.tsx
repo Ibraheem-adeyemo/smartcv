@@ -1,4 +1,5 @@
-import { createContext, FC } from "react";
+import { createContext, FC, useContext } from "react";
+import { AuthContext } from ".";
 import { useFilter } from "../hooks";
 import { ComponentWithChildren, setFiltersToShowProps } from "../models";
 
@@ -26,8 +27,9 @@ interface StatsProviderProps extends ComponentWithChildren {
 
 }
 const StatsProvider:FC<StatsProviderProps> = (props: StatsProviderProps) => {
+    const {userDetail} = useContext(AuthContext)
     return (
-        <StatsContext.Provider value={{...useFilter()}}>
+        <StatsContext.Provider value={{...useFilter(userDetail)}}>
             {props.children}
         </StatsContext.Provider>
     )

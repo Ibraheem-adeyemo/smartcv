@@ -60,11 +60,12 @@ const TransactionBreakdown:FC = () => {
     }]
   }
       setStats(getStats())
-      if ((typeof institutions === "undefined" && typeof institutionsError === "undefined")) {
-        setLoading({ isLoading: true, text: "" })
-      } else {
-        setLoading({ isLoading: false, text: "" })
-      }
+      // if ((typeof institutions === "undefined" && typeof institutionsError === "undefined")) {
+      //   setLoading({ isLoading: true, text: "" })
+      // } else {
+      //   setLoading({ isLoading: false, text: "" })
+      // }
+      setLoading({ isLoading: false, text: "" })
   }, [institutions, institutionsError])
   return (
     <AppCard topic={<Text variant="card-header" size="card-header">Transaction Breakdown</Text>} >

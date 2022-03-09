@@ -1,9 +1,9 @@
 import { useState } from "react";
 import useSWR from "swr";
-import { apiUrlsv1, filterDates, filtersToShowDefaultValue } from "../constants";
-import { Paginate, setFiltersToShowProps, TenantView } from "../models";
+import { apiUrlsv1, appRoles, filterDates, filtersToShowDefaultValue } from "../constants";
+import { Paginate, setFiltersToShowProps, TenantView, UserModel } from "../models";
 
-export default function useFilter() {
+export default function useFilter(user?: UserModel) {
     const [selectedTenantCode, setSelectedTenantCode] = useState("0")
     const [isToday, setIsToday] = useState(false)
     const [isThisWeek, setIsThisWeek] = useState(false)
@@ -16,7 +16,8 @@ export default function useFilter() {
     const [showThisYear, setShowThisYear] = useState(true)
     const [showCustom, setShowCustom] = useState(true)
     // debugger
-    const apiUrl = typeof window !== "undefined" ? apiUrlsv1.tenant : null
+    const apiUrl = typeof window !== "undefined" && user && user.role.name === appRoles.superAdmin ? apiUrlsv1.tenant : null
+
     const { data: institutions, mutate, error: institutionsError } = useSWR<Paginate<TenantView>>(apiUrl)
     const [searchText, setSearchText] = useState("")
 
@@ -80,7 +81,7 @@ export default function useFilter() {
         isThisYear,
         searchText,
         selectedTenantCode,
-        institutions: institutions? institutions.content:undefined,
+        institutions: institutions? institutions.content:(user?.role.name === appRoles.superAdmin)? [user.tenant]:undefined,
         institutionsError,
         ShowTenant,
         showToday,

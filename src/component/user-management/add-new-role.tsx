@@ -45,7 +45,7 @@ const AddNewRole: FC = () => {
     }, [])
 
     const addMultiple = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        debugger
+        // debugger
         addField("permissionIds" as keyof CreateRoleModel)
         let a = form ? form.permissionIds : []
         if (e.target.checked) {

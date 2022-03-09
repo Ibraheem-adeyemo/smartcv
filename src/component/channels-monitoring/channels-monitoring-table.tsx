@@ -4,23 +4,27 @@ import useSWR from "swr";
 import { AppTable } from "../app";
 import { Paginate, ATMCountDetail, Column } from "../../models";
 import { PaginatorProvider, PaginatorContext,channelsMonitoringContext, StatsContext, AuthContext } from "../../providers";
-import { appTableElements } from "../../constants";
+import { appRoles, appTableElements } from "../../constants";
 import { useToast } from "@chakra-ui/react";
 
 
 const ChannelsMonitoringTable: React.FC = () => {
     // console.log({pageNumber})
-    const {token} = useContext(AuthContext)
+    const {token, userDetail} = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { selectedTenantCode } = useContext(StatsContext)
     const { tabs } = useContext(channelsMonitoringContext)
     // console.log({tabs})
     let url = (tabs.findIndex((x) => x.isSelected) > -1 ? tabs.find((x) => x.isSelected)?.url : "") as string
-    if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
-        url += `${selectedTenantCode}`
+    if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+        if(userDetail.role.name !== appRoles.superAdmin){
+            url = `${url}${userDetail.tenant.code}`
+          } else {
+            url = `${url}${selectedTenantCode}`
+          }
     }
-    url += `details/`
-    url = token?url: ""
+    url += `/details/`
+    url = token && userDetail?url: ""
     const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(url === "" ? null : `${url}?page=${(pageNumber - 1)}&size=${countPerPage}`)
     const toast = useToast()
     const data = useMemo(() => {

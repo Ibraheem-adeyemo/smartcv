@@ -1,5 +1,5 @@
-import AuditProvider, {AuditContext} from "./audit-provider";
 import AuthProvider, {AuthContext} from "./auth-provider";
+import AuditProvider, {AuditContext} from "./audit-provider";
 import ChannelsMonitoringProvider, {channelsMonitoringContext} from "./channels-monitoring-provider";
 import StatsProvider, {StatsContext} from "./stats-provider";
 import PaginatorProvider, {PaginatorContext} from "./paginator-provider";

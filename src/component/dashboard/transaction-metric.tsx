@@ -51,11 +51,13 @@ const TransactionMetric:FC = () => {
             }]
         }
         setStats(getStats())
+        /*
         if ((typeof institutions === "undefined" && typeof institutionsError === "undefined")) {
           setLoading({ isLoading: true, text: "" })
         } else {
           setLoading({ isLoading: false, text: "" })
-        }
+        }*/
+        setLoading({ isLoading: false, text: "" })
     }, [institutions, institutionsError])
     return (
         <AppCard topic={<Text variant="card-header" size="card-header">What Are our Transaction Metric</Text>} >

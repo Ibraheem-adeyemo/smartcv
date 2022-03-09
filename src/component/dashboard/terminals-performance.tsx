@@ -2,7 +2,7 @@ import {Text, useToast} from '@chakra-ui/react'
 import React, { FC, useContext, useEffect, useState } from "react"
 import { StatsA } from "../../models/stats-models";
 import useSWR from "swr";
-import { apiUrlsv1, StatsName } from "../../constants";
+import { apiUrlsv1, appRoles, StatsName } from "../../constants";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
 import { ATMCount, Paginate } from "../../models";
@@ -12,13 +12,19 @@ import { SkeletonLoader } from "..";
 import { Stat } from "../stats";
 
 const TerminalsPerformance:FC = () => {
-  const {token} = useContext(AuthContext)
+  const {token, userDetail} = useContext(AuthContext)
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let url = apiUrlsv1.atmCount
-  if (typeof selectedTenantCode !== "undefined" && selectedTenantCode !== "0") {
-    url += `/${selectedTenantCode}`
+  // debugger
+  if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+    
+    if(userDetail.role.name !== appRoles.superAdmin){
+      url = `${apiUrlsv1.atmCount}/${userDetail.tenant.code}`
+    } else {
+      url = `${apiUrlsv1.atmCount}/${selectedTenantCode}`
+    }
   }
-  url = token? url:""
+  url = token && userDetail? url:""
   const { data: totalATMCount, mutate: _mutate, error: totalATMCountError } = useSWR<Paginate<ATMCount>>(token?url:null)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "Loading" })
   const [stats, setStats] = useState<StatsA[]>()
@@ -63,13 +69,13 @@ const TerminalsPerformance:FC = () => {
         isClosable: true
       })
     }
-
-    if ((typeof institutions === "undefined" && typeof institutionsError === "undefined") || (typeof totalATMCount === "undefined" && typeof totalATMCountError === "undefined")) {
+    debugger
+    if ((typeof totalATMCount === "undefined" && typeof totalATMCountError === "undefined")) {
       setLoading({ isLoading: true, text: "" })
     } else {
       setLoading({ isLoading: false, text: "" })
     }
-  }, [totalATMCount, totalATMCountError, institutions, institutionsError])
+  }, [totalATMCount, totalATMCountError])
   return (
     <AppCard topic={<Text variant="card-header" size="card-header">How are terminals performance</Text>} >
       {!loading.isLoading ?

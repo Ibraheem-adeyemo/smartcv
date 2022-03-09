@@ -28,14 +28,19 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
     const [query, setQuery] = useState<string>()
     useEffect(() => {
       
-        setDropdownContent(props.data.map((x, i) => (
-            typeof x === "string" ? {
+        setDropdownContent(props.data.map((x, i) => {
+          // debugger
+          const selected = i === 0 ? true : false
+          return  typeof x === "string" ? {
                 label: x,
                 value: x,
-                selected: i === 0 ? true : false
-            } : x)))
+                selected
+            } : x}))
     }, [props.data])
 
+    useEffect(() => {
+        console.log({dropdownContent})
+    }, [dropdownContent])
     const ref = useRef<HTMLInputElement>(null)
 
     const pickItem = useCallback((selectedItem: DropdownContent) => {
@@ -81,12 +86,13 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
                     <Input placeholder="search here" size="sm" ref={ref} defaultValue="" value={query} onInput={(e) => {
                         debouncedFetchData(e.currentTarget.value, (items?: DropdownContent[]) => {
                             setDropdownContent(items)
-                        }, props.data.map((x, i) => (
-                            typeof x === "string" ? {
+                        }, props.data.map((x, i) => {
+                            // debugger
+                            return typeof x === "string" ? {
                                 label: x,
                                 value: x,
                                 selected: i === 0 ? true : false
-                            } : x)))
+                            } : x}))
                     }} /></MenuItem>
                 {dropdownContent?.map((x, i) => <MenuItem key={i} onClick={(e) => pickItem(x)}>
                     <AnimatedText size="dropdown-text">{x.label}</AnimatedText>

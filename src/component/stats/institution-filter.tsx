@@ -41,7 +41,7 @@ const InstitutionFilter:FC = () => {
                         [
                             { label: "All", value: "0", selected: selectedTenantCode === "0" },
                             ...map(tenants, (x, i) => ({ label: x.name, value: x.code, selected: x.code === selectedTenantCode }))
-                        ]:[...map(tenants, (x, i) => ({ label: x.name, value: x.code, selected: x.code === selectedTenantCode }))]
+                        ] : [...map(tenants, (x, i) => ({ label: x.name, value: x.code, selected: true }))]
                     } label="Institution" onSelected={(e) => changeSelectedTenantCode(e.value)} selected />
             }
             {
