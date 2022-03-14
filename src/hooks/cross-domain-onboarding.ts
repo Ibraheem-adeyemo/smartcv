@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { allowedApp, ALLOWED_APPS, links, onboardingCrossDomain, sessionStorageKeys, sessionStorageTimeout } from "../constants";
+import { useCallback, useEffect, useState } from "react";
+import { allowedApp, links, onboardingCrossDomain, sessionStorageKeys, sessionStorageTimeout } from "../constants";
 import { AllowedApp, Onboarding, PostMessage } from "../models";
 
 enum intervalKeys {
@@ -33,12 +33,12 @@ export default function useCrossDomainOnboarding() {
     const validateKeyAndSetData = () => {
         if (message?.value === selectedApp?.key) {
             const go = new URL(selectedApp?.origin as string)
-          
+
             // setCookie(cookieKeys.fromAnotherOrigin, selectApp.origin, cookiesTimeout.fromAnotherOriginTimeout, go.host)
             window.sessionStorage.setItem(sessionStorageKeys.fromAnotherOrigin, selectedApp?.key as string)
             window.sessionStorage.setItem(sessionStorageKeys.fromAnotherOriginSetDate, (new Date()).toString())
             window.sessionStorage.setItem(sessionStorageKeys.fromAnotherOriginTimeout, `${sessionStorageTimeout.fromAnotherOriginTimeout}`)
-
+            
         } else {
             setCantView(true)
         }
@@ -52,14 +52,16 @@ export default function useCrossDomainOnboarding() {
             window.sessionStorage.setItem(sessionStorageKeys.interchangeIdSetDate, window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOriginSetDate) as string)
             setIsOnInterval(prev => {
                 const intervals = prev
-                const currentInterval = { key: intervalKeys.interchangeId, interval: setInterval(() => {
-                  
-                    // window.top?.location.reload()
-                    window.sessionStorage.removeItem(sessionStorageKeys.interchangeId)
-                    window.sessionStorage.removeItem(sessionStorageKeys.interchangeIdSetDate)
-                    clearInterval(isOnInterval?.find(x => x.key === intervalKeys.interchangeId)?.interval as NodeJS.Timer)
-                    window.location.href= links.registerOrganization
-                }, sessionStorageTimeout.interchangeIdTimeout * 1000 * 60) } as CrossDomainInterval
+                const currentInterval = {
+                    key: intervalKeys.interchangeId, interval: setInterval(() => {
+
+                        // window.top?.location.reload()
+                        window.sessionStorage.removeItem(sessionStorageKeys.interchangeId)
+                        window.sessionStorage.removeItem(sessionStorageKeys.interchangeIdSetDate)
+                        clearInterval(isOnInterval?.find(x => x.key === intervalKeys.interchangeId)?.interval as NodeJS.Timer)
+                        window.location.href = links.registerOrganization
+                    }, sessionStorageTimeout.interchangeIdTimeout * 1000 * 60)
+                } as CrossDomainInterval
                 if (typeof intervals === "undefined") {
                     return [currentInterval]
                 } else {
@@ -70,18 +72,17 @@ export default function useCrossDomainOnboarding() {
         }
     }
 
-    const registerSelectedApp = (origin?:string) => {
-        if(typeof window !== "undefined"){
-            const StoredSelectedApp = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
-            if(!origin && StoredSelectedApp) {
-                origin = StoredSelectedApp
+    const registerSelectedApp = (origin?: string) => {
+        if (typeof window !== "undefined") {
+            const StoredSelectedAppKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
+            // console.log({StoredSelectedAppKey})
+            if(StoredSelectedAppKey){
+                setSelectedApp(allowedApp.find((x) => StoredSelectedAppKey === x.key))
+            } else {
+                setSelectedApp(allowedApp.find((x) => origin === x.origin))
             }
-
         }
-        if(origin) {
-            setSelectedApp(allowedApp.find((x) => x.origin === origin) as AllowedApp)
-        }
-    } 
+    }
 
     const cancelDomainReconnecitonInterval = () => {
         if (typeof isOnInterval !== "undefined" && isOnInterval.findIndex(x => x.key === intervalKeys.fromAnotherOrigin) > -1) {
@@ -92,62 +93,63 @@ export default function useCrossDomainOnboarding() {
             })
         }
     }
- 
+
     const getSelectedApp = () => {
-        reconnect()
-        registerSelectedApp()
+        // debugger
+        const appKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
+        // debugger
+        if(appKey){
+            // console.log({appKey})
+            const a = allowedApp.find(x => x.key === appKey)
+            // console.log({a})
+            setSelectedApp(a)
+            reconnect()
+            registerSelectedApp()
+            // allowedApp.find(x => x.key === appKey)
+        }
     }
 
-    const reconnect = () => {
-        postAMessage({"action":"${onboardingCrossDomain.reconnect}"}, origin)
+    const reconnect = (origin?: string) => {
+        // console.log({selectedApp})
+        const appKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
+        const a = allowedApp.find(x => x.key === appKey)
+        if(a){
+            setMessage({ "action": onboardingCrossDomain.reconnect })
+        }
     }
 
-    const postAMessage = (message: PostMessage, origin: string) => {
-        window.parent.postMessage(`${message}`, origin)
-    }
+    useCallback(() => {
+        // debugger
+        if(selectedApp && message)  {
+            window.parent.postMessage(JSON.stringify(message), selectedApp.origin)
+        }
+    }, [message, selectedApp])
 
     const completeContract = (onboarding: Onboarding) => {
 
     }
 
-    useEffect(() => {
-
-        const readEventMsg = (ev: MessageEvent<any>) => {
-          
-            setisOnCrossDomain(false)
-            if (ev.data && allowedApp.some((x) => x.origin === ev.origin)) {
-                const message = JSON.parse(ev.data) as PostMessage
-                setMessage(message)
-                registerSelectedApp(ev.origin)
-            }
-        }
-
-        
-        if (typeof window !== "undefined") {
-          
-            window.addEventListener("message", readEventMsg)
-        }
-        return () => {
-            window.removeEventListener("message", readEventMsg)
-        }
-    }, [])
 
     useEffect(() => {
+        console.log({message, selectedApp})
         if (typeof message !== "undefined" && typeof selectedApp !== "undefined") {
+            // debugger
+                // console.log({message, selectedApp})
             if (message.action === onboardingCrossDomain.loading) {
-                postAMessage({"action":"${onboardingCrossDomain.loaded}"}, selectedApp.origin)
+                setMessage({ "action": onboardingCrossDomain.loaded })
+                
                 // console.log(message.payload) /* Do something with the data from onboarding portal */
             } else if (message.action === onboardingCrossDomain.confirmKey) {
-              
+                // debugger
                 validateKeyAndSetData()
                 setisOnCrossDomain(true)
                 setIsOnInterval((prev) => {
                     const intervals = prev
                     const currentInterval = {
                         key: intervalKeys.fromAnotherOrigin, interval: setInterval(() => {
-                          
+
                             // window.top?.location.reload()
-                            reconnect()
+                            getSelectedApp()
                         }, sessionStorageTimeout.fromAnotherOriginTimeout * 1000 * 60)
                     } as CrossDomainInterval
                     if (typeof intervals !== "undefined") {
@@ -157,16 +159,54 @@ export default function useCrossDomainOnboarding() {
                     }
                     return intervals
                 })
+            } else if(message.action === onboardingCrossDomain.loaded || message.action === onboardingCrossDomain.reconnect || message.action === onboardingCrossDomain.accountCreated) {
+                // console.log({message})
+                
+                window.parent.postMessage(JSON.stringify(message), selectedApp.origin)
             }
         }
-    }, [selectedApp, message])
+        
+        const readEventMsg = (ev: MessageEvent<any>) => {
+            // debugger
+            setisOnCrossDomain(false)
 
+            if (ev.data && allowedApp.some((x) => x.origin === ev.origin)) {
+                const message = JSON.parse(ev.data) as PostMessage
+                setMessage(message)
+                registerSelectedApp(ev.origin)
+            }
+        }
+
+
+        if (typeof window !== "undefined") {
+            // debugger
+            window.addEventListener("message", readEventMsg)
+        }
+        // getSelectedApp()
+        return () => {
+            window.removeEventListener("message", readEventMsg)
+        }
+    }, [selectedApp, message])
+    const sendCreatedAccount = (data: any) => {
+        const appKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
+        // debugger
+        setMessage({ "action": onboardingCrossDomain.accountCreated, value: data })
+        if(appKey){
+            // console.log({appKey})
+            const a = allowedApp.find(x => x.key === appKey)
+            // console.log({a})
+            setMessage(undefined)
+            setSelectedApp(a)
+
+        }
+    }
     return {
         cantVew,
         isOnCrossDomain,
         removeData,
         setInterChangeIdData,
-        getSelectedApp
+        getSelectedApp,
+        sendCreatedAccount
     }
 }
 

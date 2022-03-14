@@ -39,7 +39,7 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
     }, [props.data])
 
     useEffect(() => {
-        console.log({dropdownContent})
+        // console.log({dropdownContent})
     }, [dropdownContent])
     const ref = useRef<HTMLInputElement>(null)
 

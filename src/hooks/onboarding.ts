@@ -72,6 +72,7 @@ export default function useOnboarding(): UseOnboardingReturn {
             setCookie(cookieKeys.token, "", cookiesTimeout.timeoutCookie)
         }
         setLoading({ isLoading: true, text: "loading" })
+        // debugger
         if (typeof window !== "undefined") {
             if (typeof isRefresh !== "undefined") {
                 if (isRefresh) {
@@ -84,6 +85,7 @@ export default function useOnboarding(): UseOnboardingReturn {
     }, [checkPersistedData, isRefresh])
 
     useEffect(() => {
+        // debugger
         if (typeof window !== "undefined") {
             const interchangeId = getCookie(cookieKeys.interchangeId) === "" ? window.sessionStorage.getItem(sessionStorageKeys.interchangeId) : getCookie(cookieKeys.interchangeId)
             if (!interchangeId) {

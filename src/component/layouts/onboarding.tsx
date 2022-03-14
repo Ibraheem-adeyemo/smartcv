@@ -51,14 +51,14 @@ interface LoadAvatarProps {
 
 const LoadAvatar: FC<LoadAvatarProps> = (props: LoadAvatarProps) => {
     // let loadTab;
-  
+
     if (typeof window !== "undefined") {
-      
+
         if (props.state === props.onboarding?.state) {
             return <Avatar name={`${props.state + 1}`} bgColor="brand.muted-blue"></Avatar>
         } else {
             const tab = props.onboarding[props.step.key as keyof OnboardingModel] as Tenant | tenantAdmin | InstitutionColorInfo
-          
+
             if (tab.completed) {
                 return <Avatar bgColor="brand.primary-blue" icon={<TickIcon color="white" />}></Avatar>
             }
@@ -68,7 +68,7 @@ const LoadAvatar: FC<LoadAvatarProps> = (props: LoadAvatarProps) => {
 }
 
 const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
-    const {cantVew, getSelectedApp} = useContext(CrossDomainOnboardingContext)
+    const { cantVew, getSelectedApp, sendCreatedAccount, isOnCrossDomain } = useContext(CrossDomainOnboardingContext)
     const { steps, onboarding, startLoading, stopLoading } = useContext(OnboardingContext)
     // useEffect(() => console.log({ c: onboarding }))
     const router = useRouter()
@@ -85,7 +85,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
 
     const createAccount = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-      
+
         startLoading()
         try {
             if (typeof onboarding !== "undefined") {
@@ -96,8 +96,12 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
                     isClosable: true,
                     variant: "left-accent"
                 })
-                
-                router.push(links.onboardingSuccessPage)
+                // debugger
+                if (!isOnCrossDomain) {
+                    router.push(links.onboardingSuccessPage)
+                } else {
+                    sendCreatedAccount(onboarding)
+                }
                 return;
             } else {
                 toast({
@@ -109,8 +113,8 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
             }
             stopLoading()
         } catch (error: any) {
-          
-            if (typeof error.message !== "undefined" || typeof error !== "undefined") {
+
+            if (typeof error !== "undefined") {
                 toast({
                     status: "error",
                     title: typeof error.message !== "undefined" ? error.message : error,
@@ -118,17 +122,22 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
                     variant: "left-accent"
                 })
             }
-            console.error({ createAccountError: error })
+            // console.error({ createAccountError: error })
             stopLoading()
         }
     }, [onboarding])
 
     useEffect(() => {
+        
         getSelectedApp()
     }, [])
 
     useEffect(() => {
-        console.log({ steps, step })
+        // console.log({ isOnCrossDomain })
+    }, [isOnCrossDomain])
+
+    useEffect(() => {
+        // console.log({ steps, step })
     }, [steps, step])
 
     return (
@@ -136,7 +145,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
             <OnboardingNav />
             <Flex mx="306px" gap="33px" flexDirection="column" h="100%">
 
-                { !cantVew && <form method="post" onSubmit={createAccount} >
+                {!cantVew && <form method="post" onSubmit={createAccount} >
 
                     <Flex gap="33px" flexDirection="column">
                         <Flex gap={onboarding?.state as number > 0 ? `13px` : `100px`} alignItems="center" justifyContent="space-around">

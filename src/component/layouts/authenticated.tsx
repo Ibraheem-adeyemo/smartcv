@@ -23,8 +23,8 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayout> = (props: Authenticated
     const { user, signOut, error, refreshAccessToken } = useContext(AuthContext)
     const router = useRouter()
     const handleOnIdle = (event: any) => {
-        console.log('user is idle', event)
-        console.log('last active', getLastActiveTime())
+        // console.log('user is idle', event)
+        // console.log('last active', getLastActiveTime())
     }
 
     const handleOnActive = () => {

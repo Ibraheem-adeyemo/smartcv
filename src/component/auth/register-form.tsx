@@ -17,15 +17,15 @@ const RegisterForm: FC = () => {
     const toast = useToast()
     const [loading, setLoading] = useLoading()
 
-    const { isOnCrossDomain, setInterChangeIdData, removeData, cantVew } = useContext(CrossDomainOnboardingContext)
+    const { isOnCrossDomain, setInterChangeIdData, removeData, cantVew, getSelectedApp } = useContext(CrossDomainOnboardingContext)
 
     const getInterChangebyInterchangeId = async () => {
         try {
-          
+          // debugger
             setLoading({ isLoading: true, text: "Confirming" })
             const data = await getInterchangeById(interChangeId as string)
             if (typeof data.statusCondition !== "undefined" && +data.statusCondition === 1 && typeof interChangeId !== "undefined") {
-              
+                // debugger
                 setCookie(cookieKeys.interchangeId, interChangeId, cookiesTimeout.interchangeIdTimeout)
                 if (isOnCrossDomain) {
                     setInterChangeIdData(interChangeId)
@@ -46,7 +46,7 @@ const RegisterForm: FC = () => {
                 throw new Error(notificationMesage.AnErrorOccurred)
             }
         } catch (error: any) {
-            console.error({ getInterChangebyInterchangeIdError: error })
+            // console.error({ getInterChangebyInterchangeIdError: error })
             if (typeof error.message !== "undefined" || typeof error !== "undefined") {
                 toast({
                     status: "error",
@@ -60,8 +60,9 @@ const RegisterForm: FC = () => {
     }
 
     useEffect(() => {
-      
+        // debugger
         sessionStorage.removeItem(sessionStorageKeys.onboarding)
+        getSelectedApp()
         removeData()
         return () => {
             // window.removeEventListener("message", readEventMsg)

@@ -33,7 +33,7 @@ export enum sessionStorageKeys {
     onboarding = 'onboarding',
     interchangeIdTimeout=15,
     interchangeIdSetDate="interchange-id-set-date",
-    interchangeId="interchange-id"
+    interchangeId="interchange-id",
 }
 
 export enum sessionStorageTimeout {

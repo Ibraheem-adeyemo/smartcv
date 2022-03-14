@@ -31,7 +31,7 @@ const mapData = function <T>(objString: string): T {
                 return returnValue
         }
     } catch (error) {
-        console.error({error})
+        // console.error({error})
         throw error
     }
 }

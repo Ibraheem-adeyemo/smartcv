@@ -64,7 +64,7 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
     }, [])
 
     useEffect(() => {
-        console.error({stateError: error})
+        // console.error({stateError: error})
     }, [error])
 
     useEffect(() => {

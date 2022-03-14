@@ -95,5 +95,6 @@ export enum onboardingCrossDomain {
     loading = "Loading",
     loaded = "Loaded",
     confirmKey = "Confirm Key",
-    reconnect = "Reconnect"
+    reconnect = "Reconnect",
+    accountCreated = "Account created"
 }
