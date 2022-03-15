@@ -1,12 +1,13 @@
-import { CircularProgress } from "@chakra-ui/react"
+import { CircularProgress, Link } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { FC } from "react"
 import useSWR from "swr"
 import { appear, appearWithDimensions, delayChildren } from "../../animations"
-import { apiUrlsv1, CloseIcon, Images } from "../../constants"
+import { apiUrlsv1, CloseIcon, Images, links } from "../../constants"
 import { APIResponse } from "../../models"
 import { AnimatedCardHeader, AnimatedText, MotionFlex, MotionImage } from "../framer"
 
+import NextLink from 'next/link'
 interface ActivateAccountProps {
     activationCode: string | null
 }
@@ -17,7 +18,7 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
     const url = `${apiUrlsv1.activateAccount}?token=${props.activationCode}`
     const { data, error } = useSWR<APIResponse<any>>(url)
 
-    
+
     return (
         <MotionFlex sx={{
             flexDir: "column",
@@ -28,7 +29,7 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
             alignItems: "center",
             w: "633px",
             py: "42.34px",
-            mx:"auto"
+            mx: "auto"
         }}
             initial="hide"
             animate="show"
@@ -49,7 +50,7 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
                 gap: "20px"
             }}
                 variants={delayChildren}>  <AnimatedCardHeader>Error in activatiing</AnimatedCardHeader>
-                 <AnimatedText sx={{ color: 'red' }}>Can't activate account</AnimatedText></MotionFlex>}
+                <AnimatedText sx={{ color: 'red' }}>Can't activate account</AnimatedText></MotionFlex>}
 
             {!data && !error && <MotionFlex sx={{
                 height: "100vh"
@@ -62,6 +63,9 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
                     margin: "auto"
                 }}
                 />
+                <Link px="201.5px" py="12px" variant="primary-link" href={links.login}>
+                    <NextLink href={links.login}>Back to Login</NextLink>
+                </Link>
             </MotionFlex>}
         </MotionFlex>
     )
