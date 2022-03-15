@@ -31,6 +31,7 @@ export interface Tab {
 
 
 export interface apiUrlsv1Model {
+    activateAccount: string,
     atmCount: string,
     atmCountDetails: string,
     atmInService: string,
@@ -42,7 +43,7 @@ export interface apiUrlsv1Model {
     atmStats: string,
     audit: string,
     auditByUser: string,
-    createRole:string,
+    createRole: string,
     createTenantAdmin: string,
     getUserDetail: string,
     interChange: string,

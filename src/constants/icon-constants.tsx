@@ -10,7 +10,7 @@ import { BsGear } from 'react-icons/bs'
 import { GiCapitol } from 'react-icons/gi'
 import { GoPrimitiveDot } from 'react-icons/go'
 import { forwardRef } from "@chakra-ui/system"
-
+import { CgCloseO } from 'react-icons/cg'
 
 
 export const dashboardIcon = forwardRef((props, ref) => <Icon as={IoGridOutline} {...props} ref={ref} />)
@@ -42,3 +42,6 @@ export const CapitolIcon = forwardRef((props, ref) => <Icon as={GiCapitol} {...p
 export const AvatarIcon = forwardRef((props, ref) => <Icon as={AiOutlineUser} {...props} ref={ref} />)
 
 export const DotIcon = forwardRef((props, ref) => <Icon as={GoPrimitiveDot} {...props} ref={ref} />)
+
+
+export const CloseIcon = forwardRef((props, ref) => <Icon as={CgCloseO} {...props} ref={ref} />)

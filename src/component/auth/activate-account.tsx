@@ -1,43 +1,55 @@
 import { CircularProgress } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { FC, useContext } from "react"
+import { FC } from "react"
 import useSWR from "swr"
-import { appear, apperWithDimensions, delayChildren } from "../../animations"
-import { Images } from "../../constants"
+import { appear, appearWithDimensions, delayChildren } from "../../animations"
+import { apiUrlsv1, CloseIcon, Images } from "../../constants"
 import { APIResponse } from "../../models"
-import { AuthContext } from "../../providers"
-import { AnimatedText, MotionFlex, MotionImage } from "../framer"
+import { AnimatedCardHeader, AnimatedText, MotionFlex, MotionImage } from "../framer"
 
 interface ActivateAccountProps {
-    activationCode: string
+    activationCode: string | null
 }
 
 const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) => {
-    const router = useRouter()
-    const {token} = useContext(AuthContext)
-    const url = props.activationCode
+    debugger
+    // const router = useRouter()
+    const url = `${apiUrlsv1.activateAccount}?token=${props.activationCode}`
     const { data, error } = useSWR<APIResponse<any>>(url)
 
-
+    
     return (
         <MotionFlex sx={{
             flexDir: "column",
-            gap: "55px"
+            gap: "20px",
+            px: "66px",
+            bg: "white",
+            borderRadius: "6px",
+            alignItems: "center",
+            w: "633px",
+            py: "42.34px",
+            mx:"auto"
         }}
             initial="hide"
             animate="show"
             variants={delayChildren}>
-            <MotionImage src={Images.onboardingSuccess} boxSize="134px" animate="show" initial="hide" variants={apperWithDimensions({ width: "134px", height: "134px" })} />
-            {data && <><MotionFlex sx={{
+            {data && <MotionImage src={Images.onboardingSuccess} boxSize="134px" animate="show" initial="hide" variants={appearWithDimensions({ width: "134px", height: "134px" })} />}
+            {error && <CloseIcon boxSize="134px" />}
+            {data && <MotionFlex sx={{
                 flexDir: "column",
                 gap: "20px"
             }}
                 variants={delayChildren}>
-                <AnimatedText variant="card-header" size="card-header">Account Activation Complete</AnimatedText>
+                <AnimatedCardHeader variant="card-header" size="card-header">Account Activation Complete</AnimatedCardHeader>
                 <AnimatedText variant="">Your Account has been activated successfully</AnimatedText>
-            </MotionFlex></>}
+            </MotionFlex>}
 
-            {error && <AnimatedText sx={{ color: 'red' }}>Can't activate account</AnimatedText>}
+            {error && <MotionFlex sx={{
+                flexDir: "column",
+                gap: "20px"
+            }}
+                variants={delayChildren}>  <AnimatedCardHeader>Error in activatiing</AnimatedCardHeader>
+                 <AnimatedText sx={{ color: 'red' }}>Can't activate account</AnimatedText></MotionFlex>}
 
             {!data && !error && <MotionFlex sx={{
                 height: "100vh"

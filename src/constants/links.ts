@@ -24,6 +24,7 @@ export enum links {
 export const onboardingURL = "http://127.0.0.1:5500" /* (This is the current production url but may change in the future) */
 
 export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
+    activateAccount: `${API_BASE_URL}${CURRENT_API_VERSION}/user/activate`,
     atmCount: `${API_BASE_URL}${CURRENT_API_VERSION}/monitor/atm/count`,
     atmCountDetails: `${API_BASE_URL}${CURRENT_API_VERSION}/monitor/atm/count/`,
     atmInService: `${API_BASE_URL}${CURRENT_API_VERSION}/monitor/atm/in-service`,

@@ -85,7 +85,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
 
     const createAccount = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
+        console.log({isOnCrossDomain})
         startLoading()
         try {
             if (typeof onboarding !== "undefined") {
@@ -96,7 +96,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
                     isClosable: true,
                     variant: "left-accent"
                 })
-                // debugger
+                debugger
                 if (!isOnCrossDomain) {
                     router.push(links.onboardingSuccessPage)
                 } else {

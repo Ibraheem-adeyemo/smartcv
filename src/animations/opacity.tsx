@@ -15,11 +15,11 @@ export const appear: Variants = {
         }
     }
 }
-interface apperWithDimensionsPros {
+interface appearWithDimensionsPros {
     width?:string,
     height?:string
 }
-export const apperWithDimensions = ({width="fit-content", height="fit-content"}: apperWithDimensionsPros): Variants => ({
+export const appearWithDimensions = ({width="fit-content", height="fit-content"}: appearWithDimensionsPros): Variants => ({
     show: {
         opacity: 1,
         height,

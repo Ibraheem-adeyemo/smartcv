@@ -4,7 +4,7 @@ import { Images, links } from "../../constants";
 import NextLink from 'next/link'
 import React, { FC } from "react";
 import { AnimatedText, MotionFlex, MotionImage } from "../framer";
-import { apperWithDimensions, delayChildren } from "../../animations";
+import { appearWithDimensions, delayChildren } from "../../animations";
 
 const SuccessCard: FC = () => {
     const cardTitle = <MotionFlex sx={{
@@ -15,7 +15,7 @@ const SuccessCard: FC = () => {
         initial="hide"
         variants={delayChildren}
     >
-        <MotionImage src={Images.onboardingSuccess} boxSize="134px" animate="show" initial="hide" variants={apperWithDimensions({width:"134px", height:"134px"})}  />
+        <MotionImage src={Images.onboardingSuccess} boxSize="134px" animate="show" initial="hide" variants={appearWithDimensions({width:"134px", height:"134px"})}  />
         <AnimatedText variant="card-header" size="extra-large-text" color="brand.success">Changes updated</AnimatedText>
     </MotionFlex>
     const cardFooter = <Link px="201.5px" py="12px" variant="primary-link" href={links.login}>
