@@ -58,7 +58,7 @@ const TopTransactionMetri:FC = () => {
         {!loading ?
             <>
                 {stats?.map((x, i) => <Barchart key={i} {...x} />)}
-            </> : <SkeletonLoader rows={1} columns={2} width="10px" height="200px" gap="30px" />
+            </> : <SkeletonLoader rows={1} columns={2} width="10px" height="200px" gap="30px" loaderKey="top-transaction-metric-app-card" />
 
         }
     </AppCard>

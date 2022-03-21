@@ -55,7 +55,7 @@ const UsageMetric:React.FC = () => {
                 <>
                     {stats?.map((x, i) => <Stat key={i} {...x} />)}
                 </> :
-                <SkeletonLoader rows={3} columns={2} width="200px" height="10px" gap="30px" />
+                <SkeletonLoader rows={3} columns={2} width="200px" height="10px" gap="30px" loaderKey="usage-metric-app-card" />
             }
         </AppCard>)
 }

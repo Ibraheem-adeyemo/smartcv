@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import React, { useContext } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
 import { delayChildren, verticalPosition } from "../../animations";
-import { appTableElements, DotIcon, Images } from "../../constants";
+import { appTableElements, DotIcon, Images, keysForArrayComponents } from "../../constants";
 import { appDate } from "../../lib";
 import { Action, Column } from "../../models";
 import { PaginatorContext } from "../../providers";
@@ -54,7 +54,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                     }}
                     >#</MotionTd>}
                     {map(props.columns, (x, i, arr) => <MotionTd
-                        key={i}
+                        key={`${keysForArrayComponents.tableColumn}-${i}`}
                         sx={{
                             fontSize: "13px",
                             py: "19px",
@@ -201,7 +201,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                     typeof props.rows === "undefined" && map(range(8), (z, i) =>
                         <MotionTr key={i}>
                             {
-                                typeof props.columns !== "undefined" && map(props.columns, (x, j) => <Td key={j}><SkeletonLoader rows={1} columns={1} width="60px" height="10px" /></Td>)
+                                typeof props.columns !== "undefined" && map(props.columns, (x, j) => <Td key={j}><SkeletonLoader rows={1} loaderKey={`motion-tr-${i}`} columns={1} width="60px" height="10px" /></Td>)
                             }
                         </MotionTr>
                     )

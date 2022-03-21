@@ -2,6 +2,7 @@ import { HStack, Link, Text } from "@chakra-ui/react"
 import React, { FC, useContext } from "react"
 import { PaginatorContext } from "../../providers"
 import { map, range } from "lodash"
+import { keysForArrayComponents } from "../../constants"
 
 const AppTableFooter:FC = () => {
 
@@ -9,7 +10,8 @@ const AppTableFooter:FC = () => {
         totalPageNumber,
         incrementPageNumber,
         decrementPageNumber,
-        gotoPage } = useContext(PaginatorContext)
+        gotoPage 
+    } = useContext(PaginatorContext)
 
     // console.log({ pageNumber, totalPageNumber })
     return (<>
@@ -27,7 +29,7 @@ const AppTableFooter:FC = () => {
                 }
                 {map(range(0, totalPageNumber), (x, i) => <Link  _hover={{textDecoration: "none"}} px="11px" py="5px" border="1px solid rgba(128, 128, 128, 0.25)" borderRadius="4px" display={(x+1) === pageNumber? "initial" :"none"}  href={`?page=${x + 1}`}  onClick={(e) => {
                     e.preventDefault(); 
-                    gotoPage(x + 1)}} key={i}>{x + 1}</Link>)}
+                    gotoPage(x + 1)}} key={`${keysForArrayComponents.tableFooter}-${i}`}>{x + 1}</Link>)}
                 <Text> / </Text><Link  _hover={{textDecoration: "none"}} href={`?page=${totalPageNumber}`} px="11px" py="5px" border="1px solid rgba(128, 128, 128, 0.25)" onClick={(e) => {
                     e.preventDefault(); 
                     gotoPage(totalPageNumber)}}>{totalPageNumber}</Link>

@@ -100,7 +100,7 @@ const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
         <>
           {stats?.map((x, i) => <Stat key={i} {...x} />)}
         </> :
-        <SkeletonLoader rows={1} columns={2} width="200px" height="200px" />
+        <SkeletonLoader rows={1} columns={2} width="200px" height="200px" loaderKey="service-status-app-card" />
       }
     </AppCard>
   )

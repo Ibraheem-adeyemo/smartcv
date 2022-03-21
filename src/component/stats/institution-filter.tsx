@@ -12,6 +12,7 @@ const InstitutionFilter:FC = () => {
     const toast = useToast()
     const [tenants, setTenant] = useState<TenantView[]>()
     const {userDetail} = useContext(AuthContext)
+    const isTenantAndInstitutionLoading = typeof tenants === "undefined" && typeof institutionsError === "undefined"
     useEffect(() => {
         // debugger
         if(userDetail?.role.name === superAdmin) {
@@ -45,7 +46,7 @@ const InstitutionFilter:FC = () => {
                     } label="Institution" onSelected={(e) => changeSelectedTenantCode(e.value)} selected />
             }
             {
-                typeof tenants === "undefined" && typeof institutionsError === "undefined" && <SkeletonLoader rows={1} columns={1} width="100px" height="20px" />
+               isTenantAndInstitutionLoading  && <SkeletonLoader rows={1} columns={1} width="100px" height="20px" loaderKey="tenant-and-institution" />
             }
         </>
     )

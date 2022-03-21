@@ -50,7 +50,7 @@ export interface UserModel {
     accountNonExpired: string,
     accountNonLocked: string,
     tenant: TenantView,
-    role: Role
+    role: Role,
 }
 
 

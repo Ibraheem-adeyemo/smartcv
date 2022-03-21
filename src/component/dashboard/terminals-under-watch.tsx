@@ -91,7 +91,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = (props: TerminalsUnder
         <>
           {stats?.map((x, i) => <Stat key={i} {...x} />)}
         </> :
-        <SkeletonLoader rows={3} columns={3} width="200px" height="10px" gap="30px" />
+        <SkeletonLoader rows={3} columns={3} width="200px" height="10px" gap="30px" loaderKey="terminals-under-watch-app-card" />
       }
     </AppCard>
   )

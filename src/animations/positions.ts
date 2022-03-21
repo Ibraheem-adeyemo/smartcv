@@ -27,3 +27,18 @@ export const verticalPositionWithOpacity: Variants = {
         }
     }
 }
+type horizontalPositionWithOpacityFunc = (i: number) => Variants
+export const horizontalPositionWithOpacity: horizontalPositionWithOpacityFunc = (i: number) => ({
+    show: {
+        x: 0,
+        opacity: 1,
+        transition: {
+            duration: 0.4,
+            delay: i * 0.4
+        }
+    },
+    hide: {
+        x: -200,
+        opacity: 0
+    }
+})

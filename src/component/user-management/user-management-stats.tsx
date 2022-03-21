@@ -17,8 +17,7 @@ const UserManagementStats: FC = () => {
     const tenanturl= token?(typeof window !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? null : apiUrlsv1.tenant):null
     const { data: iswAdmin, mutate: _mutateISWAdmin, error: iswAdminError } = useSWR<Paginate<ISWAdminView>>(iswAdminUrl) /* add the url to get iswadmin admin in the second null of the ternary operator */
     const { data: tenantAdmin, mutate: _mutateTenantAdmin, error: tenantAdminError } = useSWR<Paginate<TenantAdminView>>(tenantAdminurl)
-    const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<TenantView[]>(tenanturl)
-    
+    const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<TenantView[]>(tenanturl)    
     const [userManagementStats, setUserManagementStats] = useState<UserManagementStat[]>([{
         name: StatsName.createdBanks,
         totalCount: getCookie(cookieKeys.totalTenant)
@@ -29,7 +28,7 @@ const UserManagementStats: FC = () => {
         name: StatsName.iSWAdminUser,
         totalCount: getCookie(cookieKeys.totalISWAdmin)
     }])
-
+    const isTotalCountLoading = _.every(userManagementStats, (stat: UserManagementStat) => stat.totalCount !== "")
 
     const GetStateIcon = useCallback(({ statName }: { statName: string }) => {
         switch (statName) {
@@ -71,7 +70,7 @@ const UserManagementStats: FC = () => {
     return (
         <AppCard topic="">
             <>
-                {_.every(userManagementStats, (stat: UserManagementStat) => stat.totalCount !== "") ? <SkeletonLoader rows={3} columns={3} width="200" height="10px" gap="30px" /> :
+                { isTotalCountLoading ? <SkeletonLoader rows={3} columns={3} width="200" height="10px" gap="30px" loaderKey="total-count-loading" /> :
                     _.map(userManagementStats, (x, i) => (
                     <Flex key={i} p="19px" bgColor="brand.muted-background" flexGrow={1} gap="15px">
                         <Flex justifyContent="space-between" w="100%">
@@ -89,7 +88,6 @@ const UserManagementStats: FC = () => {
                             </Box>
                         </Flex>
                     </Flex >))
-
                 }
             </>
         </AppCard >

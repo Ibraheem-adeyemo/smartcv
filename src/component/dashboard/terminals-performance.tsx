@@ -80,7 +80,7 @@ const TerminalsPerformance:FC = () => {
     <AppCard topic={<Text variant="card-header" size="card-header">How are terminals performance</Text>} >
       {!loading.isLoading ?
         <>{stats?.map((x, i) => <Stat key={i} {...x} />)}</> :
-        <SkeletonLoader rows={3} columns={2} width="400px" height="10px" gap="30px" />
+        <SkeletonLoader rows={3} columns={2} width="400px" height="10px" gap="30px" loaderKey='terminal-performance-app-card' />
       }
     </AppCard>
   )

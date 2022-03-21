@@ -72,7 +72,7 @@ const TransactionBreakdown:FC = () => {
       {!loading.isLoading ?
         <>{stats?.map((x, i) =><Stat key={i} {...x} />)}
         </> :
-        <SkeletonLoader rows={3} columns={4} width="200px" height="10px" gap="30px" />
+        <SkeletonLoader rows={3} columns={4} width="200px" height="10px" gap="30px" loaderKey="transaction-breakdown-app-card" />
       }
     </AppCard>)
 }

@@ -1,9 +1,9 @@
 import { Flex, Text, List, ListItem, Avatar } from "@chakra-ui/react"
 import React, { FC, memo, useMemo } from "react"
-import { TickIcon } from "../constants"
+import { keysForArrayComponents, TickIcon } from "../constants"
 import { MotionFlex, MotionList, MotionListItem, MotionText } from "./framer"
 
-const MissionStatement:FC =  memo(() => {
+const MissionStatement: FC = memo(() => {
     const missionStatement = [{
         missionHead: "ATM & Transaction monitoring",
         missionText: `Set-up new terminals,send downloads to disconnected terminals, realtime transaction monitoring, monitor online/offline/supervisor mode terminals`
@@ -82,7 +82,7 @@ const MissionStatement:FC =  memo(() => {
                 }}
             >
                 {missionStatement.map((x, i) =>
-                    <MotionListItem key={i}
+                    <MotionListItem key={`${keysForArrayComponents.missionStatementMotionText}${i}`}
                         sx={{
                             gap: "21px",
                             display: "flex"
@@ -91,7 +91,7 @@ const MissionStatement:FC =  memo(() => {
                         animate="visible"
                         initial="hidden"
                         variants={{
-                            visible: { opacity: 1, x: 0, transition: {delay: i * 0.5} },
+                            visible: { opacity: 1, x: 0, transition: { delay: i * 0.5 } },
                             hidden: { opacity: 0, x: -100 }
                         }}
                     >
