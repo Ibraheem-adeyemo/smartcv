@@ -14,13 +14,16 @@ export const MotionFormLabel = (props: ComponentWithChildren) => {
                 overflow: "hidden"
             }}>
                 <MotionText
-                sx={{
-                    display: "inline-block",
-                }}
-                animate={props.children?"show":"hide"}
-                initial="hide"
-                variants={verticalPositionWithOpacity}
-                >{props.children}</MotionText>
+                    as={"span"}
+                    sx={{
+                        display: "inline-block",
+                    }}
+                    animate={props.children ? "show" : "hide"}
+                    initial="hide"
+                    variants={verticalPositionWithOpacity}
+                >
+                    {props.children}
+                </MotionText>
             </Box>
         </FormLabel>
     )

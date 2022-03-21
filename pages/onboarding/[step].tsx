@@ -36,7 +36,7 @@ export default function Step1(props: any) {
     const { step } = router.query
     const { steps } = useContext(OnboardingContext)
     const [stepNumber, setStepNumber] = useState<number>()
-  
+    const isTepAndStateLoaded = typeof stepNumber !== "undefined" && typeof step !== "undefined"
     useEffect(() => {
         // debbuger
         if (typeof steps !== "undefined" && typeof step !== "undefined") {
@@ -68,7 +68,8 @@ export default function Step1(props: any) {
                 <CrossDomainOnboardingProvider>
                     <OnboardingProvider>
                         <Onboarding>
-                            <AnimatePresence>{typeof stepNumber !== "undefined" && typeof step !== "undefined" && <LoadTab state={stepNumber} step={step} />}</AnimatePresence>
+                            <AnimatePresence>{ isTepAndStateLoaded && <LoadTab state={stepNumber} step={step} />}</AnimatePresence>
+                            <AnimatePresence>{ !isTepAndStateLoaded && <></>}</AnimatePresence>
                         </Onboarding>
                     </OnboardingProvider>
                 </CrossDomainOnboardingProvider>

@@ -1,8 +1,7 @@
-import { FormErrorMessage, FormLabel, Text } from "@chakra-ui/react";
-import { AnimatePresence } from "framer-motion";
-import { MotionText } from ".";
+import { Box, FormErrorMessage } from "@chakra-ui/react";
 import { verticalPositionWithOpacity } from "../../animations";
 import { ComponentWithChildren } from "../../models";
+import { MotionBox } from "./motion-box";
 
 
 // const MotionFormLabel = motion<FormLabelProps>(Label)
@@ -11,20 +10,23 @@ export const MotionFormErrorMessage = (props: ComponentWithChildren) => {
     // debugger
     return (
         <FormErrorMessage>
-            <Text sx={{
+            <Box as="span" sx={{
                 display: "inline-block",
                 overflow: "hidden"
             }}>
-                        <MotionText
-                            animate={"show"}
-                            initial="hide"
-                            exit="hide"
-                            sx={{
-                                display: "inline-block",
-                            }}
-                            variants={verticalPositionWithOpacity}
-                        ><FormErrorMessage>{props.children}</FormErrorMessage></MotionText>
-            </Text>
+                <MotionBox
+                    as="span"
+                    animate={"show"}
+                    initial="hide"
+                    exit="hide"
+                    sx={{
+                        display: "inline-block",
+                    }}
+                    variants={verticalPositionWithOpacity}
+                >
+                    <FormErrorMessage>{props.children}</FormErrorMessage>
+                </MotionBox>
+            </Box>
         </FormErrorMessage>
     )
 }

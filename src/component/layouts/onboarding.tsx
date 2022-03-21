@@ -128,17 +128,8 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
     }, [onboarding])
 
     useEffect(() => {
-        
         getSelectedApp()
     }, [])
-
-    useEffect(() => {
-        // console.log({ isOnCrossDomain })
-    }, [isOnCrossDomain])
-
-    useEffect(() => {
-        // console.log({ steps, step })
-    }, [steps, step])
 
     return (
         <Flex h="100vh" flexDir="column" gap="59px" >
@@ -148,8 +139,12 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
                 {!cantVew && <form method="post" onSubmit={createAccount} >
 
                     <Flex gap="33px" flexDirection="column">
-                        <Flex gap={onboarding?.state as number > 0 ? `13px` : `100px`} alignItems="center" justifyContent="space-around">
-                            {steps?.map((x, i, arr) =>
+                        <Flex sx={{
+                            gap: onboarding?.state as number > 0 ? `13px` : `100px`,
+                            alignItems:"center",
+                            justifyContent:"space-around"
+                        }} >
+                            {steps && steps.map((x, i, arr) =>
                                 <Fragment key={i}>
                                     <QuestionDivider i={i} arr={arr} />
                                     <OnboardingLink href={x.url}>
@@ -164,6 +159,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
                                     </OnboardingLink>
                                 </Fragment>
                             )}
+                            {!steps && <></>}
                         </Flex>
                         <Flex>
                             {props.children}
