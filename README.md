@@ -50,4 +50,4 @@ Below are the baisc the requirement the developer needs to have
 
     React framework
 
-I added readme.md in each folder to give a brief explanation for how some components work for the the application
+# I added readme.md in each folder to give a brief explanation for how some components work for the the application
