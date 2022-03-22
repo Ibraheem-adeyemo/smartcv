@@ -1,14 +1,13 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
-import { Button, Flex, FormControl, HStack, Input, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Switch } from '@chakra-ui/react'
+import { Button, Flex, FormControl, HStack, Input, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Switch, useToast } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
-import { BankAdmin, CreateRoleModel, UserManagementModal } from "../../models";
-import { UserManagementModalNames, UserManagementModals } from "../../constants";
+import { CreateRoleModel, UserManagementModal } from "../../models";
+import { notificationMesage, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { AuthContext, StatsContext, UserManagementTabProviderContext } from "../../providers";
-import { validateEmail } from "../../lib";
 import _ from "lodash";
 import { MotionModal } from "../framer/motion-modal";
 import { AnimatePresence } from "framer-motion";
-import { createBankAdmin } from "../../services/v1";
+import { createRole } from "../../services/v1";
 import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
 import { appear } from "../../animations";
 const permissions = [{
@@ -33,14 +32,11 @@ const AddNewRole: FC = () => {
     const { validation, addField, inputData, validateAllCompulsoryFields } = useValidator<CreateRoleModel>(["name", "tenantCode", "permissionIds"])
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>(UserManagementModals[2])
     const [loading, changeLoading] = useLoading()
-    const [isValidEmail, setIsValidEmail] = useState(false)
+    const toast = useToast()
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         e.stopPropagation()
         addField(e.target.id as keyof CreateRoleModel)
         formOnChange({ [e.target.id]: e.target.value })
-        if (e.target.id === "email") {
-            setIsValidEmail(validateEmail(e.target.value))
-        }
 
     }, [])
 
@@ -65,10 +61,29 @@ const AddNewRole: FC = () => {
         changeLoading(() => ({ isLoading: true, text: "Creating role" }))
         try {
             if (form) {
-                await createBankAdmin({ ...form, tenantCode: userDetail?.tenant.code } as unknown as BankAdmin)
+                await createRole(form)
+                toast({
+                    title: notificationMesage.SuccessfulRoleCreation,
+                    variant: "left-accent",
+                    isClosable: true,
+                    status: "success"
+                })
             }
-        } catch (error) {
-
+        } catch (error:any) {
+            typeof error === "string" && 
+            toast({
+                title: error,
+                variant: "left-accent",
+                isClosable: true,
+                status: "error"
+            })
+            error && typeof error.message !== "undefined" && error.message !== null && 
+            toast({
+                title: error.message,
+                variant: "left-accent",
+                isClosable: true,
+                status: "error"
+            })
         }
         changeLoading(() => ({ isLoading: false, text: "" }))
     }, [form])

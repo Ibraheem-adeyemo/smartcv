@@ -1,4 +1,4 @@
-import { TenantView } from ".";
+import { InstitutionColor, TenantView } from ".";
 
 export interface AuthModel {
     id: string,
@@ -9,17 +9,18 @@ export interface AuthModel {
 }
 
 interface Tenant {
-    id: number,
     name: string,
-    color: string,
-    code: string,
-    domain: string,
-    slogan: string,
     image: string,
-    location: string,
+    logo: string,
+    tenantCode: string,
     address: string,
+    dateCreated: string,
+    bankSuperAdmin: string,
+    status: string,
+    location: string,
     branch: string,
-    isActive: string
+    code: string
+    colot: InstitutionColor
 }
 
 interface Permission {
@@ -49,7 +50,7 @@ export interface UserModel {
     credentialsNonExpired: string,
     accountNonExpired: string,
     accountNonLocked: string,
-    tenant: TenantView,
+    tenant: Tenant,
     role: Role,
 }
 

@@ -11,8 +11,7 @@ export interface TenantView {
     status: string,
     location: string,
     branch: string,
-    code: string,
-    color: InstitutionColor
+    code: string
 }
 export interface TenantAdminView {
     firstName: string,

@@ -1,11 +1,12 @@
 export enum notificationMesage {
-    SuccessfulBankCreation="Bank creation successful",
-    SuccessfulAccountCreation="Account creation successful",
-    CantmoveToNextForm="Can't move to the next form",
-    SuccessfulSuperAdminCreation="Super admin creation successful",
-    Opps="Oops!",
-    SuccessfulLogin="Login Successful",
     AccountVerified="Your account has been verified",
+    AnErrorOccurred="Oops! An error occuured",
+    CantmoveToNextForm="Can't move to the next form",
     CantSubmitForm="Opps! can't submit this form, try again",
-    AnErrorOccurred="Oops! An error occuured"
+    Opps="Oops!",
+    SuccessfulAccountCreation="Account creation successful",
+    SuccessfulBankCreation="Bank creation successful",
+    SuccessfulLogin="Login Successful",
+    SuccessfulRoleCreation="Role creation successfult",
+    SuccessfulSuperAdminCreation="Super admin creation successful"
 }
