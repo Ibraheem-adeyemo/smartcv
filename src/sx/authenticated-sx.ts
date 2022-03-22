@@ -1,3 +1,4 @@
+import { CSSObject } from "@chakra-ui/react";
 import { NextRouter } from "next/router";
 import { MenuListItem } from "../models";
 
@@ -6,7 +7,9 @@ interface authenticatedSXProps {
     menuListItem: MenuListItem
 }
 
-export const appLinkSX = (props: authenticatedSXProps) => ({
+type appLinkSXFunc = (props: authenticatedSXProps) => CSSObject
+
+export const appLinkSX:appLinkSXFunc = (props: authenticatedSXProps) => ({
     fontSize: "16px",
     bgColor: props.menuListItem.link === props.router.asPath ? "brand.light-blue" : "",
     display: "flex",
