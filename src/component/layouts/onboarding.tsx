@@ -1,6 +1,6 @@
 import { Avatar, BoxProps, chakra, ChakraComponent, Divider, Flex, forwardRef, Link, Text, useToast } from "@chakra-ui/react";
 import React, { FC, Fragment, useCallback, useContext, useEffect } from "react";
-import { links, notificationMesage, TickIcon } from "../../constants";
+import { keysForArrayComponents, links, notificationMesage, TickIcon } from "../../constants";
 import NextLink from 'next/link'
 import { useRouter } from "next/router";
 import { Tenant, InstitutionColorInfo, Onboarding as OnboardingModel, Step, tenantAdmin, ComponentWithChildren } from "../../models";
@@ -8,6 +8,7 @@ import { createAccountAsync } from "../../services/v1";
 import { OnboardingNav } from '.'
 import _ from "lodash";
 import { OnboardingContext, CrossDomainOnboardingContext } from "../../providers";
+import { onboardingContainerBodySX, onboardingContainerSX, onboardingQuestionDIviderSX, stepsSX } from "../../sx";
 interface OnboardingProps extends ComponentWithChildren {
 }
 const OnboardingLink = forwardRef((props, ref) => {
@@ -52,9 +53,9 @@ interface LoadAvatarProps {
 const LoadAvatar: FC<LoadAvatarProps> = (props: LoadAvatarProps) => {
     // let loadTab;
 
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && props.onboarding) {
 
-        if (props.state === props.onboarding?.state) {
+        if (props.state === props.onboarding.state) {
             return <Avatar name={`${props.state + 1}`} bgColor="brand.muted-blue"></Avatar>
         } else {
             const tab = props.onboarding[props.step.key as keyof OnboardingModel] as Tenant | tenantAdmin | InstitutionColorInfo
@@ -78,14 +79,14 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
 
     const QuestionDivider = useCallback(({ i, arr }: { i: number, arr: Step[] }) => {
         if ((i > 0 && i <= (arr.length - 1) && (onboarding?.state as number) > 0)) {
-            return <Divider border="1px solid" borderColor="var(--chakra-colors-brand-muted)" w="184px" />
+            return <Divider sx={onboardingQuestionDIviderSX} />
         }
         return <></>
     }, [onboarding?.state])
 
     const createAccount = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log({isOnCrossDomain})
+        console.log({ isOnCrossDomain })
         startLoading()
         try {
             if (typeof onboarding !== "undefined") {
@@ -96,7 +97,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
                     isClosable: true,
                     variant: "left-accent"
                 })
-                debugger
+                // debugger
                 if (!isOnCrossDomain) {
                     router.push(links.onboardingSuccessPage)
                 } else {
@@ -132,35 +133,27 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
     }, [])
 
     return (
-        <Flex h="100vh" flexDir="column" gap="59px" >
+        <Flex sx={onboardingContainerSX} >
             <OnboardingNav />
-            <Flex mx="306px" gap="33px" flexDirection="column" h="100%">
-
+            <Flex sx={onboardingContainerBodySX} >
                 {!cantVew && <form method="post" onSubmit={createAccount} >
-
                     <Flex gap="33px" flexDirection="column">
-                        <Flex sx={{
-                            gap: onboarding?.state as number > 0 ? `13px` : `100px`,
-                            alignItems:"center",
-                            justifyContent:"space-around"
-                        }} >
+                        {onboarding && <Flex sx={stepsSX(onboarding.state)} >
                             {steps && steps.map((x, i, arr) =>
-                                <Fragment key={i}>
+                                <Fragment key={`${keysForArrayComponents.onboardingStep}-${i}`}>
                                     <QuestionDivider i={i} arr={arr} />
                                     <OnboardingLink href={x.url}>
                                         <Span>
 
-                                            {onboarding && <>
-                                                <LoadAvatar state={i} step={x} onboarding={onboarding} />
-                                                <LoadTextHeader state={i} step={x} onboarding={onboarding} />
-                                            </>}
+                                            <LoadAvatar state={i} step={x} onboarding={onboarding} />
+                                            <LoadTextHeader state={i} step={x} onboarding={onboarding} />
                                             <Text textAlign="center">{x.description}</Text>
                                         </Span>
                                     </OnboardingLink>
                                 </Fragment>
                             )}
                             {!steps && <></>}
-                        </Flex>
+                        </Flex>}
                         <Flex>
                             {props.children}
                         </Flex>

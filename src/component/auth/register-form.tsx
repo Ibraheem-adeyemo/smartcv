@@ -9,6 +9,7 @@ import { AppLink } from "../app";
 import { CrossDomainOnboardingContext } from "../../providers";
 import { MotionBox, MotionButton, MotionFlex } from "../framer";
 import { appear, staggerChildrenWithDuration, verticalPosition } from "../../animations";
+import { registerFormContainerSX } from "../../sx";
 
 const RegisterForm: FC = () => {
 
@@ -21,7 +22,7 @@ const RegisterForm: FC = () => {
 
     const getInterChangebyInterchangeId = async () => {
         try {
-          // debugger
+            // debugger
             setLoading({ isLoading: true, text: "Confirming" })
             const data = await getInterchangeById(interChangeId as string)
             if (typeof data.statusCondition !== "undefined" && +data.statusCondition === 1 && typeof interChangeId !== "undefined") {
@@ -74,17 +75,7 @@ const RegisterForm: FC = () => {
                 e.preventDefault();
                 getInterChangebyInterchangeId()
             })}>
-                <MotionFlex sx={{
-                    flexDir: "column",
-                    gap: "36px",
-                    px: "66px",
-                    bg: "white",
-                    borderRadius: "6px",
-                    alignItems: "center",
-                    w: "633px",
-                    py: "36px",
-                    mx: "auto"
-                }}
+                <MotionFlex sx={registerFormContainerSX}
                     initial="hide"
                     animate="show"
                     variants={staggerChildrenWithDuration}
@@ -98,10 +89,10 @@ const RegisterForm: FC = () => {
                             }}>
                             <MotionBox sx={{
                                 display: "inline-block"
-                            }} 
-                            initial="hide"
-                            animate="show"
-                            variants={verticalPosition}>
+                            }}
+                                initial="hide"
+                                animate="show"
+                                variants={verticalPosition}>
                                 Organization ID</MotionBox></FormLabel>
                         <Input placeholder="XYZ1278IO" borderRadius="4px" onInput={(e) => {
                             e.stopPropagation()
@@ -118,8 +109,8 @@ const RegisterForm: FC = () => {
                             w: "100%",
                             py: "12px"
                         }}
-                        
-                        variants={appear}
+
+                            variants={appear}
                         >
                             Submit
                         </MotionButton>

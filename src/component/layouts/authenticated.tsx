@@ -13,7 +13,7 @@ import { MotionFlex, MotionText } from "../framer";
 import colors from "../../theme/foundations/colors";
 import { breakpoints } from "../../theme/breakpoints";
 import { components } from "../../theme/components";
-import { appLayoutSX, appLinkSX, appLinkTextSX, interswitchLogoSx, mainSX, sidebarSX } from "../../sx";
+import { appLayoutSX, appLinkSX, appLinkTextSX, interswitchLogoSx, mainSX, sidebarSX, skeletonLoaderForMainSX } from "../../sx";
 import { horizontalPositionWithOpacity } from "../../animations";
 import { overrides } from "../../theme";
 
@@ -86,7 +86,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
             name: menuNames.systemSettings,
             link: ""
         }]
-        
+
         return <>
             {menuList.map((x, i) =>
                 <MotionText color="brand.muted" animate="show" initial="hide"
@@ -194,7 +194,9 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                 {isUserLoading && <SkeletonLoader rows={5} width="300px" columns={1} loaderKey="loader-list" />}
                 {isUserLoaded && <MenuLists />}
             </GridItem>
-            {isUserLoading && <GridItem d="flex" w="100%" alignItems="center" px="50px">  <SkeletonLoader rows={1} width="200px" height="20px" columns={1} loaderKey="page-header" /></GridItem>}
+            {isUserLoading && <GridItem d="flex" w="100%" alignItems="center" px="50px">  
+                <SkeletonLoader rows={1} width="200px" height="20px" columns={1} loaderKey="page-header" />
+            </GridItem>}
             {isUserLoaded &&
                 <GridItem d="flex" w="100%" alignItems="center"> {typeof props.pageHeader === "string" ? <Text sx={{
                     px: ["20px", "20px", "20px", "30px", "50px", "50px"]
@@ -202,13 +204,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
             }
 
 
-            {isUserLoading && <Flex sx={{
-                pl: "50px",
-                pr: "55px",
-                py: "30px",
-                w: "100%",
-                h: "100%"
-            }}
+            {isUserLoading && <Flex sx={skeletonLoaderForMainSX}
             > <SkeletonLoader rows={1} height="100%" width="100%" columns={1} loaderKey="main" /></Flex>}
             {isUserLoaded &&
                 <GridItem

@@ -9,6 +9,7 @@ export enum keysForArrayComponents {
     motionTrSkeleton = 'motion-tr-skeleton',
     motionTrActionSkeleton = 'motion-tr-action-skeleton',
     motionTrColumnSkeleton = 'motion-tr-column-skeleton',
+    onboardingStep = 'onboarding-step',
     skeletonLoader = 'skeloader-loader',
     tableFooter = 'table-footer',
     tableColumn = 'table-column',

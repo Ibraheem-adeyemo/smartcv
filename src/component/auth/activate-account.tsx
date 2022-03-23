@@ -1,5 +1,4 @@
 import { CircularProgress, Link } from "@chakra-ui/react"
-import { useRouter } from "next/router"
 import { FC } from "react"
 import useSWR from "swr"
 import { appear, appearWithDimensions, delayChildren } from "../../animations"
@@ -8,6 +7,7 @@ import { APIResponse } from "../../models"
 import { AnimatedCardHeader, AnimatedText, MotionFlex, MotionImage } from "../framer"
 
 import NextLink from 'next/link'
+import { activateAccountContainerSX } from "../../sx"
 interface ActivateAccountProps {
     activationCode: string | null
 }
@@ -20,17 +20,7 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
 
 
     return (
-        <MotionFlex sx={{
-            flexDir: "column",
-            gap: "20px",
-            px: "66px",
-            bg: "white",
-            borderRadius: "6px",
-            alignItems: "center",
-            w: "633px",
-            py: "42.34px",
-            mx: "auto"
-        }}
+        <MotionFlex sx={activateAccountContainerSX}
             initial="hide"
             animate="show"
             variants={delayChildren}>

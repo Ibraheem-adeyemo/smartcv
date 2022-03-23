@@ -96,3 +96,11 @@ export const interswitchLogoSx = {
     h:"100%", 
     borderBottom: "0.5px solid #7F91A8" 
 }
+
+export const skeletonLoaderForMainSX = {
+    pl: "50px",
+    pr: "55px",
+    py: "30px",
+    w: "100%",
+    h: "100%"
+}
