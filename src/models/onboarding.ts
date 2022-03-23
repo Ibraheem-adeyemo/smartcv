@@ -10,7 +10,7 @@ export interface Tenant {
 
 export interface InstitutionColorInfo {
     headerColor: string,
-    sidebarColor: string,
+    sidebarColour: string,
     buttonColor: string,
     completed: boolean,
 }

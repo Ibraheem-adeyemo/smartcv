@@ -29,7 +29,7 @@ export const initialOnboardingData: Onboarding = {
     },
     institutionColorInfo: {
         headerColor: "",
-        sidebarColor: "",
+        sidebarColour: "",
         buttonColor: "",
         completed: false
     },

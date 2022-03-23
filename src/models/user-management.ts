@@ -68,7 +68,7 @@ export interface UserManagementStat {
 
 export interface InstitutionColor {
     headerColor: string,
-    sidebarColor: string,
+    sidebarColour: string,
     buttonColor: string
 }
 

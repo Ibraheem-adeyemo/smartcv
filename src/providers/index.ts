@@ -7,6 +7,7 @@ import UserManagementTabProvider, {UserManagementTabProviderContext} from "./use
 import InterchangeDisconnectionProvider, {InterchangeDisconnectionContext} from "./interchange-disconnection-provider";
 import CrossDomainOnboardingProvider, {CrossDomainOnboardingContext} from "./cross-domain-onboarding-provider";
 import OnboardingProvider, {OnboardingContext} from "./onboarding-provider";
+import ThemeProvider from "./theme-provider";
 
 export {
     AuditProvider,
@@ -26,5 +27,6 @@ export {
     CrossDomainOnboardingProvider,
     CrossDomainOnboardingContext,
     OnboardingProvider,
-    OnboardingContext
+    OnboardingContext,
+    ThemeProvider
 }

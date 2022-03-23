@@ -18,7 +18,8 @@ const colors = {
         "muted-blue": "#6EB4E0",
         "muted-background":"#F3F5F6",
         "bg-sidebar-color": "#EBF8FE",
-        "bg-horizontal-nav-color": "#EBF8FE",
+        "bg-horizontal-nav-color": "white",
+        "bg-button-color": "#EBF8FE", 
         success:"#11B01A"
     }
 }

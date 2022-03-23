@@ -22,7 +22,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
                     branch: body.tenant.branch,
                     color: {
                         headerColor: body.institutionColorInfo.headerColor,
-                        sidebarColour: body.institutionColorInfo.sidebarColor,
+                        sidebarColour: body.institutionColorInfo.sidebarColour,
                         buttonColor: body.institutionColorInfo.buttonColor
                     }
                 },

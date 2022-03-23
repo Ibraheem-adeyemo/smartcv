@@ -15,12 +15,13 @@ import { breakpoints } from "../../theme/breakpoints";
 import { components } from "../../theme/components";
 import { appLayoutSX, appLinkSX, appLinkTextSX, interswitchLogoSx, mainSX, sidebarSX } from "../../sx";
 import { horizontalPositionWithOpacity } from "../../animations";
+import { overrides } from "../../theme";
 
 interface AuthenticatedLayoutProps extends ComponentWithChildren {
     pageHeader: string | JSX.Element
 }
 
-const Layout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) => {
+const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) => {
     const { user, signOut, error, refreshAccessToken } = useContext(AuthContext)
     const router = useRouter()
     const handleOnIdle = (event: any) => {
@@ -85,6 +86,7 @@ const Layout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) =
             name: menuNames.systemSettings,
             link: ""
         }]
+        
         return <>
             {menuList.map((x, i) =>
                 <MotionText color="brand.muted" animate="show" initial="hide"
@@ -93,7 +95,7 @@ const Layout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) =
                     }}
                     key={`${keysForArrayComponents}${i}`}
                     variants={horizontalPositionWithOpacity(i)}>
-                    <AppLink href={x.link ? x.link : "/"}role="group"
+                    <AppLink href={x.link ? x.link : "/"} role="group"
                         _active={{
                             outline: "none"
                         }}
@@ -104,7 +106,7 @@ const Layout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) =
                             bgColor: "brand.accent-color",
                             cursor: "pointer"
                         }}
-                        sx={appLinkSX({menuListItem:x, router})}
+                        sx={appLinkSX({ menuListItem: x, router })}
                     >
                         <Icon as={x.icon} _groupHover={{
                             color: "brand.primary-blue"
@@ -187,28 +189,28 @@ const Layout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) =
             </GridItem>
             <GridItem
                 sx={sidebarSX}
-                
+
             >
                 {isUserLoading && <SkeletonLoader rows={5} width="300px" columns={1} loaderKey="loader-list" />}
                 {isUserLoaded && <MenuLists />}
             </GridItem>
             {isUserLoading && <GridItem d="flex" w="100%" alignItems="center" px="50px">  <SkeletonLoader rows={1} width="200px" height="20px" columns={1} loaderKey="page-header" /></GridItem>}
             {isUserLoaded &&
-                <GridItem d="flex" w="100%" alignItems="center"> {typeof props.pageHeader === "string" ? <Text sx={{ 
-                    px:["20px","20px","20px","30px","50px","50px"]
+                <GridItem d="flex" w="100%" alignItems="center"> {typeof props.pageHeader === "string" ? <Text sx={{
+                    px: ["20px", "20px", "20px", "30px", "50px", "50px"]
                 }} variant="page-header">{props.pageHeader}</Text> : props.pageHeader}</GridItem>
             }
 
 
-            {isUserLoading && <Flex sx = {{
-                 pl:"50px",
-                 pr:"55px",
-                 py:"30px",
-                 w:"100%", 
-                 h:"100%"
+            {isUserLoading && <Flex sx={{
+                pl: "50px",
+                pr: "55px",
+                py: "30px",
+                w: "100%",
+                h: "100%"
             }}
-               > <SkeletonLoader rows={1} height="100%" width="100%" columns={1} loaderKey="main" /></Flex>}
-            { isUserLoaded &&
+            > <SkeletonLoader rows={1} height="100%" width="100%" columns={1} loaderKey="main" /></Flex>}
+            {isUserLoaded &&
                 <GridItem
                     sx={mainSX}
                 >
@@ -217,43 +219,6 @@ const Layout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) =
                 </GridItem>
             }
         </Grid>)
-}
-
-const AuthenticatedLayout:FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) => {
-    const {userDetail}  = useContext(AuthContext)
-    const tenantHasColor = userDetail && userDetail.tenant && userDetail.tenant.color
-    const bgSidebarColor = tenantHasColor? userDetail.tenant.color.sidebarColor: colors.brand["bg-sidebar-color"];
-    const bgMenuColor =  tenantHasColor? userDetail.tenant.color.headerColor: colors.brand["bg-horizontal-nav-color"];
-    const bgButtonColor =  tenantHasColor? userDetail.tenant.color: "";
-    const {LoginForm, ...newComponent} = components
-    const reBrandColors = {
-        brand: {
-            "bg-sidebar-color": bgSidebarColor,
-            "bg-horizontal-nav-color": bgMenuColor,
-            "bg-button-color": bgButtonColor
-        }
-    }
-
-    const overrides = {
-
-        colors: {
-            ...colors,
-            ...reBrandColors
-        },
-        fonts: {
-          body: "avertastd-regularuploadedfile"
-        },
-        components: newComponent,
-        breakpoints
-    }
-
-    const theme = extendTheme(overrides)
-
-    return <ChakraProvider theme={theme}>
-        <Layout pageHeader={props.pageHeader} >
-            {props.children}
-        </Layout>
-    </ChakraProvider>
 }
 
 export default AuthenticatedLayout

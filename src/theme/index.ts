@@ -10,7 +10,7 @@ import { breakpoints } from "./breakpoints";
   400px: From 30em upwards
   500px: From 48em upwards
 */
-const overrides = {
+export const overrides = {
     styles,
     colors,
     fonts: {
@@ -18,7 +18,4 @@ const overrides = {
     },
     components,
     breakpoints
-
 }
-
-export default extendTheme(overrides)

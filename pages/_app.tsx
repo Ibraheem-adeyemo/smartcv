@@ -1,8 +1,6 @@
 import type { AppProps } from 'next/app'
 import React from 'react'
-import { ChakraProvider } from '@chakra-ui/react'
-import { AuthProvider } from '../src/providers'
-import theme from "../src/theme"
+import { AuthProvider, ThemeProvider } from '../src/providers'
 import { SWRConfig } from 'swr'
 import { fetchJson } from '../src/lib'
 import Fonts from '../src/component/font'
@@ -19,10 +17,10 @@ const App:NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
       }}
     >
       <AuthProvider>
-        <ChakraProvider theme={theme}>
+        <ThemeProvider>
           <Fonts/>
           <Component {...pageProps} />
-        </ChakraProvider>
+        </ThemeProvider>
       </AuthProvider>
     </SWRConfig>
   )

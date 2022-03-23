@@ -33,14 +33,14 @@ const AddNewBank:FC = () => {
     const {form:institutionColorForm, formOnChange:institutionColorFormOnChange, refreshForm:institutionColorRefreshForm} = useForm<InstitutionColor>({
         headerColor: "#C8D2D6",
         buttonColor: "#AAB7C6",
-        sidebarColor: "#E1E6ED"
+        sidebarColour: "#E1E6ED"
     })
     const fileRef = useRef<HTMLInputElement>(null)
     const headerColorRef = useRef<HTMLInputElement>(null)
-    const sidebarColorRef = useRef<HTMLInputElement>(null)
+    const sidebarColourRef = useRef<HTMLInputElement>(null)
     const buttonColorRef = useRef<HTMLInputElement>(null)
     const { validation, addField, inputData, validateAllCompulsoryFields } = useValidator<TenantView>(["name", "logo", "address", "location", "branch", "tenantCode"])
-    const {validation: institutionColorValidation, addField:institutionColorAddField, inputData: institutionColorInputData  } = useValidator<InstitutionColorInfo>()
+    const {validation: institutionColorValidation, addField:institutionColorAddField, inputData: institutionColorInputData  } = useValidator<InstitutionColor>()
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>(UserManagementModals[1])
     const [loading, changeLoading] = useLoading()
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Event) => {
@@ -85,11 +85,11 @@ const AddNewBank:FC = () => {
         institutionColorFormOnChange({"buttonColor":(e.target as HTMLInputElement).value})
     }
 
-    function setSidebarColor(e: React.FormEvent<HTMLInputElement>) {
+    function setsidebarColour(e: React.FormEvent<HTMLInputElement>) {
 
         e.stopPropagation()
-        institutionColorAddField("sidebarColor")
-        institutionColorFormOnChange({"sidebarColor":(e.target as HTMLInputElement).value})
+        institutionColorAddField("sidebarColour")
+        institutionColorFormOnChange({"sidebarColour":(e.target as HTMLInputElement).value})
     }
 
     const saveBank = useCallback(async(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -232,7 +232,7 @@ const AddNewBank:FC = () => {
                                                         <Flex flexDir="column" gap="39px" pl="26px" pr="20px">
                                                             <Flex gap="29px">
                                                                 <Flex flexDir="column" gap="13px">
-                                                                    {map(range(0, 3), (x) => <Skeleton key={x} speed={0} bgColor={institutionColorForm?.sidebarColor} w="92px" h="13px" borderRadius="8px" />)}
+                                                                    {map(range(0, 3), (x) => <Skeleton key={x} speed={0} bgColor={institutionColorForm?.sidebarColour} w="92px" h="13px" borderRadius="8px" />)}
                                                                 </Flex>
                                                                 <Flex flexDir="column" gap="13px">
                                                                     {map(range(0, 4), (x) => <Skeleton key={x} speed={0} w="289px" bgColor="#E1E6ED" h="14px" borderRadius="8px" />)}
@@ -271,20 +271,20 @@ const AddNewBank:FC = () => {
                                                             <PickerIcon />
                                                         </Flex>
                                                         <Text color="red">{typeof institutionColorValidation?.touched !== "undefined" && institutionColorValidation?.touched.buttonColor === "touched" && !validateHexColor( institutionColorForm?.buttonColor as string) ? "This hexcode is invalid" : ""}</Text>
-                                                        <Flex bgColor="brand.muted-background" borderRadius="8px" w="100%" border={typeof institutionColorValidation?.touched !== "undefined" && institutionColorValidation?.touched.headerColor === "touched" && !validateHexColor( institutionColorForm?.sidebarColor as string) ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
-                                                            <Button bgColor={institutionColorForm?.sidebarColor} w="40px" h="16px" borderRadius="8px" onClick={
+                                                        <Flex bgColor="brand.muted-background" borderRadius="8px" w="100%" border={typeof institutionColorValidation?.touched !== "undefined" && institutionColorValidation?.touched.headerColor === "touched" && !validateHexColor( institutionColorForm?.sidebarColour as string) ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
+                                                            <Button bgColor={institutionColorForm?.sidebarColour} w="40px" h="16px" borderRadius="8px" onClick={
                                                                 () => {
-                                                                    if(sidebarColorRef.current){
-                                                                        sidebarColorRef.current.click()
+                                                                    if(sidebarColourRef.current){
+                                                                        sidebarColourRef.current.click()
                                                                     }
                                                                 }
                                                             }>
-                                                                <Input visibility="hidden" ref={sidebarColorRef} name="sidebarColor" onChange={setSidebarColor} type="color" w="40px" h="16px" borderRadius="8px" value={institutionColorForm?.sidebarColor} />
+                                                                <Input visibility="hidden" ref={sidebarColourRef} name="sidebarColour" onChange={setsidebarColour} type="color" w="40px" h="16px" borderRadius="8px" value={institutionColorForm?.sidebarColour} />
                                                             </Button>
-                                                            <Input placeholder="Side menu & accents eg. #04257F" value={institutionColorForm?.sidebarColor} border="0" bgColor="brand.muted-background" onInput={setSidebarColor} />
+                                                            <Input placeholder="Side menu & accents eg. #04257F" value={institutionColorForm?.sidebarColour} border="0" bgColor="brand.muted-background" onInput={setsidebarColour} />
                                                             <PickerIcon />
                                                         </Flex>
-                                                        <Text color="red">{typeof institutionColorValidation?.touched !== "undefined" && institutionColorValidation?.touched.sidebarColor === "touched" && !validateHexColor( institutionColorForm?.sidebarColor as string) ? "This hexcode is invalid" : ""}</Text>
+                                                        <Text color="red">{typeof institutionColorValidation?.touched !== "undefined" && institutionColorValidation?.touched.sidebarColour === "touched" && !validateHexColor( institutionColorForm?.sidebarColour as string) ? "This hexcode is invalid" : ""}</Text>
                                                     </VStack>
                                                 </Flex>
 

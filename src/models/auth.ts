@@ -20,7 +20,7 @@ interface Tenant {
     location: string,
     branch: string,
     code: string
-    colot: InstitutionColor
+    color: InstitutionColor
 }
 
 interface Permission {

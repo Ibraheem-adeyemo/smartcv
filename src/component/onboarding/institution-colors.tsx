@@ -17,7 +17,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
     const { steps, onboarding, addInfo, resetForm, previousState, loading } = useContext(OnboardingContext)
     const [canNotSubmit, setCanNotSubmit] = useState<boolean>()
     const headerColorRef = useRef<HTMLInputElement>(null)
-    const sidebarColorRef = useRef<HTMLInputElement>(null)
+    const sidebarColourRef = useRef<HTMLInputElement>(null)
     const buttonColorRef = useRef<HTMLInputElement>(null)
     const [validation, setValidation] = useState<string[]>()
 
@@ -28,7 +28,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
         resetForm("institutionColorInfo", {
             headerColor: "#C8D2D6",
             buttonColor: "#AAB7C6",
-            sidebarColor: "#E1E6ED",
+            sidebarColour: "#E1E6ED",
             completed: true
         })
     }
@@ -42,10 +42,10 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
         addInfo("institutionColorInfo", "buttonColor", (e.target as HTMLInputElement).value)
     }
 
-    function setSidebarColor(e: React.FormEvent<HTMLInputElement>) {
+    function setsidebarColour(e: React.FormEvent<HTMLInputElement>) {
 
         e.stopPropagation()
-        addInfo("institutionColorInfo", "sidebarColor", (e.target as HTMLInputElement).value)
+        addInfo("institutionColorInfo", "sidebarColour", (e.target as HTMLInputElement).value)
     }
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
             }
 
             if (typeof onboarding?.institutionColorInfo !== "undefined") {
-                if (["headerColor", "buttonColor", "sidebarColor"].filter(x => onboarding?.institutionColorInfo[x as keyof InstitutionColorInfo] === "").length > 0) {
+                if (["headerColor", "buttonColor", "sidebarColour"].filter(x => onboarding?.institutionColorInfo[x as keyof InstitutionColorInfo] === "").length > 0) {
 
                     setInitTialColorProps()
                 }
@@ -71,7 +71,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
     }, [steps])
 
     useEffect(() => {
-        setValidation(["headerColor", "sidebarColor", "buttonColor"].map(x => {
+        setValidation(["headerColor", "sidebarColour", "buttonColor"].map(x => {
             const value = (onboarding?.institutionColorInfo as InstitutionColorInfo)[x as keyof InstitutionColorInfo]
             if (value === "") {
                 return "This field cannot be empty"
@@ -118,7 +118,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                     <Flex flexDir="column" gap="39px" pl="26px" pr="20px">
                         <Flex gap="29px">
                             <Flex flexDir="column" gap="13px">
-                                {range(0, 3).map((x) => <Skeleton key={x} speed={0} bgColor={onboarding?.institutionColorInfo?.sidebarColor} w="92px" h="13px" borderRadius="8px" />)}
+                                {range(0, 3).map((x) => <Skeleton key={x} speed={0} bgColor={onboarding?.institutionColorInfo?.sidebarColour} w="92px" h="13px" borderRadius="8px" />)}
                             </Flex>
                             <Flex flexDir="column" gap="13px">
                                 {range(0, 4).map((x) => <Skeleton key={x} speed={0} w="289px" bgColor="#E1E6ED" h="14px" borderRadius="8px" />)}
@@ -158,16 +158,16 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                     </Flex>
                     <AnimatedText color="red">{(typeof validation !== "undefined" && validation[2] !== "") ? validation[2] : ""}</AnimatedText>
                     <Flex bgColor="brand.muted-background" borderRadius="8px" w="100%" border={(typeof validation !== "undefined" && validation[1] !== "") ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
-                        <Button bgColor={onboarding?.institutionColorInfo?.sidebarColor} w="40px" h="16px" borderRadius="8px" onClick={
+                        <Button bgColor={onboarding?.institutionColorInfo?.sidebarColour} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
-                                if( sidebarColorRef.current){
-                                    sidebarColorRef.current.click()
+                                if( sidebarColourRef.current){
+                                    sidebarColourRef.current.click()
                                 }
                             }
                         }>
-                            <Input visibility="hidden" ref={sidebarColorRef} name="sidebarColor" onChange={addData} type="color" w="40px" h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.sidebarColor} />
+                            <Input visibility="hidden" ref={sidebarColourRef} name="sidebarColour" onChange={addData} type="color" w="40px" h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.sidebarColour} />
                         </Button>
-                        <Input placeholder="Side menu & accents eg. #04257F" value={onboarding?.institutionColorInfo?.sidebarColor} border="0" bgColor="brand.muted-background" onInput={setSidebarColor} />
+                        <Input placeholder="Side menu & accents eg. #04257F" value={onboarding?.institutionColorInfo?.sidebarColour} border="0" bgColor="brand.muted-background" onInput={setsidebarColour} />
                         <PickerIcon />
                     </Flex>
                     <AnimatedText color="red">{(typeof validation !== "undefined" && validation[1] !== "") ? validation[1] : ""}</AnimatedText>
