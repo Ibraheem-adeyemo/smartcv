@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic"
 import { FC, Fragment, useContext, useEffect, useState } from "react"
-import { InterchangeReconnectionModalNames } from "../../constants"
+import { InterchangeReconnectionModalNames, keysForArrayComponents } from "../../constants"
 import { interchangeDisconnectionTabsName } from "../../constants/tabs"
 import { InterchangeReconnectionModal } from "../../models"
 import { InterchangeDisconnectionContext } from "../../providers"
@@ -23,18 +23,22 @@ const InterchangeDisconnectionTable: FC = () => {
         {tabs.map((x, i) => {
             if (x.isSelected) {
                 if (x.name === interchangeDisconnectionTabsName.status) {
-                    return (<><InterchangeDisconnectionStatusTable key={i} />
-
-                        {selectedModal && selectedModal.isOpen && selectedModal.name === InterchangeReconnectionModalNames.interchangeReconnection && <InterchangeReconnectionRequest />}
-                    </>)
+                    return (
+                        <Fragment key={`${keysForArrayComponents.interchangeDisconnectionTab1}-${i}`}>
+                            <InterchangeDisconnectionStatusTable />
+                            {selectedModal && selectedModal.isOpen && selectedModal.name === InterchangeReconnectionModalNames.interchangeReconnection && <InterchangeReconnectionRequest />}
+                        </Fragment >
+                    )
                 } else if (x.name === interchangeDisconnectionTabsName.connectionRequest) {
-                    return <> <InterchangeConnectionRequestTable key={i} />
-
-                        {selectedModal && selectedModal.isOpen && selectedModal.name === InterchangeReconnectionModalNames.interchangeReconnection && <InterchangeReconnectionRequest />}
-                    </>
+                    return (
+                        <Fragment key={`${keysForArrayComponents.interchangeDisconnectionTab2}-${i}`} >
+                            <InterchangeConnectionRequestTable />
+                            {selectedModal && selectedModal.isOpen && selectedModal.name === InterchangeReconnectionModalNames.interchangeReconnection && <InterchangeReconnectionRequest />}
+                        </Fragment>
+                    )
                 }
             }
-            return <Fragment key={i}></Fragment>
+            return (<Fragment key={`${keysForArrayComponents.interchangeDisconnectionTabEmpty}-${i}`}></Fragment>)
 
         })}
     </>)

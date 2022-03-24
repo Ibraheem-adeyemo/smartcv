@@ -86,7 +86,7 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
 
     const createAccount = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log({ isOnCrossDomain })
+        // console.log({ isOnCrossDomain })
         startLoading()
         try {
             if (typeof onboarding !== "undefined") {

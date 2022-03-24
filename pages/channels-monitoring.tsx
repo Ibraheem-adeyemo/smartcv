@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ChannelsMonitoring as ChannelsMonitoringComponent } from "../src/component/channels-monitoring";
 import { Authenticated } from "../src/component/layouts";
 import { filtersToShowDefaultValue } from "../src/constants";
@@ -8,7 +8,9 @@ import { ChannelsMonitoringProvider, StatsProvider } from "../src/providers";
 import { StatsContext } from "../src/providers";
 const ChannelsMonitoring: NextPage = () => {
     const { setFiltersToShow } = useContext(StatsContext)
-    setFiltersToShow(filtersToShowDefaultValue)
+    useEffect(() => {
+        setFiltersToShow(filtersToShowDefaultValue)
+    }, [])
     return (
         <ChannelsMonitoringProvider>
             <StatsProvider>

@@ -131,7 +131,7 @@ export default function useCrossDomainOnboarding() {
 
 
     useEffect(() => {
-        console.log({message, selectedApp})
+        // console.log({message, selectedApp})
         if (typeof message !== "undefined" && typeof selectedApp !== "undefined") {
             // debugger
                 // console.log({message, selectedApp})

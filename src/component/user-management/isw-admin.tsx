@@ -62,7 +62,7 @@ const ISWAdminTable: FC = () => {
     }, [iswAdmin, error])
 
     useEffect(() => {
-        if (typeof error !== "undefined") {
+        if (error) {
             toast({
                 status: "error",
                 title: typeof error.message === "undefined" ? error : error.message,
@@ -73,7 +73,7 @@ const ISWAdminTable: FC = () => {
     }, [error])
 
     useEffect(() => {
-        if (typeof iswAdmin !== "undefined" && typeof iswAdmin.totalElements !== "undefined") {
+        if (iswAdmin  && iswAdmin.totalElements) {
             setCookie(cookieKeys.totalISWAdmin, iswAdmin.totalElements.toString(), cookiesTimeout.totalISWAdminTimeout)
             setPaginationProps(iswAdmin.totalElements)
         }

@@ -20,7 +20,7 @@ const ThemeProvider: FC<ComponentWithChildren> = (props: ComponentWithChildren) 
         "bg-button-color": bgButtonColor
     }
     const theme = extendTheme(overrides)
-    console.log({ theme })
+    // console.log({ theme })
     return (
         <ChakraProvider theme={theme}>
             {props.children}

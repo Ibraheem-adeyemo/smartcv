@@ -27,7 +27,7 @@ const InterchangeDisconnectionAppBar: FC = () => {
         })
     }, [showActionButtonText])
     useEffect(() => {
-        setFiltersToShow({ showTodayFilter: true })
+        setFiltersToShow({ showTodayFilter: true, showTenantFilter: true })
     }, [])
     useEffect(() => {
         setShowActionButtonText((prev) => {
