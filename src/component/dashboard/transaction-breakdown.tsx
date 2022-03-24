@@ -1,4 +1,4 @@
-import { Text } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react"
 import React, { useState, useEffect, useContext, FC } from "react"
 import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
@@ -69,9 +69,9 @@ const TransactionBreakdown:FC = () => {
   }, [institutions, institutionsError])
   return (
     <AppCard topic={<Text variant="card-header" size="card-header">Transaction Breakdown</Text>} >
-      {!loading.isLoading ?
-        <>{stats?.map((x, i) =><Stat key={i} {...x} />)}
-        </> :
+      {!loading.isLoading && stats ?
+        <Flex flexWrap={"wrap"} gap="15px">{stats.map((x, i) =><Stat key={i} {...x} />)}
+        </Flex> :
         <SkeletonLoader rows={3} columns={4} width="200px" height="10px" gap="30px" loaderKey="transaction-breakdown-app-card" />
       }
     </AppCard>)

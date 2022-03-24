@@ -10,6 +10,8 @@ import useSWR from "swr";
 import { OnboardingContext } from "../../providers";
 import { MotionFormErrorMessage, MotionFormLabel, MotionImage } from "../framer";
 import { AnimatePresence } from "framer-motion";
+import { appear } from "../../animations";
+import { createBankContainerSX, formControlInputSX } from "../../sx";
 
 interface CreateBankProps extends stepsProps {
 
@@ -126,35 +128,25 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
     </Flex>
     return (
         <OnboardingCard cardTitle={cardTitle} cardFooter={cardFooter}>
-            <Flex gridColumnGap="21px" gridRowGap="32px" flexWrap="wrap" variant={{
-                hide: {
-                    opacity: 1,
-                    transition: {
-                        duration: 0.3
-                    }
-                },
-                show: {
-                    opacity: 0
-                }
-            }} >
-                <FormControl isRequired id="name" flexGrow={1} width="35%" isInvalid={validation?.errors?.name !== "" && validation?.touched.name === "touched"}>
+            <Flex sx={createBankContainerSX} variant={appear} >
+                <FormControl isRequired id="name" sx={formControlInputSX} isInvalid={validation?.errors?.name !== "" && validation?.touched.name === "touched"}>
                     <MotionFormLabel><Text>Bank Name</Text></MotionFormLabel>
 
                     <Input placeholder="Enter Bank Name" borderRadius="4px" value={onboarding?.tenant?.name} onChange={addData} />
                     <MotionFormErrorMessage>{validation?.errors.name}</MotionFormErrorMessage>
                 </FormControl>
-                <FormControl isRequired id="tenantCode" flexGrow={1} width="35%" isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
+                <FormControl isRequired id="tenantCode" sx={formControlInputSX} isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
                     <MotionFormLabel>Bank ID</MotionFormLabel>
                     <Input placeholder="Enter Bank ID" borderRadius="4px" value={onboarding?.tenant?.tenantCode} onChange={addData} />
                     <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
                 </FormControl>
-                <FormControl isRequired id="branch" flexGrow={1} width="35%" isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
+                <FormControl isRequired id="branch" sx={formControlInputSX} isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
                     <MotionFormLabel>Bank Branch</MotionFormLabel>
 
                     <Input placeholder="Enter Bank Branch" borderRadius="4px" value={onboarding?.tenant?.branch} onChange={addData} />
                     <MotionFormErrorMessage>{validation?.errors.branch}</MotionFormErrorMessage>
                 </FormControl>
-                <FormControl isRequired id="location" flexGrow={1} width="35%" isInvalid={validation?.errors?.location !== "" && validation?.touched.location === "touched"}>
+                <FormControl isRequired id="location" sx={formControlInputSX} isInvalid={validation?.errors?.location !== "" && validation?.touched.location === "touched"}>
                     <MotionFormLabel>Bank LocatIon</MotionFormLabel>
                     <Select borderRadius="4px" value={onboarding?.tenant?.location} onChange={addData} placeholder="Select a state">
                         {states?.map((x, i) =><option key={i} value={x.id}>{x.name}</option>)}

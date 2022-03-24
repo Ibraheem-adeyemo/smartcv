@@ -40,7 +40,7 @@ const TerminalsPerformance:FC = () => {
         prefix: "",
         suffix: ""
       }
-      const atmCountValue = typeof totalATMCount !== "undefined" && typeof totalATMCount.content !== "undefined" ? sumBy(totalATMCount?.content, (atm) => atm.count) : 0
+      const atmCountValue = totalATMCount && typeof totalATMCount.content !== "undefined" ? sumBy(totalATMCount?.content, (atm) => atm.count) : 0
       const atmLowCashValue = 0
       return [{
         ...boxSize,

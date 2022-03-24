@@ -10,7 +10,6 @@ interface authenticatedSXProps {
 type appLinkSXFunc = (props: authenticatedSXProps) => CSSObject
 
 export const appLinkSX:appLinkSXFunc = (props: authenticatedSXProps) => ({
-    fontSize: "16px",
     bgColor: props.menuListItem.link === props.router.asPath ? "brand.light-blue" : "",
     display: "flex",
     pl: "13.9px",
@@ -25,7 +24,6 @@ export const appLinkSX:appLinkSXFunc = (props: authenticatedSXProps) => ({
 export const appLinkTextSX =
 {
     opacity: [0, 0, 0, 1, 1, 1],
-    fontSize: ["10px", "10px", "10px", "10px", "16px", "16px"],
     display: ["none", "none", "none", "inline-block", "inline-block", "inline-block"],
     textAlign: "left"
 }
@@ -61,6 +59,8 @@ export const sidebarSX = {
     position: "relative",
     overflowX: "auto",
     transition: "width .5s",
+    "&>p>a>p":{
+        fontSize: ["14px", "14px", "14px", "10px", "initial", "initial"]},
     "&:hover": {
         transition: "width .5s",
         zIndex: 10,
@@ -77,7 +77,7 @@ export const sidebarSX = {
                 opacity: 1,
                 display: "inline-block",
                 transition: "display .5s 1s opacity .5s 1s",
-                fontSize: ["14px", "14px", "14px", "initial", "initial", "initial"],
+                fontSize: ["14px", "14px", "14px", "10px", "initial", "initial"],
             }
         }
 

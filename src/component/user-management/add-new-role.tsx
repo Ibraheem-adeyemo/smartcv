@@ -10,6 +10,7 @@ import { AnimatePresence } from "framer-motion";
 import { createRole } from "../../services/v1";
 import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
 import { appear } from "../../animations";
+import { formControlInputSX } from "../../sx";
 const permissions = [{
     valuw: 1,
     name: "Permision 1"
@@ -110,27 +111,27 @@ const AddNewRole: FC = () => {
     return (
         <AnimatePresence>
             {typeof form !== "undefined" && <form>
-                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={appear} size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
+                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={appear()} size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
                     <ModalOverlay />
                     <ModalContent bgColor="white" px="48px">
                         <ModalHeader>{UserManagementModalNames.addNewRole}</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                             <Flex gridRowGap="23px" gridColumnGap="32px" flexWrap="wrap" >
-                                <FormControl isRequired id="name" flexGrow={1} width="35%" isInvalid={validation?.errors?.name !== "" && validation?.touched.name === "touched"}>
+                                <FormControl isRequired id="name" sx={formControlInputSX} isInvalid={validation?.errors?.name !== "" && validation?.touched.name === "touched"}>
                                     <MotionFormLabel>Name</MotionFormLabel>
 
                                     <Input placeholder="Enter role name" borderRadius="4px" value={form?.name} onChange={addData} />
                                     <MotionFormErrorMessage>{validation?.errors.name}</MotionFormErrorMessage>
                                 </FormControl>
-                                <FormControl isRequired id="tenantCode" flexGrow={1} width="35%" isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
+                                <FormControl isRequired id="tenantCode" sx={formControlInputSX} isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
                                     <MotionFormLabel>Bank</MotionFormLabel>
                                     <Select borderRadius="4px" value={form?.tenantCode} onChange={addData} placeholder="Select an institution">
                                         {institutions?.map((x, i) => <option key={i} value={x.tenantCode}>{x.name}</option>)}
                                     </Select>
                                     <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
                                 </FormControl>
-                                <FormControl isRequired id="permissionId" flexGrow={1} width="35%" isInvalid={validation?.errors?.permissionIds !== "" && validation?.touched.permissionIds === "touched"}>
+                                <FormControl isRequired id="permissionId" sx={formControlInputSX} isInvalid={validation?.errors?.permissionIds !== "" && validation?.touched.permissionIds === "touched"}>
                                     {permissions.map((x, i) =>
                                         <>
                                             <MotionFormLabel >

@@ -22,7 +22,7 @@ export const MotionFormErrorMessage = (props: ComponentWithChildren) => {
                     sx={{
                         display: "inline-block",
                     }}
-                    variants={verticalPositionWithOpacity}
+                    variants={verticalPositionWithOpacity()}
                 >
                     <FormErrorMessage>{props.children}</FormErrorMessage>
                 </MotionBox>

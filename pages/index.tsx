@@ -56,7 +56,7 @@ const Home: NextPage = () => {
     }}
     initial="hide"
     animate="show"
-      variants={appear}
+      variants={appear()}
     >
       {token == "" && <CircularProgress isIndeterminate color="brand.primary-blue" size="120px" sx={{
         margin: "auto"

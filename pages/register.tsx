@@ -6,24 +6,17 @@ import { InterswitchLogo } from "../src/component/custom-component"
 import { NonAuthenticated } from "../src/component/layouts"
 import MissionStatement from "../src/component/mission-statement"
 import { CrossDomainOnboardingProvider } from "../src/providers"
+import { registerContainerDivSX, registerContainerSX } from "../src/sx"
 
 
 const Register: NextPage = () => {
     return (
         <NonAuthenticated>
-            <Flex sx={{
-                flexDir: "column",
-                px: ["80px", "80px", "80px", "100px", "147px", "147px", ], 
-                gap: ["30px", "30px", "30px", "30px", "102.61px", "102.61px"],
-                py: "34.5px"
-            }}>
+            <Flex sx={registerContainerSX}>
                 <Flex>
                     <InterswitchLogo variant="inverted" alt="Interswitch Logo" />
                 </Flex>
-                <Flex sx={{
-                    gap: ["30px", "30px", "30px", "50px", "99px", "99px"],
-                    flexDir: ["column","column","column","column","row","row",]
-                }}
+                <Flex sx={registerContainerDivSX}
                 >
                     <MissionStatement />
                     <CrossDomainOnboardingProvider>

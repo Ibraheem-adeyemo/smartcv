@@ -52,7 +52,7 @@ const LoginForm: FC = () => {
                 </MotionBox>
                 <MotionImage src={Images.handShake} sx={{
                     boxSize: "167px"
-                }} variants={appear} alt="hand shake" />
+                }} variants={appear()} alt="hand shake" />
 
                 <MotionBox
                     sx={{

@@ -11,6 +11,7 @@ import { AnimatePresence } from "framer-motion";
 import { createBankAdmin } from "../../services/v1";
 import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
 import { appear } from "../../animations";
+import { formControlInputSX } from "../../sx";
 
 const AddNewUser: FC = () => {
     const {userDetail} = useContext(AuthContext)
@@ -72,25 +73,25 @@ const AddNewUser: FC = () => {
     return (
         <AnimatePresence>
             {typeof form !== "undefined" && <form>
-                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={appear} size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
+                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={appear()} size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
                     <ModalOverlay />
                     <ModalContent bgColor="white" px="48px">
                         <ModalHeader>{UserManagementModalNames.addNewUser}</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                             <Flex gridRowGap="23px" gridColumnGap="32px" flexWrap="wrap" >
-                                <FormControl isRequired id="firstName" flexGrow={1} width="35%" isInvalid={validation?.errors?.firstName !== "" && validation?.touched.firstName === "touched"}>
+                                <FormControl isRequired id="firstName" sx={formControlInputSX} isInvalid={validation?.errors?.firstName !== "" && validation?.touched.firstName === "touched"}>
                                     <MotionFormLabel>First Name</MotionFormLabel>
 
                                     <Input placeholder="Enter First Name" borderRadius="4px" value={form?.firstName} onChange={addData} />
                                     <MotionFormErrorMessage>{validation?.errors.firstName}</MotionFormErrorMessage>
                                 </FormControl>
-                                <FormControl isRequired id="lastName" flexGrow={1} width="35%" isInvalid={validation?.errors?.lastName !== "" && validation?.touched.lastName === "touched"}>
+                                <FormControl isRequired id="lastName" sx={formControlInputSX} isInvalid={validation?.errors?.lastName !== "" && validation?.touched.lastName === "touched"}>
                                     <MotionFormLabel>Last Name</MotionFormLabel>
                                     <Input placeholder="Enter Last name" borderRadius="4px" value={form?.lastName} onChange={addData} />
                                     <MotionFormErrorMessage>{validation?.errors.lastName}</MotionFormErrorMessage>
                                 </FormControl>
-                                <FormControl isRequired id="email" flexGrow={1} width="35%" isInvalid={(!isValidEmail || validation?.errors?.email !== "") && validation?.touched.email === "touched"}>
+                                <FormControl isRequired id="email" sx={formControlInputSX} isInvalid={(!isValidEmail || validation?.errors?.email !== "") && validation?.touched.email === "touched"}>
                                     <MotionFormLabel>Email Address</MotionFormLabel>
                                     <Input placeholder="Enter Email Address" borderRadius="4px" value={form?.email} type="email" onChange={addData} />
                                     <MotionFormErrorMessage>{validation?.errors.email}</MotionFormErrorMessage>

@@ -21,7 +21,7 @@ export const AnimatedText: FC<ComponentWithChildren & TextProps> = (props: Compo
             animate={children ? "show" : "hide"}
             initial="hide"
             exit="hide"
-            variants={verticalPositionWithOpacity}
+            variants={verticalPositionWithOpacity()}
         >
             <Text {...rest}>
                 {children}
@@ -43,7 +43,7 @@ export const AnimatedCardHeader: FC<ComponentWithChildren & TextProps> = (props:
             animate={children ? "show" : "hide"}
             initial="hide"
             exit="hide"
-            variants={verticalPositionWithOpacity}
+            variants={verticalPositionWithOpacity()}
         >
             <Text variant="card-header" size="card-header" {...rest}>
                 {children}

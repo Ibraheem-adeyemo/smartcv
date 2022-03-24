@@ -13,7 +13,7 @@ interface ActivateAccountProps {
 }
 
 const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) => {
-    debugger
+    // debugger
     // const router = useRouter()
     const url = `${apiUrlsv1.activateAccount}?token=${props.activationCode}`
     const { data, error } = useSWR<APIResponse<any>>(url)
@@ -47,7 +47,7 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
             }}
                 initial="hide"
                 animate="show"
-                variants={appear}
+                variants={appear()}
             >
                 <CircularProgress isIndeterminate color="brand.primary-blue" size="120px" sx={{
                     margin: "auto"

@@ -4,7 +4,7 @@ import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import useSWR from "swr";
 import { apiUrlsv1, AvatarIcon, CapitolIcon, cookieKeys, StatsName } from "../../constants";
 import { getCookie } from "../../lib";
-import { ISWAdminView, Paginate, TenantAdminView, TenantView, UserManagementStat } from "../../models";
+import { ISWAdminView, ISWAdmView, Paginate, TenantAdminView, TenantView, UserManagementStat } from "../../models";
 import { AuthContext } from "../../providers";
 import { AppCard } from "../app";
 import SkeletonLoader from "../skeleton-loader";
@@ -12,12 +12,12 @@ import SkeletonLoader from "../skeleton-loader";
 const UserManagementStats: FC = () => {
     // const { data: userManagementStats, mutate, error } = useSWR<UserManagementStat[]>('/api/get-user-management-stats')
     const  {userDetail, token} = useContext(AuthContext)
-    const iswAdminUrl = token?(typeof window !== "undefined" && getCookie(cookieKeys.totalISWAdmin) !== "" ? null : null):null
+    const iswAdminUrl = token?(typeof window !== "undefined" && getCookie(cookieKeys.totalISWAdmin) !== "" ? null : apiUrlsv1.iswAdmin):null
     const tenantAdminurl = token?(typeof window !== "undefined" && getCookie(cookieKeys.totalTenantAdmin) !== "" ? null : apiUrlsv1.tenantAdmin):null
     const tenanturl= token?(typeof window !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? null : apiUrlsv1.tenant):null
-    const { data: iswAdmin, mutate: _mutateISWAdmin, error: iswAdminError } = useSWR<Paginate<ISWAdminView>>(iswAdminUrl) /* add the url to get iswadmin admin in the second null of the ternary operator */
+    const { data: iswAdmin, mutate: _mutateISWAdmin, error: iswAdminError } = useSWR<Paginate<ISWAdmView>>(iswAdminUrl) /* add the url to get iswadmin admin in the second null of the ternary operator */
     const { data: tenantAdmin, mutate: _mutateTenantAdmin, error: tenantAdminError } = useSWR<Paginate<TenantAdminView>>(tenantAdminurl)
-    const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<TenantView[]>(tenanturl)    
+    const { data: tenant, mutate: _mutateTenantView, error: tenantError } = useSWR<Paginate<TenantView>>(tenanturl)    
     const [userManagementStats, setUserManagementStats] = useState<UserManagementStat[]>([{
         name: StatsName.createdBanks,
         totalCount: getCookie(cookieKeys.totalTenant)
@@ -28,7 +28,7 @@ const UserManagementStats: FC = () => {
         name: StatsName.iSWAdminUser,
         totalCount: getCookie(cookieKeys.totalISWAdmin)
     }])
-    const isTotalCountLoading = _.every(userManagementStats, (stat: UserManagementStat) => stat.totalCount !== "")
+    const isTotalCountLoaded = _.every(userManagementStats, (stat: UserManagementStat) => stat.totalCount !== "")
 
     const GetStateIcon = useCallback(({ statName }: { statName: string }) => {
         switch (statName) {
@@ -57,7 +57,7 @@ const UserManagementStats: FC = () => {
         
         setUserManagementStats([{
             name: StatsName.createdBanks,
-            totalCount: typeof window !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? getCookie(cookieKeys.totalTenant) : typeof tenant === "undefined" && typeof tenantError === "undefined" ? "" : typeof tenant !== "undefined" && typeof tenantError === "undefined" ? `${tenant?.length}` : "0"
+            totalCount: typeof window !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? getCookie(cookieKeys.totalTenant) : typeof tenant === "undefined" && typeof tenantError === "undefined" ? "" : typeof tenant !== "undefined" && typeof tenantError === "undefined" ? `${tenant?.totalElements}` : "0"
         }, {
             name: StatsName.tenantAdminUser,
             totalCount: typeof window !== "undefined" && getCookie(cookieKeys.totalTenantAdmin) !== "" ? getCookie(cookieKeys.totalTenantAdmin) : typeof tenantAdmin === "undefined" && typeof tenantAdminError === "undefined" ? "" : typeof tenantAdmin !== "undefined" && typeof tenantAdminError === "undefined" ? `${tenantAdmin?.totalElements}` : "0"
@@ -70,7 +70,7 @@ const UserManagementStats: FC = () => {
     return (
         <AppCard topic="">
             <>
-                { isTotalCountLoading ? <SkeletonLoader rows={3} columns={3} width="200" height="10px" gap="30px" loaderKey="total-count-loading" /> :
+                { !isTotalCountLoaded ? <SkeletonLoader rows={3} columns={3} width="200" height="10px" gap="30px" loaderKey="total-count-loading" /> :
                     _.map(userManagementStats, (x, i) => (
                     <Flex key={i} p="19px" bgColor="brand.muted-background" flexGrow={1} gap="15px">
                         <Flex justifyContent="space-between" w="100%">

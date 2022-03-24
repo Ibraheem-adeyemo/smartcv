@@ -42,7 +42,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     interChange: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange/find`,
     interchangeDisconnectionStatus: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange`,
     interchangeDisconnectionRequest: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange/requests`,
-    iswAdmin: `/api/get-isw-admins`,
+    iswAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/admins/super`,
     passporProfileUrl: `${NEXT_PUBLIC_PASSPORT_BASE_URL}api/v1/accounts/me`,
     passportUrl: `${NEXT_PUBLIC_PASSPORT_BASE_URL}oauth/authorize?client_id=${CLIENT_ID}&scope=profile&response_type=code&redirect_uri=`,
     passportTokenUrl: `${NEXT_PUBLIC_PASSPORT_BASE_URL}oauth/token`,

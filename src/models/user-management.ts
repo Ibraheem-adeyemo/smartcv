@@ -1,4 +1,5 @@
 import { Tab } from ".";
+import { UserModel } from "./auth";
 
 export interface TenantView {
     name: string,
@@ -52,6 +53,10 @@ export interface ISWAdminView {
     email: string,
     dateCreated: string,
     status: string
+}
+
+export interface ISWAdmView extends ISWAdminView, UserModel {
+
 }
 
 export interface UserManagementModal {

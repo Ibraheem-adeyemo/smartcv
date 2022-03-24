@@ -1,6 +1,6 @@
 import { Box, FormLabel, Text } from "@chakra-ui/react";
 import { MotionText } from ".";
-import { verticalPositionWithOpacity } from "../../animations";
+import { verticalPositionWithOpacity} from "../../animations";
 import { ComponentWithChildren } from "../../models";
 
 
@@ -20,7 +20,7 @@ export const MotionFormLabel = (props: ComponentWithChildren) => {
                     }}
                     animate={props.children ? "show" : "hide"}
                     initial="hide"
-                    variants={verticalPositionWithOpacity}
+                    variants={verticalPositionWithOpacity()}
                 >
                     {props.children}
                 </MotionText>

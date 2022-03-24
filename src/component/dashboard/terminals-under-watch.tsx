@@ -47,7 +47,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = (props: TerminalsUnder
       return [{
         ...boxSize,
         headerName: StatsName.atmInSupervisor,
-        totalNumber: typeof atmInSupervisor !== "undefined" && typeof atmInSupervisor.content !== "undefined" ? sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
+        totalNumber: atmInSupervisor && typeof atmInSupervisor.content !== "undefined" ? sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days"

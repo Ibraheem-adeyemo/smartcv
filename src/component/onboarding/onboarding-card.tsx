@@ -32,7 +32,7 @@ const OnboardingCard: React.FC<OnboardingCardProps> = (props: OnboardingCardProp
                 variants={verticalPosition}
             ><Flex>{cardTitle}</Flex></MotionBox></Box>
             {props.children}
-            <MotionFlex variants={appear}>
+            <MotionFlex variants={appear()}>
                 {props.cardFooter}
             </MotionFlex>
         </MotionFlex>

@@ -1,18 +1,11 @@
 import { Flex, Text } from "@chakra-ui/react";
-import { AnimatePresence } from "framer-motion";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
 import React, { useContext } from "react";
-import { ChannelsMonitoringTabs } from "../src/component/channels-monitoring";
-import ChannelsMonitoringSearch from "../src/component/channels-monitoring/channels-monitoring-search.";
+import { ChannelsMonitoring as ChannelsMonitoringComponent } from "../src/component/channels-monitoring";
 import { Authenticated } from "../src/component/layouts";
 import { filtersToShowDefaultValue } from "../src/constants";
 import { ChannelsMonitoringProvider, StatsProvider } from "../src/providers";
 import { StatsContext } from "../src/providers";
-
-const AppBarFilter = dynamic(() => import("../src/component/stats/app-bar-filter"), { ssr: false })
-const ChannelsMonitoringStats = dynamic(() => import("../src/component/channels-monitoring/channels-monitoring-stats"), { ssr: false })
-const ChannelsMonitoringTable = dynamic(() => import("../src/component/channels-monitoring/channels-monitoring-table"), { ssr: false })
 const ChannelsMonitoring: NextPage = () => {
     const { setFiltersToShow } = useContext(StatsContext)
     setFiltersToShow(filtersToShowDefaultValue)
@@ -24,16 +17,7 @@ const ChannelsMonitoring: NextPage = () => {
                         <Text variant="page-header" size="page-header">Channels Monitoring</Text>
                     </Flex>
                 }>
-                    <Flex flexDir="column" gap="40px">
-                        <Flex flexDir="column" gap="33px">
-                            <ChannelsMonitoringSearch />
-                            <ChannelsMonitoringStats />
-                        </Flex>
-                        <ChannelsMonitoringTabs />
-                        <AnimatePresence>
-                            <ChannelsMonitoringTable />
-                        </AnimatePresence>
-                    </Flex>
+                    <ChannelsMonitoringComponent />
                 </Authenticated>
             </StatsProvider>
         </ChannelsMonitoringProvider>

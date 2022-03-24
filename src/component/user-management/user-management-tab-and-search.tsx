@@ -1,7 +1,7 @@
 import { HStack, Button, Flex } from "@chakra-ui/react";
 import React, { FC, ReactEventHandler, useCallback, useContext, useEffect, useState } from "react";
 import { UserManagementSearch } from ".";
-import { delayChildren } from "../../animations";
+import { appear, delayChildren } from "../../animations";
 import { appRoles, UserManagementModals, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
 import { AuthContext, UserManagementTabProviderContext } from "../../providers";
 import { MotionButton, MotionButtonGroup } from "../framer";
@@ -51,18 +51,7 @@ const UserManagementTabAndSearch: FC = () => {
     return <HStack justifyContent="space-between" w="100%">
         <MotionButtonGroup spacing="0" animate="show" initial="hide" variants={delayChildren}>
             {tabs.map((x, i, arr) => <MotionButton animate="show" initial="hide"
-                variants={{
-                    show: {
-                        opacity: 1,
-                        transition: {
-                            duration: 0.4,
-                            delay: 0.3 * i
-                        }
-                    },
-                    hide: {
-                        opacity: 0
-                    }
-                }}
+                variants={appear(i)}
                 sx={{
                     px: "20px",
                     py: "11px",

@@ -1,20 +1,23 @@
 import { Variants } from "framer-motion"
 
-export const appear: Variants = {
+type appearFunc = (i?:number) => Variants
+export const appear: appearFunc = (i=0) =>({
 
     show: {
         opacity: 1,
         transition: {
-            duration: 0.4
+            duration: 0.4,
+            delay: i * 0.3
         }
     },
     hide: {
         opacity: 0,
         transition: {
-            duration: 0.4
+            duration: 0.4,
+            delay: i * 0.3
         }
     }
-}
+})
 interface appearWithDimensionsPros {
     width?:string,
     height?:string

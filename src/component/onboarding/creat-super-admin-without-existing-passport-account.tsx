@@ -13,6 +13,7 @@ import { comparePassword, validateEmail, validateLowercase, validateNumber, vali
 import { OnboardingContext } from "../../providers";
 import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
 import { AnimatePresence } from "framer-motion";
+import { formControlInputSX } from "../../sx";
 
 interface PasswordChecker { checker: string, status: boolean, text: string }
 const MobileNoInput = forwardRef((props, ref) => {
@@ -272,25 +273,25 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
     return (<OnboardingCard cardTitle="" cardFooter={cardFooter}>
 
         <Flex gridColumnGap="21px" gridRowGap="32px" flexWrap="wrap" >
-            <FormControl isRequired id="firstName" flexGrow={1} width="35%" isInvalid={validation?.errors?.firstName !== "" && validation?.touched.firstName === "touched"}>
+            <FormControl isRequired id="firstName" sx={formControlInputSX} isInvalid={validation?.errors?.firstName !== "" && validation?.touched.firstName === "touched"}>
                 <MotionFormLabel>First Name</MotionFormLabel>
 
                 <Input placeholder="Jane" name="firstName" borderRadius="4px" value={onboarding?.tenantAdmin?.firstName} onInput={addData} />
                 <MotionFormErrorMessage>{validation?.errors.firstName}</MotionFormErrorMessage>
             </FormControl>
-            <FormControl isRequired id="lastName" flexGrow={1} width="35%" isInvalid={validation?.errors?.lastName !== "" && validation?.touched.lastName === "touched"}>
+            <FormControl isRequired id="lastName" sx={formControlInputSX} isInvalid={validation?.errors?.lastName !== "" && validation?.touched.lastName === "touched"}>
                 <MotionFormLabel>Last name</MotionFormLabel>
                 <Input placeholder="Doe" name="lastName" borderRadius="4px" value={onboarding?.tenantAdmin?.lastName} onInput={addData} />
                 <MotionFormErrorMessage>{validation?.errors.lastName}</MotionFormErrorMessage>
 
             </FormControl>
-            <FormControl isRequired id="email" flexGrow={1} width="35%" isInvalid={(!validateEmail(onboarding?.tenantAdmin?.email as string) || validation?.errors?.email !== "") && validation?.touched.email === "touched"}>
+            <FormControl isRequired id="email" sx={formControlInputSX} isInvalid={(!validateEmail(onboarding?.tenantAdmin?.email as string) || validation?.errors?.email !== "") && validation?.touched.email === "touched"}>
                 <MotionFormLabel>Email Address</MotionFormLabel>
                 <Input placeholder="janedoe@gmail.com" name="email" type="email" borderRadius="4px" value={onboarding?.tenantAdmin?.email} onInput={addData} />
                 <MotionFormErrorMessage>{validation?.errors.email}</MotionFormErrorMessage>
                 <MotionFormErrorMessage>{!validateEmail(onboarding?.tenantAdmin?.email as string) && validation?.errors.email === "" ? "Invalid email" : ""}</MotionFormErrorMessage>
             </FormControl>
-            <FormControl isRequired id="mobileNo" flexGrow={1} width="35%" isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo:"")) && validation?.touched.mobileNo === "touched"}>
+            <FormControl isRequired id="mobileNo" sx={formControlInputSX} isInvalid={(validation?.errors?.mobileNo !== "" || !isValidPhoneNumber(typeof onboarding?.tenantAdmin?.mobileNo !== "undefined"? onboarding?.tenantAdmin?.mobileNo:"")) && validation?.touched.mobileNo === "touched"}>
                 <MotionFormLabel>Phone Number</MotionFormLabel>
                 <MobileNoInput placeholder="Enter Phone no" name="mobileNo" borderRadius="4px" value={onboarding?.tenantAdmin?.mobileNo} ref={numberRef} onChange={enterSuperAdminMobile} />
                 <MotionFormErrorMessage>{validation?.errors.mobileNo}</MotionFormErrorMessage>
@@ -307,7 +308,7 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
             >
                 <PopoverTrigger>
 
-                    <FormControl isRequired id="password" flexGrow={1} width="35%" isInvalid={(((passC as PasswordChecker[])?.filter(x => !(x?.status)).length > 0) || validation?.errors?.password !== "") && validation?.touched.password === "touched"}>
+                    <FormControl isRequired id="password" sx={formControlInputSX} isInvalid={(((passC as PasswordChecker[])?.filter(x => !(x?.status)).length > 0) || validation?.errors?.password !== "") && validation?.touched.password === "touched"}>
                         <FormLabel>Password</FormLabel>
                         <Input placeholder="Enter Password" type="password" name="password" ref={passRef} borderRadius="4px" value={onboarding?.tenantAdmin?.password}
                             onBlur={() => closePopOver()}
@@ -328,7 +329,7 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
                     </PopoverBody>
                 </PopoverContent>
             </Popover>
-            <FormControl isRequired id="confirmPassword" flexGrow={1} width="35%" isInvalid={(!comparePassword(onboarding?.tenantAdmin?.confirmPassword as string, onboarding?.tenantAdmin?.password as string) || validation?.errors.confirmPassword !== "") && validation?.touched.confirmPassword === "touched"}>
+            <FormControl isRequired id="confirmPassword" sx={formControlInputSX} isInvalid={(!comparePassword(onboarding?.tenantAdmin?.confirmPassword as string, onboarding?.tenantAdmin?.password as string) || validation?.errors.confirmPassword !== "") && validation?.touched.confirmPassword === "touched"}>
                 <FormLabel>Confirm Password</FormLabel>
                 <Input type="password" placeholder="Confirm Password" name="confirmPassword" borderRadius="4px" value={onboarding?.tenantAdmin?.confirmPassword} onInput={addData} />
                 <MotionFormErrorMessage>{validation?.errors.confirmPassword}</MotionFormErrorMessage>

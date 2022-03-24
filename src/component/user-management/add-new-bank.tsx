@@ -10,6 +10,7 @@ import { validateHexColor } from "../../lib";
 import { InstitutionColor, InstitutionColorInfo, State, TenantInput, TenantView, UserManagementModal } from "../../models";
 import { UserManagementTabProviderContext } from "../../providers";
 import { createTenantAsync } from "../../services/v1";
+import { formControlInputSX } from "../../sx";
 import { AnimatedText, MotionFormErrorMessage, MotionFormLabel } from "../framer";
 import { MotionModal } from "../framer/motion-modal";
 
@@ -141,7 +142,7 @@ const AddNewBank:FC = () => {
     return (
         <AnimatePresence>
             {typeof form !== "undefined" && <form>
-                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={appear} scrollBehavior="inside" size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
+                {typeof selectedModal !== "undefined" && <MotionModal exit="hide" animate="show" initial="hide" variants={appear()} scrollBehavior="inside" size="xl" onClose={() => handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })} isOpen={selectedModal?.isOpen} isCentered>
                     <ModalOverlay />
                     <ModalContent bgColor="white" px="18px">
                         <ModalHeader>{UserManagementModalNames.addNewBank}</ModalHeader>
@@ -155,18 +156,18 @@ const AddNewBank:FC = () => {
                                     <Input placeholder="Enter Bank Name" borderRadius="4px" value={form.name} onChange={addData} />
                                     <MotionFormErrorMessage>{validation?.errors.name}</MotionFormErrorMessage>
                                 </FormControl>
-                                <FormControl isRequired id="tenantCode" flexGrow={1} width="35%" isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
+                                <FormControl isRequired id="tenantCode" sx={formControlInputSX} isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
                                     <MotionFormLabel>Bank ID</MotionFormLabel>
                                     <Input placeholder="Enter Bank ID" borderRadius="4px" value={form.tenantCode} onChange={addData} />
                                    <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
                                 </FormControl>
-                                <FormControl isRequired id="branch" flexGrow={1} width="35%" isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
+                                <FormControl isRequired id="branch" sx={formControlInputSX} isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
                                     <MotionFormLabel>Bank Branch</MotionFormLabel>
 
                                     <Input placeholder="Enter Bank Branch" borderRadius="4px" value={form.branch} onChange={addData} />
                                     <MotionFormErrorMessage>{validation?.errors.branch}</MotionFormErrorMessage>
                                 </FormControl>
-                                <FormControl isRequired id="location" flexGrow={1} width="35%" isInvalid={validation?.errors?.location !== "" && validation?.touched.location === "touched"}>
+                                <FormControl isRequired id="location" sx={formControlInputSX} isInvalid={validation?.errors?.location !== "" && validation?.touched.location === "touched"}>
                                     <MotionFormLabel>Bank Locatoin</MotionFormLabel>
                                     <Select borderRadius="4px" value={form.location} onChange={addData} placeholder="Select a state">
                                         {states?.map((x, i) => <option key={i} value={x.id}>{x.name}</option>)}

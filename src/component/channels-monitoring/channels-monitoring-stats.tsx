@@ -2,12 +2,13 @@ import { Flex } from "@chakra-ui/react";
 import React, { FC } from "react"
 import _ from "lodash";
 import { ServiceStatus, TerminalsUnderWatch } from "../dashboard";
+import { formControlInputSX } from "../../sx";
 
 const ChannelsMonitoringStats:FC = () => {
 
   return (
     <Flex gap="20px" flexWrap="wrap">
-      <Flex flexGrow={1} width="35%">
+      <Flex sx={formControlInputSX}>
         <ServiceStatus />
       </Flex>
       <Flex flexGrow={3}>

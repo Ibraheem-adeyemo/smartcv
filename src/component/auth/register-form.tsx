@@ -101,7 +101,7 @@ const RegisterForm: FC = () => {
                         }} />
                     </FormControl>
                     <MotionFlex flexDir="column" gap="15px" w="100%" alignItems="center"
-                        variants={appear}
+                        variants={appear()}
                         animate="open"
                         initial="close"
                     >
@@ -110,7 +110,7 @@ const RegisterForm: FC = () => {
                             py: "12px"
                         }}
 
-                            variants={appear}
+                            variants={appear()}
                         >
                             Submit
                         </MotionButton>

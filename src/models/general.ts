@@ -12,7 +12,7 @@ export interface State {
 }
 
 export interface ComponentWithChildren {
-    children: JSX.Element | JSX.Element[] | ReactNode
+    children: ReactNode
 }
 
 export interface Column {

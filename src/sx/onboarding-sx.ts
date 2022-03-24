@@ -7,7 +7,7 @@ export const onboardingContainerSX: CSSObject = {
 }
 
 export const onboardingContainerBodySX: CSSObject = {
-    mx: ["306px", "306px", "306px", "306px", "306px", "306px"],
+    mx: ["306px", "56px", "106px", "150px", "256px", "306px"],
     gap: ["33px", "33px", "33px", "33px", "33px", "33px"],
     flexDirection: "column",
     h: "100%"

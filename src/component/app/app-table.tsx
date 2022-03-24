@@ -4,13 +4,13 @@ import _, { get, map, range, reduce } from "lodash";
 import dynamic from "next/dynamic";
 import React, { useContext } from "react";
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
-import { appear, delayChildren, verticalPosition, verticalPositionWithOpacity } from "../../animations";
+import { appear, delayChildren, verticalPosition, verticalPositionWithOpacity, staggerChildrenWithDuration } from "../../animations";
 import { appTableElements, DotIcon, Images, keysForArrayComponents } from "../../constants";
 import { appDate } from "../../lib";
 import { Action, Column } from "../../models";
 import { PaginatorContext } from "../../providers";
 import { actionButtonSX, columnSX, showNumberColumnSX } from "../../sx";
-import { AnimatedText, MotionImage, MotionTable, MotionTbody, MotionTd, MotionThead, MotionTr } from "../framer";
+import { AnimatedText, MotionImage, MotionMenu, MotionMenuItem, MotionMenuList, MotionTable, MotionTbody, MotionTd, MotionThead, MotionTr } from "../framer";
 import SkeletonLoader from "../skeleton-loader";
 
 
@@ -29,7 +29,7 @@ interface TdElementProps<T extends Record<keyof T, T[keyof T]>> {
 
 }
 const TdElement = <T extends Record<keyof T, T[keyof T]>>(tdElementProps: TdElementProps<T>) => {
-
+    // debugger
     const ifElementExists = (column: Column) => typeof column.ele !== "undefined" && column.ele !== ""
     const isDataExists = (data: T[keyof T]) => typeof data === "undefined" || data === null
 
@@ -42,11 +42,13 @@ const TdElement = <T extends Record<keyof T, T[keyof T]>>(tdElementProps: TdElem
                 }}
                     initial="hide"
                     animate="show"
-                    variants={appear}
+                    variants={appear()}
                     src={isDataExists(tdElementProps.data) ? Images.defaultCompanyLogo : "data:image/jpg;base64," + tdElementProps.data as unknown as string} onError={() => Images.defaultCompanyLogo} />
             case appTableElements.status:
-
-                return <HStack spacing="11px">{+tdElementProps.data === 1 ? <><DotIcon color="green" /> <Text> {typeof tdElementProps.column.lookUp === "undefined" ? 'Active' : tdElementProps.column.lookUp[+tdElementProps.data]}</Text></> : <><DotIcon color="red" /> <Text>{typeof tdElementProps.column.lookUp === "undefined" ? 'Not Active' : tdElementProps.column.lookUp[+tdElementProps.data]}</Text></>
+                // debugger
+                let data = +tdElementProps.data
+                data = !isNaN(data) ? data : 0
+                return <HStack spacing="11px">{data === 1 ? <><DotIcon color="green" /> <Text> {typeof tdElementProps.column.lookUp === "undefined" ? 'Active' : tdElementProps.column.lookUp[data]}</Text></> : <><DotIcon color="red" /> <Text>{typeof tdElementProps.column.lookUp === "undefined" ? 'Not Active' : tdElementProps.column.lookUp[data]}</Text></>
                 }</HStack>
             case appTableElements.dateTime:
                 return <AnimatedText>{appDate(tdElementProps.data)}</AnimatedText>
@@ -56,7 +58,7 @@ const TdElement = <T extends Record<keyof T, T[keyof T]>>(tdElementProps: TdElem
                 return <AnimatedText>{tdElementProps.data}</AnimatedText>
         }
     }
-    return <>{tdElementProps.data}</>
+    return tdElementProps.data ? <>{tdElementProps.data}</> : <></>
 }
 
 const TdSN = (props: { pageindex: number, pageNumber: number, countPerPage: number }) => {
@@ -117,14 +119,14 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
 
                 animate="show"
                 initial="hide"
-                variants={appear}
+                variants={appear()}
             >
                 {
                     typeof props.rows?.map !== "undefined" && props.rows?.map((x: T, i: number) =>
                         <MotionTr key={`${keysForArrayComponents.motionTBodyRow}-${i}`}
                             initial="hide"
                             animate="show"
-                            variants={verticalPositionWithOpacity}
+                            variants={appear()}
                         >
                             {
                                 showNumbering && <TdSN pageindex={i} pageNumber={pageNumber} countPerPage={countPerPage} />
@@ -156,24 +158,31 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                             }
                             {
                                 typeof props.actions !== "undefined" && !showAllAction && <Td>
-                                    <Menu>
-                                        <MenuButton as={Button} bgColor="white">
-                                            <Icon as={IoEllipsisVerticalOutline} />
-                                        </MenuButton>
-                                        <MenuList>
+                                    <MotionMenu initial="hide" animate="show" variants={appear()} direction="ltr">
+                                        {({ isOpen }) => {
+                                            debugger
+                                            return(
+                                            <>
+                                                <MenuButton as={Button} bgColor="white">
+                                                    <Icon as={IoEllipsisVerticalOutline} />
+                                                </MenuButton>
+                                                <MotionMenuList initial="hide" animate="show" variants={staggerChildrenWithDuration}>
 
-                                            {
-                                                map(props.actions, (z, k) => <MenuItem key={`${keysForArrayComponents.actionMenuItem}-${k}`}
-                                                    sx={{
-                                                        bgColor: typeof z.bgColor === "undefined" ? "white" : z.bgColor,
-                                                        color: typeof z.color === "undefined" ? "initial" : z.color
-                                                    }}
-                                                    onClick={() => isShowTextOnly(z) ? undefined : z.method<T>(x)}>
-                                                    {z.name}
-                                                </MenuItem>)
-                                            }
-                                        </MenuList>
-                                    </Menu>
+                                                    {
+                                                        map(props.actions, (z, k) => <MenuItem key={`${keysForArrayComponents.actionMenuItem}-${k}`}
+                                                            sx={{
+                                                                bgColor: typeof z.bgColor === "undefined" ? "white" : z.bgColor,
+                                                                color: typeof z.color === "undefined" ? "initial" : z.color
+                                                            }}
+                                                            onClick={() => isShowTextOnly(z) ? undefined : z.method<T>(x)}>
+                                                            {z.name}
+                                                        </MenuItem>)
+                                                    }
+                                                </MotionMenuList>
+                                            </>
+                                            )
+                                        }}
+                                    </MotionMenu>
                                 </Td>
                             }
                             {

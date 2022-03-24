@@ -56,14 +56,14 @@ const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
 
         ...boxSize,
         headerName: "ATM In Service",
-        totalNumber: typeof totalATMInService !== "undefined" && typeof totalATMInService.content !== "undefined" ? sumBy(totalATMInService?.content, (atm) => atm.count) : 0,
+        totalNumber: totalATMInService  && totalATMInService.content ? sumBy(totalATMInService?.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days"
       }, {
         ...boxSize,
         headerName: "ATM Out Service",
-        totalNumber: typeof totalATMOutOfService !== "undefined" && typeof totalATMOutOfService.content !== "undefined" ? sumBy(totalATMOutOfService?.content, (atm) => atm.count) : 0,
+        totalNumber: totalATMOutOfService && totalATMOutOfService.content ? sumBy(totalATMOutOfService?.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days"
@@ -86,8 +86,10 @@ const ServiceStatus:FC<ServiceStatusProps> = (props: ServiceStatusProps) => {
         isClosable: true
       })
     }
-
-    if ((typeof totalATMInService === "undefined" && typeof totalATMInServiceError === "undefined") || (typeof totalATMOutOfService === "undefined" && typeof totalATMOutOfServiceError === "undefined")) {
+    if(totalATMInService === null || totalATMOutOfService === null){
+      setLoading({ isLoading: false, text: "" })
+    }
+    else if ((!totalATMInService  && !totalATMInServiceError) || (!totalATMOutOfService && !totalATMOutOfServiceError)) {
       setLoading({ isLoading: true, text: "" })
     } else {
       setLoading({ isLoading: false, text: "" })
