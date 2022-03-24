@@ -1,21 +1,30 @@
-import { clone } from "lodash"
+import { clone, map } from "lodash"
 import { useEffect, useState } from "react"
-import { cookieKeys, cookiesTimeout, interchangeDisconnectionTabs } from "../constants"
+import { cookieKeys, cookiesTimeout, InterchangeDisconnectionModals, interchangeDisconnectionTabs } from "../constants"
 import { getCookie, setCookie } from "../lib"
-import { interchangeDisconnectionTab } from "../models"
+import { interchangeDisconnectionTab, InterchangeReconnectionModal } from "../models"
 
 export default function useInterchangeDisconnection() {
-    const [showReconnectionRequestModal, setShowReconnectionRequestModal] = useState(false)
     const [timerLeft, setTimerLeft] = useState(0)
     const [tabs, setTabs] = useState(interchangeDisconnectionTabs as interchangeDisconnectionTab[])
+    const [modals, setModals] = useState(InterchangeDisconnectionModals)
+    
 
+    const handleToggleModal = (modalInstance?: InterchangeReconnectionModal) => {
+
+        if (typeof modalInstance !== "undefined") {
+            setModals((prev) => map(prev, (x) => x.name === modalInstance.name ? ({ ...x, ...modalInstance }) : {...x, isOpen: false}))
+        } else {
+            setModals(InterchangeDisconnectionModals)
+        }
+    }
     useEffect(() => {
         const cookieTimelLeft = getCookie(cookieKeys.requestConnectionTimeout)
         if (cookieTimelLeft !== "") {
-                setTimeout(() => {
-                    setTimerLeft(prev => prev - 1)
+            setTimeout(() => {
+                setTimerLeft(prev => prev - 1)
 
-                }, 1000);
+            }, 1000);
         } else {
             setTimerLeft(0)
         }
@@ -26,7 +35,7 @@ export default function useInterchangeDisconnection() {
             setTabs(tab as interchangeDisconnectionTab[])
         } else if (typeof index !== "undefined" && !isNaN(index)) {
             setTabs(prev => {
-              
+
                 const data = clone(prev)
                 const selectedIndex = data.findIndex((x) => x.isSelected)
                 if (selectedIndex > -1) {
@@ -39,11 +48,6 @@ export default function useInterchangeDisconnection() {
     }
 
 
-
-    const triggerReconnectionRequestModal = (status: boolean) => {
-        setShowReconnectionRequestModal(status)
-    }
-
     const requestConnection = () => {
         setCookie(cookieKeys.requestConnectionTimeout, `${cookiesTimeout.requestConnectionTimeout}`, cookiesTimeout.requestConnectionTimeout)
         let timer = cookiesTimeout.requestConnectionTimeout
@@ -55,9 +59,9 @@ export default function useInterchangeDisconnection() {
 
     return {
         tabs,
-        showReconnectionRequestModal,
+        modals,
         modifyTab,
-        triggerReconnectionRequestModal
+        handleToggleModal,
     }
 
 }

@@ -3,9 +3,9 @@ import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { TenantAdminView, Paginate, UserManagementModal} from "../../models";
-import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext } from "../../providers";
+import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext, AuthContext, StatsContext } from "../../providers";
 import { useToast } from "@chakra-ui/react";
-import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, appRoles, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
 import { AddNewBank, AddNewUser } from ".";
 import AddNewRole from "./add-new-role";
@@ -14,8 +14,20 @@ import AddNewRole from "./add-new-role";
 const BankAdminTable:FC = () => {
     // console.log({pageNumber})
 
+    const { token, userDetail } = useContext(AuthContext)
+    const { selectedTenantCode } = useContext(StatsContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
-    const { data: tenantAdmin, mutate, error } = useSWR<Paginate<TenantAdminView>>(`${apiUrlsv1.tenantAdmin}?page=${pageNumber-1}&countPerPage=${countPerPage}`)
+    let url = apiUrlsv1.tenantAdmin
+    if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+        if(userDetail.role.name !== appRoles.superAdmin){
+            url = `${url}${userDetail.tenant.code}`
+          } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
+            url = `${url}${selectedTenantCode}`
+          }
+    }
+    url += `?page=${pageNumber-1}&countPerPage=${countPerPage}`
+    url = token && userDetail?url: ""
+    const { data: tenantAdmin, mutate, error } = useSWR<Paginate<TenantAdminView>>(url === "" ? null : url)
     const toast = useToast()
     const data = useMemo(() => ({
         columns: [
@@ -86,8 +98,6 @@ const BankAdminTable:FC = () => {
             setPaginationProps(tenantAdmin.totalElements )
         }
     }, [tenantAdmin])
-
-
     return (<AppTable<TenantAdminView> columns={data?.columns} rows={data.data as TenantAdminView[]} actions={data.actions} showNumbering />)
 
 }

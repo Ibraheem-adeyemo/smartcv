@@ -1,7 +1,9 @@
-import container from "./container";
-import missionStatement from "./mission-statement";
-import skeletonLoader from "./skeleton-loader";
+import Container from "./container";
+import MissionStatement from "./mission-statement";
+import SkeletonLoader from "./skeleton-loader";
 
-export const Container = container
-export const MissionStatement = missionStatement
-export const SkeletonLoader = skeletonLoader
+export {
+    MissionStatement,
+    Container,
+    SkeletonLoader,
+}

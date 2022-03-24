@@ -18,14 +18,14 @@ const ChannelsMonitoringTable: React.FC = () => {
     let url = (tabs.findIndex((x) => x.isSelected) > -1 ? tabs.find((x) => x.isSelected)?.url : "") as string
     if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
         if(userDetail.role.name !== appRoles.superAdmin){
-            url = `${url}${userDetail.tenant.code}`
+            url = `${url}${userDetail.tenant.code}/`
           } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
-            url = `${url}${selectedTenantCode}`
+            url = `${url}${selectedTenantCode}/`
           }
     }
-    url += `/details/`
-    url = token && userDetail?url: ""
-    const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(url === "" ? null : `${url}?page=${(pageNumber - 1)}&size=${countPerPage}`)
+    url += `details/`
+    url = token && userDetail?`${url}?page=${(pageNumber - 1)}&size=${countPerPage}`: ""
+    const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(url === "" ? null : url)
     const toast = useToast()
     const data = useMemo(() => {
         const rowData = url === "" ? [] : typeof atmCountDetail !== "undefined" && typeof error === "undefined" ? atmCountDetail?.content as ATMCountDetail[] : typeof error !== "undefined" ? [] : undefined
@@ -72,8 +72,11 @@ const ChannelsMonitoringTable: React.FC = () => {
         }
     }, [error])
     useEffect(() => {
+        debugger
         if (typeof atmCountDetail !== "undefined" && typeof atmCountDetail.totalElements !== "undefined" && typeof atmCountDetail.totalPages !== "undefined" && atmCountDetail.totalPages > 1) {
             setPaginationProps(atmCountDetail.totalElements)
+        } else {
+            setPaginationProps(0)
         }
     }, [atmCountDetail])
 

@@ -67,7 +67,7 @@ export const sidebarSX = {
         left: 0,
         bottom: 0,
         top: 0,
-        width: ["250px", "250px", "250px", "inherit", "inherit", "inherit",],
+        width: ["250px", "250px", "250px", "inherit", "inherit", "inherit"],
         background: "white",
         "&>p": {
             mx: 0,

@@ -1,19 +1,27 @@
-import { UserManagementModal } from "../models";
+import { InterchangeReconnectionModal, UserManagementModal } from "../models";
 
 
 export enum UserManagementModalNames {
-    addNewUser="Add New User",
-    addNewBank="Add New Bank",
-    addNewRole="Add New Role"
+    addNewUser = "Add New User",
+    addNewBank = "Add New Bank",
+    addNewRole = "Add New Role"
+}
+
+export enum InterchangeReconnectionModalNames {
+    interchangeReconnection = "Request Reconnection"
 }
 
 export enum UserManagementTriggerButtons {
-    addNewUser="Create User",
-    addNewBank="Create Bank",
-    addNewRole="Create Role"
+    addNewUser = "Create User",
+    addNewBank = "Create Bank",
+    addNewRole = "Create Role"
 }
 
-export const UserManagementModals : Readonly<UserManagementModal[]> = [
+export enum InterchangeReconnectionTriggerButtons {
+    RequestReconnection = "Create User",
+}
+
+export const UserManagementModals: Readonly<UserManagementModal[]> = [
     {
         name: UserManagementModalNames.addNewUser,
         isOpen: false,
@@ -24,12 +32,21 @@ export const UserManagementModals : Readonly<UserManagementModal[]> = [
         name: UserManagementModalNames.addNewBank,
         isOpen: false,
         triggerButton: UserManagementTriggerButtons.addNewBank,
-        isSubmitted:false
+        isSubmitted: false
     },
     {
         name: UserManagementModalNames.addNewRole,
         isOpen: false,
         triggerButton: UserManagementTriggerButtons.addNewRole,
-        isSubmitted:false
+        isSubmitted: false
+    }
+]
+
+export const InterchangeDisconnectionModals: Readonly<InterchangeReconnectionModal[]> = [
+    {
+        name: InterchangeReconnectionModalNames.interchangeReconnection,
+        isOpen: false,
+        triggerButton: InterchangeReconnectionTriggerButtons.RequestReconnection,
+        isSubmitted: false
     }
 ]

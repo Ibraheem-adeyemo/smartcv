@@ -1,4 +1,4 @@
-import { Tab } from ".";
+import { Tab, UserManagementModal } from ".";
 
 export interface InterchangeDisconnectionStatus {
     node: string,
@@ -22,4 +22,13 @@ export interface InterchangeDisconnectionRequest {
 
 export interface interchangeDisconnectionTab extends Tab {
     url: string
+}
+export interface InterchangeReconnectionModal extends UserManagementModal {
+
+}
+
+export interface InterchangeReconnectionModel {
+    interchangeName: string,
+    tenantCode: string,
+    command: string
 }

@@ -66,6 +66,7 @@ export interface UserManagementModal {
     isSubmitted: boolean
 }
 
+
 export interface UserManagementStat {
     name: string,
     totalCount: string

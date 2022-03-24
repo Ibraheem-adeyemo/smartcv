@@ -161,25 +161,25 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                                     <MotionMenu initial="hide" animate="show" variants={appear()} direction="ltr">
                                         {({ isOpen }) => {
                                             debugger
-                                            return(
-                                            <>
-                                                <MenuButton as={Button} bgColor="white">
-                                                    <Icon as={IoEllipsisVerticalOutline} />
-                                                </MenuButton>
-                                                <MotionMenuList initial="hide" animate="show" variants={staggerChildrenWithDuration}>
+                                            return (
+                                                <>
+                                                    <MenuButton as={Button} bgColor="white">
+                                                        <Icon as={IoEllipsisVerticalOutline} />
+                                                    </MenuButton>
+                                                    <MotionMenuList initial="hide" animate="show" variants={staggerChildrenWithDuration}>
 
-                                                    {
-                                                        map(props.actions, (z, k) => <MenuItem key={`${keysForArrayComponents.actionMenuItem}-${k}`}
-                                                            sx={{
-                                                                bgColor: typeof z.bgColor === "undefined" ? "white" : z.bgColor,
-                                                                color: typeof z.color === "undefined" ? "initial" : z.color
-                                                            }}
-                                                            onClick={() => isShowTextOnly(z) ? undefined : z.method<T>(x)}>
-                                                            {z.name}
-                                                        </MenuItem>)
-                                                    }
-                                                </MotionMenuList>
-                                            </>
+                                                        {
+                                                            map(props.actions, (z, k) => <MenuItem key={`${keysForArrayComponents.actionMenuItem}-${k}`}
+                                                                sx={{
+                                                                    bgColor: typeof z.bgColor === "undefined" ? "white" : z.bgColor,
+                                                                    color: typeof z.color === "undefined" ? "initial" : z.color
+                                                                }}
+                                                                onClick={() => isShowTextOnly(z) ? undefined : z.method<T>(x)}>
+                                                                {z.name}
+                                                            </MenuItem>)
+                                                        }
+                                                    </MotionMenuList>
+                                                </>
                                             )
                                         }}
                                     </MotionMenu>

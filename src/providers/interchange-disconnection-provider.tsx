@@ -1,13 +1,13 @@
 import { createContext, FC } from "react";
-import { interchangeDisconnectionTabs } from "../constants";
+import { InterchangeDisconnectionModals, interchangeDisconnectionTabs } from "../constants";
 import { useInterchangeDisconnection } from "../hooks";
 import { ComponentWithChildren, interchangeDisconnectionTab } from "../models";
 
 export const InterchangeDisconnectionContext = createContext<ReturnType<typeof useInterchangeDisconnection>>({
     tabs: interchangeDisconnectionTabs as interchangeDisconnectionTab[],
-    showReconnectionRequestModal:false,
+    modals:InterchangeDisconnectionModals,
     modifyTab: () => {},
-    triggerReconnectionRequestModal: () => {}
+    handleToggleModal: () => {}
 })
 
 interface InterchangeDisconnectionTProviderProps extends ComponentWithChildren  {
