@@ -115,8 +115,8 @@ const TenantAdmin:FC = () => {
 
         <PaginatorProvider>
             <BankAdminTable />
-            {typeof selectedModal !== "undefined" && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewUser && <AddNewUser />}
-            {typeof selectedModal !== "undefined" && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewRole && <AddNewRole />}
+            {selectedModal && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewUser && <AddNewUser />}
+            {selectedModal && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewRole && <AddNewRole />}
         </PaginatorProvider>
     )
 }

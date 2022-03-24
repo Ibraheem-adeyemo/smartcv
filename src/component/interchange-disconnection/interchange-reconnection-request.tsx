@@ -86,7 +86,7 @@ const InterchangeReconnectionRequest: FC = () => {
         }
     }, [form])
     useEffect(() => {
-
+        debugger
         const modal = modals.find((x) => x.name === InterchangeReconnectionModalNames.interchangeReconnection) as InterchangeReconnectionModal
         setSelectedModal(modal)
     }, [modals])

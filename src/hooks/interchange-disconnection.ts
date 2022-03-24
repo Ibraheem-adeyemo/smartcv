@@ -8,12 +8,29 @@ export default function useInterchangeDisconnection() {
     const [timerLeft, setTimerLeft] = useState(0)
     const [tabs, setTabs] = useState(interchangeDisconnectionTabs as interchangeDisconnectionTab[])
     const [modals, setModals] = useState(InterchangeDisconnectionModals)
-    
+
 
     const handleToggleModal = (modalInstance?: InterchangeReconnectionModal) => {
+        // debugger
+        if (modalInstance) {
+            setModals((prev) => {
+                // debugger
+                const a = map(prev, (x) => {
+                    // debugger
+                    if (x.name === modalInstance.name) {
+                        return {
+                            ...x,
+                            ...modalInstance
+                        }
+                    } return {
+                        ...x,
+                        isOpen: false
+                    }
+                }
+                )
+                return a
+            })
 
-        if (typeof modalInstance !== "undefined") {
-            setModals((prev) => map(prev, (x) => x.name === modalInstance.name ? ({ ...x, ...modalInstance }) : {...x, isOpen: false}))
         } else {
             setModals(InterchangeDisconnectionModals)
         }

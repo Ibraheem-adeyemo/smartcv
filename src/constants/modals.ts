@@ -18,7 +18,7 @@ export enum UserManagementTriggerButtons {
 }
 
 export enum InterchangeReconnectionTriggerButtons {
-    RequestReconnection = "Create User",
+    RequestReconnection = "Requestion Reconnection",
 }
 
 export const UserManagementModals: Readonly<UserManagementModal[]> = [

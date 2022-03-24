@@ -4,5 +4,6 @@ import InterchangeDisconnectionTabs from "./interchange-disconnection-tabs";
 import InterchangeDisconnectionStatusTable from "./interchange-disconnection-status-table";
 import InterchangeDisconnectionTable from './interchange-disconnection-table'
 import InterchangeDisconnection from "./interchange-disconnection";
+import InterchangeReconnectionRequest from './interchange-reconnection-request'
 
-export { ConnectionRequestTable, InterchangeDisconnectionTabs, InterchangeDisconnectionAppBar, InterchangeDisconnectionStatusTable, InterchangeDisconnectionTable, InterchangeDisconnection }
+export { ConnectionRequestTable, InterchangeDisconnectionTabs, InterchangeDisconnectionAppBar, InterchangeDisconnectionStatusTable, InterchangeDisconnectionTable, InterchangeDisconnection, InterchangeReconnectionRequest }
