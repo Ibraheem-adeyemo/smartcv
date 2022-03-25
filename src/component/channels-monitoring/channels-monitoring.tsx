@@ -1,12 +1,12 @@
 import { Flex } from "@chakra-ui/react"
 import { AnimatePresence } from "framer-motion"
 import dynamic from "next/dynamic"
+import { FC } from "react"
 import { ChannelsMonitoringSearch, ChannelsMonitoringTabs } from "."
 
 const ChannelsMonitoringStats = dynamic(() => import("./channels-monitoring-stats"), { ssr: false })
 const ChannelsMonitoringTable = dynamic(() => import("./channels-monitoring-table"), { ssr: false })
-const ChanngelsMonitoring = () => {
-
+const ChanngelsMonitoring:FC = () => {
     return (
         <Flex flexDir="column" gap="40px">
             <Flex flexDir="column" gap="33px">

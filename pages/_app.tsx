@@ -13,7 +13,8 @@ const App:NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
     <SWRConfig
       value={{
         fetcher:fetchJson,
-        onError:(err) => console.error({SWRError:err})
+        onError:(err) => console.error({SWRError:err}),
+        refreshInterval: 30000000
       }}
     >
       <AuthProvider>

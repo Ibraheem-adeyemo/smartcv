@@ -7,7 +7,8 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
     try {
         const interchangeId1 = getCookie(cookieKeys.interchangeId)
         const interchangeId2 = window.sessionStorage.getItem(sessionStorageKeys.interchangeId)
-        if (interchangeId1 !== "" || interchangeId2) {
+        const currrentInterChangeId = interchangeId1?interchangeId1:interchangeId2?interchangeId2:""
+        if (currrentInterChangeId) {
             const body = onboarding
 
             const requestBody = JSON.stringify({
@@ -20,6 +21,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
                     address: body.tenant.address,
                     location: body.tenant.location,
                     branch: body.tenant.branch,
+                    interchangeName:currrentInterChangeId,
                     color: {
                         headerColor: body.institutionColorInfo.headerColor,
                         sidebarColour: body.institutionColorInfo.sidebarColour,
