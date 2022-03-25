@@ -128,7 +128,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                     </Flex>
                 </Flex>
                 <VStack spacing='8px'>
-                    <AnimatedText color="muted-text" textAlign="left" w="100%">Pick from the sma Pills on each box beloe to set your app color </AnimatedText>
+                    <AnimatedText color="muted-text" textAlign="left" w="100%">Pick from the small Pills beside the Color codes below to show the color picker or type to change the Hex codes on each box beloe to set your app color </AnimatedText>
                     <Flex bgColor="brand.muted-background" border={(typeof validation !== "undefined" && validation[0] !== "") ? "1px solid red" : "unset"} borderRadius="8px" w="100%" alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.headerColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
