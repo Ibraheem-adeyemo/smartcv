@@ -160,7 +160,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                                 typeof props.actions !== "undefined" && !showAllAction && <Td>
                                     <MotionMenu initial="hide" animate="show" variants={appear()} direction="ltr">
                                         {({ isOpen }) => {
-                                            debugger
+                                            // debugger
                                             return (
                                                 <>
                                                     <MenuButton as={Button} bgColor="white">

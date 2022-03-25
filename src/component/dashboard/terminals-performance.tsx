@@ -1,17 +1,24 @@
-import {Text, useToast} from '@chakra-ui/react'
+import {Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast} from '@chakra-ui/react'
 import React, { FC, useContext, useEffect, useState } from "react"
 import { StatsA } from "../../models/stats-models";
 import useSWR from "swr";
-import { apiUrlsv1, appRoles, StatsName } from "../../constants";
+import { apiUrlsv1, appRoles, keysForArrayComponents, StatsName, UserManagementModalNames } from "../../constants";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
 import { ATMCount, Paginate } from "../../models";
-import { AuthContext, StatsContext } from "../../providers"
+import { AuthContext, PaginatorProvider, StatsContext } from "../../providers"
 import { AppCard } from "../app";
 import { SkeletonLoader } from "..";
 import { Stat } from "../stats";
+import { ChannelsMonitoringTableSetup } from '../channels-monitoring';
 
-const TerminalsPerformance:FC = () => {
+interface TerminalsPerformanceProps {
+  showDetails?:boolean
+}
+
+const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = false ,...props}: TerminalsPerformanceProps) => {
+  const [selectedUrl, setSelectedUrl] = useState<string>();
+  const [selectedHeaderName, setSelectedHeaderName] = useState<string>();
   const {token, userDetail} = useContext(AuthContext)
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let url = apiUrlsv1.atmCount
@@ -36,11 +43,11 @@ const TerminalsPerformance:FC = () => {
     const getStats = (): StatsA[] => {
       const boxSize = {
         width: ["224px", "224px", "224px", "224px", "229px", "229px"],
-        height: ["159px", "159px", "159px", "159px", "159px", "189px"],
+        height: ["200px", "200px", "200px", "200px", "200px", "200px"],
         prefix: "",
         suffix: ""
       }
-      const atmCountValue = totalATMCount && typeof totalATMCount.content !== "undefined" ? sumBy(totalATMCount?.content, (atm) => atm.count) : 0
+      const atmCountValue = totalATMCount && totalATMCount.content ? sumBy(totalATMCount?.content, (atm) => atm.count) : 0
       const atmLowCashValue = 0
       return [{
         ...boxSize,
@@ -49,15 +56,24 @@ const TerminalsPerformance:FC = () => {
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days",
-
-      }, {
-        ...boxSize,
-        headerName: StatsName.atmLowCashLevel,
-        totalNumber: atmLowCashValue,
-        status: "green",
-        percentage: "6.0%",
-        days: "Last 7 days",
+        url: apiUrlsv1.atmCount
       }]
+      // return [{
+      //   ...boxSize,
+      //   headerName: StatsName.atmCount,
+      //   totalNumber: atmCountValue,
+      //   status: "green",
+      //   percentage: "6.0%",
+      //   days: "Last 7 days",
+
+      // }, {
+      //   ...boxSize,
+      //   headerName: StatsName.atmLowCashLevel,
+      //   totalNumber: atmLowCashValue,
+      //   status: "green",
+      //   percentage: "6.0%",
+      //   days: "Last 7 days",
+      // }]
     }
 
     setStats(getStats())
@@ -77,12 +93,35 @@ const TerminalsPerformance:FC = () => {
     }
   }, [totalATMCount, totalATMCountError])
   return (
+    <>
     <AppCard topic={<Text variant="card-header" size="card-header">How are terminals performance</Text>} >
-      {!loading.isLoading ?
-        <>{stats?.map((x, i) => <Stat key={i} {...x} />)}</> :
-        <SkeletonLoader rows={3} columns={2} width="400px" height="10px" gap="30px" loaderKey='terminal-performance-app-card' />
+      {!loading.isLoading && stats ?
+        <>{stats.map((x, i) => <Button  key={`${keysForArrayComponents.terminalsPerformance}-${i}`} cursor={showDetails? 'pointer': 'none'} onClick={()=> {
+          if(showDetails){
+            setSelectedUrl(`${x.url}/`)
+            setSelectedHeaderName(x.headerName)
+          }}}><Stat {...x} /></Button>)}</> :
+        <SkeletonLoader rows={1} columns={1} width="300px" height="300px" loaderKey='terminal-performance-app-card' />
       }
     </AppCard>
+
+{showDetails && selectedHeaderName && selectedUrl && <Modal scrollBehavior="inside" size="fit-content" onClose={() => {
+  setSelectedUrl(undefined)
+  setSelectedHeaderName(undefined)
+  } } isOpen={selectedUrl?true:false} isCentered>
+  <ModalOverlay />
+  <ModalContent bgColor="white" px="18px" w="fit-content">
+    <ModalHeader>{selectedHeaderName}</ModalHeader>
+    <ModalCloseButton />
+    <ModalBody>
+      <PaginatorProvider>
+          <ChannelsMonitoringTableSetup url={selectedUrl} />
+      </PaginatorProvider>
+    </ModalBody>
+  </ModalContent>
+</Modal>
+}
+</>
   )
 }
 export default  TerminalsPerformance

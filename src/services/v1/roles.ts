@@ -8,7 +8,8 @@ export const  createRole = async (role: CreateRoleModel) => {
             const token = getCookie("token")
             const s = await fetchJson<UserModel>(apiUrlsv1.createRole, {
                 headers: {
-                    "Authorization": `bearer ${token}`
+                    "Authorization": `bearer ${token}`,
+                    "Content-Type": "application/json"
                 },
                 method: "post",
                 body: JSON.stringify(role),

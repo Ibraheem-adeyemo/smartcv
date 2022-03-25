@@ -86,7 +86,7 @@ const InterchangeDisconnectionStatusTable: FC = () => {
     }, [error])
 
     useEffect(() => {
-        debugger
+        // debugger
         if (connnectionRequest && connnectionRequest.totalElements) {
             setPaginationProps(connnectionRequest.totalElements)
         } else {

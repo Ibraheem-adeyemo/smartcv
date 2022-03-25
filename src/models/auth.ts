@@ -65,7 +65,8 @@ export interface TokenRequestBody {
 
 export interface TokenResponsBody {
     access_token: string,
-    refresh_token: string
+    refresh_token: string,
+    email: string
 }
 
 export interface RefreshTokenRequestBody {

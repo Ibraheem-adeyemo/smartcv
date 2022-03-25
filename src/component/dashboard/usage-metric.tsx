@@ -1,16 +1,36 @@
 import React, { useState, useCallback, useEffect, useContext } from "react"
 import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
-import { StatsA } from "../../models"
+import { Paginate, StatsA } from "../../models"
 import { AppCard } from "../app"
 import { Text } from '@chakra-ui/react'
 import { useLoading } from "../../hooks"
-import { StatsContext } from "../../providers"
+import { AuthContext, StatsContext } from "../../providers"
+import { apiUrlsv1, appRoles } from "../../constants"
+import useSWR from "swr"
 
 const UsageMetric:React.FC = () => {
-    const { institutions, institutionsError } = useContext(StatsContext)
+    const { institutions, institutionsError, selectedTenantCode } = useContext(StatsContext)
     const [loading, setLoading] = useLoading({isLoading:true, text:""})
     const [stats, setStats] = useState<StatsA[]>()
+    const {userDetail} = useContext(AuthContext)
+    let balanceEnquiryUrl = apiUrlsv1.balanceEnquiry
+    let pinChangeUrl = apiUrlsv1.pinChange
+
+    if (userDetail && (userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+  
+      if (userDetail.role.name !== appRoles.superAdmin) {
+        balanceEnquiryUrl = `${apiUrlsv1.balanceEnquiry}${userDetail.tenant.code}/count`
+        pinChangeUrl = `${apiUrlsv1.pinChange}${userDetail.tenant.code}/count`
+      } else if (userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0") {
+        balanceEnquiryUrl = `${apiUrlsv1.balanceEnquiry}${selectedTenantCode}/count`
+        pinChangeUrl = `${apiUrlsv1.pinChange}${selectedTenantCode}/count`
+      }
+    }
+    balanceEnquiryUrl = selectedTenantCode && selectedTenantCode !== "0"?balanceEnquiryUrl:""
+    pinChangeUrl = selectedTenantCode && selectedTenantCode !== "0"?pinChangeUrl:""
+    const {data:balanceEnquiryCount, error: balanceEnquiryCountError} = useSWR<Paginate<any>>(!balanceEnquiryUrl?null:balanceEnquiryUrl)
+    const {data:pinChangeCount, error: pinChangeCountError} = useSWR<Paginate<any>>(!pinChangeUrl?null:pinChangeUrl)
 
 
     useEffect(() => {
@@ -27,7 +47,7 @@ const UsageMetric:React.FC = () => {
             return [{
                 ...boxSize,
                 headerName: "Balance Enquiry",
-                totalNumber: 0,
+                totalNumber: balanceEnquiryCount && balanceEnquiryCount.totalElements? balanceEnquiryCount.totalElements:0,
                 status: "green",
                 percentage: "6.0%",
                 days: "Last 7 days",
@@ -35,7 +55,7 @@ const UsageMetric:React.FC = () => {
             }, {
                 ...boxSize,
                 headerName: "Pin Change",
-                totalNumber: 0,
+                totalNumber: pinChangeCount && pinChangeCount.totalElements? pinChangeCount.totalElements:0,
                 status: "green",
                 percentage: "6.0%",
                 days: "Last 7 days",

@@ -13,7 +13,10 @@ export enum keysForArrayComponents {
     motionTrActionSkeleton = 'motion-tr-action-skeleton',
     motionTrColumnSkeleton = 'motion-tr-column-skeleton',
     onboardingStep = 'onboarding-step',
+    serviceStatusAppCard = 'service-status-app-card',
     skeletonLoader = 'skeloader-loader',
     tableFooter = 'table-footer',
     tableColumn = 'table-column',
+    terminalsPerformance = 'terminals-performance',
+    terminalsUnderWatchAppCard = 'terminals-under-watch-app-card'
 }

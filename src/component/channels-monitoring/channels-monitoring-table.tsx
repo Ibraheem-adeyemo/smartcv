@@ -7,15 +7,18 @@ import { PaginatorProvider, PaginatorContext,channelsMonitoringContext, StatsCon
 import { appRoles, appTableElements } from "../../constants";
 import { useToast } from "@chakra-ui/react";
 
+interface ChannelsMonitoringTableSetupProps {
+    url?: string
+}
 
-const ChannelsMonitoringTable: React.FC = () => {
+export const ChannelsMonitoringTableSetup: FC<ChannelsMonitoringTableSetupProps> = (props: ChannelsMonitoringTableSetupProps) => {
     // console.log({pageNumber})
     const {token, userDetail} = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { selectedTenantCode } = useContext(StatsContext)
     const { tabs } = useContext(channelsMonitoringContext)
     // console.log({tabs})
-    let url = (tabs.findIndex((x) => x.isSelected) > -1 ? tabs.find((x) => x.isSelected)?.url : "") as string
+    let url = props.url? props.url : (tabs.findIndex((x) => x.isSelected) > -1 ? tabs.find((x) => x.isSelected)?.url : "") as string
     if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
         if(userDetail.role.name !== appRoles.superAdmin){
             url = `${url}${userDetail.tenant.code}/`
@@ -72,7 +75,7 @@ const ChannelsMonitoringTable: React.FC = () => {
         }
     }, [error])
     useEffect(() => {
-        debugger
+        // debugger
         if (typeof atmCountDetail !== "undefined" && typeof atmCountDetail.totalElements !== "undefined" && typeof atmCountDetail.totalPages !== "undefined" && atmCountDetail.totalPages > 1) {
             setPaginationProps(atmCountDetail.totalElements)
         } else {
@@ -85,13 +88,13 @@ const ChannelsMonitoringTable: React.FC = () => {
 
 }
 
-const ChannelsMonitoring: FC = () => {
+const ChannelsMonitoringTable: FC = () => {
     return (
 
         <PaginatorProvider>
-            <ChannelsMonitoringTable />
+            <ChannelsMonitoringTableSetup />
         </PaginatorProvider>
     )
 }
 
-export default ChannelsMonitoring
+export default ChannelsMonitoringTable

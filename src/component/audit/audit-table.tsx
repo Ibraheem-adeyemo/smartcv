@@ -3,19 +3,27 @@ import React, { FC, useContext, useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { AppTable } from "../app";
 import { Paginate, AuditView, Action } from "../../models";
-import { PaginatorProvider, PaginatorContext, AuditContext, AuthContext } from "../../providers";
+import { PaginatorProvider, PaginatorContext, AuditContext, AuthContext, StatsContext } from "../../providers";
 import { useToast } from "@chakra-ui/react";
-import { apiUrlsv1 } from "../../constants";
+import { apiUrlsv1, appRoles } from "../../constants";
 
 
 const AuditTable:FC = () => {
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
-    const { token } = useContext(AuthContext)
+    const { token, userDetail } = useContext(AuthContext)
     const { searchText, changeAuditView, columns, toggleDetailsModal, changeAuditInfo} = useContext(AuditContext)
     let url = `${apiUrlsv1.audit}?page=${pageNumber-1}&size=${countPerPage}`
-    
-    if(searchText !== "") {
+    const {selectedTenantCode} = useContext(StatsContext)
+    if (userDetail && (userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+  
+      if (userDetail.role.name !== appRoles.superAdmin) {
+        url = `${apiUrlsv1.audit}code/${userDetail.tenant.code}?page=${pageNumber-1}&size=${countPerPage}`
+      } else if (userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0") {
+        url = `${apiUrlsv1.audit}code/${selectedTenantCode}?page=${pageNumber-1}&size=${countPerPage}`
+      }
+    }
+    else if(searchText !== "") {
         url =`${apiUrlsv1.auditByUser}/${searchText}?page=${pageNumber-1}&size=${countPerPage}` 
     }
     

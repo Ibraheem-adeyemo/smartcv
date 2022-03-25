@@ -2,12 +2,14 @@ import { NextPage } from "next";
 import React from "react";
 import { Audit as AuditComponent } from "../src/component/audit";
 import { Authenticated } from "../src/component/layouts";
-import { AuditProvider } from "../src/providers";
+import { AuditProvider, StatsProvider } from "../src/providers";
 const Audit: NextPage = () => {
 
     return (<AuditProvider>
         <Authenticated pageHeader={"Audit"}>
-            <AuditComponent />
+            <StatsProvider>
+                <AuditComponent />
+            </StatsProvider>
         </Authenticated>
     </AuditProvider>)
 }

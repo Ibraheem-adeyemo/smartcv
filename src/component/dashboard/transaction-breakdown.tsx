@@ -19,7 +19,7 @@ const TransactionBreakdown:FC = () => {
   const getStats = () : StatsA[]  => {
     const boxSize = {
       width: ["224px", "224px", "224px", "224px", "229px", "229px"],
-      height: ["159px", "159px", "159px", "159px", "159px", "189px"],
+      height: ["200px", "200px", "200px", "200px", "200px", "200px"],
       prefix:"",
       suffix:""
     }

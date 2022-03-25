@@ -1,5 +1,6 @@
 export enum cookieKeys {
     token = "token",
+    email = "email",
     tokenExpiresIn = "token-expires-in",
     tokenDurationDate = "token-duration-date",
     interchangeId = "interchange-id",
@@ -20,6 +21,7 @@ export enum cookiesTimeout {
     totalTenantTimeout = 10,
     totalISWAdminTimeout = 10,
     tokenTimeout = 60,
+    emailTimeout = 60,
     tokenDurationDateTimeout = 60,
     tokenExpiresInTimeout = 60,
     redirectUrlTimeout = 10,

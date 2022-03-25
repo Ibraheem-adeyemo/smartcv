@@ -68,7 +68,7 @@ const UserManagementStats: FC = () => {
     }, [tenant, tenantError, tenantAdmin, tenantAdminError, iswAdmin, iswAdminError])
 
     return (
-        <AppCard topic="">
+        <AppCard topic="" width="100%">
             <>
                 { !isTotalCountLoaded ? <SkeletonLoader rows={3} columns={3} width="200" height="10px" gap="30px" loaderKey="total-count-loading" /> :
                     _.map(userManagementStats, (x, i) => (

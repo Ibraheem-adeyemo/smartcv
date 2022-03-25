@@ -1,8 +1,9 @@
 import { Flex } from "@chakra-ui/react"
 import dynamic from "next/dynamic"
 import { FC, useContext, useEffect, useMemo } from "react"
-import { filterDates } from "../../constants"
-import { StatsContext } from "../../providers"
+import { appRoles, filterDates } from "../../constants"
+import { AuthContext, StatsContext } from "../../providers"
+import { dashboardContainerSX } from "../../sx"
 
 const TerminalsPerformance = dynamic(() => import('./terminals-performance'), {ssr:false})
 const SuccessRate = dynamic(() => import('./success-rate'), {ssr:false})
@@ -14,41 +15,46 @@ const TransactionBreakdown = dynamic(() => import('./transaction-breakdown'), {s
 const TransactionMetric = dynamic(() => import('./transaction-metric'), {ssr:false})
 const UsageMetric = dynamic(() => import('./usage-metric'), {ssr:false})
 const Dashboard:FC = () => {
-    const {toggleDate} = useContext(StatsContext)
+    const {userDetail} = useContext(AuthContext)
+    const {toggleDate, selectedTenantCode} = useContext(StatsContext)
+    let isTenantLoaded = false
+    if (userDetail && (userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+      isTenantLoaded = true
+    }
     useEffect(() => {
         toggleDate(filterDates.today)
     },[])
     return(
         
-        <Flex gap="30px" flexWrap="wrap">
-          <Flex flexGrow={3}>
-            <TerminalsPerformance />
+        <Flex sx={dashboardContainerSX} >
+          <Flex>
+            <TerminalsPerformance showDetails />
           </Flex>
-          <Flex flexGrow={1} w="25%">
+          {/* <Flex flexGrow={1} w="25%">
             <SuccessRate />
+          </Flex> */}
+          <Flex >
+            <ServiceStatus showDetails />
           </Flex>
-          <Flex flexGrow={1} w="35%">
-            <ServiceStatus />
+          <Flex >
+            <TerminalsUnderWatch showDetails />
           </Flex>
-          <Flex flexGrow={3} >
-            <TerminalsUnderWatch />
-          </Flex>
-          <Flex flexGrow={3}>
+          <Flex>
             <TransactionMetric />
           </Flex>
-          <Flex flexGrow={1}>
+          {isTenantLoaded &&<Flex>
             <UsageMetric />
-          </Flex>
-          <Flex flexGrow={1}>
+          </Flex>}
+          <Flex>
             <TransactionBreakdown />
           </Flex>
 
-          <Flex flexGrow={4} width6="70%">
+          {/* <Flex flexGrow={4} width6="70%">
             <TopPerforminBanks />
-          </Flex>
-          <Flex flexGrow={1} width="25%">
+          </Flex> */}
+          {/* <Flex flexGrow={1} width="25%">
             <TopTransactionMetric />
-          </Flex>
+          </Flex> */}
         </Flex>
     )
 }

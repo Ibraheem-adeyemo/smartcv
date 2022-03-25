@@ -4,18 +4,22 @@ import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 import { useLoading } from "../../hooks";
-import { apiUrlsv1, appRoles, StatsName } from "../../constants";
+import { apiUrlsv1, appRoles, keysForArrayComponents, StatsName, UserManagementModalNames } from "../../constants";
 import useSWR from "swr";
 import { ATMInSupervisor, Paginate } from "../../models";
-import { AuthContext, StatsContext } from "../../providers";
-import { useToast, Text } from "@chakra-ui/react";
+import { AuthContext, PaginatorProvider, StatsContext } from "../../providers";
+import { useToast, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Button } from "@chakra-ui/react";
 import _, { sumBy } from "lodash";
+import { ChannelsMonitoringTableSetup } from "../channels-monitoring";
 
 interface TerminalsUnderWatchProps {
-  title?: string
+  title?: string,
+  showDetails?: boolean
 }
 
-const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = (props: TerminalsUnderWatchProps) => {
+const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false, ...props }: TerminalsUnderWatchProps) => {
+  const [selectedUrl, setSelectedUrl] = useState<string>();
+  const [selectedHeaderName, setSelectedHeaderName] = useState<string>();
   const { token, userDetail } = useContext(AuthContext)
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
   let atmInSupervisorUrl = apiUrlsv1.atmInSupervisor
@@ -23,7 +27,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = (props: TerminalsUnder
 
     if (userDetail.role.name !== appRoles.superAdmin) {
       atmInSupervisorUrl = `${apiUrlsv1.atmInSupervisor}/${userDetail.tenant.code}`
-    } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
+    } else if (userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0") {
       atmInSupervisorUrl = `${apiUrlsv1.atmInSupervisor}/${selectedTenantCode}`
     }
   }
@@ -40,7 +44,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = (props: TerminalsUnder
 
       const boxSize = {
         width: ["224px", "224px", "224px", "224px", "229px", "229px"],
-        height: ["159px", "159px", "159px", "159px", "159px", "189px"],
+        height: ["200px", "200px", "200px", "200px", "200px", "200px"],
         prefix: "",
         suffix: ""
       }
@@ -50,22 +54,31 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = (props: TerminalsUnder
         totalNumber: atmInSupervisor && typeof atmInSupervisor.content !== "undefined" ? sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
-        days: "Last 7 days"
-      }, {
-        ...boxSize,
-        headerName: StatsName.atmInCashJam,
-        totalNumber: 0,
-        status: "green",
-        percentage: "6.0%",
-        days: "Last 7 days"
-      }, {
-        ...boxSize,
-        headerName: StatsName.atmCassetteErrors,
-        totalNumber: 0,
-        status: "red",
-        percentage: "6.0%",
         days: "Last 7 days",
-      },]
+        url: apiUrlsv1.atmInSupervisor
+      }]
+      // return [{
+      //   ...boxSize,
+      //   headerName: StatsName.atmInSupervisor,
+      //   totalNumber: atmInSupervisor && typeof atmInSupervisor.content !== "undefined" ? sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
+      //   status: "green",
+      //   percentage: "6.0%",
+      //   days: "Last 7 days"
+      // }, {
+      //   ...boxSize,
+      //   headerName: StatsName.atmInCashJam,
+      //   totalNumber: 0,
+      //   status: "green",
+      //   percentage: "6.0%",
+      //   days: "Last 7 days"
+      // }, {
+      //   ...boxSize,
+      //   headerName: StatsName.atmCassetteErrors,
+      //   totalNumber: 0,
+      //   status: "red",
+      //   percentage: "6.0%",
+      //   days: "Last 7 days",
+      // },]
     }
     setStats(getStats())
     if (typeof atmInSupervisorError !== "undefined") {
@@ -85,15 +98,37 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = (props: TerminalsUnder
     }
   }, [atmInSupervisor, atmInSupervisorError])
   return (
-    <AppCard topic={<Text variant="card-header" size="card-header">{typeof props.title !== "undefined" && props.title !== "" ? props.title : "What Terminals are under watch"}</Text>}>
+    <>
+      <AppCard topic={<Text variant="card-header" size="card-header">{typeof props.title !== "undefined" && props.title !== "" ? props.title : "What Terminals are under watch"}</Text>}>
 
-      {!loading.isLoading ?
-        <>
-          {stats?.map((x, i) => <Stat key={i} {...x} />)}
-        </> :
-        <SkeletonLoader rows={3} columns={3} width="200px" height="10px" gap="30px" loaderKey="terminals-under-watch-app-card" />
-      }
-    </AppCard>
+        {!loading.isLoading ?
+          <>
+            {stats?.map((x, i) =><Button key={`${keysForArrayComponents.terminalsUnderWatchAppCard}-${i}`} cursor={showDetails? 'pointer': 'none'} onClick={()=> {
+              if(showDetails) {
+              setSelectedUrl(`${x.url}/`)
+              setSelectedHeaderName(x.headerName)
+              }}} ><Stat {...x} /></Button>)}
+          </> :
+          <SkeletonLoader rows={1} columns={1} width="229px" height="229px" gap="30px" loaderKey={keysForArrayComponents.terminalsUnderWatchAppCard} />
+        }
+      </AppCard>
+
+      {showDetails && selectedHeaderName && selectedUrl && <Modal scrollBehavior="inside" size="xl" onClose={() => {
+        setSelectedUrl(undefined)
+        setSelectedHeaderName(undefined) 
+        }} isOpen={selectedUrl ? true : false} isCentered>
+        <ModalOverlay />
+        <ModalContent bgColor="white" px="18px">
+          <ModalHeader>{selectedHeaderName}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <PaginatorProvider>
+              <ChannelsMonitoringTableSetup url={selectedUrl} />
+            </PaginatorProvider>
+          </ModalBody>
+        </ModalContent>
+      </Modal>}
+    </>
   )
 }
 export default TerminalsUnderWatch

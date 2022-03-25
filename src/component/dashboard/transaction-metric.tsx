@@ -2,17 +2,18 @@ import React, { useState, useEffect, useContext, FC } from "react"
 import { Text } from '@chakra-ui/react'
 import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
-import { StatsA } from "../../models"
+import { Paginate, StatsA } from "../../models"
 import { AppCard } from "../app"
-import { StatsContext } from "../../providers"
+import { AuthContext, StatsContext } from "../../providers"
 import { useLoading } from "../../hooks"
-import { StatsName } from "../../constants"
+import { apiUrlsv1, appRoles, StatsName } from "../../constants"
+import useSWR from "swr"
 
 const TransactionMetric:FC = () => {
     const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
     const [loading, setLoading] = useLoading({isLoading:true, text:""})
     const [stats, setStats] = useState<StatsA[]>()
-
+    const {userDetail} = useContext(AuthContext)
 
     useEffect(() => {
         // console.log("waiting")
@@ -20,7 +21,7 @@ const TransactionMetric:FC = () => {
         const getStats = (): StatsA[] => {
             const boxSize = {
                 width: ["224px", "224px", "224px", "224px", "229px", "229px"],
-                height: ["159px", "159px", "159px", "159px", "159px", "189px"],
+                height: ["200px", "200px", "200px", "200px", "200px", "200px"],
                 prefix:"",
                 suffix:""
             }

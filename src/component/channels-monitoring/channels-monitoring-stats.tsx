@@ -9,7 +9,7 @@ const ChannelsMonitoringStats:FC = () => {
   return (
     <Flex gap="20px" flexWrap="wrap">
       <Flex sx={formControlInputSX}>
-        <ServiceStatus />
+        <ServiceStatus width={"100%"} />
       </Flex>
       <Flex flexGrow={3}>
         <TerminalsUnderWatch />
