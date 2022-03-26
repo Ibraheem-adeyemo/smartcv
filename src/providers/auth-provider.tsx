@@ -3,6 +3,7 @@ import { useAuthentication } from "../hooks";
 import { ComponentWithChildren } from "../models";
 
 export const AuthContext = createContext<ReturnType<typeof useAuthentication>>({
+    userDetailError: undefined,
     userDetail: undefined,
     user: undefined,
     token: "",
@@ -12,8 +13,10 @@ export const AuthContext = createContext<ReturnType<typeof useAuthentication>>({
     loginWithPassport: async (code: string) =>{},
     refreshAccessToken:async (refreshToken:string) => {}
 })
+
 interface AuthProviderProps extends ComponentWithChildren {
 }
+
 const AuthProvider:FC<AuthProviderProps> = (props: AuthProviderProps) => {
 
     return <AuthContext.Provider value={useAuthentication()}>

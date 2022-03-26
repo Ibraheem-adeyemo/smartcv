@@ -67,10 +67,11 @@ export function appDate(dateStr: string, withTime = true) {
         const year = date.getFullYear()
         const hour = date.getHours() - 12 > 0 ? date.getHours() - 12 : date.getHours()
         const minute = date.getMinutes()
+        const minuteString = minute.toString()
         const d = date.getHours() - 12 > -1 ? "PM" : "AM"
         fullDate = `${day}-${month}-${year}`
         if (withTime) {
-            fullDate += ` | ${hour}:${minute}${d}`
+            fullDate += ` | ${hour===0?12:hour}:${minuteString.length=== 2? minute:0+minuteString}${d}`
         }
         return fullDate
     }

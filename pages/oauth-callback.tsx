@@ -9,7 +9,7 @@ import { getCookie, setCookie } from "../src/lib"
 import { AuthContext } from "../src/providers"
 
 const OauthCallback: NextPage = () => {
-    const { loginWithPassport } = useContext(AuthContext)
+    const { loginWithPassport, user, userDetail, error, userDetailError } = useContext(AuthContext)
     const router = useRouter()
     const toast = useToast()
     useEffect(() => {
@@ -19,13 +19,14 @@ const OauthCallback: NextPage = () => {
         if (typeof window !== "undefined" && typeof code !== "undefined") {
 
             loginWithPassport(code as string).then(() => {
-
-                if (getCookie(cookieKeys.redirectUrl) !== "") {
-                    const redirectUrl = getCookie(cookieKeys.redirectUrl)
-                    setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
-                    router.push(redirectUrl)
-                } else {
-                    router.push(links.dashboard)
+                if(user && userDetail){
+                    if (getCookie(cookieKeys.redirectUrl) !== "") {
+                        const redirectUrl = getCookie(cookieKeys.redirectUrl)
+                        setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
+                        router.push(redirectUrl)
+                    } else {
+                        router.push(links.dashboard)
+                    }
                 }
             }).catch((err) => {
 
@@ -46,6 +47,35 @@ const OauthCallback: NextPage = () => {
             })
         }
     }, [])
+
+    useEffect(() => {
+        if(error || userDetailError) {
+            userDetailError? toast({
+                status: "error",
+                title: userDetailError.message,
+                variant: "left-accent",
+                isClosable: true
+            }) : "";
+            error? toast({
+                status: "error",
+                title: error.message,
+                variant: "left-accent",
+                isClosable: true
+            }) : "";
+            
+            router.push("/")
+        }
+        if(user && userDetail){
+            if (getCookie(cookieKeys.redirectUrl) !== "") {
+                const redirectUrl = getCookie(cookieKeys.redirectUrl)
+                setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
+                router.push(redirectUrl)
+            } else {
+                router.push(links.dashboard)
+            }
+        }
+    }, [user, userDetail, error, userDetailError])
+
     return (
         <Flex sx={{
             height: "100vh",

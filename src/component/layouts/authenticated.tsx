@@ -22,14 +22,14 @@ interface AuthenticatedLayoutProps extends ComponentWithChildren {
 }
 
 const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) => {
-    const { user, signOut, error, refreshAccessToken } = useContext(AuthContext)
+    const { userDetail, user, signOut, error, refreshAccessToken } = useContext(AuthContext)
     const router = useRouter()
     const handleOnIdle = (event: any) => {
         // console.log('user is idle', event)
         // console.log('last active', getLastActiveTime())
     }
-    const isUserLoading = typeof user === "undefined" && typeof error === "undefined"
-    const isUserLoaded = typeof user !== "undefined" && typeof error === "undefined"
+    const isUserLoading = (typeof userDetail === "undefined" || typeof user === "undefined") && typeof error === "undefined"
+    const isUserLoaded = typeof userDetail !== "undefined" && typeof user !== "undefined" && typeof error === "undefined"
     const handleOnActive = () => {
         if (typeof window !== "undefined") {
             const timeLeft = (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60)

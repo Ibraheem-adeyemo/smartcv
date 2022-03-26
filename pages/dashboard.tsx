@@ -12,7 +12,7 @@ const AppBarFilter = dynamic(() => import('../src/component/stats/app-bar-filter
 const Dashboard:NextPage = () => {
   const {setFiltersToShow} = useContext(StatsContext)
   useEffect(() => {
-      setFiltersToShow(filtersToShowDefaultValue)
+      setFiltersToShow({showTenantFilter: true})
   }, [])
   return (
     <StatsProvider>

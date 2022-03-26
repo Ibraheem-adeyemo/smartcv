@@ -169,6 +169,6 @@ export default function useAuthentication() {
         }
     }
 
-    return { user, userDetail, token, error, signIn, signOut, loginWithPassport, refreshAccessToken }
+    return { user, userDetail, token, error, userDetailError, signIn, signOut, loginWithPassport, refreshAccessToken }
 }
 
