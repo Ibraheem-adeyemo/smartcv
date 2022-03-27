@@ -15,8 +15,8 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
                 tenant: {
                     name: body.tenant?.name,
                     code: body.tenant?.tenantCode,
-                    domain: `www.${Names[getRandomInt(Names.length)].firstName}-${Names[getRandomInt(Names.length)].lastName}.${Names[getRandomInt(Names.length)].lastName}`,
-                    slogan: "",
+                    domain: body.tenant.domain,
+                    slogan: body.tenant.slogan,
                     logo: body.tenant.logo.split(",")[1],
                     address: body.tenant.address,
                     location: body.tenant.location,
