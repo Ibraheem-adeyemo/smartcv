@@ -40,6 +40,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     createRole: `${API_BASE_URL}${CURRENT_API_VERSION}/roles/create`,
     createTenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/tenant-admin`,
     getUserDetail: `${API_BASE_URL}${CURRENT_API_VERSION}/user`,
+    healthCheck: `${API_BASE_URL}${CURRENT_API_VERSION}/actuator/health`,
     interChange: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange/find`,
     interchangeDisconnectionStatus: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange`,
     interchangeDisconnectionRequest: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange/requests`,

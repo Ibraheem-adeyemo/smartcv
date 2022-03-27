@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { NextApiResponse } from "next";
 import { getCookie } from ".";
-import { cookieKeys, months, notificationMesage, amountAbbrevications } from "../constants";
+import { cookieKeys, months, notificationMesage, amountAbbrevications, apiUrlsv1 } from "../constants";
 import { APIResponse } from "../models";
 
 export function getRandomInt(max: number) {
@@ -12,7 +12,7 @@ export function shortenNumber(amount: number) {
     if (!isNaN(amount)) {
         const length = String(amount).length
         t = _.reduce(amountAbbrevications, (prev, curr) => {
-          
+
             const fractionAmount = amount / curr.value
             const sp = String(fractionAmount).split(".")
             if (String(sp[0]).length <= 3) {
@@ -71,45 +71,59 @@ export function appDate(dateStr: string, withTime = true) {
         const d = date.getHours() - 12 > -1 ? "PM" : "AM"
         fullDate = `${day}-${month}-${year}`
         if (withTime) {
-            fullDate += ` | ${hour===0?12:hour}:${minuteString.length=== 2? minute:0+minuteString}${d}`
+            fullDate += ` | ${hour === 0 ? 12 : hour}:${minuteString.length === 2 ? minute : 0 + minuteString}${d}`
         }
         return fullDate
     }
     return fullDate
 }
 
+export async function checkIfOnline():Promise<boolean> {
+    try {
+        const online = await fetch(apiUrlsv1.healthCheck);
+        return online.status >= 200 && online.status < 300; // either true or false
+
+    } catch (error) {
+        return false
+    }
+}
 
 export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit): Promise<T> {
 
     try {
         // console.log({init});
-      
-        let token = typeof window !== "undefined" ? getCookie(cookieKeys.token) : ""
-        const response = token !== "" ? await fetch(input, typeof init === "undefined" ? {
-            method: "GET",
-            headers: {
-                Authorization: `bearer ${token}`
+        if (await checkIfOnline()) {
+
+            let token = typeof window !== "undefined" ? getCookie(cookieKeys.token) : ""
+            const response = token !== "" ? await fetch(input, typeof init === "undefined" ? {
+                method: "GET",
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            } : init) : await fetch(input, init);
+            const data = await response.json() as APIResponse<T>
+
+            if (response.ok) {
+                if (typeof data.data !== "undefined") {
+                    return data.data as T;
+                } else {
+                    return data as unknown as T
+                }
             }
-        } : init) : await fetch(input, init);
-        const data = await response.json() as APIResponse<T>
-      
-        if (response.ok) {
-            if (typeof data.data !== "undefined") {
-                return data.data as T;
-            } else {
-                return data as unknown as T
+            else if (typeof data !== "undefined") {
+
+                if (typeof data.message !== "undefined") {
+                    throw data.message
+                } else {
+                    throw (data as unknown as any).error_description
+                }
             }
-        }
-        else if (typeof data !== "undefined") {
-          
-            if (typeof data.message !== "undefined") {
-                throw data.message
-            } else {
-                throw (data as unknown as any).error_description
+            else {
+                throw notificationMesage.AnErrorOccurred
             }
-        }
-        else {
-            throw notificationMesage.AnErrorOccurred
+
+        } else {
+            throw notificationMesage.offline
         }
 
     } catch (error: any) {

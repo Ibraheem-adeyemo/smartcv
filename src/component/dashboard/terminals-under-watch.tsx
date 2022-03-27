@@ -106,7 +106,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
         {!loading.isLoading ?
           <>
             {stats?.map((x, i) =>(
-              <Button key={`${keysForArrayComponents.terminalsUnderWatchAppCard}-${i}`} cursor={showDetails && !x.comingSoon && x.url? 'pointer': 'none'} onClick={()=> {
+              <Button key={`${keysForArrayComponents.terminalsUnderWatchAppCard}-${i}`} disabled={x.comingSoon} opacity={x.comingSoon? "0.4":"1"} cursor={showDetails && !x.comingSoon && x.url? 'pointer': 'none'} onClick={()=> {
                 if(showDetails && x.url && !x.comingSoon) {
                   setSelectedUrl(`${x.url}/`)
                   setSelectedHeaderName(x.headerName)

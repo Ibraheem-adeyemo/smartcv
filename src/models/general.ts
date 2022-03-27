@@ -47,6 +47,7 @@ export interface apiUrlsv1Model {
     createRole: string,
     createTenantAdmin: string,
     getUserDetail: string,
+    healthCheck: string,
     interChange: string,
     interchangeDisconnectionRequest: string,
     interchangeDisconnectionStatus: string,
