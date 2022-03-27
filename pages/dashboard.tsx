@@ -10,16 +10,12 @@ import { StatsProvider, StatsContext } from "../src/providers"
 const AppBarFilter = dynamic(() => import('../src/component/stats/app-bar-filter'), {ssr:false})
 
 const Dashboard:NextPage = () => {
-  const {setFiltersToShow} = useContext(StatsContext)
-  useEffect(() => {
-      setFiltersToShow({showTenantFilter: true})
-  }, [])
   return (
     <StatsProvider>
       <Authenticated pageHeader={
         <Flex w="100%" flexWrap="wrap" justifyContent="space-between" px="50px" alignItems="center">
           <AnimatedText variant="page-header" size="page-header">User Dashboard</AnimatedText>
-          <AppBarFilter />
+          <AppBarFilter  />
         </Flex>
       }>
         <DashboardPage />

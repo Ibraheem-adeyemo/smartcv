@@ -9,11 +9,7 @@ import { loginContainerDivSX, loginContainerSX } from "../src/sx"
 
 
 const Login: NextPage = () => {
-
-
-
     return (
-
         <NonAuthenticated>
             <Flex sx={loginContainerSX}>
                 <Flex>
@@ -26,7 +22,5 @@ const Login: NextPage = () => {
                 </Flex>
             </Flex>
         </NonAuthenticated>)
-
 }
-
 export default Login

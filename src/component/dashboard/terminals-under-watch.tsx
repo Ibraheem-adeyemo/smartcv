@@ -4,7 +4,7 @@ import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 import { useLoading } from "../../hooks";
-import { apiUrlsv1, appRoles, keysForArrayComponents, StatsName, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, appRoles, keysForArrayComponents, StatsName, upcomingFeature, UserManagementModalNames } from "../../constants";
 import useSWR from "swr";
 import { ATMInSupervisor, Paginate } from "../../models";
 import { AuthContext, PaginatorProvider, StatsContext } from "../../providers";
@@ -14,7 +14,13 @@ import { ChannelsMonitoringTableSetup } from "../channels-monitoring";
 
 interface TerminalsUnderWatchProps {
   title?: string,
-  showDetails?: boolean
+  showDetails?: boolean,
+  width?: string | string[],
+  height?: string | string []
+}
+
+interface StatsProps extends StatsA {
+  comingSoon?: boolean
 }
 
 const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false, ...props }: TerminalsUnderWatchProps) => {
@@ -34,19 +40,20 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
   atmInSupervisorUrl = token && userDetail ? atmInSupervisorUrl : ""
   const { data: atmInSupervisor, mutate: _mutate, error: atmInSupervisorError } = useSWR<Paginate<ATMInSupervisor>>(atmInSupervisorUrl ? atmInSupervisorUrl : null)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "" })
-  const [stats, setStats] = useState<StatsA[]>()
+  const [stats, setStats] = useState<StatsProps[]>()
   const toast = useToast()
 
   useEffect(() => {
     // console.log("waiting")
 
-    const getStats = (): StatsA[] => {
+    const getStats = () => {
 
       const boxSize = {
-        width: ["224px", "224px", "224px", "224px", "229px", "229px"],
-        height: ["200px", "200px", "200px", "200px", "200px", "200px"],
+        width: props.width,
+        height: props.height,
         prefix: "",
-        suffix: ""
+        suffix: "",
+        comingSoon:false
       }
       return [{
         ...boxSize,
@@ -56,29 +63,24 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
         percentage: "6.0%",
         days: "Last 7 days",
         url: apiUrlsv1.atmInSupervisor
-      }]
-      // return [{
-      //   ...boxSize,
-      //   headerName: StatsName.atmInSupervisor,
-      //   totalNumber: atmInSupervisor && typeof atmInSupervisor.content !== "undefined" ? sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
-      //   status: "green",
-      //   percentage: "6.0%",
-      //   days: "Last 7 days"
-      // }, {
-      //   ...boxSize,
-      //   headerName: StatsName.atmInCashJam,
-      //   totalNumber: 0,
-      //   status: "green",
-      //   percentage: "6.0%",
-      //   days: "Last 7 days"
-      // }, {
-      //   ...boxSize,
-      //   headerName: StatsName.atmCassetteErrors,
-      //   totalNumber: 0,
-      //   status: "red",
-      //   percentage: "6.0%",
-      //   days: "Last 7 days",
-      // },]
+      }, {
+        ...boxSize,
+        headerName: StatsName.atmInCashJam,
+        totalNumber: 0,
+        status: "green",
+        percentage: "6.0%",
+        days: "Last 7 days",
+        url: ""
+      }, {
+        ...boxSize,
+        headerName: StatsName.atmCassetteErrors,
+        totalNumber: 0,
+        status: "red",
+        percentage: "6.0%",
+        days: "Last 7 days",
+        url: "",
+        comingSoon: true
+      },]
     }
     setStats(getStats())
     if (typeof atmInSupervisorError !== "undefined") {
@@ -103,13 +105,19 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
 
         {!loading.isLoading ?
           <>
-            {stats?.map((x, i) =><Button key={`${keysForArrayComponents.terminalsUnderWatchAppCard}-${i}`} cursor={showDetails? 'pointer': 'none'} onClick={()=> {
-              if(showDetails) {
-              setSelectedUrl(`${x.url}/`)
-              setSelectedHeaderName(x.headerName)
-              }}} ><Stat {...x} /></Button>)}
+            {stats?.map((x, i) =>(
+              <Button key={`${keysForArrayComponents.terminalsUnderWatchAppCard}-${i}`} cursor={showDetails && !x.comingSoon && x.url? 'pointer': 'none'} onClick={()=> {
+                if(showDetails && x.url && !x.comingSoon) {
+                  setSelectedUrl(`${x.url}/`)
+                  setSelectedHeaderName(x.headerName)
+              }}} >
+                {x.comingSoon && <Text size="page-header" variant="page-header" sx={{
+                        pos: "absolute",
+                        zIndex: 10
+                    }}>{upcomingFeature.stats}</Text>}
+                <Stat {...x} /></Button>))}
           </> :
-          <SkeletonLoader rows={1} columns={1} width="229px" height="229px" gap="30px" loaderKey={keysForArrayComponents.terminalsUnderWatchAppCard} />
+          <SkeletonLoader rows={1} columns={3} width={props.width} height={props.height} gap="30px" loaderKey={keysForArrayComponents.terminalsUnderWatchAppCard} />
         }
       </AppCard>
 

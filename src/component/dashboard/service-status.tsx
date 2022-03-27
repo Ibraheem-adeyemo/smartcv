@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast } from "@chakra-ui/react";
+import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, useToast } from "@chakra-ui/react";
 import React, { FC, useContext, useEffect, useState } from "react"
 import { Stat } from "../stats"
 import { StatsA } from "../../models/stats-models";
@@ -11,14 +11,20 @@ import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
 import { AuthContext, PaginatorProvider, StatsContext } from "../../providers";
 import { ChannelsMonitoringTableSetup } from "../channels-monitoring";
+import { GiComputing } from "react-icons/gi";
 
 interface ServiceStatusProps {
   title?: string,
   width?: string | string[],
+  height?: string | string[],
   showDetails?:boolean
 }
 
+interface  StatsProps extends StatsA {
+  commingSoon: boolean
+}
 const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDetails=false, ...props }: ServiceStatusProps) => {
+  // debugger
   const [selectedUrl, setSelectedUrl] = useState<string>();
   const [selectedHeaderName, setSelectedHeaderName] = useState<string>();
   const { token, userDetail } = useContext(AuthContext)
@@ -40,23 +46,24 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
   atmInServiceurl = token && userDetail ? atmInServiceurl : ""
   atmOutOfServiceurl = token && userDetail ? atmOutOfServiceurl : ""
 
-  const { data: totalATMInService, mutate: _totalATMInServiceMutate, error: totalATMInServiceError } = useSWR<Paginate<ATMInService>>(atmInServiceurl ? atmInServiceurl : null)
-  const { data: totalATMOutOfService, mutate: _totalATMOutOfServiceMutate, error: totalATMOutOfServiceError } = useSWR<Paginate<ATMInService>>(atmOutOfServiceurl ? atmOutOfServiceurl : null)
+  const { data: totalATMInService, mutate: _totalATMInServiceMutate, error: totalATMInServiceError } = useSWR<Paginate<ATMInService>>(!atmInServiceurl ?  null : atmInServiceurl)
+  const { data: totalATMOutOfService, mutate: _totalATMOutOfServiceMutate, error: totalATMOutOfServiceError } = useSWR<Paginate<ATMInService>>(!atmOutOfServiceurl? null : atmOutOfServiceurl)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "" })
-  const [stats, setStats] = useState<StatsA[]>()
+  const [stats, setStats] = useState<StatsProps[]>()
   const toast = useToast()
 
 
   useEffect(() => {
     // console.log("waiting")
-
-    const getStats = (): StatsA[] => {
+    setLoading({ isLoading: true, text: "" })
+    const getStats = (): StatsProps[] => {
 
       const boxSize = {
-        width: ["224px", "224px", "224px", "224px", "229px", "229px"],
-        height: ["200px", "200px", "200px", "200px", "200px", "200px"],
+        width,
+        height: props.height,
         prefix: "",
-        suffix: ""
+        suffix: "",
+        commingSoon: false
       }
       return [{
 
@@ -66,7 +73,8 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
         status: "green",
         percentage: "6.0%",
         days: "Last 7 days",
-        url: apiUrlsv1.atmInService
+        url: apiUrlsv1.atmInService,
+        commingSoon: false
       }, {
         ...boxSize,
         headerName: "ATM Out Service",
@@ -94,7 +102,7 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
         isClosable: true
       })
     }
-    if (totalATMInService === null || totalATMOutOfService === null) {
+    if (totalATMInService || totalATMOutOfService ) {
       setLoading({ isLoading: false, text: "" })
     }
     else if ((!totalATMInService && !totalATMInServiceError) || (!totalATMOutOfService && !totalATMOutOfServiceError)) {
@@ -106,13 +114,15 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
 
   return (
     <>
-      <AppCard width={width} topic={<Text variant="card-header" size="card-header"> {typeof props.title !== "undefined" && props.title !== "" ? props.title : "What is our service"}</Text>}>
-        {!loading.isLoading && stats && stats.map((x, i) => <Button key={`${keysForArrayComponents.serviceStatusAppCard}-${i}`} cursor={showDetails? 'pointer': 'none'} onClick={()=> {
-          if(showDetails){
+      <AppCard topic={<Text variant="card-header" size="card-header"> {typeof props.title !== "undefined" && props.title !== "" ? props.title : "What is our service"}</Text>}>
+        {!loading.isLoading && stats? stats.map((x, i) => <Button disabled={x.commingSoon?true:!x.url?true:false} opacity={x.commingSoon? 0.7:""} position={"relative"} key={`${keysForArrayComponents.serviceStatusAppCard}-${i}`} cursor={ !x.commingSoon && showDetails? 'pointer': 'none'} onClick={()=> {
+          if(showDetails && !x.commingSoon){
             setSelectedUrl(`${x.url}/`)
             setSelectedHeaderName(x.headerName)
-          }}}><Stat {...x} /></Button>)}
-        {loading.isLoading && !stats && <SkeletonLoader rows={1} columns={2} width="200px" height="200px" loaderKey={keysForArrayComponents.serviceStatusAppCard} />}
+          }}}>
+            {<Flex position="absolute" right={0} top={0} bottom={0} left={0}  ></Flex>}
+              <Stat {...x} />
+            </Button>):<SkeletonLoader rows={1} columns={2} width={width} height={props.height} loaderKey={keysForArrayComponents.serviceStatusAppCard} />}
       </AppCard>
 
       {showDetails && selectedHeaderName && selectedUrl && <Modal scrollBehavior="inside" size="fit-content" onClose={() => {

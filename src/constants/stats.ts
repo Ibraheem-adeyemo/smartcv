@@ -20,3 +20,7 @@ export enum StatsName {
     totalInService = "Total in Service",
     totalOutOfService = "Total Out of Service"
 }
+
+export enum upcomingFeature {
+    stats = "Coming soon"
+}

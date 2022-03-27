@@ -13,7 +13,9 @@ import { Stat } from "../stats";
 import { ChannelsMonitoringTableSetup } from '../channels-monitoring';
 
 interface TerminalsPerformanceProps {
-  showDetails?:boolean
+  showDetails?:boolean,
+  width?: string [] | string,
+  height?: string[] | string
 }
 
 const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = false ,...props}: TerminalsPerformanceProps) => {
@@ -42,13 +44,15 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
     // console.log("waiting")
     const getStats = (): StatsA[] => {
       const boxSize = {
-        width: ["224px", "224px", "224px", "224px", "229px", "229px"],
-        height: ["200px", "200px", "200px", "200px", "200px", "200px"],
+        width: props.width,
+        height: props.height,
         prefix: "",
         suffix: ""
       }
+      
       const atmCountValue = totalATMCount && totalATMCount.content ? sumBy(totalATMCount?.content, (atm) => atm.count) : 0
       const atmLowCashValue = 0
+    
       return [{
         ...boxSize,
         headerName: StatsName.atmCount,
@@ -57,23 +61,15 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
         percentage: "6.0%",
         days: "Last 7 days",
         url: apiUrlsv1.atmCount
+      }, {
+        ...boxSize,
+        headerName: StatsName.atmLowCashLevel,
+        totalNumber: atmLowCashValue,
+        status: "green",
+        percentage: "6.0%",
+        days: "Last 7 days",
+        url:""
       }]
-      // return [{
-      //   ...boxSize,
-      //   headerName: StatsName.atmCount,
-      //   totalNumber: atmCountValue,
-      //   status: "green",
-      //   percentage: "6.0%",
-      //   days: "Last 7 days",
-
-      // }, {
-      //   ...boxSize,
-      //   headerName: StatsName.atmLowCashLevel,
-      //   totalNumber: atmLowCashValue,
-      //   status: "green",
-      //   percentage: "6.0%",
-      //   days: "Last 7 days",
-      // }]
     }
 
     setStats(getStats())
@@ -101,7 +97,7 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
             setSelectedUrl(`${x.url}/`)
             setSelectedHeaderName(x.headerName)
           }}}><Stat {...x} /></Button>)}</> :
-        <SkeletonLoader rows={1} columns={1} width="300px" height="300px" loaderKey='terminal-performance-app-card' />
+        <SkeletonLoader rows={1} columns={2} width={props.width} height={props.height} loaderKey='terminal-performance-app-card' />
       }
     </AppCard>
 

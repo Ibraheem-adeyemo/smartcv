@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiUrlsv1, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, SECRET } from '../constants'
+import { apiUrlsv1, appRoles, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie } from '../lib'
 import { AuthModel, RefreshTokenRequestBody, TokenRequestBody, TokenResponsBody, UserModel } from '../models'
 export default function useAuthentication() {
@@ -9,7 +9,15 @@ export default function useAuthentication() {
     const { mutate } = useSWRConfig()
     const { data: user, mutate: _mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie(cookieKeys.token) == "" ? null : url)
     const { data: userDetail, mutate: _userDetailMutate, error:userDetailError } = useSWR<UserModel>(!user ? null : `${apiUrlsv1.getUserDetail}/${user.email}`)
-
+    // const userDetail: any | undefined = {
+    //     role: {
+    //         name: appRoles.superAdmin
+    //     },
+    //     tenant: {
+    //         code: "787"
+    //     }
+    // }
+    // const userDetailError:any| undefined = undefined 
     // const [user, setUser] = useState<any>()
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie(cookieKeys.token) : "")
 

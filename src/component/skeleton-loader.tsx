@@ -5,7 +5,7 @@ import { keysForArrayComponents } from "../constants";
 interface SkeletonLoaderProps {
     columns: number,
     rows: number,
-    width: string | string[],
+    width?: string | string[],
     height?: string | string[],
     gap?: string,
     loaderKey: string

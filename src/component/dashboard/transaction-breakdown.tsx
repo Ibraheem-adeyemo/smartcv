@@ -8,7 +8,12 @@ import { StatsContext } from "../../providers"
 import { AppCard } from "../app"
 import { StatsName } from "../../constants"
 
-const TransactionBreakdown:FC = () => {
+interface TransactionBreakdownProps {
+  width: string | string[],
+  height:  string | string[]
+}
+
+const TransactionBreakdown:FC<TransactionBreakdownProps> = (props: TransactionBreakdownProps) => {
   const { institutions, institutionsError } = useContext(StatsContext)
   const [loading, setLoading] = useLoading({isLoading:true, text:""})
   const [stats, setStats] = useState<StatsA[]>()
@@ -18,8 +23,8 @@ const TransactionBreakdown:FC = () => {
     
   const getStats = () : StatsA[]  => {
     const boxSize = {
-      width: ["224px", "224px", "224px", "224px", "229px", "229px"],
-      height: ["200px", "200px", "200px", "200px", "200px", "200px"],
+      width: props.width,
+      height: props.height,
       prefix:"",
       suffix:""
     }
@@ -72,7 +77,7 @@ const TransactionBreakdown:FC = () => {
       {!loading.isLoading && stats ?
         <Flex flexWrap={"wrap"} gap="15px">{stats.map((x, i) =><Stat key={i} {...x} />)}
         </Flex> :
-        <SkeletonLoader rows={3} columns={4} width="200px" height="10px" gap="30px" loaderKey="transaction-breakdown-app-card" />
+        <SkeletonLoader rows={1} columns={4} width={props.width} height={props.height} gap="30px" loaderKey="transaction-breakdown-app-card" />
       }
     </AppCard>)
 }

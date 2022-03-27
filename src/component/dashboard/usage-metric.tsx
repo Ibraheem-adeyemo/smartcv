@@ -3,7 +3,7 @@ import { SearchFilter, Stat } from "../stats"
 import { SkeletonLoader } from ".."
 import { Paginate, StatsA } from "../../models"
 import { AppCalendar, AppCard } from "../app"
-import { Text } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import { useLoading } from "../../hooks"
 import { AuthContext, StatsContext } from "../../providers"
 import { apiUrlsv1, appRoles, hours, selectionModeValues } from "../../constants"
@@ -73,6 +73,7 @@ const UsageMetric: React.FC = () => {
         <AppCard topic={
             <>
                 <Text variant="card-header" size="card-header">What Are our usage Metric</Text>
+                <Flex gap="17px">
                 <AppCalendar selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
                     console.log({ date, time })
                 }} />
@@ -93,6 +94,7 @@ const UsageMetric: React.FC = () => {
                         label="Duration" onSelected={(e) => {
                             console.log({e})
                         }} selected />
+                        </Flex>
             </>
         } >
             {!loading.isLoading ?

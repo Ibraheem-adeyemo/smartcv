@@ -31,6 +31,7 @@ export default function useFilter(user?: UserModel) {
     }
 
     const setFiltersToShow = ( filtersToshow: setFiltersToShowProps = filtersToShowDefaultValue) => {
+        debugger
         setShowTenant(filtersToshow.showTenantFilter as boolean)
         setShowToday(filtersToshow.showTodayFilter as boolean)
         setShowThisWeek(filtersToshow?.showThisWeekFilter as boolean)

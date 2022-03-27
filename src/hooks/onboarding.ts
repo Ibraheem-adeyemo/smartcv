@@ -8,7 +8,10 @@ import { Tenant, defaultCallback, defaultCallbackInitiator, InstitutionColorInfo
 
 
 export const initialOnboardingData: Onboarding = {
-    state: 0, tenant: {
+    state: 0, 
+    tenant: {
+        domain:"",
+        slogan:"",
         name: "",
         address: "",
         branch: "",

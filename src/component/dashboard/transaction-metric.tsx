@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, FC } from "react"
-import { Text } from '@chakra-ui/react'
+import { propNames, Text } from '@chakra-ui/react'
 import { Stat } from "../stats"
 import { SkeletonLoader } from ".."
 import { Paginate, StatsA } from "../../models"
@@ -9,7 +9,12 @@ import { useLoading } from "../../hooks"
 import { apiUrlsv1, appRoles, StatsName } from "../../constants"
 import useSWR from "swr"
 
-const TransactionMetric:FC = () => {
+interface TransactionMetricProps {
+    width?: string | string [],
+    height?: string | string []
+}
+
+const TransactionMetric:FC<TransactionMetricProps> = (props: TransactionMetricProps) => {
     const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
     const [loading, setLoading] = useLoading({isLoading:true, text:""})
     const [stats, setStats] = useState<StatsA[]>()
@@ -20,8 +25,8 @@ const TransactionMetric:FC = () => {
 
         const getStats = (): StatsA[] => {
             const boxSize = {
-                width: ["224px", "224px", "224px", "224px", "229px", "229px"],
-                height: ["200px", "200px", "200px", "200px", "200px", "200px"],
+                width: props.width,
+                height: props.height,
                 prefix:"",
                 suffix:""
             }
@@ -66,7 +71,7 @@ const TransactionMetric:FC = () => {
                 <>
                     {stats?.map((x, i) => <Stat key={i} {...x} />)}
                 </> :
-                <SkeletonLoader rows={3} columns={3} width="200px" height="10px" gap="30px" loaderKey="transaction-metric-app-card" />
+                <SkeletonLoader rows={3} columns={3} width={props.width} height={props.height} gap="30px" loaderKey="transaction-metric-app-card" />
             }
         </AppCard>)
 }

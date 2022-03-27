@@ -28,6 +28,7 @@ const OauthCallback: NextPage = () => {
                         router.push(links.dashboard)
                     }
                 }
+                
             }).catch((err) => {
 
                 typeof err !== "undefined" ?

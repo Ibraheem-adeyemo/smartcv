@@ -23,6 +23,7 @@ export enum keysForArrayComponents {
     onboardingStep = 'onboarding-step',
     serviceStatusAppCard = 'service-status-app-card',
     skeletonLoader = 'skeloader-loader',
+    successRateDonutChart = 'success-rate-donut-chart',
     tableFooter = 'table-footer',
     tableColumn = 'table-column',
     terminalsPerformance = 'terminals-performance',

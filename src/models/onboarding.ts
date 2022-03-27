@@ -6,6 +6,8 @@ export interface Tenant {
     address: string,
     logo: string,
     completed: boolean,
+    domain: string,
+    slogan: string,
 }
 
 export interface InstitutionColorInfo {

@@ -6,6 +6,7 @@ import { StatProps } from "../../models";
 import { statsContainerBodySX, statsContainerSX, statsTotalNumberTextSX, statsTotalNumberValueSX } from "../../sx";
 import { AnimatedText, MotionFlex } from "../framer";
 
+
 const Stat:FC<StatProps> = (props: StatProps) => {
   let val = props.prefix === "N" && props.totalNumber === 0 ?`${props.totalNumber}.00`:`${props.totalNumber}`
   if(val.length > 5){
@@ -14,6 +15,7 @@ const Stat:FC<StatProps> = (props: StatProps) => {
        val = `${shortenedVal.fractionAmount}${shortenedVal.abbrev}`
      }
   }
+  
   return (
     <MotionFlex sx={statsContainerSX(props)} animate="show" initial="hide" variants={appear()}>
       <MotionFlex sx={statsContainerBodySX} animate="show" initial="hide" variants={delayChildren}>

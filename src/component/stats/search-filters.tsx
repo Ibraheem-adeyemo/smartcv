@@ -41,7 +41,6 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
     useEffect(() => {
         // console.log({dropdownContent})
     }, [dropdownContent])
-    const ref = useRef<HTMLInputElement>(null)
 
     const pickItem = useCallback((selectedItem: DropdownContent) => {
 
@@ -77,13 +76,23 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
         }
     }, [dropdownContent])
     return (
-        <Menu onOpen={() => setTimeout(() => ref.current?.focus(), 500)} >
+        <Menu >
             <MenuButton as={Button} h="26px" p="12px" rightIcon={<DropdownIcon />} borderWidth={selected ? '1px' : '0px'} borderStyle={selected ? 'bold' : ''} borderColor={selected ? 'var(--chakra-colors-brand-primary-blue)' : ''}  >
                 <AnimatedText size="dropdown-text" variant="dropdown-text-header" color={selected ? 'brand.primary-blue' : ''}>{props.label}: {dropdownContent?.find(x => x.selected)?.label}</AnimatedText>
             </MenuButton>
             <MenuList maxH="334px" overflowY="auto" maxW="204px">
-                <MenuItem closeOnSelect={false} onClick={() => ref.current?.focus()} as={Box}>
-                    <Input placeholder="search here" size="sm" ref={ref} defaultValue="" value={query} onInput={(e) => {
+                <MenuItem closeOnSelect={false} as={Box}>
+                    <Input placeholder="search here" size="sm" onFocus={(e) => {
+                        e.stopPropagation()
+                        const a = e.target as HTMLInputElement
+                        a.focus()
+                    }  }
+                    onClick={((e) => {
+                        e.stopPropagation()
+                        const a = e.target as HTMLInputElement
+                        a.focus()
+                    })} 
+                        defaultValue="" value={query} onInput={(e) => {
                         debouncedFetchData(e.currentTarget.value, (items?: DropdownContent[]) => {
                             setDropdownContent(items)
                         }, props.data.map((x, i) => {

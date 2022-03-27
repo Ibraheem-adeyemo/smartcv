@@ -1,7 +1,7 @@
 import { Text, MenuButton, Select, Flex, Menu, MenuList, MenuItem, Button, Tag, VStack } from "@chakra-ui/react"
 import { range } from "lodash"
 import { FC, useEffect, useRef, useState } from "react"
-import { days, hours, keysForArrayComponents, minutes, months, seconds, selectionModeValues } from "../../constants"
+import { days, DropdownIcon, hours, keysForArrayComponents, minutes, months, seconds, selectionModeValues } from "../../constants"
 import { appDate } from "../../lib"
 import { AnimatedText, MotionMenu, MotionMenuItem, MotionMenuList } from "../framer"
 
@@ -81,12 +81,13 @@ const AppCalendar: FC<AppCalendarProps> = ({ selectionMode = selectionModeValues
         }
     }, [selectedDate, selectedTime])
     return (
-        <Tag cursor={"pointer"}>
+        <Tag variant={"outline"} cursor={"pointer"} colorScheme={"brand"} bgColor={"brand.light-blue"}>
             <MotionMenu closeOnSelect={false} onOpen={() => {
                 // debugger
                 setTempSelectedDate(selectedDate)
             }} >
-                <MenuButton as="button">{selectionMode === selectionModeValues.pickDateTime ? appDate(selectedDate + " " + selectedTime) : appDate(selectedDate, false)}</MenuButton>
+                <MenuButton as={Button} h="26px" p="12px" rightIcon={<DropdownIcon/>} borderWidth={'1px'} borderStyle={ 'bold' } borderColor={'var(--chakra-colors-brand-primary-blue)'}>
+                    <AnimatedText size="dropdown-text" variant="dropdown-text-header" color={'brand.primary-blue'}>{selectionMode === selectionModeValues.pickDateTime ? appDate(selectedDate + " " + selectedTime) : appDate(selectedDate, false)}</AnimatedText></MenuButton>
                 <MotionMenuList >
                     <MotionMenuItem as={Flex} closeOnSelect={false} justifyContent={"flex-start"} gap="10px" >
                         <VStack>
