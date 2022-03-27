@@ -7,10 +7,6 @@ import { filtersToShowDefaultValue } from "../src/constants";
 import { ChannelsMonitoringProvider, StatsProvider } from "../src/providers";
 import { StatsContext } from "../src/providers";
 const ChannelsMonitoring: NextPage = () => {
-    const { setFiltersToShow } = useContext(StatsContext)
-    useEffect(() => {
-        setFiltersToShow(filtersToShowDefaultValue)
-    }, [])
     return (
         <ChannelsMonitoringProvider>
             <StatsProvider>
