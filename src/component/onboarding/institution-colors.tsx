@@ -93,8 +93,10 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
     }, [onboarding?.institutionColorInfo])
 
     const cardTitle = <Flex flexDir="column" gap="5px">
-        <Text variant="card-header" size="page-header" >Institution Colors</Text>
-        <Text color="muted-text">Select the colour scheme for the institution’s dashboard. Choose a colour for the header, CTAs and accents.</Text>
+        <AnimatedText variant="card-header" size="page-header" >Institution Colors</AnimatedText>
+        <AnimatedText color="muted-text">Select the colour scheme for the institution’s dashboard. Choose a colour for the header, CTAs and accents.</AnimatedText>
+        <AnimatedText color="muted-text" textAlign="left">Pick from the small Pills beside the Color codes below to show the color picker or type to change the Hex codes on each box beloe to set your app color </AnimatedText>
+                    
     </Flex>
     const cardFooter = <Flex w="100%" justifyContent="right" gap="20px" >
         <Button variant="muted-primary-button" px="45px" py="8px" onClick={(_e) => {
@@ -112,15 +114,15 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
     </Flex>
     return (
         <OnboardingCard cardTitle={cardTitle} cardFooter={cardFooter}>
-            <Flex flexDir="column" gap="25px" w={"475px"}>
-                <Flex w="100%" h="262px" flexDir="column" bgColor={"#F3F5F6"} gap="26px" borderRadius="6px">
+            <Flex flexWrap={"wrap"} gap="15px" w={"fit-content"} justify="space-around">
+                <Flex w="fit-content" h="200px" flexDir="column" bgColor={"#F3F5F6"} gap="16px" borderRadius="6px">
                     <Skeleton speed={0} w="100%" h="26px" bgColor={onboarding?.institutionColorInfo?.headerColor} />
-                    <Flex flexDir="column" gap="39px" pl="26px" pr="20px">
-                        <Flex gap="29px">
-                            <Flex flexDir="column" gap="13px">
+                    <Flex flexDir="column" gap="29px" pl="26px" pr="20px">
+                        <Flex gap="19px">
+                            <Flex flexDir="column" gap="5px">
                                 {range(0, 3).map((x) => <Skeleton key={x} speed={0} bgColor={onboarding?.institutionColorInfo?.sidebarColour} w="92px" h="13px" borderRadius="8px" />)}
                             </Flex>
-                            <Flex flexDir="column" gap="13px">
+                            <Flex flexDir="column" gap="5px">
                                 {range(0, 4).map((x) => <Skeleton key={x} speed={0} w="289px" bgColor="#E1E6ED" h="14px" borderRadius="8px" />)}
                             </Flex>
                         </Flex>
@@ -128,8 +130,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                     </Flex>
                 </Flex>
                 <VStack spacing='8px'>
-                    <AnimatedText color="muted-text" textAlign="left" w="100%">Pick from the small Pills beside the Color codes below to show the color picker or type to change the Hex codes on each box beloe to set your app color </AnimatedText>
-                    <Flex bgColor="brand.muted-background" border={(typeof validation !== "undefined" && validation[0] !== "") ? "1px solid red" : "unset"} borderRadius="8px" w="100%" alignItems="center" px="12px" py="16px">
+                    <Flex bgColor="brand.muted-background" border={(typeof validation !== "undefined" && validation[0] !== "") ? "1px solid red" : "unset"} borderRadius="8px" alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.headerColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
                                 if(headerColorRef.current){
@@ -140,10 +141,11 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                             <Input bgColor={headerColorRef.current?.value} visibility="hidden" ref={headerColorRef} onChange={addData} name="headerColor" type="color" w="40px" h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.headerColor} />
                         </Button>
                         <Input placeholder="Header colour eg. #04257F" border="0" bgColor="brand.muted-background" value={onboarding?.institutionColorInfo?.headerColor} onInput={setHeaderColor} />
+                        <Text>Horizontal Nav</Text>
                         <PickerIcon />
                     </Flex>
                     <AnimatedText color="red">{(typeof validation !== "undefined" && validation[0] !== "") ? validation[0] : ""}</AnimatedText>
-                    <Flex bgColor="brand.muted-background" borderRadius="8px" border={(typeof validation !== "undefined" && validation[2] !== "") ? "1px solid red" : "unset"} w="100%" alignItems="center" px="12px" py="16px">
+                    <Flex bgColor="brand.muted-background" borderRadius="8px" border={(typeof validation !== "undefined" && validation[2] !== "") ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.buttonColor} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
                                 if(buttonColorRef.current){
@@ -154,10 +156,11 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                             <Input visibility="hidden" type="color" name="buttonColor" w="40px" ref={buttonColorRef} onChange={addData} h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.buttonColor} />
                         </Button>
                         <Input placeholder="Buttons & links colour eg. #04257F" border="0" value={onboarding?.institutionColorInfo?.buttonColor} bgColor="brand.muted-background" onInput={setButtonColor} />
+                        <Text>Button Color</Text>
                         <PickerIcon />
                     </Flex>
                     <AnimatedText color="red">{(typeof validation !== "undefined" && validation[2] !== "") ? validation[2] : ""}</AnimatedText>
-                    <Flex bgColor="brand.muted-background" borderRadius="8px" w="100%" border={(typeof validation !== "undefined" && validation[1] !== "") ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
+                    <Flex bgColor="brand.muted-background" borderRadius="8px" border={(typeof validation !== "undefined" && validation[1] !== "") ? "1px solid red" : "unset"} alignItems="center" px="12px" py="16px">
                         <Button bgColor={onboarding?.institutionColorInfo?.sidebarColour} w="40px" h="16px" borderRadius="8px" onClick={
                             () => {
                                 if( sidebarColourRef.current){
@@ -168,6 +171,7 @@ const InstitutionColors:React.FC<InstitutionColorsProps> = (props: InstitutionCo
                             <Input visibility="hidden" ref={sidebarColourRef} name="sidebarColour" onChange={addData} type="color" w="40px" h="16px" borderRadius="8px" value={onboarding?.institutionColorInfo?.sidebarColour} />
                         </Button>
                         <Input placeholder="Side menu & accents eg. #04257F" value={onboarding?.institutionColorInfo?.sidebarColour} border="0" bgColor="brand.muted-background" onInput={setsidebarColour} />
+                        <Text>sidebar Color</Text>
                         <PickerIcon />
                     </Flex>
                     <AnimatedText color="red">{(typeof validation !== "undefined" && validation[1] !== "") ? validation[1] : ""}</AnimatedText>

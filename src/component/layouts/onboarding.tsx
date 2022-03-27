@@ -1,4 +1,4 @@
-import { Avatar, BoxProps, chakra, ChakraComponent, Divider, Flex, forwardRef, Link, Text, useToast } from "@chakra-ui/react";
+import { Avatar, chakra, ChakraComponent, Divider, Flex, forwardRef, Link, Text, useToast } from "@chakra-ui/react";
 import React, { FC, Fragment, useCallback, useContext, useEffect } from "react";
 import { keysForArrayComponents, links, notificationMesage, TickIcon } from "../../constants";
 import NextLink from 'next/link'
@@ -135,9 +135,10 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
     return (
         <Flex sx={onboardingContainerSX} >
             <OnboardingNav />
+            <Text size="page-header" textAlign={"center"} variant="page-header">Onboarding</Text>
             <Flex sx={onboardingContainerBodySX} >
                 {!cantVew && <form method="post" onSubmit={createAccount} >
-                    <Flex gap="33px" flexDirection="column">
+                    <Flex gap="10px" flexDirection="column">
                         {onboarding && <Flex sx={stepsSX(onboarding.state)} >
                             {steps && steps.map((x, i, arr) =>
                                 <Fragment key={`${keysForArrayComponents.onboardingStep}-${i}`}>
