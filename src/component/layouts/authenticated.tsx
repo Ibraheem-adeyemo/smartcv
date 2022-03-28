@@ -1,4 +1,4 @@
-import React, { FC, memo, useContext } from "react";
+import React, { FC, memo, useContext, useEffect } from "react";
 import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, AuthenticatedPage, menuNames, cookieKeys, keysForArrayComponents } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 import { Avatar, Button, ChakraProvider, extendTheme, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
@@ -16,6 +16,7 @@ import { components } from "../../theme/components";
 import { appLayoutSX, appLinkSX, appLinkTextSX, interswitchLogoSx, mainSX, sidebarSX, skeletonLoaderForMainSX } from "../../sx";
 import { horizontalPositionWithOpacity } from "../../animations";
 import { overrides } from "../../theme";
+import { useState } from "react";
 
 interface AuthenticatedLayoutProps extends ComponentWithChildren {
     pageHeader: string | JSX.Element
@@ -23,7 +24,9 @@ interface AuthenticatedLayoutProps extends ComponentWithChildren {
 
 const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) => {
     const { userDetail, user, signOut, error, refreshAccessToken } = useContext(AuthContext)
+    const [animationCount, setAnmationCount] = useState(true)
     const router = useRouter()
+    const [firstLoad, setFirstLoad] = useState(0)
     const handleOnIdle = (event: any) => {
         // console.log('user is idle', event)
         // console.log('last active', getLastActiveTime())
@@ -56,7 +59,11 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
     // console.log({ session })
 
     const MenuLists = memo(() => {
-
+        
+        setInterval(() => {
+            refreshAccessToken(getCookie(cookieKeys.refreshToken))
+            setFirstLoad(1)
+        }, 3600000)
         const menuList: MenuListItem[] = [{
             icon: dashboardIcon,
             name: menuNames.dashboard,
@@ -86,16 +93,20 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
             name: menuNames.systemSettings,
             link: ""
         }]
-
         return <>
             {menuList.map((x, i) =>
-                <MotionText color="brand.muted" animate="show" initial="hide"
+               x.link && <MotionText color="brand.muted" animate={ animationCount? "show":"hide"} initial={ !animationCount? "show":"hide"}
                     sx={{
                         mx: ["auto", "auto", "auto", 0, 0, 0]
                     }}
                     key={`${keysForArrayComponents}${i}`}
-                    variants={horizontalPositionWithOpacity(i)}>
-                    <AppLink href={x.link ? x.link : "/"} role="group"
+                    variants={horizontalPositionWithOpacity(i/10)}>
+                    <AppLink href={x.link ? x.link : "/"} onClick={(e: any) => {
+                        // debugger
+                        e.preventDefault()
+                        setAnmationCount(false)
+                        router.push(e.target.href?e.target.href:e.currentTarget.href)
+                    }} role="group"
                         _active={{
                             outline: "none"
                         }}
@@ -120,6 +131,8 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                 </MotionText>)}
         </>
     })
+
+
 
 
     return (
@@ -191,7 +204,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                 sx={sidebarSX}
 
             >
-                {isUserLoading && <SkeletonLoader rows={5} width="300px" columns={1} loaderKey="loader-list" />}
+                {isUserLoading && <SkeletonLoader rows={5} width={"70%"} columns={1} loaderKey="loader-list" />}
                 {isUserLoaded && <MenuLists />}
             </GridItem>
             {isUserLoading && <GridItem d="flex" w="100%" alignItems="center" px="50px">  

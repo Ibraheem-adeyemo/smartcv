@@ -88,7 +88,7 @@ export async function checkIfOnline():Promise<boolean> {
     }
 }
 
-export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit): Promise<T> {
+export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit & any): Promise<T> {
 
     try {
         // console.log({init});

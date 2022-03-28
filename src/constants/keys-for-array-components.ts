@@ -27,5 +27,6 @@ export enum keysForArrayComponents {
     tableFooter = 'table-footer',
     tableColumn = 'table-column',
     terminalsPerformance = 'terminals-performance',
-    terminalsUnderWatchAppCard = 'terminals-under-watch-app-card'
+    terminalsUnderWatchAppCard = 'terminals-under-watch-app-card',
+    usageMetricAppCard = 'usage-metric-app-card'
 }

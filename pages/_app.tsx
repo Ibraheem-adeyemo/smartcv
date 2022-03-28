@@ -14,7 +14,7 @@ const App:NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
       value={{
         fetcher:fetchJson,
         onError:(err) => console.error({SWRError:err}),
-        refreshInterval: 30000000
+        refreshInterval: 0
       }}
     >
       <AuthProvider>

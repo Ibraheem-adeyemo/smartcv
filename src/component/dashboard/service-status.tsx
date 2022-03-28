@@ -102,10 +102,11 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
         isClosable: true
       })
     }
-    if (totalATMInService || totalATMOutOfService ) {
+    // debugger
+    if (totalATMInService || totalATMOutOfService || totalATMInService === null || totalATMOutOfService === null ) {
       setLoading({ isLoading: false, text: "" })
     }
-    else if ((!totalATMInService && !totalATMInServiceError) || (!totalATMOutOfService && !totalATMOutOfServiceError)) {
+    else if ((!totalATMInService || !totalATMOutOfService) && !totalATMInServiceError && !totalATMOutOfServiceError) {
       setLoading({ isLoading: true, text: "" })
     } else {
       setLoading({ isLoading: false, text: "" })

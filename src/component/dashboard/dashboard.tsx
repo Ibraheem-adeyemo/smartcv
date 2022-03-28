@@ -23,7 +23,7 @@ const Dashboard: FC = () => {
   }
   useEffect(() => {
     toggleDate(filterDates.today)
-    setFiltersToShow({showTenantFilter: true})
+    setFiltersToShow({ showTenantFilter: true })
   }, [])
   return (
 
@@ -56,7 +56,9 @@ const Dashboard: FC = () => {
           height={["200px", "200px", "200px", "200px", "200px", "200px"]} />
       </Flex>
       <Flex>
-        <UsageMetric />
+        <UsageMetric
+          width={["224px", "224px", "224px", "224px", "229px", "229px"]}
+          height={["159px", "159px", "159px", "159px", "159px", "189px"]} />
       </Flex>
       <Flex>
         <TransactionBreakdown

@@ -42,6 +42,10 @@ export const horizontalPositionWithOpacity: horizontalPositionWithOpacityFunc = 
     },
     hide: {
         x: -200,
-        opacity: 0
+        opacity: 0,
+        transition: {
+            duration: 0.4,
+            delay: i * 0.4
+        }
     }
 })

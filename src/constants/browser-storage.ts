@@ -26,7 +26,7 @@ export enum cookiesTimeout {
     tokenExpiresInTimeout = 60,
     redirectUrlTimeout = 10,
     createdAccountTimeout = 5,
-    refreshTokenTimeout = 60
+    refreshTokenTimeout = 600000
 }
 export enum sessionStorageKeys {
     fromAnotherOrigin = "from-another-origin",
