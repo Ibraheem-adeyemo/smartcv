@@ -1,13 +1,14 @@
-import { CircularProgress, Link } from "@chakra-ui/react"
+import { Button, CircularProgress, Link } from "@chakra-ui/react"
 import { FC } from "react"
 import useSWR from "swr"
-import { appear, appearWithDimensions, delayChildren } from "../../animations"
+import { appear, appearWithDimensions, delayChildren, staggerChildren, staggerChildrenWithDuration, verticalPosition } from "../../animations"
 import { apiUrlsv1, CloseIcon, Images, links } from "../../constants"
 import { APIResponse } from "../../models"
-import { AnimatedCardHeader, AnimatedText, MotionFlex, MotionImage } from "../framer"
+import { AnimatedCardHeader, AnimatedText, MotionBox, MotionButton, MotionFlex, MotionImage } from "../framer"
 
 import NextLink from 'next/link'
-import { activateAccountContainerSX } from "../../sx"
+import { activateAccountContainerSX, loginButtonSX, loginFormContainerSX } from "../../sx"
+import { AppLink } from "../app"
 interface ActivateAccountProps {
     activationCode: string | null
 }
@@ -20,45 +21,65 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
 
 
     return (
-        <MotionFlex sx={activateAccountContainerSX}
-            initial="hide"
-            animate="show"
-            variants={delayChildren}>
-            {data && <MotionImage src={Images.onboardingSuccess} boxSize="134px" animate="show" initial="hide" variants={appearWithDimensions({ width: "134px", height: "134px" })} />}
-            {error && <CloseIcon boxSize="134px" />}
-            {data && <MotionFlex sx={{
-                flexDir: "column",
-                gap: "20px"
-            }}
-                variants={delayChildren}>
-                <AnimatedCardHeader variant="card-header" size="card-header">Account Activation Complete</AnimatedCardHeader>
-                <AnimatedText variant="">Your Account has been activated successfully</AnimatedText>
-            </MotionFlex>}
+        <>
 
-            {error && <MotionFlex sx={{
-                flexDir: "column",
-                gap: "20px"
-            }}
-                variants={delayChildren}>  <AnimatedCardHeader>Error in activatiing</AnimatedCardHeader>
-                <AnimatedText sx={{ color: 'red' }}>Can't activate account</AnimatedText></MotionFlex>}
-
-            {!data && !error && <MotionFlex sx={{
-                height: "100vh"
-            }}
+            <MotionFlex sx={loginFormContainerSX}
                 initial="hide"
                 animate="show"
-                variants={appear()}
+                variants={staggerChildrenWithDuration}
             >
-                <CircularProgress isIndeterminate color="brand.primary-blue" size="120px" sx={{
-                    margin: "auto"
-                }}
-                />
-                <Link px="201.5px" py="12px" variant="primary-link" href={links.login}>
-                    <NextLink href={links.login}>Back to Login</NextLink>
-                </Link>
-            </MotionFlex>}
-        </MotionFlex>
-    )
+
+                {data && <MotionImage src={Images.onboardingSuccess} boxSize="167px" animate="show" initial="hide" variants={appearWithDimensions({ width: "134px", height: "134px" })} />}
+                {error && <CloseIcon boxSize="134px" />}
+                <MotionBox
+                    sx={{
+                        overflow: "hidden",
+                        display: "inline-block"
+                    }}
+
+                    animate="show"
+                    initial="hide"
+                    variants={staggerChildren}
+                >
+                    <MotionBox
+                        sx={{
+                            display: "inline-block"
+                        }}
+                        initial="hide"
+                        animate="show"
+                        variants={verticalPosition}
+                    >
+                        {data && <AnimatedText variant="card-header" size="page-header" >Account Activated</AnimatedText>}
+                        {error && <AnimatedText variant="card-header" size="page-header" >Account not activated</AnimatedText>}
+                        {!data && !error && <CircularProgress isIndeterminate color="brand.primary-blue" size="120px" sx={{
+                            margin: "auto"
+                        }}
+                        />}
+                    </MotionBox>
+                </MotionBox>
+                <MotionBox
+                    sx={{
+                        overflow: "hidden",
+                        display: "inline-block"
+                    }}
+                    variants={staggerChildrenWithDuration}
+                >
+                    <MotionFlex sx={{
+                        flexDir: "column",
+                        gap: "8px"
+                    }}
+
+                        initial="hide"
+                        animate="show"
+                        variants={verticalPosition}
+                    >
+                        <Button as={AppLink} href={links.login} variant="primary-button" sx={loginButtonSX}>
+                            Back to Login
+                        </Button>
+                    </MotionFlex>
+                </MotionBox>
+            </MotionFlex>
+        </>)
 }
 
 export default ActivateAccount
