@@ -33,3 +33,32 @@ export const createTenantAsync = async (tenant: TenantInput) => {
         throw error
     }
 }
+
+export const activateTenant =async (tenantId: string) => {
+    // debugger
+    try {
+        if (tenantId) {
+            const token = getCookie("token")
+            const data = await fetchJson<any>(`${apiUrlsv1.activateTenant}/${tenantId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `bearer ${token}`
+                }
+            })
+            // debugger
+            // const response = {
+            //     ok: true,
+            //     status: 200,
+            //     json: async () => JSON.parse(requestBody)
+            // }
+        } else {
+            throw new Error("You need to select a tenant")
+        }
+    } catch (error) {
+        console.error({error})
+        const a  = error
+        // debugger
+        throw error
+    }
+}

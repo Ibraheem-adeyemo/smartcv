@@ -76,7 +76,7 @@ const AppCalendar: FC<AppCalendarProps> = ({ selectionMode = selectionModeValues
     const yearRange = currentYear - startyear + 1
 
     useEffect(() => {
-        console.log({ calenderInfo })
+        // console.log({ calenderInfo })
         setCalenderInfo(getCalenderDate(tempSelectedDate))
         // debugger
         if (tempSelectedDate.split("-").length === 3) {
@@ -197,7 +197,7 @@ const AppCalendar: FC<AppCalendarProps> = ({ selectionMode = selectionModeValues
                             // }
                             const tempSelectedDay = tempSelectedDateArray.length === 3 ? tempSelectedDateArray[2] : tempSelectedDateArray[1] === selectedDate.split("-")[1] ? y : ""
                             const newTempDate = tempSelectedDay && tempSelectedDateArray.length === 2 ? tempSelectedDate + '-' + tempSelectedDay : tempSelectedDate
-                            const bgColor = newTempDate === selectedDate && +tempSelectedDay === y ? "brand.primary-blue" : ""
+                            const bgColor = +tempSelectedDay === y ? "brand.primary-blue" : ""
                             return <Button boxSize={"35px"} cursor="pointer" bgColor={bgColor} key={`${keysForArrayComponents.calenderDayOption}-${j}`} disabled={!y} onClick={() => {
                                 // const 
                                 const tempSelectedDateArray = tempSelectedDate.split("-")

@@ -34,12 +34,12 @@ const CreateSuperAdminWithExistingSuperAdminAccount:React.FC = () => {
         if (typeof onboarding?.tenantAdmin !== "undefined" && typeof canNotSubmit !== "undefined" && typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
             if (steps.length !== (onboarding.state + 1)) {
                 completeForm("tenantAdmin")
-                toast({
-                    title: notificationMesage.SuccessfulSuperAdminCreation,
-                    variant: "left-accent",
-                    isClosable: true,
-                    status: "success"
-                })
+                // toast({
+                //     title: notificationMesage.SuccessfulSuperAdminCreation,
+                //     variant: "left-accent",
+                //     isClosable: true,
+                //     status: "success"
+                // })
                 router.push(steps[onboarding.state + 1]?.url)
             } else {
                 toast({

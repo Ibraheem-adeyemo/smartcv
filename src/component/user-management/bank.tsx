@@ -26,6 +26,13 @@ const BankTable: FC = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedOption, setSelectedOption] = useState("")
     const [selectedBank, setSelectedBank] = useState<TenantTableView>()
+    function shouldReload(status = false) {
+        if(status) {
+            mutate(url)
+            setIsOpen((prev) => !isOpen)
+            setSelectedOption("")
+        }
+    }
     const data = useMemo(() => ({
         columns: [
             {
@@ -106,7 +113,7 @@ const BankTable: FC = () => {
     }, [modals])
 
     useEffect(() => {
-        debugger
+        // debugger
         if(selectedOption) {
             setIsOpen(true)
         } else setIsOpen(false)
@@ -121,7 +128,7 @@ const BankTable: FC = () => {
                 setSelectedOption("")
                 }} bankInfo={selectedBank} />}
 
-                {selectedOption && selectedOption === UserManagementTriggerButtons.activateTenant && isOpen && <ActivateTenant isOpen={isOpen} closeModal={ () =>{
+                {selectedOption && selectedOption === UserManagementTriggerButtons.activateTenant && isOpen && <ActivateTenant reload={(status) => shouldReload(status)} isOpen={isOpen} closeModal={ () =>{
                 setIsOpen((prev) => !isOpen)
                 setSelectedOption("")
                 }} bankInfo={selectedBank} />}

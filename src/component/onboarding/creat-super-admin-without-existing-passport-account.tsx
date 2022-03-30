@@ -228,12 +228,12 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
       
         if (typeof otherValidations !== "undefined" && typeof canNotSubmit !== "undefined") {
             if (!otherValidations && !canNotSubmit) {
-                toast({
-                    title: notificationMesage.SuccessfulSuperAdminCreation,
-                    variant: "left-accent",
-                    isClosable: true,
-                    status: "success"
-                })
+                // toast({
+                //     title: notificationMesage.SuccessfulSuperAdminCreation,
+                //     variant: "left-accent",
+                //     isClosable: true,
+                //     status: "success"
+                // })
                 
                 completeForm("tenantAdmin")
                 if (typeof onboarding?.state !== "undefined" && typeof steps !== "undefined") {

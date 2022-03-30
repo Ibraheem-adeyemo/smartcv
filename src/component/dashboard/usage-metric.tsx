@@ -159,12 +159,12 @@ const UsageMetric: React.FC<usageMetricsProps> = (props: usageMetricsProps) => {
                 <Text variant="card-header" size="card-header">What Are our usage Metric</Text>
                 <Flex gap="17px">
                     <AppCalendar label="Start Date" selectedDate={startTime.split(" ")[0]} selectedTime={startTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
-                        console.log({ date, time })
+                        // console.log({ date, time })
                         setStartTime(`${date} ${time}`)
                     }} />
 
                     {/* <AppCalendar label="End Date" selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
-                        console.log({ date, time })
+                        // console.log({ date, time })
                         setEndTime(`${date} ${time}`)
                     }} /> */}
                 </Flex>
@@ -175,13 +175,13 @@ const UsageMetric: React.FC<usageMetricsProps> = (props: usageMetricsProps) => {
                             { label: "Minute", value: "minute", selected: countInterval == "minute" },
                         ]
                         } label="Interval" onSelected={(e) => {
-                            console.log({ e })
+                            // console.log({ e })
                             setCountInterval(e.value)
                         }} selected />
                     <SearchFilter
                         data={durationList}
                         label="Duration" onSelected={(e) => {
-                            console.log({ e })
+                            // console.log({ e })
                             setDuration(e.value)
                         }} selected />
                 </Flex>

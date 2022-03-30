@@ -98,12 +98,12 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
       
         if (typeof onboarding?.tenant !== "undefined" && typeof canNotSubmit !== "undefined") {
             if (!Object.values(onboarding.tenant).some((val) => val as string === "") && !canNotSubmit) {
-                toast({
-                    title: notificationMesage.SuccessfulBankCreation,
-                    variant: "left-accent",
-                    isClosable: true,
-                    status: "success"
-                })
+                // toast({
+                //     title: notificationMesage.SuccessfulBankCreation,
+                //     variant: "left-accent",
+                //     isClosable: true,
+                //     status: "success"
+                // })
                 completeForm('tenant')
                 if (typeof onboarding.state !== "undefined" && typeof steps !== "undefined") {
                     if (steps.length !== (onboarding.state + 1))

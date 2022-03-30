@@ -102,7 +102,7 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
                 }
             } : init) : await fetch(input, init);
             const data = await response.json() as APIResponse<T>
-
+            // debugger
             if (response.ok) {
                 if (typeof data.data !== "undefined") {
                     return data.data as T;
@@ -111,22 +111,27 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
                 }
             }
             else if (typeof data !== "undefined") {
-
+                // debugger
                 if (typeof data.message !== "undefined") {
+                    // debugger
                     throw data.message
-                } else {
+                } else if(typeof (data as any).error !== "undefined") {
+                    // debugger
+                    throw (data as any).error
+                }else {
                     throw (data as unknown as any).error_description
                 }
-            }
-            else {
+            } else {
                 throw notificationMesage.AnErrorOccurred
             }
-
         } else {
+
             throw notificationMesage.offline
         }
 
     } catch (error: any) {
+        // debugger
+        // console.error({error})
         throw error
     }
 

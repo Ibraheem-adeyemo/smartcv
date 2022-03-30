@@ -32,6 +32,7 @@ export interface Tab {
 
 export interface apiUrlsv1Model {
     activateAccount: string,
+    activateTenant: string,
     atmCount: string,
     atmCountDetails: string,
     atmInService: string,
