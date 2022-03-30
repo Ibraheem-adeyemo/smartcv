@@ -2,7 +2,7 @@ import { Flex, VStack, Text, Box, Badge } from "@chakra-ui/react";
 import _ from "lodash";
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import useSWR from "swr";
-import { apiUrlsv1, AvatarIcon, CapitolIcon, cookieKeys, StatsName } from "../../constants";
+import { apiUrlsv1, AvatarIcon, CapitolIcon, cookieKeys, keysForArrayComponents, StatsName } from "../../constants";
 import { getCookie } from "../../lib";
 import { ISWAdminView, ISWAdmView, Paginate, TenantAdminView, TenantView, UserManagementStat } from "../../models";
 import { AuthContext } from "../../providers";
@@ -72,7 +72,7 @@ const UserManagementStats: FC = () => {
             <>
                 { !isTotalCountLoaded ? <SkeletonLoader rows={3} columns={3} width="200" height="10px" gap="30px" loaderKey="total-count-loading" /> :
                     _.map(userManagementStats, (x, i) => (
-                    <Flex key={i} p="19px" bgColor="brand.muted-background" flexGrow={1} gap="15px">
+                    <Flex key={`${keysForArrayComponents.userManagementStat}-${i}`} p="19px" bgColor="brand.muted-background" flexGrow={1} gap="15px">
                         <Flex justifyContent="space-between" w="100%">
                             <VStack spacing="14.5px">
                                 <Text variant="stat-header" size="stat-header">{x.name}</Text>

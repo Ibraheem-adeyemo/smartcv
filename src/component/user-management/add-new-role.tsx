@@ -2,7 +2,7 @@ import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { Button, Flex, FormControl, HStack, Input, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Switch, useToast } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { CreateRoleModel, UserManagementModal } from "../../models";
-import { notificationMesage, UserManagementModalNames, UserManagementModals } from "../../constants";
+import { keysForArrayComponents, notificationMesage, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { AuthContext, StatsContext, UserManagementTabProviderContext } from "../../providers";
 import _ from "lodash";
 import { MotionModal } from "../framer/motion-modal";
@@ -127,7 +127,7 @@ const AddNewRole: FC = () => {
                                 <FormControl isRequired id="tenantCode" sx={formControlInputSX} isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
                                     <MotionFormLabel>Bank</MotionFormLabel>
                                     <Select borderRadius="4px" value={form?.tenantCode} onChange={addData} placeholder="Select an institution">
-                                        {institutions?.map((x, i) => <option key={i} value={x.tenantCode}>{x.name}</option>)}
+                                        {institutions?.map((x, i) => <option key={`${keysForArrayComponents.addNewRoleInstitution}-${i}`} value={x.tenantCode}>{x.name}</option>)}
                                     </Select>
                                     <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
                                 </FormControl>

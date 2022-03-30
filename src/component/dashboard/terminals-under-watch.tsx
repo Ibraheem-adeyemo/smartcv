@@ -80,7 +80,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
         days: "Last 7 days",
         url: "",
         comingSoon: true
-      },]
+      }]
     }
     setStats(getStats())
     if (typeof atmInSupervisorError !== "undefined") {

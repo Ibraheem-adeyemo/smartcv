@@ -110,7 +110,7 @@ const UsageMetric: React.FC<usageMetricsProps> = (props: usageMetricsProps) => {
             }]
         }
         setStats(getStats())
-        debugger
+        // debugger
         if ( selectedTenantCode && selectedTenantCode !== "0" && (!balanceEnquiryCount || !pinChangeCount) && !balanceEnquiryCountError && !pinChangeCountError) {
           setLoading({ isLoading: true, text: "" })
         } else {

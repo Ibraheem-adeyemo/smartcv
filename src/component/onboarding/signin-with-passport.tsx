@@ -171,7 +171,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                 <ModalHeader><AnimatedText>Login with your Interswitch Passport Account</AnimatedText></ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <AnimatedText>Use your Interswitch Passport account to create super admin</AnimatedText>
+                    <AnimatedText>Use your Interswitch Passport account to create Bank admin</AnimatedText>
                     <Flex gap="32px" flexDir="column" >
                         <FormControl isRequired id="email" width="100%" isInvalid={validation?.errors?.email !== "" && validation?.touched.email === "touched"}>
                             <MotionFormLabel>email</MotionFormLabel>

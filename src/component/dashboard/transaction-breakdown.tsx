@@ -6,27 +6,33 @@ import { useLoading } from "../../hooks"
 import { StatsA } from "../../models"
 import { StatsContext } from "../../providers"
 import { AppCard } from "../app"
-import { StatsName } from "../../constants"
+import { keysForArrayComponents, StatsName } from "../../constants"
 
 interface TransactionBreakdownProps {
   width: string | string[],
   height:  string | string[]
 }
 
+interface StatsProps extends StatsA {
+  comingSoon?: boolean
+}
+
+
 const TransactionBreakdown:FC<TransactionBreakdownProps> = (props: TransactionBreakdownProps) => {
   const { institutions, institutionsError } = useContext(StatsContext)
   const [loading, setLoading] = useLoading({isLoading:true, text:""})
-  const [stats, setStats] = useState<StatsA[]>()
+  const [stats, setStats] = useState<StatsProps[]>()
 
   useEffect(() => {
     // console.log("waiting")
     
-  const getStats = () : StatsA[]  => {
+  const getStats = () : StatsProps[]  => {
     const boxSize = {
       width: props.width,
       height: props.height,
       prefix:"",
-      suffix:""
+      suffix:"",
+      comingSoon: false
     }
     // console.log("done waiting")
     return [{
@@ -45,7 +51,8 @@ const TransactionBreakdown:FC<TransactionBreakdownProps> = (props: TransactionBr
       status: "green",
       percentage: "6.0%",
       days: "Last 7 days",
-      prefix:"N"
+      prefix:"N",
+      comingSoon: true
     }, {
       ...boxSize,
       headerName: StatsName.quicktellerBill,
@@ -53,7 +60,8 @@ const TransactionBreakdown:FC<TransactionBreakdownProps> = (props: TransactionBr
       status: "green",
       percentage: "6.0%",
       days: "Last 7 days",
-      prefix:"N"
+      prefix:"N",
+      comingSoon: true
     }, {
       ...boxSize,
       headerName: StatsName.paycodeWithdrawal,
@@ -61,7 +69,8 @@ const TransactionBreakdown:FC<TransactionBreakdownProps> = (props: TransactionBr
       status: "green",
       percentage: "6.0%",
       days: "Last 7 days",
-      prefix:"N"
+      prefix:"N",
+      comingSoon: true
     }]
   }
       setStats(getStats())
@@ -75,9 +84,9 @@ const TransactionBreakdown:FC<TransactionBreakdownProps> = (props: TransactionBr
   return (
     <AppCard topic={<Text variant="card-header" size="card-header">Transaction Breakdown</Text>} >
       {!loading.isLoading && stats ?
-        <Flex flexWrap={"wrap"} gap="15px">{stats.map((x, i) =><Stat key={i} {...x} />)}
+        <Flex flexWrap={"wrap"} gap="15px">{stats.map((x, i) =><Stat key={`${keysForArrayComponents.transactionBreakdownAppCard}-${i}`} {...x} />)}
         </Flex> :
-        <SkeletonLoader rows={1} columns={4} width={props.width} height={props.height} gap="30px" loaderKey="transaction-breakdown-app-card" />
+        <SkeletonLoader rows={1} columns={4} width={props.width} height={props.height} gap="30px" loaderKey="" />
       }
     </AppCard>)
 }

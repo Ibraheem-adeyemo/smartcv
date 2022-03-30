@@ -33,8 +33,8 @@ export const onboardingTabs: Readonly<Step[]> = [
         url: links.createBank,
         key: "tenant"
     }, {
-        name: "Create Super Admin",
-        description: "Enter superadmin information and create user",
+        name: "Create Bank Admin",
+        description: "Enter Bank admin information and create user",
         url: links.createSuperAdmin,
         key: "tenantAdmin"
     }, {

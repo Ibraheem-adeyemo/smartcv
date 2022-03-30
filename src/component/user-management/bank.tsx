@@ -3,24 +3,29 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
-import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
+import { BankView } from ".";
+import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames, userManagementTabsAdmin, UserManagementTriggerButtons } from "../../constants";
 import { setCookie } from "../../lib";
-import { TenantView, Paginate, UserManagementModal, Column } from "../../models";
+import { TenantView, Paginate, UserManagementModal, Column, Action, TenantTableView } from "../../models";
 import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext, AuthContext } from "../../providers";
 import { AppTable } from "../app";
+import ActivateAccount from "../auth/activate-account";
+import ActivateTenant from "./activate-tenant";
 
-const AddNewBank = dynamic(() =>import('./add-new-bank'), {ssr:false})
+const AddNewBank = dynamic(() => import('./add-new-bank'), { ssr: false })
 
-const BankTable:FC = () => {
+const BankTable: FC = () => {
     // console.log({pageNumber})
     const toast = useToast()
-    const {token} = useContext(AuthContext)
+    const { token } = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
-    const { modals ,handleToggleModal, mutateData} = useContext(UserManagementTabProviderContext)
-    const {mutate} = useSWRConfig()
-    const url = token?`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`:null
-    const { data: tenant, mutate:_mutate, error } = useSWR<Paginate<TenantView>>(url)
-
+    const { modals, handleToggleModal, mutateData } = useContext(UserManagementTabProviderContext)
+    const { mutate } = useSWRConfig()
+    const url = token ? `${apiUrlsv1.tenant}?page=${pageNumber - 1}&size=${countPerPage}` : null
+    const { data: tenant, mutate: _mutate, error } = useSWR<Paginate<TenantTableView>>(url)
+    const [isOpen, setIsOpen] = useState(false)
+    const [selectedOption, setSelectedOption] = useState("")
+    const [selectedBank, setSelectedBank] = useState<TenantTableView>()
     const data = useMemo(() => ({
         columns: [
             {
@@ -37,48 +42,36 @@ const BankTable:FC = () => {
                 name: "Address",
                 key: "address"
             }, {
-                name: "Date Created",
-                key: "dateCreated"
-            }, {
-                name: "Bank Super Admin",
-                key: "bankSuperAdmin"
-            }, {
                 name: "Status",
-                key: "isActive",
+                key: "active",
                 ele: appTableElements.status,
                 lookUp: ["Not Active", "Active"]
             }
         ] as Column[],
         actions: [
             {
-                name: "Edit",
-                icons: {
-                    use: true
+                name: UserManagementTriggerButtons.activateTenant,
+                show: (x: TenantTableView) => { 
+                    // debugger
+                    return !x.active
                 },
-                method: () => {
-                    alert("Edit")
+                method: (x: TenantTableView) => {
+                    // debugger
+                    setSelectedBank(x)
+                    setSelectedOption(UserManagementTriggerButtons.activateTenant)
                 }
             },
             {
-                name: "Delete",
-                icons: {
-                    use: true,
-                },
-                method: () => {
-                    alert("Delete")
+                name: UserManagementTriggerButtons.viewBank,
+                show: true,
+                method: (x: TenantTableView) => {
+                    // debugger
+                    setSelectedBank(x)
+                    setSelectedOption(UserManagementTriggerButtons.viewBank)
                 }
-            },
-            {
-                name: "View",
-                icons: {
-                    use: true
-                },
-                method: () => {
-                    alert("View")
-                }
-            },
-        ],
-        data: typeof tenant === "undefined" && typeof error === "undefined" ? tenant: (typeof tenant !== "undefined" && typeof error === "undefined" )?  tenant.content as TenantView[]:[]
+            }
+        ] as Action[],
+        data: typeof tenant === "undefined" && typeof error === "undefined" ? tenant : (typeof tenant !== "undefined" && typeof error === "undefined") ? tenant.content as TenantView[] : []
     }), [tenant, error])
 
     useEffect(() => {
@@ -100,23 +93,45 @@ const BankTable:FC = () => {
     }, [tenant])
 
     useEffect(() => {
-        
-      
+
+
         const selectedModal = modals.some(x => x.isSubmitted)
-        if(selectedModal) {
+        if (selectedModal) {
             mutateData(() => {
-              
-                mutate(`${apiUrlsv1.tenant}?page=${pageNumber-1}&size=${countPerPage}`)
+
+                mutate(`${apiUrlsv1.tenant}?page=${pageNumber - 1}&size=${countPerPage}`)
                 handleToggleModal()
             })
         }
     }, [modals])
 
-    return (<AppTable<TenantView> columns={data?.columns} rows={data.data as TenantView[]} actions={data.actions} showNumbering />)
+    useEffect(() => {
+        debugger
+        if(selectedOption) {
+            setIsOpen(true)
+        } else setIsOpen(false)
+
+    }, [selectedOption])
+
+    return (
+        <>
+            <AppTable<TenantTableView> columns={data?.columns} rows={data.data as TenantTableView[]} actions={data.actions} showNumbering />
+            {selectedOption && selectedOption === UserManagementTriggerButtons.viewBank && isOpen && <BankView isOpen={isOpen} closeModal={() => {
+                setIsOpen((prev) => !isOpen)
+                setSelectedOption("")
+                }} bankInfo={selectedBank} />}
+
+                {selectedOption && selectedOption === UserManagementTriggerButtons.activateTenant && isOpen && <ActivateTenant isOpen={isOpen} closeModal={ () =>{
+                setIsOpen((prev) => !isOpen)
+                setSelectedOption("")
+                }} bankInfo={selectedBank} />}
+
+        </>
+    )
 
 }
 
-const Bank:FC = () => {
+const Bank: FC = () => {
     const { modals } = useContext(UserManagementTabProviderContext)
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>()
 

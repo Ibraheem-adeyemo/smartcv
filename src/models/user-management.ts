@@ -12,7 +12,11 @@ export interface TenantView {
     status: string,
     location: string,
     branch: string,
-    code: string
+    code: string,
+}
+
+export interface TenantTableView extends TenantView {
+    active: boolean
 }
 export interface TenantAdminView {
     firstName: string,
@@ -37,7 +41,11 @@ export interface Role {
     permissions: string[],
     tenantCode: string
 }
-
+export interface PasswordChecker { 
+    checker: string, 
+    status: boolean, 
+    text: string 
+}
 export interface userManagementTab extends Tab {
 
 }
@@ -115,4 +123,11 @@ export interface TenantColor {
 export interface RoleModel {
     value: number,
     name: string
+}
+
+type onCloseFunc = () => void
+export interface BankModalProps {
+    isOpen: boolean,
+    closeModal: onCloseFunc,
+    bankInfo?: TenantTableView
 }

@@ -6,7 +6,7 @@ import { Paginate, StatsA } from "../../models"
 import { AppCard } from "../app"
 import { AuthContext, StatsContext } from "../../providers"
 import { useLoading } from "../../hooks"
-import { apiUrlsv1, appRoles, StatsName } from "../../constants"
+import { apiUrlsv1, appRoles, keysForArrayComponents, StatsName } from "../../constants"
 import useSWR from "swr"
 
 interface TransactionMetricProps {
@@ -69,7 +69,7 @@ const TransactionMetric:FC<TransactionMetricProps> = (props: TransactionMetricPr
         <AppCard topic={<Text variant="card-header" size="card-header">What Are our Transaction Metric</Text>} >
             {!loading.isLoading ?
                 <>
-                    {stats?.map((x, i) => <Stat key={i} {...x} />)}
+                    {stats?.map((x, i) => <Stat key={`${keysForArrayComponents.transactionMetricStat}-${i}`} {...x} />)}
                 </> :
                 <SkeletonLoader rows={3} columns={3} width={props.width} height={props.height} gap="30px" loaderKey="transaction-metric-app-card" />
             }

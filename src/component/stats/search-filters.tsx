@@ -27,15 +27,16 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
     const [dropdownContent, setDropdownContent] = useState<DropdownContent[]>()
     const [query, setQuery] = useState<string>()
     useEffect(() => {
-      
+
         setDropdownContent(props.data.map((x, i) => {
-          // debugger
-          const selected = i === 0 ? true : false
-          return  typeof x === "string" ? {
+            // debugger
+            const selected = i === 0 ? true : false
+            return typeof x === "string" ? {
                 label: x,
                 value: x,
                 selected
-            } : x}))
+            } : x
+        }))
     }, [props.data])
 
     useEffect(() => {
@@ -65,11 +66,11 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
 
     useEffect(() => {
         if (typeof dropdownContent !== "undefined" && dropdownContent.length > 0) {
-          
+
             const selectedItem = find(dropdownContent, (content) => content.selected)
             if (typeof selectedItem !== "undefined") {
                 if (typeof props.onSelected !== "undefined") {
-                  
+
                     props.onSelected(selectedItem)
                 }
             }
@@ -86,24 +87,25 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
                         e.stopPropagation()
                         const a = e.target as HTMLInputElement
                         a.focus()
-                    }  }
-                    onClick={((e) => {
-                        e.stopPropagation()
-                        const a = e.target as HTMLInputElement
-                        a.focus()
-                    })} 
+                    }}
+                        onClick={((e) => {
+                            e.stopPropagation()
+                            const a = e.target as HTMLInputElement
+                            a.focus()
+                        })}
                         defaultValue="" value={query} onInput={(e) => {
-                        debouncedFetchData(e.currentTarget.value, (items?: DropdownContent[]) => {
-                            setDropdownContent(items)
-                        }, props.data.map((x, i) => {
-                            // debugger
-                            return typeof x === "string" ? {
-                                label: x,
-                                value: x,
-                                selected: i === 0 ? true : false
-                            } : x}))
-                    }} /></MenuItem>
-                {dropdownContent?.map((x, i) => <MenuItem key={i} onClick={(e) => pickItem(x)}>
+                            debouncedFetchData(e.currentTarget.value, (items?: DropdownContent[]) => {
+                                setDropdownContent(items)
+                            }, props.data.map((x, i) => {
+                                // debugger
+                                return typeof x === "string" ? {
+                                    label: x,
+                                    value: x,
+                                    selected: i === 0 ? true : false
+                                } : x
+                            }))
+                        }} /></MenuItem>
+                {dropdownContent?.map((x, i) => <MenuItem key={`add-new-list-${x.value}-${i}`} onClick={(e) => pickItem(x)}>
                     <AnimatedText size="dropdown-text">{x.label}</AnimatedText>
                 </MenuItem>)}
             </MenuList>

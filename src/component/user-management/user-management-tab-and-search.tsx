@@ -2,7 +2,7 @@ import { HStack, Button, Flex } from "@chakra-ui/react";
 import React, { FC, ReactEventHandler, useCallback, useContext, useEffect, useState } from "react";
 import { UserManagementSearch } from ".";
 import { appear, delayChildren } from "../../animations";
-import { appRoles, UserManagementModals, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
+import { appRoles, keysForArrayComponents, UserManagementModals, userManagementTabsName, UserManagementTriggerButtons } from "../../constants";
 import { AuthContext, UserManagementTabProviderContext } from "../../providers";
 import { MotionButton, MotionButtonGroup } from "../framer";
 
@@ -62,7 +62,7 @@ const UserManagementTabAndSearch: FC = () => {
                     borderTopRightRadius: (i + 1) === arr.length ? "4px" : "0px",
                     borderBottomRightRadius: (i + 1) === arr.length ? "4px" : "0px"
                 }}
-                isActive={x.isSelected} key={i} colorScheme="blue" variant="outline" onClick={(e) => handleTabSelection(i)}>{x.name}</MotionButton>)}
+                isActive={x.isSelected} key={`${keysForArrayComponents.userManagementTabButton}-${i}`} colorScheme="blue" variant="outline" onClick={(e) => handleTabSelection(i)}>{x.name}</MotionButton>)}
         </MotionButtonGroup>
         <HStack spacing="38px">
             <UserManagementSearch />
@@ -70,7 +70,7 @@ const UserManagementTabAndSearch: FC = () => {
                 gap:"20px"
             }}>
             {showActionButton && showActionButtonText && showActionButtonText.map((txt, i) =>
-                <Button key={i} variant="primary-button" px="53px" py="8px" onClick={showActionButtonMethod} >{txt}</Button>)}</Flex>
+                <Button key={`${keysForArrayComponents.userManagementActionButton}-${i}`} variant="primary-button" px="53px" py="8px" onClick={showActionButtonMethod} >{txt}</Button>)}</Flex>
         </HStack>
     </HStack>
 }

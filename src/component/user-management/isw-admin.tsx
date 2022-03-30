@@ -27,11 +27,8 @@ const ISWAdminTable: FC = () => {
         const isIswAdminIsLoading = typeof iswAdmin === "undefined" && typeof error === "undefined"
         const isIswAdminIsLoaded = typeof iswAdmin !== "undefined" && typeof error === "undefined"
         return {
-            columns: [
-                {
-                    name: "Name",
-                    key: "firstName,lastName"
-                }, {
+            columns: [{
+
                     name: "Role",
                     key: "role.name"
                 }, {
@@ -39,7 +36,8 @@ const ISWAdminTable: FC = () => {
                     key: "email"
                 }, {
                     name: "Date Created",
-                    key: "dateCreated"
+                    key: "createdAt",
+                    ele: appTableElements.dateTime
                 }, {
                     name: "Status",
                     key: "status",
@@ -52,6 +50,7 @@ const ISWAdminTable: FC = () => {
                     icons: {
                         use: true
                     },
+                    show:false,
                     method: () => {
                         alert("View")
                     }

@@ -63,14 +63,15 @@ export interface apiUrlsv1Model {
 }
 
 type performAction = <T extends Record<keyof T, T[keyof T]>>(x: T) => void
-
+type showFunc = <T extends Record<keyof T, T[keyof T]>>(x: T) => boolean
 export interface Action {
     name: string,
     method: performAction,
     bgColor?: string,
     color?: string,
     showTextOnly?: boolean,
-    ele?: string
+    ele?: string,
+    show?: boolean | showFunc
 }
 
 

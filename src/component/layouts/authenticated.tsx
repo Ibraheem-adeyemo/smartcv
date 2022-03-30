@@ -204,7 +204,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                 sx={sidebarSX}
 
             >
-                {isUserLoading && <SkeletonLoader rows={5} width={"70%"} columns={1} loaderKey="loader-list" />}
+                {isUserLoading && <SkeletonLoader rows={5} width={["70px", "70px", "100px", "200px", "300px", "300px"]} columns={1} loaderKey="loader-list" />}
                 {isUserLoaded && <MenuLists />}
             </GridItem>
             {isUserLoading && <GridItem d="flex" w="100%" alignItems="center" px="50px">  

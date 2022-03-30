@@ -20,21 +20,17 @@ const BankAdminTable:FC = () => {
     let url = apiUrlsv1.tenantAdmin
     if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
         if(userDetail.role.name !== appRoles.superAdmin){
-            url = `${url}${userDetail.tenant.code}`
+            url = `${url}/${userDetail.tenant.code}`
           } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
             url = `${url}${selectedTenantCode}`
           }
     }
-    url += `?page=${pageNumber-1}&countPerPage=${countPerPage}`
+    url += `?page=${pageNumber-1}&size=${countPerPage}`
     url = token && userDetail?url: ""
     const { data: tenantAdmin, mutate, error } = useSWR<Paginate<TenantAdminView>>(url === "" ? null : url)
     const toast = useToast()
     const data = useMemo(() => ({
-        columns: [
-            {
-                name: "Name",
-                key: "firstName,lastName"
-            }, {
+        columns: [{
                 name: "Bank name",
                 key: "tenant.name"
             }, {

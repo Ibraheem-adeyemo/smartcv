@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { Button, Flex, FormControl, HStack, Input, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Switch, useToast } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
-import { CreateRoleModel, InterchangeReconnectionModal, InterchangeReconnectionModel, UserManagementModal } from "../../models";
-import { InterchangeDisconnectionModals, InterchangeReconnectionModalNames, notificationMesage, UserManagementModalNames, UserManagementModals } from "../../constants";
+import { CreateRoleModel, InterchangeDisconnectionStatus, InterchangeReconnectionModal, InterchangeReconnectionModel, Paginate, UserManagementModal } from "../../models";
+import { apiUrlsv1, appRoles, InterchangeDisconnectionModals, InterchangeReconnectionModalNames, keysForArrayComponents, notificationMesage, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { AuthContext, InterchangeDisconnectionContext, StatsContext } from "../../providers";
 import _ from "lodash";
 import { MotionModal } from "../framer/motion-modal";
@@ -11,18 +11,9 @@ import { createRole } from "../../services/v1";
 import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
 import { appear } from "../../animations";
 import { formControlInputSX } from "../../sx";
-const permissions = [{
-    valuw: 1,
-    name: "Permision 1"
-}, {
-    valuw: 2,
-    name: "Permision 2"
-}, {
-    valuw: 3,
-    name: "Permision 3"
-}]
+import useSWR from "swr";
 const InterchangeReconnectionRequest: FC = () => {
-    const { userDetail } = useContext(AuthContext)
+    const { userDetail, token } = useContext(AuthContext)
     const { tabs, modals, handleToggleModal  } = useContext(InterchangeDisconnectionContext)
     const { institutions, selectedTenantCode } = useContext(StatsContext)
     const { form, formOnChange, refreshForm } = useForm<InterchangeReconnectionModel>({
@@ -34,6 +25,19 @@ const InterchangeReconnectionRequest: FC = () => {
     const [selectedModal, setSelectedModal] = useState<InterchangeReconnectionModal>(InterchangeDisconnectionModals[2])
     const [loading, changeLoading] = useLoading()
     const toast = useToast()
+    
+    let url = apiUrlsv1.interchangeDisconnectionStatus
+    // debugger
+    if (userDetail && (userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+
+        if (userDetail.role.name !== appRoles.superAdmin) {
+            url = `${apiUrlsv1.interchangeDisconnectionStatus}/${userDetail.tenant.code}`
+        } else if (userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0") {
+            url = `${apiUrlsv1.interchangeDisconnectionStatus}/${selectedTenantCode}`
+        }
+    }
+    url = token && userDetail ? `${url}` : ""
+    const { data: connnectionRequest, mutate: _mutate, error } = useSWR<Paginate<InterchangeDisconnectionStatus>>(!url ? null : url)
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         e.stopPropagation()
         addField(e.target.id as keyof InterchangeReconnectionModel)
@@ -106,7 +110,7 @@ const InterchangeReconnectionRequest: FC = () => {
                                     <MotionFormLabel>Interchange Name</MotionFormLabel>
 
                                     <Select borderRadius="4px" value={form?.tenantCode} onChange={addData} placeholder="Select an Interchange">
-                                        {institutions?.map((x, i) => <option key={i} value={x.tenantCode}>{x.name}</option>)}
+                                        {connnectionRequest && connnectionRequest.content && connnectionRequest.content.map((x, i) => <option key={`${keysForArrayComponents.interchangeReconnectionRequestDropdown}-${i}`} value={x.node}>{x.node}</option>)}
                                     </Select>
                                     <MotionFormErrorMessage>{validation?.errors.interchangeName}</MotionFormErrorMessage>
                                 </FormControl>

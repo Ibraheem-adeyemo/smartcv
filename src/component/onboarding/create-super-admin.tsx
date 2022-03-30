@@ -3,7 +3,7 @@ import { Avatar, useToast, Flex, Text } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import { horizontalPositionWithOpacity } from "../../animations";
+import { horizontalPositionWithOpacity, staggerChildrenWithDuration } from "../../animations";
 import { notificationMesage, TickIcon } from "../../constants";
 import { Tenant, Onboarding, stepsProps, tenantAdmin } from "../../models";
 import { OnboardingContext } from "../../providers";
@@ -88,17 +88,7 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
 
     return (
         <>
-            <MotionAccordion d="flex" flexDir="column" gap="24px" w="100%" index={accordionindex} onChange={(n) => setAccordionindex(n as number)} animate="show" initial="hide" variants={{
-                show: {
-                    opacity: 1,
-                    transition: {
-                        staggerChildren: 0.5
-                    }
-                },
-                hide: {
-
-                }
-            }}>
+            <MotionAccordion d="flex" flexDir="column" gap="24px" w="100%" index={accordionindex} onChange={(n) => setAccordionindex(n as number)} animate="show" initial="hide" variants={staggerChildrenWithDuration}>
                 <MotionAccordionItem w="100%" bgColor="white" animate="show" initial="hide" variants={horizontalPositionWithOpacity()}>
                     {({ isExpanded }) => {
                         return <>
@@ -110,7 +100,7 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
                                         <Avatar boxSize="26px" showBorder borderColor="var(--chakra-colors-brand-muted)" name=" " bgColor="white"></Avatar>
                                     )}
                                     <Text textAlign="right" variant="card-header">
-                                        Create super admin with an exisiting Interswitch Passport account
+                                        Create Bank admin with an exisiting Interswitch Passport account
                                     </Text>
                                 </Flex>
                             </AccordionButton>
@@ -133,7 +123,7 @@ const CreateSuperAdmin:React.FC<CreateSuperAdminProps> = (props: CreateSuperAdmi
                                         <Avatar boxSize="26px" showBorder borderColor="var(--chakra-colors-brand-muted)" name=" " bgColor="white"></Avatar>
                                     )}
                                     <Text textAlign="right" variant="card-header">
-                                        Create super admin with a new account
+                                        Create Bank admin with a new account
                                     </Text>
                                 </Flex>
                             </AccordionButton>

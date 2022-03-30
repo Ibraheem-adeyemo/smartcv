@@ -34,14 +34,12 @@ const AuditTable:FC = () => {
         actions: [
             {
                 name: "view",
-                icons: {
-                    use: true
-                },
                 method: (x: AuditView) => {
                     toggleDetailsModal(true)
                     changeAuditInfo(x)
-                }
-            }],
+                },
+                show: true
+            }] as Action[],
         data: typeof auditView !== "undefined" && typeof error ==="undefined"? auditView?.content as AuditView[]:typeof error !=="undefined"?[]:undefined
     }), [auditView, error])
 

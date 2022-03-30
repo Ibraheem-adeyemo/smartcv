@@ -1,6 +1,7 @@
 export enum keysForArrayComponents {
     actionButton = "action-button",
     actionMenuItem = "action-menu-item",
+    addNewRoleInstitution = 'add-new-role-institution',
     calenderDayOption = "calender-day-option",
     calenderDayNameOption = "calender-day-name-option",
     calenderHourOption="calender-hour-option",
@@ -9,10 +10,12 @@ export enum keysForArrayComponents {
     calenderWeekOption = "calender-week-option",
     calenderMonthOption = "calender-month-option",
     calnderYearOption = "calender-year-option",
+    channelsMonitoringTabButton = 'channels-monitoring-tabs-button',
     flexSkeletonLoader = 'flex-skeloader-loader',
     interchangeDisconnectionTab1 = 'interchange-disconnection-tabs-1',
     interchangeDisconnectionTab2 = 'interchange-disconnection-tabs-2',
     interchangeDisconnectionTabEmpty = 'interchange-disconnection-tabs-empty',
+    interchangeReconnectionRequestDropdown = 'interchange-reconnection-request-dropdown',
     menuText = 'menu-text',
     missionStatementMotionText = 'mission-statement-motion-text',
     motionTBodyCell = "motion-tbody-cell",
@@ -28,5 +31,11 @@ export enum keysForArrayComponents {
     tableColumn = 'table-column',
     terminalsPerformance = 'terminals-performance',
     terminalsUnderWatchAppCard = 'terminals-under-watch-app-card',
-    usageMetricAppCard = 'usage-metric-app-card'
+    transactionBreakdownAppCard='transaction-breakdown-app-card',
+    transactionMetricStat = 'transaction-metric-stat',
+    usageMetricAppCard = 'usage-metric-app-card',
+    userManagementActionButton = 'user-management-action-button',
+    userManagementStat = 'user-management-stats',
+    userManagementTabButton = 'user-management-tab-buttom'
+
 }

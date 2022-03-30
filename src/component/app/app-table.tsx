@@ -141,7 +141,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
 
                                         if (typeof y.lookUp !== "undefined") {
                                             if (typeof y.ele === "undefined") {
-                                                data = y.lookUp[data]
+                                                data = y.lookUp[+data]
                                             }
                                         }
                                     }
@@ -169,7 +169,16 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                                                     <MotionMenuList initial="hide" animate="show" variants={staggerChildrenWithDuration}>
 
                                                         {
-                                                            map(props.actions, (z, k) => <MenuItem key={`${keysForArrayComponents.actionMenuItem}-${k}`}
+                                                            map(props.actions?.filter((v) => {
+                                                                if(typeof v.show === "undefined") {
+                                                                    return true
+                                                                } else if(typeof v.show === "boolean"){
+                                                                    return v.show 
+                                                                }
+                                                                else {
+                                                                    return v.show(x)
+                                                                }
+                                                            }) , (z, k) =>  <MenuItem key={`${keysForArrayComponents.actionMenuItem}-${k}`}
                                                                 sx={{
                                                                     bgColor: typeof z.bgColor === "undefined" ? "white" : z.bgColor,
                                                                     color: typeof z.color === "undefined" ? "initial" : z.color

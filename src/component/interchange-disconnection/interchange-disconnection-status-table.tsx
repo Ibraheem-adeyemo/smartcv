@@ -49,28 +49,6 @@ const InterchangeDisconnectionStatusTable: FC = () => {
             lookUp: ["Not Active", "Active"]
         }
         ],
-        actions: [
-            {
-                name: "Accept",
-                icons: {
-                    use: true
-                },
-                method: () => {
-                    alert("Accepted")
-                },
-                color: "green"
-            },
-            {
-                name: "Rejected",
-                icons: {
-                    use: true
-                },
-                method: () => {
-                    alert("Accepted")
-                },
-                color: "red"
-            }
-        ],
         data: !connnectionRequest && !error ? undefined : (connnectionRequest && !error) ? connnectionRequest.content as InterchangeDisconnectionStatusModdel[] : []
     }), [connnectionRequest, error])
 

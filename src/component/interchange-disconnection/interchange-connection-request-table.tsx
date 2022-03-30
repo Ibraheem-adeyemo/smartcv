@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { FC, useContext, useMemo } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, appTableElements, appRoles, superAdmin } from "../../constants";
-import { Column, InterchangeDisconnectionRequest, Paginate, TenantView } from "../../models";
+import { Action, Column, InterchangeDisconnectionRequest, Paginate, TenantView } from "../../models";
 import { PaginatorProvider, PaginatorContext, AuthContext } from "../../providers";
 import { AppTable } from "../app";
 
@@ -33,28 +33,6 @@ const InterchangeConnectionRequestTable: FC = () => {
             name: "Verdict",
             key: "verdict"
         }] as Column[],
-        actions: [
-            {
-                name: "Accept",
-                icons: {
-                    use: true
-                },
-                method: () => {
-                    alert("Accepted")
-                },
-                color: "green"
-            },
-            {
-                name: "Rejected",
-                icons: {
-                    use: true
-                },
-                method: () => {
-                    alert("Accepted")
-                },
-                color: "red"
-            }
-        ],
         data: connnectionRequest && error ? undefined : (connnectionRequest && error) ? connnectionRequest.content as InterchangeDisconnectionRequest[] : []
     }), [connnectionRequest, error])
     return (<AppTable<InterchangeDisconnectionRequest> columns={data?.columns} rows={data.data as InterchangeDisconnectionRequest[]} showNumbering />)
