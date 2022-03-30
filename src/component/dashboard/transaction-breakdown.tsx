@@ -89,23 +89,22 @@ const TransactionBreakdown: FC<TransactionBreakdownProps> = ({ showDetails = fal
 
       {!loading.isLoading && stats ?
         <Flex flexWrap={"wrap"} gap="15px"> {stats.map((x, i) => (
-          <Button key={`${keysForArrayComponents.terminalsUnderWatchAppCard}-${i}`} disabled={x.comingSoon} opacity={x.comingSoon ? "0.4" : "1"} cursor={showDetails && !x.comingSoon && x.url ? 'pointer' : 'none'}
+          <Button key={`${keysForArrayComponents.transactionBreakdownAppCard}-${i}`} disabled={x.comingSoon} opacity={x.comingSoon ? "0.4" : "1"} cursor={showDetails && !x.comingSoon && x.url ? 'pointer' : 'none'}
             onClick={() => {
               if (showDetails && x.url && !x.comingSoon) {
                 setSelectedUrl(`${x.url}/`)
                 setSelectedHeaderName(x.headerName)
               }
-            }
-            }
+            }}
           >
             {x.comingSoon && <Text size="page-header" variant="page-header" sx={{
               pos: "absolute",
               zIndex: 10
             }}>{upcomingFeature.stats}</Text>}
-            <Stat key={`${keysForArrayComponents.transactionBreakdownAppCard}-${i}`} {...x} />
+            <Stat {...x} />
           </Button>
         ))}</Flex> :
-        <SkeletonLoader rows={1} columns={4} width={props.width} height={props.height} gap="30px" loaderKey="" />
+        <SkeletonLoader rows={1} columns={4} width={props.width} height={props.height} gap="30px" loaderKey={keysForArrayComponents.transactionBreakdownAppCard} />
       }
     </AppCard>
   )
