@@ -30,51 +30,58 @@ const ResendUserActivationMail: FC<ActivateUserProps> = (props: ActivateUserProp
     const sendEmailActivation = useCallback(async (e: MouseEvent<HTMLButtonElement>) => {
         debugger
         try {
-            setLoading({isLoading: true, text: "resending email"})
+            setLoading({ isLoading: true, text: "resending email" })
             const email = props.isLoggedIn && props.user ? props.user.email : !props.isLoggedIn && props.email ? props.email : ""
             await sendUserActivationMail(email)
-        } catch (error:any) {
+            // debugger
+            toast({
+                status: "success",
+                title: notificationMesage.mailSent,
+                isClosable: true,
+                variant: "left-accent"
+            })
+        } catch (error: any) {
+            // debugger
             toast({
                 status: "error",
-                title: error? error.message?error.message : error: `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`,
+                title: error ? error.message ? error.message : error : `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`,
                 isClosable: true,
                 variant: "left-accent"
             })
         }
-        setLoading({isLoading: false, text: ""})
+        setLoading({ isLoading: false, text: "" })
     }, [])
 
     return (
-            <MotionModal size={"fit-content"} isCentered isOpen={props.isOpen} onClose={() => {
-                if (props.isLoggedIn && props.user) {
-                    props.closeModal()
-                } else {
-                    void (0)
-                }
-            }}>
-                {!props.isLoggedIn && <OverlayOne />}
-                {props.isLoggedIn && <ModalOverlay />}
-                <ModalContent width={"fit-content"}>
-                    {!props.isLoggedIn && <ModalHeader><AnimatedText>Resend activation mail for your account</AnimatedText></ModalHeader>}
-                    {props.isLoggedIn && props.user && <ModalHeader><AnimatedText>Resend activation mail for {props.user.email}</AnimatedText></ModalHeader>}
-                    {props.isLoggedIn && <ModalCloseButton />}
-                    <ModalBody>
-                        {!props.isLoggedIn && <AnimatedText>You can not access this feature because you have not activated your account</AnimatedText>}
-                        {props.isLoggedIn && <MotionFlex variants={staggerChildrenWithDuration}>
+        <MotionModal size={"fit-content"} isCentered isOpen={props.isOpen} onClose={() => {
+            if (props.isLoggedIn && props.user) {
+                props.closeModal()
+            } else {
+                void (0)
+            }
+        }}>
+            {!props.isLoggedIn && <OverlayOne />}
+            {props.isLoggedIn && <ModalOverlay />}
+            <ModalContent width={"fit-content"}>
+                {!props.isLoggedIn && <ModalHeader><AnimatedText>Resend activation mail for your account</AnimatedText></ModalHeader>}
+                {props.isLoggedIn && props.user && <ModalHeader><AnimatedText>Resend activation mail for {props.user.email}</AnimatedText></ModalHeader>}
+                {props.isLoggedIn && <ModalCloseButton />}
+                <ModalBody>
+                    {!props.isLoggedIn && <AnimatedText>You can not access this feature because you have not activated your account</AnimatedText>}
+                    {props.isLoggedIn && <MotionFlex variants={staggerChildrenWithDuration}>
 
-                        </MotionFlex>}
-                    </ModalBody>
-                    <ModalFooter>
-                        <Flex gap="10px" flexWrap="wrap">
+                    </MotionFlex>}
+                </ModalBody>
+                <ModalFooter>
+                    <Flex gap="10px" flexWrap="wrap">
                         {props.isLoggedIn && props.user && <MotionButton initial="hide" animate="show" variants={appear(0)} variant="muted-primary-button" px="45px" py="8px" onClick={() => props.closeModal()}>Cancel</MotionButton>}
                         <AppLink py="8px" variant="primary-button" href={links.login}><AnimatedText>Back to Login</AnimatedText></AppLink>
                         <MotionButton initial="hide" animate="show" variants={appear(0)} variant="primary-button" px="115px" py="8px" isLoading={loading?.isLoading} loadingText={typeof loading?.text === "undefined" ? "loading" : loading.text} onClick={sendEmailActivation}>Resend</MotionButton>
-                        </Flex>
-                    </ModalFooter>
-                </ModalContent>
-            </MotionModal>
+                    </Flex>
+                </ModalFooter>
+            </ModalContent>
+        </MotionModal>
     )
 }
-
 
 export default ResendUserActivationMail

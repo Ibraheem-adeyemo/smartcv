@@ -7,7 +7,7 @@ import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext, 
 import { useToast } from "@chakra-ui/react";
 import { apiUrlsv1, appRoles, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
-import { AddNewBank, AddNewUser } from ".";
+import { AddNewBank, AddNewUser, ResendUserActivationMail } from ".";
 import AddNewRole from "./add-new-role";
 
 
@@ -17,6 +17,9 @@ const BankAdminTable:FC = () => {
     const { token, userDetail } = useContext(AuthContext)
     const { selectedTenantCode } = useContext(StatsContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
+    
+    const [selectedUser, setSelectedUser] = useState<TenantAdminView>()
+    const [openModal, setOpenModal] = useState(false)
     let url = apiUrlsv1.tenantAdmin
     if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
         if(userDetail.role.name !== appRoles.superAdmin){
@@ -48,30 +51,13 @@ const BankAdminTable:FC = () => {
         ],
         actions: [
             {
-                name: "Edit",
+                name: "Resend verification Mail",
                 icons: {
                     use: true
                 },
-                method: () => {
-                    alert("Edit")
-                }
-            },
-            {
-                name: "Delete",
-                icons: {
-                    use: true,
-                },
-                method: () => {
-                    alert("Delete")
-                }
-            },
-            {
-                name: "View",
-                icons: {
-                    use: true
-                },
-                method: () => {
-                    alert("View")
+                method: (x: TenantAdminView) => {
+                    setOpenModal(true)
+                    setSelectedUser(x)
                 }
             },
         ],
@@ -94,7 +80,14 @@ const BankAdminTable:FC = () => {
             setPaginationProps(tenantAdmin.totalElements )
         }
     }, [tenantAdmin])
-    return (<AppTable<TenantAdminView> columns={data?.columns} rows={data.data as TenantAdminView[]} showNumbering />)
+    return (<>
+    <AppTable<TenantAdminView> columns={data?.columns} rows={data.data as TenantAdminView[]} showNumbering />
+    
+    <ResendUserActivationMail isLoggedIn={true} user={selectedUser} isOpen={openModal} closeModal={function (): void {
+            setSelectedUser(undefined)
+            setOpenModal(false)
+        } } />
+    </>)
 
 }
 

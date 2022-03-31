@@ -6,6 +6,7 @@ export enum notificationMesage {
     CantSubmitForm = "Oops! can't submit this form, try again!",
     emailRequired = "Email required",
     invalidEmailFormat = "Invalid Email format",
+    mailSent = "Mail sent",
     Oops = "Oops!",
     SuccessfulAccountCreation = "Account creation successful!",
     SuccessfulBankCreation = "Bank creation successful!",

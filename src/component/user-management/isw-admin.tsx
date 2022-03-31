@@ -5,10 +5,11 @@ import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import { apiUrlsv1, appRoles, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames } from "../../constants";
 import { setCookie } from "../../lib";
-import { ISWAdmView, Paginate, UserManagementModal } from "../../models";
+import { Action, ISWAdmView, Paginate, TenantAdminView, UserManagementModal } from "../../models";
 import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext, AuthContext } from "../../providers";
 import { AppTable } from "../app";
 import AddNewRole from "./add-new-role";
+import ResendUserActivationMail from "./resend-user-activation-mail";
 
 const AddNewUser = dynamic(() => import("./add-new-user"), { ssr: false })
 const ISWAdminTable: FC = () => {
@@ -20,7 +21,8 @@ const ISWAdminTable: FC = () => {
     const url = userDetail && userDetail.role.name === appRoles.superAdmin && token ? `${apiUrlsv1.iswAdmin}?page=${pageNumber - 1}&countPerPage=${countPerPage}` : null
     const { data: iswAdmin, mutate: _mutate, error } = useSWR<Paginate<ISWAdmView>>(url)
     const toast = useToast()
-
+    const [selectedUser, setSelectedUser] = useState<ISWAdmView>()
+    const [openModal, setOpenModal] = useState(false)
     const { modals, handleToggleModal, mutateData } = useContext(UserManagementTabProviderContext)
     const data = useMemo(() => {
         // debugger
@@ -29,33 +31,30 @@ const ISWAdminTable: FC = () => {
         return {
             columns: [{
 
-                    name: "Role",
-                    key: "role.name"
-                }, {
-                    name: "Email Address",
-                    key: "email"
-                }, {
-                    name: "Date Created",
-                    key: "createdAt",
-                    ele: appTableElements.dateTime
-                }, {
-                    name: "Status",
-                    key: "status",
-                    ele: appTableElements.status
-                }
+                name: "Role",
+                key: "role.name"
+            }, {
+                name: "Email Address",
+                key: "email"
+            }, {
+                name: "Date Created",
+                key: "createdAt",
+                ele: appTableElements.dateTime
+            }, {
+                name: "Status",
+                key: "status",
+                ele: appTableElements.status
+            }
             ],
             actions: [
                 {
-                    name: "View",
-                    icons: {
-                        use: true
-                    },
-                    show:false,
-                    method: () => {
-                        alert("View")
+                    name: "Resend Activation Mail",
+                    method: (x: ISWAdmView) => {
+                        setOpenModal(true)
+                        setSelectedUser(x)
                     }
                 },
-            ],
+            ] as Action[],
             data: isIswAdminIsLoading ? undefined : isIswAdminIsLoaded ? iswAdmin.content : []
         }
     }, [iswAdmin, error])
@@ -72,7 +71,7 @@ const ISWAdminTable: FC = () => {
     }, [error])
 
     useEffect(() => {
-        if (iswAdmin  && iswAdmin.totalElements) {
+        if (iswAdmin && iswAdmin.totalElements) {
             setCookie(cookieKeys.totalISWAdmin, iswAdmin.totalElements.toString(), cookiesTimeout.totalISWAdminTimeout)
             setPaginationProps(iswAdmin.totalElements)
         }
@@ -95,7 +94,13 @@ const ISWAdminTable: FC = () => {
 
 
 
-    return (<AppTable<ISWAdmView> columns={data?.columns} rows={data.data as ISWAdmView[]} actions={data.actions} showNumbering />)
+    return (<>
+        <AppTable<ISWAdmView> columns={data?.columns} rows={data.data as ISWAdmView[]} actions={data.actions} showNumbering />
+        <ResendUserActivationMail isLoggedIn={true} user={selectedUser as unknown as TenantAdminView} isOpen={openModal} closeModal={function (): void {
+            setSelectedUser(undefined)
+            setOpenModal(false)
+        } } />
+    </>)
 
 }
 
@@ -105,7 +110,7 @@ const ISWAdmin: FC = () => {
     // debugger
     const isAddNewUserIsSelected = typeof selectedModal !== "undefined" && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewUser
     const isAddNewRoleIsSelected = typeof selectedModal !== "undefined" && selectedModal.isOpen && selectedModal.name === UserManagementModalNames.addNewRole
-    
+
     useEffect(() => {
         const modal = modals.find((x, i) => (x.name === UserManagementModalNames.addNewUser || x.name === UserManagementModalNames.addNewRole) && x.isOpen)
         // debugger
@@ -113,7 +118,7 @@ const ISWAdmin: FC = () => {
     }, [modals])
 
     return (
-        
+
         <PaginatorProvider>
             <ISWAdminTable />
             {isAddNewUserIsSelected && <AddNewUser />}

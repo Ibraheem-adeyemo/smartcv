@@ -35,9 +35,6 @@ export const sendUserActivationMail = async (email: string) => {
             if (validateEmail(email)) {
                 const token = getCookie("token")
                 await fetchJson<any>(`${apiUrlsv1.resendActivationMail}/${email}`, {
-                    headers: {
-                        "Authorization": `bearer ${token}`
-                    },
                     method: "post"
                 })
             } else {
