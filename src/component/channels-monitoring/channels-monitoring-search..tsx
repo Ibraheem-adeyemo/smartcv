@@ -6,9 +6,8 @@ import { SearchText } from "../stats";
 import AppBarFilter from "../stats/app-bar-filter";
 
 const ChannelsMonitoringSearch: FC = () => {
-    const { searchText, handleSearchText, toggleDate } = useContext(StatsContext)
+    const { searchText, handleSearchText } = useContext(StatsContext)
     useMemo(() => {
-        toggleDate(filterDates.today)
     },[])
     return (
         <Flex justifyContent="space-between" sx={{

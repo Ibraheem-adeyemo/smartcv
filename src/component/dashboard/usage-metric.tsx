@@ -16,25 +16,9 @@ interface usageMetricsProps {
 }
 
 const UsageMetric: React.FC<usageMetricsProps> = (props: usageMetricsProps) => {
-    const { institutions, institutionsError, selectedTenantCode } = useContext(StatsContext)
-    const today = new Date()
-    const thisYear = today.getFullYear()
-    const thisMonth = `${today.getMonth() + 1}`.length === 1 ? `0${today.getMonth() + 1}` : `${today.getMonth() + 1}`
-    const yesterdayDate = `${today.getDate() - 1}`.length === 1 ? `0${today.getDate() - 1}` : `${today.getDate() - 1}`
-    const thisDate = `${today.getDate()}`.length === 1 ? `0${today.getDate()}` : `${today.getDate()}`
-    const selectedDuration = 24
-    const selectedInterval = "hour"
-    const [startTime, setStartTime] = useState(`${thisYear}-${thisMonth}-${yesterdayDate} 00:00:00.000`)
-    const [endTime, setEndTime] = useState(`${thisYear}-${thisMonth}-${thisDate} 00:00:00.000`)
-    const [duration, setDuration] = useState(selectedDuration)
-    const [countInterval, setCountInterval] = useState(selectedInterval)
+    const { institutions, institutionsError, selectedTenantCode, startTime, endTime, countInterval, duration } = useContext(StatsContext)
     const [loading, setLoading] = useLoading({ isLoading: true, text: "" })
     const [stats, setStats] = useState<StatsA[]>()
-    const [durationList, setDurationList] = useState(hours.map((x, i) => ({
-        label: x,
-        value: x,
-        selected: i === 2
-    })))
     const { userDetail, token } = useContext(AuthContext)
     let balanceEnquiryUrl = apiUrlsv1.balanceEnquiry
     let pinChangeUrl = apiUrlsv1.pinChange
@@ -122,29 +106,6 @@ const UsageMetric: React.FC<usageMetricsProps> = (props: usageMetricsProps) => {
 
     useEffect(() => {
         // debugger
-        if (countInterval) {
-            switch (countInterval) {
-                case "hour":
-                    setDurationList(hours.map((x, i) => ({
-                        label: x,
-                        value: x,
-                        selected: i === 2
-                    })))
-                    break
-                case "minute":
-                    setDurationList(minutes.map((x, i) => ({
-                        label: x,
-                        value: x,
-                        selected: i === 2
-                    })))
-                    break
-            }
-        }
-    }, [countInterval])
-
-
-    useEffect(() => {
-        // debugger
         if(selectedTenantCode !== "0" && startTime && countInterval && duration) {
             
             mutate(pinChangeUrl)
@@ -155,37 +116,7 @@ const UsageMetric: React.FC<usageMetricsProps> = (props: usageMetricsProps) => {
 
     return (
         <AppCard topic={
-            <Flex gap={"10px"} flexDir={"column"}>
                 <Text variant="card-header" size="card-header">What Are our usage Metric</Text>
-                <Flex gap="17px">
-                    <AppCalendar label="Start Date" selectedDate={startTime.split(" ")[0]} selectedTime={startTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
-                        // console.log({ date, time })
-                        setStartTime(`${date} ${time}`)
-                    }} />
-
-                    {/* <AppCalendar label="End Date" selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
-                        // console.log({ date, time })
-                        setEndTime(`${date} ${time}`)
-                    }} /> */}
-                </Flex>
-                <Flex gap="17px">
-                    <SearchFilter
-                        data={[
-                            { label: "Hour", value: "hour", selected: countInterval == "hour" },
-                            { label: "Minute", value: "minute", selected: countInterval == "minute" },
-                        ]
-                        } label="Interval" onSelected={(e) => {
-                            // console.log({ e })
-                            setCountInterval(e.value)
-                        }} selected />
-                    <SearchFilter
-                        data={durationList}
-                        label="Duration" onSelected={(e) => {
-                            // console.log({ e })
-                            setDuration(e.value)
-                        }} selected />
-                </Flex>
-            </Flex>
         } >
             {!loading.isLoading ?
                 <>

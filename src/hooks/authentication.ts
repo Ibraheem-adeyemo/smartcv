@@ -80,7 +80,7 @@ export default function useAuthentication() {
     useEffect(() => {
 
         if (typeof window !== "undefined") {
-            if ((typeof user === "undefined" && typeof error !== "undefined") || token === "") {
+            if (!userDetail && userDetailError) {
 
                 // console.log({AuthenticatedPage})
                 const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)

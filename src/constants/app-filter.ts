@@ -9,9 +9,8 @@ export enum filterDates {
 
 export const filtersToShowDefaultValue : setFiltersToShowProps = {
     showTenantFilter: false,
-    showTodayFilter: false,
-    showThisWeekFilter: false,
-    showThisMonthFilter: false,
-    showThisYearFilter: false,
-    showCustomFilter: false
+    showStartDateFilter: false,
+    showEndDateFilter: false,
+    showCountIntervalFilter: false,
+    showDurationFilter: false
 }

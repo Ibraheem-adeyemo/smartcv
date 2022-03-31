@@ -10,6 +10,21 @@ export interface StatsA {
     url?:string
 }
 
+export interface DropdownSearchFilterProps {
+    data: DropdownContent[],
+    label?: string,
+    selected?: boolean,
+    onSelected?: (selectedItem: DropdownContent) => void
+}
+
+
+export interface DropdownContent {
+    label: any,
+    value: any,
+    selected: boolean
+}
+export type ResultFromSearch = (items?: DropdownContent[]) => void
+
 export interface StatsB {
     data: number[];
     labels: string[];

@@ -1,27 +1,35 @@
 import { createContext, FC, useContext } from "react";
 import { AuthContext } from ".";
 import { useFilter } from "../hooks";
-import { ComponentWithChildren, setFiltersToShowProps } from "../models";
+import { ComponentWithChildren, DropdownContent, setFiltersToShowProps } from "../models";
+const today = new Date()
+const thisYear = today.getFullYear()
+const thisMonth = `${today.getMonth() + 1}`.length === 1 ? `0${today.getMonth() + 1}` : `${today.getMonth() + 1}`
+const yesterdayDate = `${today.getDate() - 1}`.length === 1 ? `0${today.getDate() - 1}` : `${today.getDate() - 1}`
+const thisDate = `${today.getDate()}`.length === 1 ? `0${today.getDate()}` : `${today.getDate()}`
 
 export const StatsContext = createContext<ReturnType<typeof useFilter>>({
-    isToday:true,
-    isThisWeek:false,
-    isThisMonth: false,
-    isThisYear:false,
     searchText:"",
     selectedTenantCode:"0",
     institutions:undefined,
     institutionsError:undefined,
     ShowTenant:true,
-    showToday:true,
-    showThisWeek:true,
-    showThisMonth:true,
-    showThisYear:true,
-    showCustom:true,
+    showCountInterval:false,
+    showDuration: false,
+    showEndDate: false,
+    showStartDate: false,
+    startTime: `${thisYear}-${thisMonth}-${yesterdayDate} 00:00:00.000`,
+    endTime:`${thisYear}-${thisMonth}-${thisDate} 00:00:00.000`,
+    duration: 24,
+    countInterval: "hour",
+    durationList: [],
     changeSelectedTenantCode: (tenantCode:string) => {},
     handleSearchText:(tenantCode:string) => {},
-    toggleDate: (datesFilter:string) => {},
-    setFiltersToShow: (filtersToShow?:setFiltersToShowProps) => {}
+    setFiltersToShow: (filtersToShow?:setFiltersToShowProps) => {},
+    getSelectedStartDate: ({ date, time }: {date: string, time:string}) => {},
+    getSelectedEndDate: ({ date, time }: {date: string, time:string}) => {},
+    onSelectedCountInterval: (e: DropdownContent) => {},
+    onSelectedDuration: (e: DropdownContent) => {}
 })
 interface StatsProviderProps extends ComponentWithChildren {
 

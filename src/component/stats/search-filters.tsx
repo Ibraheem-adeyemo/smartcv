@@ -4,6 +4,7 @@ import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import _, { debounce, find } from 'lodash';
 import { DropdownIcon } from "../../constants";
 import { AnimatedText } from "../framer";
+import { DropdownContent, DropdownSearchFilterProps, ResultFromSearch } from "../../models";
 
 
 const debouncedFetchData = debounce((query: string, cb: ResultFromSearch, data: DropdownContent[]) => {
@@ -11,18 +12,7 @@ const debouncedFetchData = debounce((query: string, cb: ResultFromSearch, data: 
     const result = data?.filter(x => String(x.label).toLowerCase().search(re) > -1)
     cb(result)
 }, 500);
-interface DropdownSearchFilterProps {
-    data: DropdownContent[],
-    label?: string,
-    selected?: boolean,
-    onSelected?: (selectedItem: DropdownContent) => void
-}
-interface DropdownContent {
-    label: any,
-    value: any,
-    selected: boolean
-}
-type ResultFromSearch = (items?: DropdownContent[]) => void
+
 const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false, ...props }: DropdownSearchFilterProps) => {
     const [dropdownContent, setDropdownContent] = useState<DropdownContent[]>()
     const [query, setQuery] = useState<string>()

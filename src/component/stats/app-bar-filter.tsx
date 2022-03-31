@@ -1,31 +1,39 @@
 import { Flex, Tag, Text } from "@chakra-ui/react";
 import React, { FC, useContext } from "react";
-import { InstitutionFilter, CustomFilter } from ".";
+import { InstitutionFilter, CustomFilter, SearchFilter } from ".";
 import { delayChildren } from "../../animations";
-import { filterDates } from "../../constants";
+import { filterDates, selectionModeValues } from "../../constants";
 import { StatsContext } from "../../providers";
+import { AppCalendar } from "../app";
 import { MotionFlex } from "../framer";
 
 const AppBarFilter: FC = () => {
-    const { showCustom, ShowTenant, showToday, showThisWeek, showThisMonth, showThisYear, isToday, isThisWeek, isThisMonth, isThisYear, toggleDate } = useContext(StatsContext)
+    const { ShowTenant, showStartDate, showEndDate, showCountInterval, showDuration, startTime, endTime, countInterval, durationList, getSelectedEndDate, getSelectedStartDate, onSelectedCountInterval, onSelectedDuration } = useContext(StatsContext)
     return (
         <MotionFlex alignItems="center" gap="17px" sx={{
             flexWrap: "wrap"
         }}
-        animate="show"
-        initial="hide"
-        variants={delayChildren}
+            animate="show"
+            initial="hide"
+            variants={delayChildren}
         >
-            {ShowTenant && <InstitutionFilter  />}
-            {showToday && isToday && <Tag variant={"outline"} colorScheme={"brand"} bgColor={"brand.light-blue"}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.today}</Text></Tag>}
-            {showToday && !isToday && <Tag cursor={"pointer"} onClick={() => toggleDate(filterDates.today)}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.today}</Text></Tag>}
-            {showThisWeek && isThisWeek && <Tag variant={"outline"} colorScheme={"brand"} bgColor={"brand.light-blue"}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.thisWeek}</Text></Tag>}
-            {showThisWeek && !isThisWeek && <Tag cursor={"pointer"} onClick={() => toggleDate(filterDates.thisWeek)}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.thisWeek}</Text></Tag>}
-            {showThisMonth && isThisMonth && <Tag variant={"outline"} colorScheme={"brand"} bgColor={"brand.light-blue"}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.thisMonth}</Text></Tag>}
-            {showThisMonth && !isThisMonth && <Tag cursor={"pointer"} onClick={() => toggleDate(filterDates.thisMonth)}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.thisMonth}</Text></Tag>}
-            {showThisYear && isThisYear && <Tag variant={"outline"} colorScheme={"brand"} bgColor={"brand.light-blue"}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.thisYear}</Text></Tag>}
-            {showThisYear && !isThisYear && <Tag cursor={"pointer"} onClick={() => toggleDate(filterDates.thisYear)}><Text variant={'dropdown-text-header'} size="tag-text">{filterDates.thisYear}</Text></Tag>}
-            {showCustom && <CustomFilter />}
+            {ShowTenant && <InstitutionFilter />}
+            {showStartDate && <AppCalendar label="Start Date" selectedDate={startTime.split(" ")[0]} selectedTime={startTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={getSelectedStartDate} />}
+            {showEndDate && <AppCalendar label="End Date" selectedDate={endTime.split(" ")[0]} selectedTime={endTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={getSelectedEndDate} />}
+
+            {/* <AppCalendar label="End Date" selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
+                        // console.log({ date, time })
+                        setEndTime(`${date} ${time}`)
+                    }} /> */}
+            {showCountInterval && <SearchFilter
+                data={[
+                    { label: "Hour", value: "hour", selected: countInterval == "hour" },
+                    { label: "Minute", value: "minute", selected: countInterval == "minute" },
+                ]
+                } label="Interval" onSelected={onSelectedCountInterval} selected />}
+            {showDuration && <SearchFilter
+                data={durationList}
+                label="Duration" onSelected={onSelectedDuration} selected />}
         </MotionFlex>
     )
 }

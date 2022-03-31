@@ -8,10 +8,11 @@ import { MotionBox, MotionFlex, MotionImage } from '../framer';
 import { AppLink } from '../app';
 import { appear, staggerChildren, staggerChildrenWithDuration, verticalPosition } from "../../animations";
 import { loginButtonSX, loginFormContainerSX, registerDivSX } from "../../sx";
+import { useLoading } from "../../hooks";
 
 const LoginForm: FC = () => {
     const { user, userDetail, signIn, signOut } = useContext(AuthContext)
-
+    const [loading, setLoading] = useLoading({isLoading: false, text: ""})
     useEffect(() => {
 
         if (typeof window !== "undefined") {
@@ -22,6 +23,7 @@ const LoginForm: FC = () => {
     return (
         <form method="POST" onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
+            setLoading({isLoading: true, text: "Redirecting..."})
             signIn()
         }} >
             
@@ -71,10 +73,11 @@ const LoginForm: FC = () => {
                         animate="show"
                         variants={verticalPosition}
                     >
-                        <Button type="submit" variant="primary-button" sx={loginButtonSX}>
+                        <Button type="submit" variant="primary-button" loadingText={loading.text} isLoading={loading.isLoading} sx={loginButtonSX}>
                             {!userDetail ? `Already on boarded? Login` : `Login as ${userDetail.email}`}
                         </Button>
                         {userDetail && <Button variant="just-text" onClick={() => {
+
                             signOut()
                         }}>Or Sign in with another Account</Button>}
                     </MotionFlex>

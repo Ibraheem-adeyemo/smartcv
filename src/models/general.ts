@@ -79,9 +79,8 @@ export interface Action {
 
 export interface setFiltersToShowProps {
     showTenantFilter?: boolean,
-    showTodayFilter?: boolean,
-    showThisWeekFilter?: boolean,
-    showThisMonthFilter?: boolean,
-    showThisYearFilter?: boolean,
-    showCustomFilter?: boolean,
+    showStartDateFilter?: boolean,
+    showEndDateFilter?: boolean,
+    showCountIntervalFilter?: boolean,
+    showDurationFilter?: boolean
 }

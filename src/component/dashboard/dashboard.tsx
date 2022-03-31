@@ -16,14 +16,13 @@ const TransactionMetric = dynamic(() => import('./transaction-metric'), { ssr: f
 const UsageMetric = dynamic(() => import('./usage-metric'), { ssr: false })
 const Dashboard: FC = () => {
   const { userDetail } = useContext(AuthContext)
-  const { toggleDate, selectedTenantCode, setFiltersToShow } = useContext(StatsContext)
+  const { selectedTenantCode, setFiltersToShow } = useContext(StatsContext)
   let isTenantLoaded = false
   if (userDetail && (userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
     isTenantLoaded = true
   }
   useEffect(() => {
-    toggleDate(filterDates.today)
-    setFiltersToShow({ showTenantFilter: true })
+    setFiltersToShow({ showTenantFilter: true, showCountIntervalFilter: true, showDurationFilter: true, showEndDateFilter: true, showStartDateFilter: true })
   }, [])
   return (
 
