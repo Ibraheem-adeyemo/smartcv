@@ -17,6 +17,7 @@ import { appLayoutSX, appLinkSX, appLinkTextSX, interswitchLogoSx, mainSX, sideb
 import { horizontalPositionWithOpacity } from "../../animations";
 import { overrides } from "../../theme";
 import { useState } from "react";
+import { ResendUserActivationMail } from "../user-management";
 
 interface AuthenticatedLayoutProps extends ComponentWithChildren {
     pageHeader: string | JSX.Element
@@ -27,6 +28,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
     const [animationCount, setAnmationCount] = useState(true)
     const router = useRouter()
     const [firstLoad, setFirstLoad] = useState(0)
+    const [openResend, setOpenResend] = useState(true)
     const handleOnIdle = (event: any) => {
         // console.log('user is idle', event)
         // console.log('last active', getLastActiveTime())
@@ -93,6 +95,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
             name: menuNames.systemSettings,
             link: ""
         }]
+
         return <>
             {menuList.map((x, i) =>
                x.link && <MotionText color="brand.muted" animate={ animationCount? "show":"hide"} initial={ !animationCount? "show":"hide"}
@@ -133,7 +136,11 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
     })
 
 
-
+    useEffect(() => {
+        if(userDetail && !userDetail.active) {
+            setOpenResend(true)
+        }
+    }, [userDetail?.active])
 
     return (
         <Grid
@@ -223,6 +230,9 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                 <GridItem
                     sx={mainSX}
                 >
+                    <ResendUserActivationMail isOpen={openResend} closeModal={function (): void {
+                        setOpenResend(false)
+                    } } isLoggedIn={false} email={userDetail.email} />
                     {props.children}
 
                 </GridItem>

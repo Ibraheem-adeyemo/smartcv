@@ -57,7 +57,7 @@ export const createAccountAsync = async (onboarding: Onboarding) => {
                 setCookie(cookieKeys.createdAccount, "done", cookiesTimeout.createdAccountTimeout)
                 return data
             } else {
-                throw new Error(notificationMesage.AnErrorOccurred)
+                throw new Error(`${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`)
             }
         } else {
             throw new Error("You need to login with your Organization ID")

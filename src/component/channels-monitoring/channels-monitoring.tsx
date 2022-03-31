@@ -3,7 +3,6 @@ import { AnimatePresence } from "framer-motion"
 import dynamic from "next/dynamic"
 import { FC, useContext, useEffect } from "react"
 import { ChannelsMonitoringSearch, ChannelsMonitoringTabs } from "."
-import { filtersToShowDefaultValue } from "../../constants"
 import { StatsContext } from "../../providers"
 
 const ChannelsMonitoringStats = dynamic(() => import("./channels-monitoring-stats"), { ssr: false })

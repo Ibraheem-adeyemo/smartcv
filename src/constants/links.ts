@@ -51,6 +51,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     passportUrl: `${NEXT_PUBLIC_PASSPORT_BASE_URL}oauth/authorize?client_id=${CLIENT_ID}&scope=profile&response_type=code&redirect_uri=`,
     passportTokenUrl: `${NEXT_PUBLIC_PASSPORT_BASE_URL}oauth/token`,
     pinChange:`${API_BASE_URL}${CURRENT_API_VERSION}/monitor/transaction/pin-change/`,
+    resendActivationMail: `/api/v1/notification/activation/user/`,
     states: `${API_BASE_URL}${CURRENT_API_VERSION}/location/states`,
     tenant: `${API_BASE_URL}${CURRENT_API_VERSION}/tenant`,
     tenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/admins`,

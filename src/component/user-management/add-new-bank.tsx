@@ -4,10 +4,10 @@ import _, { map, range } from "lodash";
 import React, { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { appear } from "../../animations";
-import { apiUrlsv1, Images, PickerIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
+import { apiUrlsv1, Images, notificationMesage, PickerIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { validateHexColor } from "../../lib";
-import { InstitutionColor, InstitutionColorInfo, State, TenantInput, TenantView, UserManagementModal } from "../../models";
+import { InstitutionColor, InstitutionColorInfo, State, TenantInput, CreateTenantModel, UserManagementModal } from "../../models";
 import { UserManagementTabProviderContext } from "../../providers";
 import { createTenantAsync } from "../../services/v1";
 import { formControlInputSX } from "../../sx";
@@ -18,7 +18,7 @@ const AddNewBank:FC = () => {
     const { data: states } = useSWR<State[]>(apiUrlsv1.states)
     const { handleToggleModal, modals } = useContext(UserManagementTabProviderContext)
     const toast = useToast()
-    const { form, formOnChange, refreshForm } = useForm<TenantView>({
+    const { form, formOnChange, refreshForm } = useForm<CreateTenantModel>({
         name: "",
         image: "",
         logo: "",
@@ -29,7 +29,8 @@ const AddNewBank:FC = () => {
         status: "",
         location: "",
         branch: "",
-        code:""
+        code:"",
+        interchangeName: ""
     })
     const {form:institutionColorForm, formOnChange:institutionColorFormOnChange, refreshForm:institutionColorRefreshForm} = useForm<InstitutionColor>({
         headerColor: "#C8D2D6",
@@ -40,14 +41,14 @@ const AddNewBank:FC = () => {
     const headerColorRef = useRef<HTMLInputElement>(null)
     const sidebarColourRef = useRef<HTMLInputElement>(null)
     const buttonColorRef = useRef<HTMLInputElement>(null)
-    const { validation, addField, inputData, validateAllCompulsoryFields } = useValidator<TenantView>(["name", "logo", "address", "location", "branch", "tenantCode"])
+    const { validation, addField, inputData, validateAllCompulsoryFields } = useValidator<CreateTenantModel>(["name", "logo", "address", "location", "branch", "tenantCode", "interchangeName"])
     const {validation: institutionColorValidation, addField:institutionColorAddField, inputData: institutionColorInputData  } = useValidator<InstitutionColor>()
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>(UserManagementModals[1])
     const [loading, changeLoading] = useLoading()
     const addData = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Event) => {
         e.stopPropagation()
         const ele = e.target as HTMLInputElement | HTMLSelectElement
-        addField(ele.id as keyof TenantView)
+        addField(ele.id as keyof CreateTenantModel)
         let value = ""
         if (ele.id === "logo") {
             let v = e as React.ChangeEvent<HTMLInputElement>
@@ -59,7 +60,7 @@ const AddNewBank:FC = () => {
                 reader.onload = () => {
                   
                     value = reader.result?.toString() as string
-                    addField(ele.id as keyof TenantView)
+                    addField(ele.id as keyof CreateTenantModel)
                     formOnChange({ "logo": value })
                 }
             }
@@ -102,6 +103,12 @@ const AddNewBank:FC = () => {
                 color: {
                     ...institutionColorForm
         }} as unknown as TenantInput)
+        toast({
+          status: "success",
+          title: notificationMesage.SuccessfulBankCreation,
+          isClosable: true,
+          variant: "left-accent"
+        })
       } catch (error: any) {
           toast({
             status: "error",
@@ -155,6 +162,11 @@ const AddNewBank:FC = () => {
 
                                     <Input placeholder="Enter Bank Name" borderRadius="4px" value={form.name} onChange={addData} />
                                     <MotionFormErrorMessage>{validation?.errors.name}</MotionFormErrorMessage>
+                                </FormControl>
+                                <FormControl isRequired id="interchangeName" sx={formControlInputSX} isInvalid={validation?.errors?.interchangeName !== "" && validation?.touched.interchangeName === "touched"}>
+                                    <MotionFormLabel>Interchange Name</MotionFormLabel>
+                                    <Input placeholder="Enter Interchange Name" borderRadius="4px" value={form.interchangeName} onChange={addData} />
+                                   <MotionFormErrorMessage>{validation?.errors.interchangeName}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="tenantCode" sx={formControlInputSX} isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
                                     <MotionFormLabel>Bank ID</MotionFormLabel>

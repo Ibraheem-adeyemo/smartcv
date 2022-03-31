@@ -23,7 +23,7 @@ export const createTenantAsync = async (tenant: TenantInput) => {
             if(typeof window !== "undefined"){
                 return data
             } else {
-                throw new Error(notificationMesage.AnErrorOccurred)
+                throw new Error(`${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`)
             }
         } else {
             throw new Error("You need to login with your Organization ID")

@@ -1,5 +1,5 @@
 import { Button, CircularProgress, Link } from "@chakra-ui/react"
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import useSWR from "swr"
 import { appear, appearWithDimensions, delayChildren, staggerChildren, staggerChildrenWithDuration, verticalPosition } from "../../animations"
 import { apiUrlsv1, CloseIcon, Images, links } from "../../constants"
@@ -18,8 +18,15 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
     // const router = useRouter()
     const url = `${apiUrlsv1.activateAccount}?token=${props.activationCode}`
     const { data, error } = useSWR<APIResponse<any>>(url)
-
-
+    const [extraMessage, setExtraMessage] = useState("")
+    useEffect(() => {
+        console.error({error})
+        if(error && typeof error === "string" && error.toLowerCase() === "token is expired" ) {
+            setExtraMessage("login to resend activation mail")
+        } else {
+            setExtraMessage("")
+        }
+    },[error])
     return (
         <>
 
@@ -50,7 +57,7 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
                         variants={verticalPosition}
                     >
                         {data && <AnimatedText variant="card-header" size="page-header" >Account Activated</AnimatedText>}
-                        {error && <AnimatedText variant="card-header" size="page-header" >Account not activated</AnimatedText>}
+                        {error && <AnimatedText variant="card-header" size="page-header" >{error} {extraMessage}</AnimatedText>}
                         {!data && !error && <CircularProgress isIndeterminate color="brand.primary-blue" size="120px" sx={{
                             margin: "auto"
                         }}

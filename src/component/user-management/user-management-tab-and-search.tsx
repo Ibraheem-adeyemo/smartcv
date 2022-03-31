@@ -37,7 +37,7 @@ const UserManagementTabAndSearch: FC = () => {
             if (tabs.findIndex((x, i) => (x.name === userManagementTabsName.bank) && x.isSelected) > -1) {
                 return [UserManagementTriggerButtons.addNewBank]
             } else if (tabs.findIndex((x, i) => (x.name === userManagementTabsName.iSWAdmin) && x.isSelected) > -1) {
-                return [UserManagementTriggerButtons.addNewUser, UserManagementTriggerButtons.addNewRole]
+                return [UserManagementTriggerButtons.addNewUser]
             } else if(tabs.findIndex((x, i) => (x.name === userManagementTabsName.tenantAdmin) && x.isSelected) > -1) {
                 return [UserManagementTriggerButtons.addNewUser]
             }

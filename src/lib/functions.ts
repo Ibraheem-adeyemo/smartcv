@@ -122,7 +122,7 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
                     throw (data as unknown as any).error_description
                 }
             } else {
-                throw notificationMesage.AnErrorOccurred
+                throw `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`
             }
         } else {
 

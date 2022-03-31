@@ -15,6 +15,10 @@ export interface TenantView {
     code: string,
 }
 
+export interface CreateTenantModel extends TenantView {
+    interchangeName: string
+}
+
 export interface TenantTableView extends TenantView {
     active: boolean
 }
@@ -86,7 +90,7 @@ export interface InstitutionColor {
     buttonColor: string
 }
 
-export interface TenantInput extends TenantView {
+export interface TenantInput extends CreateTenantModel {
     color: InstitutionColor
 }
 
@@ -125,7 +129,7 @@ export interface RoleModel {
     name: string
 }
 
-type onCloseFunc = () => void
+export type onCloseFunc = () => void
 export interface BankModalProps {
     isOpen: boolean,
     closeModal: onCloseFunc,

@@ -44,18 +44,17 @@ const RegisterForm: FC = () => {
                     data
                 }
             } else {
-                throw new Error(notificationMesage.AnErrorOccurred)
+                throw new Error(`${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`)
             }
         } catch (error: any) {
             // console.error({ getInterChangebyInterchangeIdError: error })
-            if (typeof error.message !== "undefined" || typeof error !== "undefined") {
+
                 toast({
                     status: "error",
-                    title: typeof error.message === "undefined" ? error : error.message,
+                    title: error? error.message?error.message : error: `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`,
                     isClosable: true,
                     variant: "left-accent"
                 })
-            }
             setLoading({ isLoading: false, text: "" })
         }
     }

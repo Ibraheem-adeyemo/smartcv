@@ -2,7 +2,7 @@ import React, { FC, useCallback, useContext, useEffect, useRef, useState } from 
 import { Avatar, Button, Flex, FormControl, Text, FormLabel, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverHeader, PopoverTrigger, Select, useToast } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { BankAdmin, ISWAdminView, PasswordChecker, RoleModel, tenantAdmin, UserManagementModal } from "../../models";
-import { Roles, TickIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
+import { notificationMesage, Roles, TickIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { AuthContext, UserManagementTabProviderContext } from "../../providers";
 import { comparePassword, validateEmail, validateLowercase, validateNumber, validateUppercase } from "../../lib";
 import _ from "lodash";
@@ -208,16 +208,20 @@ const AddNewUser: FC = () => {
                 await createBankAdmin({ ...form, tenantCode: userDetail?.tenant.code } as unknown as tenantAdmin)
                 refreshForm()
             }
+            toast({
+                status: "success",
+                title: notificationMesage.SuccessfulBankAdminCreation,
+                isClosable: true,
+                variant: "left-accent"
+            })
         } catch (error:any) {
 
-            if (typeof error !== "undefined") {
                 toast({
                     status: "error",
-                    title: typeof error.message !== "undefined" ? error.message : error,
+                    title: error? error.message?error.message : error: `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`,
                     isClosable: true,
                     variant: "left-accent"
                 })
-            }
         }
         changeLoading(() => ({ isLoading: false, text: "" }))
     }, [form])

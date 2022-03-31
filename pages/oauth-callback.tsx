@@ -31,21 +31,14 @@ const OauthCallback: NextPage = () => {
                     }
                 }
                 
-            }).catch((err) => {
+            }).catch((error) => {
 
-                typeof err !== "undefined" ?
-                    toast({
-                        status: "error",
-                        title: typeof err.message === "undefined" ? err : err.message,
-                        variant: "left-accent",
-                        isClosable: true
-                    }) :
-                    toast({
-                        status: "error",
-                        title: notificationMesage.AnErrorOccurred,
-                        variant: "left-accent",
-                        isClosable: true
-                    })
+                toast({
+                    status: "error",
+                    title: error? error.message?error.message : error: `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`,
+                    isClosable: true,
+                    variant: "left-accent"
+                })
                 router.push("/")
             })
         }

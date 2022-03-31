@@ -52,6 +52,7 @@ export interface UserModel {
     accountNonLocked: string,
     tenant: Tenant,
     role: Role,
+    active: boolean
 }
 
 

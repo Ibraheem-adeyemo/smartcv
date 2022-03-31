@@ -11,4 +11,5 @@ import UserManagementStats from './user-management-stats'
 import BankView from './bank-view'
 import ActivateTenant from './activate-tenant'
 import DeactivateTenant from './deactivate-tenant'
-export {ActivateTenant, BankAdmin, Bank, BankView, DeactivateTenant, ISWAdmin, UserManagementSearch, UserManagementTabAndSearch, UserManagement, AddNewUser, AddNewBank, UserManagementStats }
+import ResendUserActivationMail from './resend-user-activation-mail'
+export {ActivateTenant, BankAdmin, Bank, BankView, DeactivateTenant, ISWAdmin, UserManagementSearch, UserManagementTabAndSearch, UserManagement, AddNewUser, AddNewBank, UserManagementStats, ResendUserActivationMail }

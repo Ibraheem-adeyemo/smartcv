@@ -42,7 +42,7 @@ const BankAdminTable:FC = () => {
                 ele: appTableElements.dateTime
             }, {
                 name: "Status",
-                key: "isActive",
+                key: "active",
                 ele: appTableElements.status
             }
         ],

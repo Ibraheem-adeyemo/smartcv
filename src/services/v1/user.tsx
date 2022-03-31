@@ -1,10 +1,10 @@
-import { apiUrlsv1 } from "../../constants"
-import { fetchJson, getCookie } from "../../lib"
+import { apiUrlsv1, notificationMesage } from "../../constants"
+import { fetchJson, getCookie, validateEmail } from "../../lib"
 import { BankAdmin, tenantAdmin, UserModel } from "../../models"
 
-export const  createBankAdmin = async (bankAdmin: tenantAdmin) => {
+export const createBankAdmin = async (bankAdmin: tenantAdmin) => {
     try {
-        if(bankAdmin) {
+        if (bankAdmin) {
             const data = {
                 username: bankAdmin.email,
                 email: bankAdmin.email,
@@ -13,7 +13,7 @@ export const  createBankAdmin = async (bankAdmin: tenantAdmin) => {
                 firstName: bankAdmin.firstName,
                 lastName: bankAdmin.lastName,
                 password: bankAdmin.password
-             }
+            }
             const token = getCookie("token")
             const s = await fetchJson<UserModel>(apiUrlsv1.user, {
                 headers: {
@@ -29,3 +29,20 @@ export const  createBankAdmin = async (bankAdmin: tenantAdmin) => {
     }
 }
 
+export const sendUserActivationMail = async (email: string) => {
+    try {
+        if (email) {
+            if (validateEmail(email)) {
+                await fetchJson<any>(`${apiUrlsv1.resendActivationMail}/${email}`, {
+                    method: "post"
+                })
+            } else {
+                throw notificationMesage.invalidEmailFormat
+            }
+        } else {
+            throw notificationMesage.emailRequired
+        }
+    } catch (error) {
+        throw error
+    }
+} 
