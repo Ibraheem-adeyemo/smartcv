@@ -3,7 +3,7 @@ import _ from "lodash";
 import dynamic from "next/dynamic";
 import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
-import { BankView } from ".";
+import { BankView, DeactivateTenant } from ".";
 import { apiUrlsv1, appTableElements, cookieKeys, cookiesTimeout, UserManagementModalNames, userManagementTabsAdmin, UserManagementTriggerButtons } from "../../constants";
 import { setCookie } from "../../lib";
 import { TenantView, Paginate, UserManagementModal, Column, Action, TenantTableView } from "../../models";
@@ -69,8 +69,19 @@ const BankTable: FC = () => {
                 }
             },
             {
+                name: UserManagementTriggerButtons.deactivateTenant,
+                show: (x: TenantTableView) => { 
+                    // debugger
+                    return x.active
+                },
+                method: (x: TenantTableView) => {
+                    // debugger
+                    setSelectedBank(x)
+                    setSelectedOption(UserManagementTriggerButtons.deactivateTenant)
+                }
+            },
+            {
                 name: UserManagementTriggerButtons.viewBank,
-                show: true,
                 method: (x: TenantTableView) => {
                     // debugger
                     setSelectedBank(x)
@@ -129,6 +140,11 @@ const BankTable: FC = () => {
                 }} bankInfo={selectedBank} />}
 
                 {selectedOption && selectedOption === UserManagementTriggerButtons.activateTenant && isOpen && <ActivateTenant reload={(status) => shouldReload(status)} isOpen={isOpen} closeModal={ () =>{
+                setIsOpen((prev) => !isOpen)
+                setSelectedOption("")
+                }} bankInfo={selectedBank} />}
+
+                {selectedOption && selectedOption === UserManagementTriggerButtons.deactivateTenant && isOpen && <DeactivateTenant reload={(status) => shouldReload(status)} isOpen={isOpen} closeModal={ () =>{
                 setIsOpen((prev) => !isOpen)
                 setSelectedOption("")
                 }} bankInfo={selectedBank} />}

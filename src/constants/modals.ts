@@ -18,7 +18,8 @@ export enum UserManagementTriggerButtons {
     addNewBank = "Create Bank",
     addNewRole = "Create Role",
     viewBank = "View",
-    activateTenant = "Activate Tenant"
+    activateTenant = "Activate Tenant",
+    deactivateTenant = "Deactivate Tenant"
 }
 
 export enum InterchangeReconnectionTriggerButtons {

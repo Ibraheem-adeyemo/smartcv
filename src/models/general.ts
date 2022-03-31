@@ -47,6 +47,7 @@ export interface apiUrlsv1Model {
     balanceEnquiry: string,
     createRole: string,
     createTenantAdmin: string,
+    deactivateTenant: string,
     getUserDetail: string,
     healthCheck: string,
     interChange: string,

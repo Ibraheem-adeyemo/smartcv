@@ -40,6 +40,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     balanceEnquiry: `${API_BASE_URL}${CURRENT_API_VERSION}/monitor/transaction/balance/`,
     createRole: `${API_BASE_URL}${CURRENT_API_VERSION}/roles/create`,
     createTenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/tenant-admin`,
+    deactivateTenant: `${API_BASE_URL}${CURRENT_API_VERSION}/tenant/deactivate`,
     getUserDetail: `${API_BASE_URL}${CURRENT_API_VERSION}/user`,
     healthCheck: `${API_BASE_URL}${CURRENT_API_VERSION}/actuator/health`,
     interChange: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange/find`,
