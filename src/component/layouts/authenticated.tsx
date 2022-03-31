@@ -1,7 +1,7 @@
 import React, { FC, memo, useContext, useEffect } from "react";
 import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, AuthenticatedPage, menuNames, cookieKeys, keysForArrayComponents } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
-import { Avatar, Button, ChakraProvider, extendTheme, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
 import { AuthContext } from "../../providers";
 import { AppLink } from "../app";
@@ -10,12 +10,8 @@ import { ComponentWithChildren, MenuListItem } from "../../models";
 import { useIdleTimer } from 'react-idle-timer'
 import { getCookie } from "../../lib";
 import { MotionFlex, MotionText } from "../framer";
-import colors from "../../theme/foundations/colors";
-import { breakpoints } from "../../theme/breakpoints";
-import { components } from "../../theme/components";
 import { appLayoutSX, appLinkSX, appLinkTextSX, interswitchLogoSx, mainSX, sidebarSX, skeletonLoaderForMainSX } from "../../sx";
 import { horizontalPositionWithOpacity } from "../../animations";
-import { overrides } from "../../theme";
 import { useState } from "react";
 import { ResendUserActivationMail } from "../user-management";
 

@@ -28,10 +28,11 @@ const ResendUserActivationMail: FC<ActivateUserProps> = (props: ActivateUserProp
     )
 
     const sendEmailActivation = useCallback(async (e: MouseEvent<HTMLButtonElement>) => {
+        debugger
         try {
             setLoading({isLoading: true, text: "resending email"})
             const email = props.isLoggedIn && props.user ? props.user.email : !props.isLoggedIn && props.email ? props.email : ""
-            sendUserActivationMail(email)
+            await sendUserActivationMail(email)
         } catch (error:any) {
             toast({
                 status: "error",
@@ -67,7 +68,7 @@ const ResendUserActivationMail: FC<ActivateUserProps> = (props: ActivateUserProp
                         <Flex gap="10px" flexWrap="wrap">
                         {props.isLoggedIn && props.user && <MotionButton initial="hide" animate="show" variants={appear(0)} variant="muted-primary-button" px="45px" py="8px" onClick={() => props.closeModal()}>Cancel</MotionButton>}
                         <AppLink py="8px" variant="primary-button" href={links.login}><AnimatedText>Back to Login</AnimatedText></AppLink>
-                        <MotionButton initial="hide" animate="show" variants={appear(0)} variant="primary-button" px="115px" py="8px" isLoading={loading?.isLoading} loadingText={typeof loading?.text === "undefined" ? "loading" : loading.text} onClick={sendEmailActivation}>Save</MotionButton>
+                        <MotionButton initial="hide" animate="show" variants={appear(0)} variant="primary-button" px="115px" py="8px" isLoading={loading?.isLoading} loadingText={typeof loading?.text === "undefined" ? "loading" : loading.text} onClick={sendEmailActivation}>Resend</MotionButton>
                         </Flex>
                     </ModalFooter>
                 </ModalContent>

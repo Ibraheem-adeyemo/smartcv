@@ -94,7 +94,7 @@ const BankAdminTable:FC = () => {
             setPaginationProps(tenantAdmin.totalElements )
         }
     }, [tenantAdmin])
-    return (<AppTable<TenantAdminView> columns={data?.columns} rows={data.data as TenantAdminView[]} actions={data.actions} showNumbering />)
+    return (<AppTable<TenantAdminView> columns={data?.columns} rows={data.data as TenantAdminView[]} showNumbering />)
 
 }
 
