@@ -25,7 +25,7 @@ const DeactivateTenant:FC<DactivateTenantProps> = (props: DactivateTenantProps) 
             await deactivateTenant(props.bankInfo?.code as string)
             toast({
               status: "success",
-              title: notificationMesage.AccountActivated,
+              title: notificationMesage.TenantDeactivated,
               isClosable: true,
               variant: "left-accent"
             })

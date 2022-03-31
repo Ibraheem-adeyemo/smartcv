@@ -10,5 +10,7 @@ export enum notificationMesage {
     SuccessfulLogin = "Login Successful!",
     SuccessfulRoleCreation = "Role creation successful!",
     SuccessfulSuperAdminCreation = "Super admin creation successful!",
+    TenantActivated = "Tenant Activated successfully",
+    TenantDeactivated = "Tenant Deactivated successfully",
     offline = "You're currently offline!"
 }
