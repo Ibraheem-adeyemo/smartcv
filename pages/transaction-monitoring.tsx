@@ -1,10 +1,11 @@
 import { NextPage } from "next"
+import { Authenticated } from "../src/component/layouts"
 
 const TransactionsMonitoring:NextPage = () => {
     return (
-        <>
-            Transaction Monitoring
-        </>
+        <Authenticated pageHeader="Transaction Monitoring">
+           <> Transaction Monitoring</>
+        </Authenticated>
     )
 }
 export default TransactionsMonitoring
