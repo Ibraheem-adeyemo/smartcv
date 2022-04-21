@@ -28,12 +28,10 @@ const ResendUserActivationMail: FC<ActivateUserProps> = (props: ActivateUserProp
     )
 
     const sendEmailActivation = useCallback(async (e: MouseEvent<HTMLButtonElement>) => {
-        debugger
         try {
             setLoading({ isLoading: true, text: "resending email" })
             const email = props.isLoggedIn && props.user ? props.user.email : !props.isLoggedIn && props.email ? props.email : ""
             await sendUserActivationMail(email)
-            // debugger
             toast({
                 status: "success",
                 title: notificationMesage.mailSent,
@@ -41,7 +39,6 @@ const ResendUserActivationMail: FC<ActivateUserProps> = (props: ActivateUserProp
                 variant: "left-accent"
             })
         } catch (error: any) {
-            // debugger
             toast({
                 status: "error",
                 title: error ? error.message ? error.message : error : `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`,

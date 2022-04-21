@@ -39,7 +39,6 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
   const [stats, setStats] = useState<StatsA[]>()
   const toast = useToast()
 
-
   useEffect(() => {
     // console.log("waiting")
     const getStats = (): StatsA[] => {
@@ -50,6 +49,7 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
         suffix: ""
       }
       
+      //const atmCountValue = totalATMCount && totalATMCount.count ? 
       const atmCountValue = totalATMCount && totalATMCount.content ? sumBy(totalATMCount?.content, (atm) => atm.count) : 0
       const atmLowCashValue = 0
     

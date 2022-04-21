@@ -4,7 +4,7 @@ import { InterchangeReconnectionModal, UserManagementModal } from "../models";
 export enum UserManagementModalNames {
     addNewUser = "Add New User",
     addNewBank = "Add New Bank",
-    addNewRole = "Add New Role",
+    addNewRole = "Interchange Reconnection",
     viewBank = "view Bank"
 
 }
@@ -23,7 +23,7 @@ export enum UserManagementTriggerButtons {
 }
 
 export enum InterchangeReconnectionTriggerButtons {
-    RequestReconnection = "Requestion Reconnection",
+    RequestReconnection = "Interchange Reconnection",
 }
 
 export const UserManagementModals: Readonly<UserManagementModal[]> = [

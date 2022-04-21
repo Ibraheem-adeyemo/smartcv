@@ -9,7 +9,7 @@ const InterchangeDisconnections: NextPage = () => {
     return (
         <StatsProvider>
             <InterchangeDisconnectionProvider>
-                <AuthenticatedLayout pageHeader={"Interchange Disconnection"}>
+                <AuthenticatedLayout pageHeader={"Interchange Status"}>
                     <InterchangeDisconnectionComponent />
                 </AuthenticatedLayout>
             </InterchangeDisconnectionProvider>

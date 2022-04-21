@@ -57,6 +57,7 @@ const InterchangeReconnectionRequest: FC = () => {
                     isClosable: true,
                     status: "success"
                 })
+                handleToggleModal({ ...selectedModal, isOpen: !selectedModal.isOpen })
             }
         } catch (error:any) {
             typeof error === "string" && 
@@ -86,7 +87,6 @@ const InterchangeReconnectionRequest: FC = () => {
     useEffect(() => {
         if (typeof form !== "undefined") {
             inputData(form)
-            // console.log({ validation })
         }
     }, [form])
     useEffect(() => {
@@ -106,10 +106,10 @@ const InterchangeReconnectionRequest: FC = () => {
                         <ModalCloseButton />
                         <ModalBody>
                             <Flex gridRowGap="23px" gridColumnGap="32px" flexWrap="wrap" >
-                                <FormControl isRequired id="InterchangeName" sx={formControlInputSX} isInvalid={validation?.errors?.interchangeName !== "" && validation?.touched.interchangeName === "touched"}>
+                                <FormControl isRequired id="interchangeName" sx={formControlInputSX} isInvalid={validation?.errors?.interchangeName !== "" && validation?.touched.interchangeName === "touched"}>
                                     <MotionFormLabel>Interchange Name</MotionFormLabel>
-
-                                    <Select borderRadius="4px" value={form?.tenantCode} onChange={addData} placeholder="Select an Interchange">
+                                                               
+                                    <Select borderRadius="4px" onChange={addData} placeholder="Select an Interchange">
                                         {connnectionRequest && connnectionRequest.content && connnectionRequest.content.map((x, i) => <option key={`${keysForArrayComponents.interchangeReconnectionRequestDropdown}-${i}`} value={x.node}>{x.node}</option>)}
                                     </Select>
                                     <MotionFormErrorMessage>{validation?.errors.interchangeName}</MotionFormErrorMessage>
