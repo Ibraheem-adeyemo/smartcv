@@ -1,30 +1,26 @@
-import { Flex } from "@chakra-ui/layout"
+import { Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import React, { } from "react"
-import { LoginForm } from "../component/auth"
-import { InterswitchLogo } from "../component/custom-component"
-import { NonAuthenticated } from "../component/layouts"
-import MissionStatement from "../component/mission-statement"
+import { LoginForm } from "../src/component/auth"
+import { InterswitchLogo } from "../src/component/custom-component"
+import { NonAuthenticated } from "../src/component/layouts"
+import MissionStatement from "../src/component/mission-statement"
+import { loginContainerDivSX, loginContainerSX } from "../src/sx"
 
 
-const Login:NextPage = () => {
-
-
-
+const Login: NextPage = () => {
     return (
         <NonAuthenticated>
-
-            <Flex flexDir="column" px="147px" gridGap="102.61px" py="34.5px">
+            <Flex sx={loginContainerSX}>
                 <Flex>
                     <InterswitchLogo variant="inverted" alt="Interswitch Logo" />
                 </Flex>
-                <Flex gridGap="99px">
+                <Flex sx={loginContainerDivSX}
+                >
                     <MissionStatement />
                     <LoginForm />
                 </Flex>
             </Flex>
         </NonAuthenticated>)
-
 }
-
 export default Login

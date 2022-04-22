@@ -1,8 +1,7 @@
 import { Flex, CircularProgress } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import { OnboardingContext } from "../../component/layouts";
-import {useOnboarding} from "../../hooks";
+import { OnboardingContext } from "../../src/providers";
 
 export default function Onboarding(props:any) {
     const [loading, setLoading] = useState(true)
@@ -13,7 +12,7 @@ export default function Onboarding(props:any) {
         if((typeof onboarding === "undefined" || onboarding === null) && typeof steps !== "undefined") {
             router.push(steps[0].url)
         } else if(typeof onboarding !== "undefined" && onboarding !== null && typeof steps !== "undefined") {
-            router.push( steps[onboarding?.state as number].url)
+            router.push( steps[onboarding?.state].url)
         }
         setLoading(prev => !prev)
     }, []) 

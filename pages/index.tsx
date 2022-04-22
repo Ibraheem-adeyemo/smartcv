@@ -1,36 +1,37 @@
-import { Flex } from '@chakra-ui/layout'
-import { CircularProgress, useToast } from '@chakra-ui/react'
+import { CircularProgress, useToast, Flex, BoxProps, FlexProps } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect } from 'react'
-import { cookieKeys, links } from '../constants'
-import { getCookie, setCookie } from '../lib'
-import { AuthContext } from '../provider/auth-provider'
-
+import { appear } from '../src/animations'
+import { MotionFlex } from '../src/component/framer/'
+import { cookieKeys, cookiesTimeout, links } from '../src/constants'
+import { getCookie, setCookie } from '../src/lib'
+import { AuthContext } from '../src/providers'
 const Home: NextPage = () => {
   const { user, token, error } = useContext(AuthContext)
   const router = useRouter()
   const toast = useToast()
   useEffect(() => {
-    if(typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
       if (window.location.pathname !== "/") {
         router.push(window.location.pathname + window.location.search);
-     }
+      }
     }
   }, [])
+
   useEffect(() => {
-    // debugger
+  
     if (typeof window !== "undefined") {
-      if (getCookie("token") === "") {
+      if (getCookie(cookieKeys.token) === "") {
         // setCookie("redirectUrl", router.asPath, 10)
         router.push(links.login)
       }
       else if (typeof user !== "undefined" || typeof error !== "undefined") {
         if (typeof user !== "undefined") {
-          // debugger
-          if(getCookie(cookieKeys.redirectUrl) !== "") {
-            const redirectUrl = getCookie("redirectUrl")
-            setCookie(cookieKeys.redirectUrl, "", -10)
+          if (getCookie(cookieKeys.redirectUrl) !== "") {
+            const redirectUrl = getCookie(cookieKeys.redirectUrl)
+            setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
             router.push(redirectUrl)
           } else {
             router.push(links.dashboard)
@@ -50,9 +51,18 @@ const Home: NextPage = () => {
   }, [user, error])
 
   return (
-    <Flex height="100vh">
-      {token == "" && <CircularProgress isIndeterminate color="brand.primary-blue" m="auto" size="120px" />}
-    </Flex>
+    <MotionFlex sx={{
+      height: "100vh"
+    }}
+    initial="hide"
+    animate="show"
+      variants={appear()}
+    >
+      {token == "" && <CircularProgress isIndeterminate color="brand.primary-blue" size="120px" sx={{
+        margin: "auto"
+      }}
+      />}
+    </MotionFlex>
   )
 }
 

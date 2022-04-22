@@ -1,21 +1,42 @@
-import { Onboarding, OnboardingContext } from "../../component/layouts";
+import { Onboarding } from "../../src/component/layouts";
 import { Text } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { FC, useCallback, useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { links } from "../../constants";
-import { getCookie } from "../../lib";
+import { cookieKeys, links, sessionStorageKeys } from "../../src/constants";
+import { getCookie } from "../../src/lib";
+import { OnboardingProvider, OnboardingContext, CrossDomainOnboardingProvider } from "../../src/providers";
+import { AnimatePresence } from "framer-motion";
 
-const CreateBank = dynamic(() => import('../../component/onboarding/create-bank'))
-const CreateSuperAmin = dynamic(() => import('../../component/onboarding/create-super-admin'))
-const InstitutionColors = dynamic(() => import('../../component/onboarding/institution-colors'))
+const CreateBank = dynamic(() => import('../../src/component/onboarding/create-bank'), {ssr:false})
+const CreateSuperAmin = dynamic(() => import('../../src/component/onboarding/create-super-admin'), {ssr:false})
+const InstitutionColors = dynamic(() => import('../../src/component/onboarding/institution-colors'), {ssr:false})
 
+
+interface LoadTabProps {
+    step: string | string[],
+    state: number
+}
+
+const LoadTab: FC<LoadTabProps> = (props: LoadTabProps) => {
+  
+    switch (`/onboarding/${props.step}`) {
+        case links.createBank:
+            return <CreateBank step={props.state} />
+        case links.createSuperAdmin:
+            return <CreateSuperAmin step={props.state} />
+        case links.institutionColors:
+            return <InstitutionColors step={props.state} />
+        default:
+            return <Text>No Tab was selected</Text>
+    }
+}
 export default function Step1(props: any) {
     const router = useRouter()
     const { step } = router.query
     const { steps } = useContext(OnboardingContext)
     const [stepNumber, setStepNumber] = useState<number>()
-    // debugger
+    const isTepAndStateLoaded = typeof stepNumber !== "undefined" && typeof step !== "undefined"
     useEffect(() => {
         // debbuger
         if (typeof steps !== "undefined" && typeof step !== "undefined") {
@@ -32,30 +53,26 @@ export default function Step1(props: any) {
 
     useEffect(() => {
         // console.log({stepNumber})
-        if(typeof window !== "undefined" && getCookie("interchangeId") === "") {
-            router.push(links.registerOrganization)
+      
+        if (typeof window !== "undefined") {
+          
+            const interchange1 = getCookie(cookieKeys.interchangeId)
+            const interchange2 = window.sessionStorage.getItem(sessionStorageKeys.interchangeId)
+            if (!interchange1 && !interchange2)
+                router.push(links.registerOrganization)
         }
     }, [])
-
-    const LoadTab = useCallback(({ index }: { index: number }) => {
-        // debugger
-        switch (`/onboarding/${step}`) {
-            case links.createBank:
-                return <CreateBank step={index as number} />
-            case links.createSuperAdmin:
-                return <CreateSuperAmin step={index as number} />
-            case links.institutionColors:
-                return <InstitutionColors step={index as number} />
-            default:
-                return <Text>No Tab was selected</Text>
-        }
-    }, [step, stepNumber])
     return (
         <>
-            {typeof window !== "undefined" && getCookie("interchangeId") !== "" &&
-                <Onboarding>
-                    <LoadTab index={stepNumber as number} />
-                </Onboarding>
+            {typeof window !== "undefined" &&
+                <CrossDomainOnboardingProvider>
+                    <OnboardingProvider>
+                        <Onboarding>
+                            <AnimatePresence>{ isTepAndStateLoaded && <LoadTab state={stepNumber} step={step} />}</AnimatePresence>
+                            <AnimatePresence>{ !isTepAndStateLoaded && <></>}</AnimatePresence>
+                        </Onboarding>
+                    </OnboardingProvider>
+                </CrossDomainOnboardingProvider>
             }
         </>
     )
