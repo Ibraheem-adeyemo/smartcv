@@ -27,7 +27,7 @@ export const ChannelsMonitoringTableSetup: FC<ChannelsMonitoringTableSetupProps>
           }
     }
     url += `details/`
-    url = token && userDetail?`${url}?page=${(pageNumber - 1)}&size=${countPerPage}`: ""
+    url = token && userDetail?`${url}?page=${(pageNumber - 1)}&size=${countPerPage}`: "";
     const { data: atmCountDetail, mutate: _mutate, error } = useSWR<Paginate<ATMCountDetail>>(url === "" ? null : url)
     const toast = useToast()
     const data = useMemo(() => {

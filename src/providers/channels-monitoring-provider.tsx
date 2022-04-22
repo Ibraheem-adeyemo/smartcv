@@ -14,6 +14,7 @@ const ChannelsMonitoringProvider:FC<ComponentWithChildren> = (props: ComponentWi
     const modifyTab = (tab: channelsMonitoringTab[] | channelsMonitoringTab, index?:number) => {
         if("length" in tab && tab["length"] > 0) {
             setTabs(tab as channelsMonitoringTab[])
+
         } else if(typeof index !== "undefined" && !isNaN(index)) {
             setTabs(prev => {
               

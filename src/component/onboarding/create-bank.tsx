@@ -75,7 +75,7 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
         if (typeof onboarding?.tenant !== "undefined") {
             inputData(onboarding.tenant)
           
-            if (Object.values(onboarding.tenant).some((val) => val as string === "")) {
+            if (Object.entries(onboarding.tenant).some((val) => val[1] as string === "" && val[0] !== 'domain' && val[0] !== 'slogan')) {
                 setCanNotSubmit(true)
             } else {
 
@@ -97,7 +97,7 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
     const createBank = useCallback((e) => {
       
         if (typeof onboarding?.tenant !== "undefined" && typeof canNotSubmit !== "undefined") {
-            if (!Object.values(onboarding.tenant).some((val) => val as string === "") && !canNotSubmit) {
+            if (!Object.entries(onboarding.tenant).some((val) => val[1] as string === "" && val[0] !== 'domain' && val[0] !== 'slogan') && !canNotSubmit) {
                 // toast({
                 //     title: notificationMesage.SuccessfulBankCreation,
                 //     variant: "left-accent",
@@ -140,15 +140,15 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
                     <Input placeholder="Enter Bank ID" borderRadius="4px" value={onboarding?.tenant?.tenantCode} onChange={addData} />
                     <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
                 </FormControl>
-                <FormControl isRequired id="domain" sx={formControlInputSX} isInvalid={validation?.errors?.domain !== "" && validation?.touched.domain === "touched"}>
+                <FormControl id="domain" sx={formControlInputSX} isInvalid={validation?.errors?.domain !== "" && validation?.touched.domain === "touched"}>
                     <MotionFormLabel>Domain</MotionFormLabel>
                     <Input placeholder="Enter Domain" type={"url"} borderRadius="4px" value={onboarding?.tenant?.domain} onChange={addData} />
-                    <MotionFormErrorMessage>{validation?.errors.domain}</MotionFormErrorMessage>
+                    {/* <MotionFormErrorMessage>{validation?.errors.domain}</MotionFormErrorMessage> */}
                 </FormControl>
-                <FormControl isRequired id="slogan" sx={formControlInputSX} isInvalid={validation?.errors?.slogan !== "" && validation?.touched.slogan === "touched"}>
+                <FormControl id="slogan" sx={formControlInputSX} isInvalid={validation?.errors?.slogan !== "" && validation?.touched.slogan === "touched"}>
                     <MotionFormLabel>Slogan</MotionFormLabel>
                     <Input placeholder="Enter Slogan" borderRadius="4px" value={onboarding?.tenant?.slogan} onChange={addData} />
-                    <MotionFormErrorMessage>{validation?.errors.slogan}</MotionFormErrorMessage>
+                    {/* <MotionFormErrorMessage>{validation?.errors.slogan}</MotionFormErrorMessage> */}
                 </FormControl>
                 <FormControl isRequired id="branch" sx={formControlInputSX} isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>
                     <MotionFormLabel>Bank Branch</MotionFormLabel>

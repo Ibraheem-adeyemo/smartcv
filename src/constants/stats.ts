@@ -3,7 +3,7 @@ export enum StatsName {
     tenantAdminUser = "Bank Admin User",
     iSWAdminUser = "ISW Admin User",
     atmInSupervisor = "ATM In-Supervisor",
-    atmCount = "ATM Count",
+    atmCount = "All ATMs",
     atmLowCashLevel = "ATM Low Cash Level",
     atmInService = "ATM In Service",
     atmOutService = "ATM Out Service",

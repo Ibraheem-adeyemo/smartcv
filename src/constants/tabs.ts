@@ -4,7 +4,7 @@ import { channelsMonitoringTab, interchangeDisconnectionTab, Step, userManagemen
 
 export enum userManagementTabsName {
     bank = 'Bank',
-    tenantAdmin = "tenantAdmin",
+    tenantAdmin = "Tenant Admin",
     iSWAdmin = "ISW Admin"
 }
 
@@ -76,7 +76,7 @@ export const channelsMonitoringTabs: Readonly<channelsMonitoringTab[]> = [
 
 export enum interchangeDisconnectionTabsName {
     status = "Status",
-    connectionRequest = "Connection Requestion"
+    connectionRequest = "Connection Request"
 }
 
 export const interchangeDisconnectionTabs: Readonly<interchangeDisconnectionTab[]> = [

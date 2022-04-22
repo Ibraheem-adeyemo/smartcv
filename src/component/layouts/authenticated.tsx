@@ -66,11 +66,13 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
             icon: dashboardIcon,
             name: menuNames.dashboard,
             link: AuthenticatedPage[0]
-        }, {
+        },
+        /*{
             icon: transactionMonitoringIcon,
             name: menuNames.transactionMonitoring,
             link: AuthenticatedPage[1]
-        }, {
+        }, */
+        {
             icon: channelsMonitoringIcon,
             name: menuNames.channelsMonitoring,
             link: AuthenticatedPage[2]
