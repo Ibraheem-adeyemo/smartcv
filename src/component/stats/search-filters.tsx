@@ -1,17 +1,82 @@
 import { } from "@chakra-ui/button";
-import { Box, Text, Menu, MenuButton, MenuList, MenuItem, Input, Button } from "@chakra-ui/react";
+import { Box, Flex, Menu, MenuButton, MenuList, MenuItem, Input, Button } from "@chakra-ui/react";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import _, { debounce, find } from 'lodash';
 import { DropdownIcon } from "../../constants";
 import { AnimatedText } from "../framer";
-import { DropdownContent, DropdownSearchFilterProps, ResultFromSearch } from "../../models";
+import { addHoursToDate } from "../../lib";
+import { DropdownContent, DropdownSearchFilterProps, ResultFromSearch, SelectedSearchProps } from "../../models";
 
+interface TimeFilterType {
+    filterBy: string,
+    options: number[]
+}
 
 const debouncedFetchData = debounce((query: string, cb: ResultFromSearch, data: DropdownContent[]) => {
     let re = new RegExp(`\\b${query.toLowerCase()}\\b`, 'gi');
     const result = data?.filter(x => String(x.label).toLowerCase().search(re) > -1)
     cb(result)
 }, 500);
+
+export const SelectedSearchFilter: FC<SelectedSearchProps> = ( props: SelectedSearchProps ) => {
+    const { setEndTime, curEndDateTime } = props
+
+    const timeFilterOptions: TimeFilterType[] = [
+        {
+            filterBy: 'hours',
+            options: [1,2,5,10,24]
+        },
+        {
+            filterBy: 'minutes',
+            options: [2,5,10,30,45]
+        }
+    ];
+    const handleSetEndTime = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, filterby:string) => {
+        let endTime:Date = new Date();
+        if((e.target as HTMLSelectElement).value) {
+            if(filterby === 'hours') {
+
+                endTime = addHoursToDate(new Date(curEndDateTime), parseInt((e.target as HTMLSelectElement).value), filterby )
+            }
+            if(filterby === 'minutes') {
+                endTime = addHoursToDate(new Date(curEndDateTime), parseInt((e.target as HTMLSelectElement).value), filterby )
+            }
+        } else {
+            return
+        }        
+        setEndTime(endTime)
+    }
+    return (
+        <Menu>
+        <MenuButton as={Button} h="26px" p="12px" borderStyle='bold' borderColor='var(--chakra-colors-brand-primary-blue)' borderWidth='1px' color='brand.primary-blue' rightIcon={<DropdownIcon />}>
+            Interval 
+        </MenuButton>
+        <MenuList>
+            {
+                timeFilterOptions.map((optns, i) => {
+                    return (
+                        <Flex  key={i} m={1}>
+                            <Menu>
+                                <MenuButton as={Button} h="26px" p="12px" borderStyle='bold' borderColor='var(--chakra-colors-brand-primary-blue)' color='brand.primary-blue' rightIcon={<DropdownIcon />}>
+                                    {optns.filterBy}
+                                </MenuButton>
+                                <MenuList>
+                                    {
+                                        optns.options.map((itm, i)=> {
+                                            return (<MenuItem onClick={e => handleSetEndTime(e, optns.filterBy)} value={itm} key={i}> <AnimatedText size="dropdown-text">{itm}</AnimatedText></MenuItem>)
+                                        })
+                                    }
+                                </MenuList>
+                            </Menu>
+                        </Flex>
+                                                
+                    )
+                })
+            }
+        </MenuList>
+        </Menu>
+    )
+}
 
 const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false, ...props }: DropdownSearchFilterProps) => {
     const [dropdownContent, setDropdownContent] = useState<DropdownContent[]>()
@@ -28,10 +93,6 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
             } : x
         }))
     }, [props.data])
-
-    useEffect(() => {
-        // console.log({dropdownContent})
-    }, [dropdownContent])
 
     const pickItem = useCallback((selectedItem: DropdownContent) => {
 

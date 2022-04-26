@@ -1,3 +1,4 @@
+import { dataAttr } from "@chakra-ui/utils";
 import _ from "lodash";
 import { NextApiResponse } from "next";
 import { getCookie } from ".";
@@ -86,6 +87,25 @@ export async function checkIfOnline():Promise<boolean> {
     } catch (error) {
         return false
     }
+}
+const addZero = (i:number | string) => {
+    if (i < 10) {i = "0" + i}
+    return i;
+  }
+
+export function getCurrentTime(tim?:Date) {
+    const today = tim ? new Date(tim): new Date()    
+    const hr = addZero(today.getHours());
+    const min = addZero(today.getMinutes());
+    const sec = addZero(today.getSeconds());
+    return `${hr}:${min}:${sec}.000`
+}
+
+export function addHoursToDate (date:Date, num:number, type?:string):Date {
+    if(type=== 'hours') {
+        return new Date(new Date(date).setHours(date.getHours() + num));
+    }
+    return new Date(new Date(date).setMinutes(date.getMinutes() + num));
 }
 
 export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit & any): Promise<T> {

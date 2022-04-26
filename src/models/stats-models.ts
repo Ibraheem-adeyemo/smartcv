@@ -17,6 +17,12 @@ export interface DropdownSearchFilterProps {
     onSelected?: (selectedItem: DropdownContent) => void
 }
 
+type setEndTimeFunc = (time:Date)=> void
+export interface SelectedSearchProps {
+    setEndTime: setEndTimeFunc,
+    curEndDateTime: string
+}
+
 
 export interface DropdownContent {
     label: any,

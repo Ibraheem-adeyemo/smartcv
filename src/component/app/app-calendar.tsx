@@ -5,6 +5,8 @@ import { days, DropdownIcon, hours, keysForArrayComponents, minutes, months, sec
 import { appDate } from "../../lib"
 import { AnimatedText, MotionMenu, MotionMenuItem, MotionMenuList } from "../framer"
 
+import { getCurrentTime } from '../../lib'
+
 type getSelectedDateFunc = ({ date, time }: { date: string, time: string }) => void
 interface AppCalendarProps {
     selectedDate?: string,
@@ -57,7 +59,8 @@ function getCalenderDate(date?: string) {
 const AppCalendar: FC<AppCalendarProps> = ({ selectionMode = selectionModeValues.pickDate, ...props }: AppCalendarProps) => {
     // debugger
     const today = new Date()
-    const now = "00:00:00"
+    const now = getCurrentTime();
+
     const todayString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
     const fromPropsDateArray = props.selectedDate? props.selectedDate.split("-"):[]
     if(fromPropsDateArray.length > 0) {
@@ -75,10 +78,9 @@ const AppCalendar: FC<AppCalendarProps> = ({ selectionMode = selectionModeValues
     const currentYear = (new Date).getFullYear()
     const yearRange = currentYear - startyear + 1
 
+
     useEffect(() => {
-        // console.log({ calenderInfo })
         setCalenderInfo(getCalenderDate(tempSelectedDate))
-        // debugger
         if (tempSelectedDate.split("-").length === 3) {
             setSelectedDate(() => {
                 const rDateArray = tempSelectedDate.split("-")
@@ -94,15 +96,15 @@ const AppCalendar: FC<AppCalendarProps> = ({ selectionMode = selectionModeValues
             props.getSelectedDate({ date: selectedDate, time: selectedTime })
         }
     }, [selectedDate, selectedTime])
+
     return (
         <MotionMenu closeOnSelect={false} onOpen={() => {
-            // debugger
             setTempSelectedDate(selectedDate)
         }} >
             <MenuButton as={Button} h={props.label?"32px":"26px"} p="12px" rightIcon={<DropdownIcon />} borderWidth={'1px'} borderStyle={'bold'} borderColor={'var(--chakra-colors-brand-primary-blue)'}>
                 <Flex flexDir={"column"} alignItems="start">
                     {props.label && <AnimatedText size="dropdown-text" variant="dropdown-text-header" color={'brand.primary-blue'}>{props.label}: </AnimatedText>}
-                    <AnimatedText size="dropdown-text" variant="dropdown-text-header" color={'brand.primary-blue'}>{selectionMode === selectionModeValues.pickDateTime ? appDate(selectedDate + " " + selectedTime) : appDate(selectedDate, false)}</AnimatedText>
+                    <AnimatedText size="dropdown-text" variant="dropdown-text-header" color={'brand.primary-blue'}>{selectionMode === selectionModeValues.pickDateTime ? appDate(props.selectedDate + " " + props.selectedTime) : appDate(selectedDate, false)}</AnimatedText>
                 </Flex>
             </MenuButton>
             <MotionMenuList >
@@ -192,9 +194,6 @@ const AppCalendar: FC<AppCalendarProps> = ({ selectionMode = selectionModeValues
                     <MotionMenuItem as={Flex} key={`${keysForArrayComponents.calenderWeekOption}-${i}`} display="flex" gap="30px">
                         {x.map((y, j) => {
                             const tempSelectedDateArray = tempSelectedDate.split("-")
-                            // if(y === 26) {
-                            // debugger
-                            // }
                             const tempSelectedDay = tempSelectedDateArray.length === 3 ? tempSelectedDateArray[2] : tempSelectedDateArray[1] === selectedDate.split("-")[1] ? y : ""
                             const newTempDate = tempSelectedDay && tempSelectedDateArray.length === 2 ? tempSelectedDate + '-' + tempSelectedDay : tempSelectedDate
                             const bgColor = +tempSelectedDay === y ? "brand.primary-blue" : ""
