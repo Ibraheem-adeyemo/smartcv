@@ -16,7 +16,8 @@ export interface TenantView {
 }
 
 export interface CreateTenantModel extends TenantView {
-    interchangeName: string
+    interchangeName: string,
+    bankDomain: string
 }
 
 export interface TenantTableView extends TenantView {

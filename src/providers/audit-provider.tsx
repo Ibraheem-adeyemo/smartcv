@@ -19,7 +19,7 @@ const columns =  [
         key: "module"
     }, {
         name: "Action",
-        key: "action",
+        key: "method",
     }, {
         name: "Originating IP",
         key: "originIP",

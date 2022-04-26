@@ -30,7 +30,8 @@ const AddNewBank:FC = () => {
         location: "",
         branch: "",
         code:"",
-        interchangeName: ""
+        interchangeName: "",
+        bankDomain: ""
     })
     const {form:institutionColorForm, formOnChange:institutionColorFormOnChange, refreshForm:institutionColorRefreshForm} = useForm<InstitutionColor>({
         headerColor: "#C8D2D6",
@@ -186,6 +187,14 @@ const AddNewBank:FC = () => {
                                     </Select>
                                     <MotionFormErrorMessage>{validation?.errors.location}</MotionFormErrorMessage>
                                 </FormControl>
+
+                                <FormControl id="bankDomain" sx={formControlInputSX}>
+                                    <MotionFormLabel>Bank Domain</MotionFormLabel>
+
+                                    <Input placeholder="bank.com" borderRadius="4px" value={form.bankDomain} onChange={addData} />
+                                    <MotionFormErrorMessage>{validation?.errors.location}</MotionFormErrorMessage>
+                                </FormControl>
+
                                 <FormControl isRequired id="address" flexGrow={2} width="100%" isInvalid={validation?.errors?.address !== "" && validation?.touched.address === "touched"}>
                                     <MotionFormLabel>Bank Address</MotionFormLabel>
                                     <Input placeholder="Enter Bank Address" borderRadius="4px" value={form.address} onChange={addData} />

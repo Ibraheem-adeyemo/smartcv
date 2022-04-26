@@ -3,6 +3,8 @@ import useSWR from "swr";
 import { apiUrlsv1, appRoles, filterDates, filtersToShowDefaultValue, hours, minutes } from "../constants";
 import { DropdownContent, Paginate, setFiltersToShowProps, TenantView, UserModel } from "../models";
 
+import { getCurrentTime } from '../lib'
+
 export default function useFilter(user?: UserModel) {
     const [selectedTenantCode, setSelectedTenantCode] = useState("0")
     const [ShowTenant, setShowTenant] = useState(true)
@@ -23,8 +25,10 @@ export default function useFilter(user?: UserModel) {
     const thisDate = `${today.getDate()}`.length === 1 ? `0${today.getDate()}` : `${today.getDate()}`
     const selectedDuration = 24
     const selectedInterval = "hour"
-    const [startTime, setStartTime] = useState(`${thisYear}-${thisMonth}-${yesterdayDate} 00:00:00.000`)
-    const [endTime, setEndTime] = useState(`${thisYear}-${thisMonth}-${thisDate} 00:00:00.000`)
+    const completeEndDate = `${thisYear}-${thisMonth}-${thisDate}`;
+    const completeEndTime = `00:00:00.000`
+    const [startTime, setStartTime] = useState(`${thisYear}-${thisMonth}-${yesterdayDate} ${getCurrentTime()}`)
+    const [endTime, setEndTime] = useState(`${completeEndDate} ${completeEndTime}`)
     const [duration, setDuration] = useState(selectedDuration)
     const [countInterval, setCountInterval] = useState(selectedInterval)
     
@@ -54,7 +58,7 @@ export default function useFilter(user?: UserModel) {
         // console.log({ date, time })
         setStartTime(`${date} ${time}`)
     }
-    const getSelectedEndDate = ({ date, time }: {date: string, time:string}) => {
+    const getSelectedEndDate = ({date, time}:{date:string, time:string}) => {
         // console.log({ date, time })
         setEndTime(`${date} ${time}`)
     }
@@ -66,6 +70,12 @@ export default function useFilter(user?: UserModel) {
         // console.log({ e })
         setDuration(e.value)
     }
+
+    const getSelectedEndTime = (tim:Date) => {
+        const completeEndDate = `${tim.getFullYear()}-${tim.getMonth() + 1}-${tim.getDate()}`;
+        setEndTime(`${completeEndDate} ${getCurrentTime(tim)}`)
+    }
+
     useEffect(() => {
         // debugger
         if (countInterval) {
@@ -86,7 +96,7 @@ export default function useFilter(user?: UserModel) {
                     break
             }
         }
-    }, [countInterval])
+    }, [countInterval, endTime])
 
     return {
         searchText,
@@ -107,6 +117,7 @@ export default function useFilter(user?: UserModel) {
         handleSearchText,
         setFiltersToShow,
         getSelectedStartDate,
+        getSelectedEndTime,
         getSelectedEndDate,
         onSelectedCountInterval,
         onSelectedDuration

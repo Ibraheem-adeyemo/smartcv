@@ -1,6 +1,6 @@
 import { Flex, Tag, Text } from "@chakra-ui/react";
-import React, { FC, useContext } from "react";
-import { InstitutionFilter, CustomFilter, SearchFilter } from ".";
+import React, { FC, useContext, useState } from "react";
+import { InstitutionFilter, CustomFilter, SearchFilter, SelectedSearchFilter  } from ".";
 import { delayChildren } from "../../animations";
 import { filterDates, selectionModeValues } from "../../constants";
 import { StatsContext } from "../../providers";
@@ -8,7 +8,8 @@ import { AppCalendar } from "../app";
 import { MotionFlex } from "../framer";
 
 const AppBarFilter: FC = () => {
-    const { ShowTenant, showStartDate, showEndDate, showCountInterval, showDuration, startTime, endTime, countInterval, durationList, getSelectedEndDate, getSelectedStartDate, onSelectedCountInterval, onSelectedDuration } = useContext(StatsContext)
+    const { ShowTenant, showStartDate, showEndDate, showCountInterval, showDuration, startTime, endTime, countInterval, durationList, getSelectedEndDate, getSelectedEndTime, getSelectedStartDate, onSelectedCountInterval, onSelectedDuration } = useContext(StatsContext)
+    
     return (
         <MotionFlex alignItems="center" gap="17px" sx={{
             flexWrap: "wrap"
@@ -25,7 +26,8 @@ const AppBarFilter: FC = () => {
                         // console.log({ date, time })
                         setEndTime(`${date} ${time}`)
                     }} /> */}
-            {showCountInterval && <SearchFilter
+            {showCountInterval && <SelectedSearchFilter setEndTime={getSelectedEndTime} curEndDateTime={startTime} />}
+            {/* {showCountInterval && <SearchFilter
                 data={[
                     { label: "Hour", value: "hour", selected: countInterval == "hour" },
                     { label: "Minute", value: "minute", selected: countInterval == "minute" },
@@ -33,7 +35,7 @@ const AppBarFilter: FC = () => {
                 } label="Interval" onSelected={onSelectedCountInterval} selected />}
             {showDuration && <SearchFilter
                 data={durationList}
-                label="Duration" onSelected={onSelectedDuration} selected />}
+                label="Duration" onSelected={onSelectedDuration} selected />} */}
         </MotionFlex>
     )
 }
