@@ -23,6 +23,24 @@ interface Tenant {
     color: InstitutionColor
 }
 
+type scopeType = "clients" | "profile"
+
+export interface Passport {
+    access_token: string,
+    token_type: string,
+    refresh_token: string,
+    scope: scopeType,
+    firstName: string,
+    lastName: string,
+    emailVerified: boolean,
+    firstLogin: boolean,
+    mobileNo: string,
+    mobileNoVerified: boolean,
+    email: string,
+    passportID: number | string | null,
+    jti: string
+}
+
 interface Permission {
     id: number,
     name: string,
@@ -37,6 +55,14 @@ interface Role {
     permissions: Permission[],
     tenantCode: string
 
+}
+export interface CredAuthDataModel {
+    userInfo: UserModel,
+    passport: Passport
+}
+export interface CredentialsAuthModel<T> extends TokenResponsBody {
+    [x: string]: any;
+    data: CredAuthDataModel
 }
 export interface UserModel {
     createdAt: string,
@@ -73,4 +99,9 @@ export interface TokenResponsBody {
 export interface RefreshTokenRequestBody {
     grant_type: string,
     refresh_token: string
+}
+
+export interface LoginCredentialBody {
+    username:string,
+    password: string
 }

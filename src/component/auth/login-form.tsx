@@ -3,7 +3,7 @@ import { Text, Button } from "@chakra-ui/react";
 import React, { FC, useContext, useEffect } from "react";
 import { cookieKeys, cookiesTimeout, Images, links } from "../../constants";
 import { AuthContext } from "../../providers";
-import { setCookie } from "../../lib";
+import { clearUserFromLocalStorage, setCookie } from "../../lib";
 import { MotionBox, MotionFlex, MotionImage } from '../framer';
 import { AppLink } from '../app';
 import { appear, staggerChildren, staggerChildrenWithDuration, verticalPosition } from "../../animations";
@@ -14,7 +14,8 @@ const LoginForm: FC = () => {
     const { user, userDetail, signIn, signOut } = useContext(AuthContext)
     const [loading, setLoading] = useLoading({isLoading: false, text: ""})
     useEffect(() => {
-
+        
+      clearUserFromLocalStorage()
         if (typeof window !== "undefined") {
             setCookie(cookieKeys.token, "", cookiesTimeout.timeoutCookie)
         }
@@ -74,8 +75,9 @@ const LoginForm: FC = () => {
                         variants={verticalPosition}
                     >
                         <Button type="submit" variant="primary-button" loadingText={loading.text} isLoading={loading.isLoading} sx={loginButtonSX}>
-                            {!userDetail ? `Already on boarded? Login` : `Login as ${userDetail.email}`}
+                            {!userDetail ? `Already on boarded? Login with passport` : `Login as ${userDetail.email}`}
                         </Button>
+                        <AppLink href={links.paasLogin} color="brand.primary-blue" >Login with credentials</AppLink>
                         {userDetail && <Button variant="just-text" onClick={() => {
 
                             signOut()

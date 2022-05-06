@@ -20,17 +20,17 @@ interface AuthenticatedLayoutProps extends ComponentWithChildren {
 }
 
 const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) => {
-    const { userDetail, user, signOut, error, refreshAccessToken } = useContext(AuthContext)
+    const { userDetail, user, signOut, error, refreshAccessToken, forceUserToSetFromLocalStorage } = useContext(AuthContext)
+    // debugger
     const [animationCount, setAnmationCount] = useState(true)
     const router = useRouter()
     const [firstLoad, setFirstLoad] = useState(0)
     const [openResend, setOpenResend] = useState(false)
     const handleOnIdle = (event: any) => {
-        // console.log('user is idle', event)
-        // console.log('last active', getLastActiveTime())
     }
-    const isUserLoading = (typeof userDetail === "undefined" || typeof user === "undefined") && typeof error === "undefined"
-    const isUserLoaded = typeof userDetail !== "undefined" && typeof user !== "undefined" && typeof error === "undefined"
+
+    const [isUserLoading, setIsUserLoading] = useState((typeof userDetail === "undefined" || typeof user === "undefined") && typeof error === "undefined")
+    const [isUserLoaded, setIsUserLoaded] = useState(typeof userDetail !== "undefined" && typeof user !== "undefined" && typeof error === "undefined")
     const handleOnActive = () => {
         if (typeof window !== "undefined") {
             const timeLeft = (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60)
@@ -54,7 +54,6 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
         onAction: handleOnAction,
         debounce: 500
     })
-    // console.log({ session })
 
     const MenuLists = memo(() => {
         
@@ -133,6 +132,18 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
         </>
     })
 
+        useEffect(()=> {
+            
+            forceUserToSetFromLocalStorage()
+        }, [])
+
+        useEffect(()=>{
+            // debugger
+            
+            console.log({userDetail, user})
+            setIsUserLoaded(typeof userDetail !== "undefined" && typeof user !== "undefined" && typeof error === "undefined")
+            setIsUserLoading((typeof userDetail === "undefined" || typeof user === "undefined") && typeof error === "undefined")
+        },[userDetail, user])
 
     useEffect(() => {
         if(userDetail && !userDetail.active) {
@@ -185,7 +196,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                                         </>
                                     }
 
-                                    {!user && !error && <SkeletonLoader rows={2} width="100px" height="15px" columns={1} loaderKey="menu-email" />}
+                                    {isUserLoading && <SkeletonLoader rows={2} width="100px" height="15px" columns={1} loaderKey="menu-email" />}
 
                                 </Flex>
                             </MenuItem>
@@ -230,7 +241,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                 >
                     <ResendUserActivationMail isOpen={openResend} closeModal={function (): void {
                         setOpenResend(false)
-                    } } isLoggedIn={false} email={userDetail.email} />
+                    } } isLoggedIn={false} email={userDetail? userDetail.email:""} />
                     {props.children}
 
                 </GridItem>

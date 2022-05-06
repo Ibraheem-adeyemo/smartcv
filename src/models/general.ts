@@ -62,7 +62,8 @@ export interface apiUrlsv1Model {
     states: string,
     tenant: string,
     tenantAdmin: string,
-    user: string
+    user: string,
+    loginWithCredential: string
 }
 
 type performAction = <T extends Record<keyof T, T[keyof T]>>(x: T) => void

@@ -1,17 +1,20 @@
 import { createContext, FC } from "react";
 import { useAuthentication } from "../hooks";
-import { ComponentWithChildren } from "../models";
+import { AuthModel, ComponentWithChildren, LoginCredentialBody } from "../models";
 
 export const AuthContext = createContext<ReturnType<typeof useAuthentication>>({
     userDetailError: undefined,
     userDetail: undefined,
-    user: undefined,
+    user: undefined as unknown as AuthModel,
     token: "",
     error:undefined,
     signIn: () => (""),
     signOut: () => (""),
     loginWithPassport: async (code: string) =>{},
-    refreshAccessToken:async (refreshToken:string) => {}
+    refreshAccessToken:async (refreshToken:string) => {},
+    loginWithCredentials: async (obj: LoginCredentialBody) => {},
+    forceUserToSetFromLocalStorage:  () => {},
+
 })
 
 interface AuthProviderProps extends ComponentWithChildren {

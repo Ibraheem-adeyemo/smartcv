@@ -111,7 +111,6 @@ export function addHoursToDate (date:Date, num:number, type?:string):Date {
 export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit & any): Promise<T> {
 
     try {
-        // console.log({init});
         if (await checkIfOnline()) {
 
             let token = typeof window !== "undefined" ? getCookie(cookieKeys.token) : ""
@@ -122,7 +121,6 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
                 }
             } : init) : await fetch(input, init);
             const data = await response.json() as APIResponse<T>
-            // debugger
             if (response.ok) {
                 if (typeof data.data !== "undefined") {
                     return data.data as T;
@@ -131,12 +129,9 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
                 }
             }
             else if (typeof data !== "undefined") {
-                // debugger
                 if (typeof data.message !== "undefined") {
-                    // debugger
                     throw data.message
                 } else if(typeof (data as any).error !== "undefined") {
-                    // debugger
                     throw (data as any).error
                 }else {
                     throw (data as unknown as any).error_description
@@ -150,8 +145,6 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
         }
 
     } catch (error: any) {
-        // debugger
-        // console.error({error})
         throw error
     }
 

@@ -6,10 +6,10 @@ import { MotionFlex, MotionList, MotionListItem, MotionText } from "./framer"
 const MissionStatement: FC = memo(() => {
     const missionStatement = [{
         missionHead: "ATM & Transaction monitoring",
-        missionText: `Set-up new terminals,send downloads to disconnected terminals, realtime transaction monitoring, monitor online/offline/supervisor mode terminals`
+        missionText: `A one-stop ATM and transaction information reporting application designed to display both transactional and non-transactional ATM data across terminals from within databases repository, consolidate and dissect the data in a concise, detailed, informative and aesthetically appealing manner.`
     }, {
-        missionHead: "Card operation",
-        missionText: `Set-up new terminals,send downloads to disconnected terminals, realtime transaction monitoring, monitor online/offline/supervisor mode terminals`
+        missionHead: "Interchange disconnection status",
+        missionText: `This will promptly alert stakeholders via both visible notifications icon on the requisite menu and triggered emails to stakeholders when there are disconnections to Interswitch network, as well as empower admins to re-initiate the connection proactively.`
     }, {
         missionHead: "Best in class support",
         missionText: "We are positioned as an industry expert with a dedicated request for all your needs and support"

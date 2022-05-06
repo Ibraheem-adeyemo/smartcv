@@ -71,7 +71,7 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
         url:""
       }]
     }
-
+    console.log({stats: getStats()})
     setStats(getStats())
     if (typeof totalATMCountError !== "undefined") {
       toast({
