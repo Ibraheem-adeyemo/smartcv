@@ -9,6 +9,7 @@ export default function useAuthentication() {
     const url = apiUrlsv1.passporProfileUrl
     const { mutate } = useSWRConfig();
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie(cookieKeys.token) : "")
+    const [loginError, setloginError] = useState<unknown|any>();
 
     const [userFromLocalStorage, setUserFromLocalStorage] = useState(getUserFromLocalStorage())
     
@@ -114,7 +115,7 @@ export default function useAuthentication() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(obj)
+                body: JSON.stringify(obj)     
             })
 
 
@@ -126,7 +127,7 @@ export default function useAuthentication() {
             }
 
         } catch (error) {
-            console.log(error, obj)
+            setloginError(error)
             throw error
         }
     }
@@ -194,6 +195,6 @@ export default function useAuthentication() {
         }
     }
 
-    return { user: !user? {firstName: userFromLocalStorage?.passport.firstName, lastName: userFromLocalStorage?.passport.lastName, email: userFromLocalStorage?.passport.email,access_token: userFromLocalStorage?.passport.access_token, id: userFromLocalStorage?.userInfo.id.toString()} as AuthModel :user, userDetail: !userDetail?userFromLocalStorage?.userInfo:userDetail, token, error, userDetailError, signIn, signOut, loginWithPassport, refreshAccessToken, loginWithCredentials, forceUserToSetFromLocalStorage }
+    return { user: !user? {firstName: userFromLocalStorage?.passport.firstName, lastName: userFromLocalStorage?.passport.lastName, email: userFromLocalStorage?.passport.email,access_token: userFromLocalStorage?.passport.access_token, id: userFromLocalStorage?.userInfo.id.toString()} as AuthModel :user, userDetail: !userDetail?userFromLocalStorage?.userInfo:userDetail, token, error, userDetailError, signIn, signOut, loginWithPassport, refreshAccessToken, loginWithCredentials, forceUserToSetFromLocalStorage, loginError, setloginError }
 }
 

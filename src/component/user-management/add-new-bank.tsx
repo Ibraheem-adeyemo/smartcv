@@ -42,7 +42,7 @@ const AddNewBank:FC = () => {
     const headerColorRef = useRef<HTMLInputElement>(null)
     const sidebarColourRef = useRef<HTMLInputElement>(null)
     const buttonColorRef = useRef<HTMLInputElement>(null)
-    const { validation, addField, inputData, validateAllCompulsoryFields } = useValidator<CreateTenantModel>(["name", "logo", "address", "location", "branch", "tenantCode", "interchangeName"])
+    const { validation, addField, inputData, validateAllCompulsoryFields } = useValidator<CreateTenantModel>(["name", "logo", "address", "location", "branch", "code", "interchangeName"])
     const {validation: institutionColorValidation, addField:institutionColorAddField, inputData: institutionColorInputData  } = useValidator<InstitutionColor>()
     const [selectedModal, setSelectedModal] = useState<UserManagementModal>(UserManagementModals[1])
     const [loading, changeLoading] = useLoading()
@@ -137,14 +137,12 @@ const AddNewBank:FC = () => {
     useEffect(() => {
         if (typeof form !== "undefined") {
             inputData(form)
-            // console.log({ validation })
         }
     }, [form])
 
     useEffect(() => {
         if (typeof institutionColorForm !== "undefined") {
             institutionColorInputData(institutionColorForm)
-            // console.log({ validation })
         }
     }, [institutionColorForm])
     return (
@@ -169,9 +167,9 @@ const AddNewBank:FC = () => {
                                     <Input placeholder="Enter Interchange Name" borderRadius="4px" value={form.interchangeName} onChange={addData} />
                                    <MotionFormErrorMessage>{validation?.errors.interchangeName}</MotionFormErrorMessage>
                                 </FormControl>
-                                <FormControl isRequired id="tenantCode" sx={formControlInputSX} isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
+                                <FormControl isRequired id="code" sx={formControlInputSX} isInvalid={validation?.errors?.tenantCode !== "" && validation?.touched.tenantCode === "touched"}>
                                     <MotionFormLabel>Bank ID</MotionFormLabel>
-                                    <Input placeholder="Enter Bank ID" borderRadius="4px" value={form.tenantCode} onChange={addData} />
+                                    <Input placeholder="Enter Bank ID" borderRadius="4px" value={form.code} onChange={addData} />
                                    <MotionFormErrorMessage>{validation?.errors.tenantCode}</MotionFormErrorMessage>
                                 </FormControl>
                                 <FormControl isRequired id="branch" sx={formControlInputSX} isInvalid={validation?.errors?.branch !== "" && validation?.touched.branch === "touched"}>

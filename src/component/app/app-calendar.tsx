@@ -101,13 +101,13 @@ const AppCalendar: FC<AppCalendarProps> = ({ selectionMode = selectionModeValues
         <MotionMenu closeOnSelect={false} onOpen={() => {
             setTempSelectedDate(selectedDate)
         }} >
-            <MenuButton as={Button} h={props.label?"32px":"26px"} p="12px" rightIcon={<DropdownIcon />} borderWidth={'1px'} borderStyle={'bold'} borderColor={'var(--chakra-colors-brand-primary-blue)'}>
+            <MenuButton as={Button} h={props.label?"32px":"26px"} p="12px" borderWidth={'1px'} borderStyle={'bold'} borderColor={'var(--chakra-colors-brand-primary-blue)'} cursor={'default'}>
                 <Flex flexDir={"column"} alignItems="start">
                     {props.label && <AnimatedText size="dropdown-text" variant="dropdown-text-header" color={'brand.primary-blue'}>{props.label}: </AnimatedText>}
                     <AnimatedText size="dropdown-text" variant="dropdown-text-header" color={'brand.primary-blue'}>{selectionMode === selectionModeValues.pickDateTime ? appDate(props.selectedDate + " " + props.selectedTime) : appDate(selectedDate, false)}</AnimatedText>
                 </Flex>
             </MenuButton>
-            <MotionMenuList >
+            {/* <MotionMenuList > rightIcon={<DropdownIcon />}
                 <MotionMenuItem as={Flex} closeOnSelect={false} justifyContent={"flex-start"} gap="10px" >
                     <VStack>
                         <Text textAlign={"left"}>Year</Text><Select placeholder='Select option' onClick={e => e.stopPropagation()} onChange={(e) => {
@@ -206,7 +206,7 @@ const AppCalendar: FC<AppCalendarProps> = ({ selectionMode = selectionModeValues
                         })}
                     </MotionMenuItem>))
                 }
-            </MotionMenuList>
+            </MotionMenuList> */}
         </MotionMenu>
 
     )

@@ -26,7 +26,7 @@ export default function useFilter(user?: UserModel) {
     const selectedDuration = 24
     const selectedInterval = "hour"
     const completeEndDate = `${thisYear}-${thisMonth}-${thisDate}`;
-    const completeEndTime = `00:00:00.000`
+    const completeEndTime = `${getCurrentTime()}`
     const [startTime, setStartTime] = useState(`${thisYear}-${thisMonth}-${yesterdayDate} ${getCurrentTime()}`)
     const [endTime, setEndTime] = useState(`${completeEndDate} ${completeEndTime}`)
     const [duration, setDuration] = useState(selectedDuration)

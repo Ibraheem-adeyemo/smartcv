@@ -25,7 +25,7 @@ const AppBarFilter: FC = () => {
             {/* <AppCalendar label="End Date" selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
                         // console.log({ date, time })
                         setEndTime(`${date} ${time}`)
-                    }} /> */}
+                    }} /> 
             {showCountInterval && <SelectedSearchFilter setEndTime={getSelectedEndTime} curEndDateTime={startTime} />}
             {/* {showCountInterval && <SearchFilter
                 data={[

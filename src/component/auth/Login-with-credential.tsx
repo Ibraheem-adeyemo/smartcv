@@ -28,7 +28,7 @@ import { MotionBox, MotionFlex } from '../framer';
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const { user, userDetail, error, userDetailError, loginWithCredentials } = useAuthentication()
+    const { user, userDetail, error, setloginError, loginError, userDetailError, loginWithCredentials } = useAuthentication()
 
     const router = useRouter()
     const toast = useToast()
@@ -41,7 +41,7 @@ import { MotionBox, MotionFlex } from '../framer';
 
   
     useEffect(() => {
-      if(error || userDetailError) {
+      if(error || userDetailError || loginError) {
           userDetailError? toast({
               status: "error",
               title: userDetailError.message,
@@ -54,8 +54,16 @@ import { MotionBox, MotionFlex } from '../framer';
               variant: "left-accent",
               isClosable: true
           }) : "";
+          loginError? toast({
+            status: "error",
+            title: loginError,
+            variant: "left-accent",
+            isClosable: true
+        }) : "";
+        setloginError('')
+        setLoading({isLoading: false, text: ""})
+          router.push("/paas-login")
           
-          router.push("/")
       }
       // debugger
       if(user && userDetail){
@@ -67,15 +75,9 @@ import { MotionBox, MotionFlex } from '../framer';
               router.push(links.dashboard)
           }
       }
-      // if(user && !userDetail) {
-      //     setMessage("Getting user details...")
-      // }
+      
   }, [user, userDetail, error, userDetailError])
-  //   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault();
-  //     // setLoading({isLoading: true, text: "Redirecting..."})
-  //     // signIn()
-  // }}
+
     return (        
       <form method="POST">
         
