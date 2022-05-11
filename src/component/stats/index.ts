@@ -5,5 +5,6 @@ import SearchFilter from './search-filters'
 import Stat from './stat'
 import { SelectedSearchFilter } from "./search-filters";
 import SearchText from './search-text'
+import DateRangeSearch from './dateRangeSearch';
 
-export{ CustomFilter, InstitutionFilter, SelectedSearchFilter , SearchFilter, SearchText,  Stat}
+export{ CustomFilter, InstitutionFilter, SelectedSearchFilter , SearchFilter, SearchText,  Stat, DateRangeSearch}
