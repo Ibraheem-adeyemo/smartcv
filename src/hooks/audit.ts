@@ -30,7 +30,6 @@ export default function useAudit() {
     }, 500)
 
     const handleDaterangeSearch = debounce((start:string, end:string) => {
-        console.log(end)
         const formatedStart = formatTime(start);
         const formatedEnd = formatTime(end)
         if(formatedStart && formatedEnd) {

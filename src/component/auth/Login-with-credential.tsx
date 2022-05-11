@@ -121,7 +121,7 @@ import { MotionBox, MotionFlex } from '../framer';
                             Login
                         </Button>
 
-                <AppLink href={links.login} color="brand.primary-blue" >Login with passport</AppLink>
+                {/* <AppLink href={links.login} color="brand.primary-blue" >Login with passport</AppLink> */}
               
                         <Stack
                   direction={{ base: 'column', sm: 'row' }}

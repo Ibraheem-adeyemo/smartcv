@@ -77,7 +77,7 @@ const LoginForm: FC = () => {
                         <Button type="submit" variant="primary-button" loadingText={loading.text} isLoading={loading.isLoading} sx={loginButtonSX}>
                             {!userDetail ? `Already on boarded? Login with passport` : `Login as ${userDetail.email}`}
                         </Button>
-                        <AppLink href={links.paasLogin} color="brand.primary-blue" >Login with credentials</AppLink>
+                        {/* <AppLink href={links.paasLogin} color="brand.primary-blue" >Login with credentials</AppLink> */}
                         {userDetail && <Button variant="just-text" onClick={() => {
 
                             signOut()
