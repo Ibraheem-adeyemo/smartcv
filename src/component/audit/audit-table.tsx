@@ -12,7 +12,7 @@ const AuditTable:FC = () => {
 
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { token, userDetail } = useContext(AuthContext)
-    const { searchText, changeAuditView, columns, toggleDetailsModal, changeAuditInfo} = useContext(AuditContext)
+    const { searchText, changeAuditView, dateRange, columns, toggleDetailsModal, changeAuditInfo} = useContext(AuditContext)
     let url = `${apiUrlsv1.audit}?page=${pageNumber-1}&size=${countPerPage}`
     const {selectedTenantCode} = useContext(StatsContext)
     if (userDetail && (userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
@@ -25,6 +25,8 @@ const AuditTable:FC = () => {
     }
     else if(searchText !== "") {
         url =`${apiUrlsv1.auditByUser}/${searchText}?page=${pageNumber-1}&size=${countPerPage}` 
+    } else if(dateRange.length > 1 && dateRange[1] !== '') {
+        url = `${apiUrlsv1.audit}code/range/${selectedTenantCode}/${userDetail?.username}?pageNumber=${pageNumber-1}&pageSize=${countPerPage}&start=${dateRange[0]}&end=${dateRange[1]}`
     }
     
     const { data: auditView, mutate: _mutate, error } = useSWR<Paginate<AuditView>>(token? url : null)

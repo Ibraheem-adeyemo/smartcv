@@ -1,5 +1,7 @@
+import { useToast } from "@chakra-ui/react";
 import { debounce } from "lodash";
 import { useState } from "react";
+import { formatTime } from "../lib";
 import { AuditView } from "../models";
 
 export default function useAudit() {
@@ -7,10 +9,13 @@ export default function useAudit() {
     const [auditView, setauditView] = useState<AuditView[]>()
     const [searchText, setSearchText] = useState("")
     const [auditInfo, setAuditInfo] = useState<AuditView>()
+    const [dateRange, setDateRange] = useState<string[]>([])
     
     const toggleDetailsModal = (state: boolean) => {
         setViewDetailsModal(state)
     }
+
+    const toast = useToast();
 
     const changeAuditView = (audit: AuditView[]) => {
         setauditView(audit)
@@ -24,5 +29,22 @@ export default function useAudit() {
         setSearchText(searchText)
     }, 500)
 
-    return {auditView, auditInfo, viewDetailsModal, searchText, toggleDetailsModal, handleSearchItem, changeAuditView, changeAuditInfo}
+    const handleDaterangeSearch = debounce((start:string, end:string) => {
+        console.log(end)
+        const formatedStart = formatTime(start);
+        const formatedEnd = formatTime(end)
+        if(formatedStart && formatedEnd) {
+            setDateRange([formatedStart, formatedEnd])
+        } else {
+            toast({
+                title: 'Kindly select the date less than or equal to the current date',
+                status: "error",
+                variant: "left-accent",
+                isClosable: true
+              })
+        }
+        
+    }, 50)
+
+    return {auditView, auditInfo, viewDetailsModal, searchText, toggleDetailsModal, handleDaterangeSearch, dateRange, handleSearchItem, changeAuditView, changeAuditInfo}
 }

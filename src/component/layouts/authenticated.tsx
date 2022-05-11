@@ -139,8 +139,6 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
 
         useEffect(()=>{
             // debugger
-            
-            console.log({userDetail, user})
             setIsUserLoaded(typeof userDetail !== "undefined" && typeof user !== "undefined" && typeof error === "undefined")
             setIsUserLoading((typeof userDetail === "undefined" || typeof user === "undefined") && typeof error === "undefined")
         },[userDetail, user])

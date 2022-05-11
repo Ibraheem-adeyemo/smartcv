@@ -8,6 +8,7 @@ import { APIResponse } from "../models";
 export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
 }
+
 export function shortenNumber(amount: number) {
     let t = { fractionAmount: Number.MAX_VALUE, abbrev: "" }
     if (!isNaN(amount)) {
@@ -106,6 +107,15 @@ export function addHoursToDate (date:Date, num:number, type?:string):Date {
         return new Date(new Date(date).setHours(date.getHours() + num));
     }
     return new Date(new Date(date).setMinutes(date.getMinutes() + num));
+}
+
+export const formatTime = (tim: string) => {    
+        const eqDate = new Date(tim)
+
+    if(!isNaN(eqDate.getFullYear())) {
+        return `${eqDate.getFullYear()}/${addZero(eqDate.getMonth()+1)}/${addZero(eqDate.getDate())} ${addZero(eqDate.getHours())}:${addZero(eqDate.getMinutes())}:${addZero(eqDate.getSeconds())}`
+    } 
+    return ''
 }
 
 export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit & any): Promise<T> {
