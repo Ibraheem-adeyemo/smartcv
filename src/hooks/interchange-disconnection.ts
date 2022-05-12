@@ -1,5 +1,5 @@
 import { clone, map } from "lodash"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { cookieKeys, cookiesTimeout, InterchangeDisconnectionModals, interchangeDisconnectionTabs } from "../constants"
 import { getCookie, setCookie } from "../lib"
 import { interchangeDisconnectionTab, InterchangeReconnectionModal } from "../models"
@@ -10,7 +10,7 @@ export default function useInterchangeDisconnection() {
     const [modals, setModals] = useState(InterchangeDisconnectionModals)
 
 
-    const handleToggleModal = (modalInstance?: InterchangeReconnectionModal) => {
+    const handleToggleModal = useCallback((modalInstance?: InterchangeReconnectionModal) => {
         // debugger
         if (modalInstance) {
             setModals((prev) => {
@@ -34,7 +34,7 @@ export default function useInterchangeDisconnection() {
         } else {
             setModals(InterchangeDisconnectionModals)
         }
-    }
+    }, [])
     useEffect(() => {
         const cookieTimelLeft = getCookie(cookieKeys.requestConnectionTimeout)
         if (cookieTimelLeft !== "") {
@@ -47,7 +47,7 @@ export default function useInterchangeDisconnection() {
         }
     }, [timerLeft])
 
-    const modifyTab = (tab: interchangeDisconnectionTab[] | interchangeDisconnectionTab, index?: number) => {
+    const modifyTab = useCallback((tab: interchangeDisconnectionTab[] | interchangeDisconnectionTab, index?: number) => {
         if ("length" in tab && tab["length"] > 0) {
             setTabs(tab as interchangeDisconnectionTab[])
         } else if (typeof index !== "undefined" && !isNaN(index)) {
@@ -62,7 +62,7 @@ export default function useInterchangeDisconnection() {
                 return data
             })
         }
-    }
+    }, [])
 
 
     const requestConnection = () => {

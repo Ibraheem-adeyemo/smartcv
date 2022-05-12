@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import { debounce } from "lodash";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { formatTime } from "../lib";
 import { AuditView } from "../models";
 
@@ -11,19 +11,19 @@ export default function useAudit() {
     const [auditInfo, setAuditInfo] = useState<AuditView>()
     const [dateRange, setDateRange] = useState<string[]>([])
     
-    const toggleDetailsModal = (state: boolean) => {
+    const toggleDetailsModal = useCallback((state: boolean) => {
         setViewDetailsModal(state)
-    }
+    }, [])
 
     const toast = useToast();
 
-    const changeAuditView = (audit: AuditView[]) => {
+    const changeAuditView = useCallback((audit: AuditView[]) => {
         setauditView(audit)
-    }
+    },[])
 
-    const changeAuditInfo = (audit: AuditView) => {
+    const changeAuditInfo = useCallback((audit: AuditView) => {
         setAuditInfo(audit)
-    }
+    },[])
     
     const handleSearchItem = debounce((searchText: string) => {
         setSearchText(searchText)

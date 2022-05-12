@@ -60,6 +60,12 @@ export interface CreateRoleModel {
     tenantCode: string,
     permissionIds: number[] 
 }
+
+export interface InterchangeReconection {
+    interchangeName: string,
+    tenantCode: string,
+    command: string
+}
 export interface ISWAdminView {
     firstName: string,
     lastName: string,

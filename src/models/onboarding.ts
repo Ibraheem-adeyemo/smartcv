@@ -17,15 +17,22 @@ export interface InstitutionColorInfo {
     completed: boolean,
 }
 
-export interface tenantAdmin {
+interface AdminInfo {
     firstName: string,
     lastName: string,
     email: string,
     mobileNo: string,
     password: string,
-    confirmPassword: string,
     access_token: string,
     completed: boolean
+}
+export interface tenantAdmin extends AdminInfo {
+    confirmPassword: string,
+}
+
+export interface bankAdmin extends AdminInfo {
+    username: string,
+    tenantCode: string,
 }
 
 

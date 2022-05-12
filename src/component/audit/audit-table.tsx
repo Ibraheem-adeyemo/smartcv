@@ -26,7 +26,11 @@ const AuditTable:FC = () => {
     else if(searchText !== "") {
         url =`${apiUrlsv1.auditByUser}/${searchText}?page=${pageNumber-1}&size=${countPerPage}` 
     } else if(dateRange.length > 1 && dateRange[1] !== '') {
-        url = `${apiUrlsv1.audit}code/range/${selectedTenantCode}/${userDetail?.username}?pageNumber=${pageNumber-1}&pageSize=${countPerPage}&start=${dateRange[0]}&end=${dateRange[1]}`
+        if (userDetail?.role?.name === appRoles.superAdmin) {
+            url = `${apiUrlsv1.audit}search?pageNumber=${pageNumber-1}&pageSize=${countPerPage}&start=${dateRange[0]}&end=${dateRange[1]}`
+        } else if (userDetail?.role?.name !== appRoles.superAdmin) {
+            url = `${apiUrlsv1.audit}code/range/${selectedTenantCode}/${userDetail?.username}?pageNumber=${pageNumber-1}&pageSize=${countPerPage}&start=${dateRange[0]}&end=${dateRange[1]}`
+        }
     }
     
     const { data: auditView, mutate: _mutate, error } = useSWR<Paginate<AuditView>>(token? url : null)

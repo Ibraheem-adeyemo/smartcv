@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 import { apiUrlsv1, appRoles, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie } from '../lib'
@@ -21,7 +21,7 @@ export default function useAuthentication() {
     // const [user, setUser] = useState<any>()
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie(cookieKeys.token) : "")
 
-    const postLoginAction = (token: string, refreshToken: string) => {
+    const postLoginAction = useCallback((token: string, refreshToken: string) => {
         setCookie(cookieKeys.token, token, cookiesTimeout.tokenTimeout)
         const tokenDate = new Date()
         setCookie(cookieKeys.tokenDurationDate, tokenDate.getTime().toString(), cookiesTimeout.tokenDurationDateTimeout)
@@ -31,9 +31,9 @@ export default function useAuthentication() {
         if (confirmToken !== "") {
             setToken(confirmToken)
         }
-    }
+    },[])
 
-    const signOut = () => {
+    const signOut = useCallback(() => {
         setCookie(cookieKeys.token, "", cookiesTimeout.timeoutCookie)
         setCookie(cookieKeys.tokenDurationDate, "", cookiesTimeout.timeoutCookie)
         setCookie(cookieKeys.refreshToken, "", cookiesTimeout.timeoutCookie)
@@ -43,12 +43,12 @@ export default function useAuthentication() {
             setToken("")
             window.location.href = links.login
         }
-    }
+    },[])
 
-    const signIn = () => {
+    const signIn = useCallback(() => {
         window.location.href = `${apiUrlsv1.passportUrl}${window.location.protocol}//${window.location.host}${links.oauthCallback}`
         // loginWithPassport()
-    }
+    },[])
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -82,7 +82,6 @@ export default function useAuthentication() {
         if (typeof window !== "undefined") {
             if (!userDetail && userDetailError) {
 
-                // console.log({AuthenticatedPage})
                 const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
 
 
@@ -97,7 +96,7 @@ export default function useAuthentication() {
 
 
 
-    const loginWithPassport = async (code: string) => {
+    const loginWithPassport = useCallback(async (code: string) => {
 
         // if (typeof code !== "undefined") {
         const body = {
@@ -147,9 +146,9 @@ export default function useAuthentication() {
         //     }
         // }
 
-    }
+    }, [])
 
-    const refreshAccessToken = async (refresh_token: string) => {
+    const refreshAccessToken = useCallback(async (refresh_token: string) => {
         const body = {
             refresh_token: refresh_token,
             grant_type: grantTypes.refreshToken,
@@ -175,7 +174,7 @@ export default function useAuthentication() {
         } catch (error) {
             throw error
         }
-    }
+    },[])
 
     return { user, userDetail, token, error, userDetailError, signIn, signOut, loginWithPassport, refreshAccessToken }
 }

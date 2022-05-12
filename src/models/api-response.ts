@@ -15,3 +15,7 @@ export interface ErrorResponse {
     message: string,
     code: string
 }
+
+export interface InterchangeApiResponse extends ErrorResponse {
+    date: string
+}

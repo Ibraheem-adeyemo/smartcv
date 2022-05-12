@@ -109,9 +109,10 @@ export function addHoursToDate (date:Date, num:number, type?:string):Date {
     return new Date(new Date(date).setMinutes(date.getMinutes() + num));
 }
 
-export const formatTime = (tim: string) => {    
-        const eqDate = new Date(tim)
-
+export const formatTime = (tim: string) => {   
+    const timeArr = tim.split('/') 
+        const eqDate = new Date(`${timeArr[1]}/${timeArr[0]}/${timeArr[2]}`)
+console.log(eqDate, timeArr)
     if(!isNaN(eqDate.getFullYear())) {
         return `${eqDate.getFullYear()}/${addZero(eqDate.getMonth()+1)}/${addZero(eqDate.getDate())} ${addZero(eqDate.getHours())}:${addZero(eqDate.getMinutes())}:${addZero(eqDate.getSeconds())}`
     } 

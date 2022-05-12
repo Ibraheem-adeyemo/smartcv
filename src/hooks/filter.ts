@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
 import { apiUrlsv1, appRoles, filterDates, filtersToShowDefaultValue, hours, minutes } from "../constants";
 import { DropdownContent, Paginate, setFiltersToShowProps, TenantView, UserModel } from "../models";
@@ -46,35 +46,36 @@ export default function useFilter(user?: UserModel) {
         setSelectedTenantCode(tenantCode)
     }
 
-    const setFiltersToShow = (filtersToshow: setFiltersToShowProps = filtersToShowDefaultValue) => {
+    const setFiltersToShow = useCallback((filtersToshow: setFiltersToShowProps = filtersToShowDefaultValue) => {
         // debugger
         setShowTenant(filtersToshow.showTenantFilter as boolean)
         setShowStartDate(filtersToshow.showStartDateFilter as boolean)
         setShowEndDate(filtersToshow.showEndDateFilter as boolean)
         setShowCountInterval(filtersToshow.showCountIntervalFilter as boolean)
         setShowDuration(filtersToshow.showDurationFilter as boolean)
-    }
-    const getSelectedStartDate = ({ date, time }: {date: string, time:string}) => {
+    }, [])
+    const getSelectedStartDate = useCallback(({ date, time }: {date: string, time:string}) => {
         // console.log({ date, time })
         setStartTime(`${date} ${time}`)
-    }
-    const getSelectedEndDate = ({date, time}:{date:string, time:string}) => {
+    }, [])
+    const getSelectedEndDate = useCallback(({date, time}:{date:string, time:string}) => {
         // console.log({ date, time })
         setEndTime(`${date} ${time}`)
-    }
-    const onSelectedCountInterval = (e: DropdownContent) => {
+    }, [])
+
+    const onSelectedCountInterval = useCallback((e: DropdownContent) => {
         // console.log({ e })
         setCountInterval(e.value)
-    }
-    const onSelectedDuration = (e: DropdownContent) => {
+    }, [])
+    const onSelectedDuration = useCallback((e: DropdownContent) => {
         // console.log({ e })
         setDuration(e.value)
-    }
+    }, [])
 
-    const getSelectedEndTime = (tim:Date) => {
+    const getSelectedEndTime = useCallback((tim:Date) => {
         const completeEndDate = `${tim.getFullYear()}-${tim.getMonth() + 1}-${tim.getDate()}`;
         setEndTime(`${completeEndDate} ${getCurrentTime(tim)}`)
-    }
+    }, [])
 
     useEffect(() => {
         // debugger

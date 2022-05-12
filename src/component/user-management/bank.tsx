@@ -11,6 +11,7 @@ import { PaginatorProvider, PaginatorContext, UserManagementTabProviderContext, 
 import { AppTable } from "../app";
 import ActivateAccount from "../auth/activate-account";
 import ActivateTenant from "./activate-tenant";
+import AddNewBankAdmin from "./add-new-bank-admin";
 
 const AddNewBank = dynamic(() => import('./add-new-bank'), { ssr: false })
 

@@ -19,7 +19,7 @@ export default function useCrossDomainOnboarding() {
     const [message, setMessage] = useState<PostMessage>()
     const [cantVew, setCantView] = useState(false)
 
-    const removeData = () => {
+    const removeData = useCallback(() => {
         const keyFromStorage = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
         if (keyFromStorage === selectedApp?.key) {
             cancelDomainReconnecitonInterval()
@@ -28,9 +28,9 @@ export default function useCrossDomainOnboarding() {
             window.sessionStorage.removeItem(sessionStorageKeys.fromAnotherOriginTimeout)
 
         }
-    }
+    },[selectedApp ])
 
-    const validateKeyAndSetData = () => {
+    const validateKeyAndSetData = useCallback(() => {
         if (message?.value === selectedApp?.key) {
             const go = new URL(selectedApp?.origin as string)
 
@@ -42,10 +42,10 @@ export default function useCrossDomainOnboarding() {
         } else {
             setCantView(true)
         }
-    }
+    }, [selectedApp, selectedApp])
 
 
-    const setInterChangeIdData = (interChangeId: string) => {
+    const setInterChangeIdData = useCallback((interChangeId: string) => {
 
         if (isOnCrossDomain) {
             window.sessionStorage.setItem(sessionStorageKeys.interchangeId, interChangeId)
@@ -70,9 +70,9 @@ export default function useCrossDomainOnboarding() {
                 return intervals
             })
         }
-    }
+    }, [isOnCrossDomain])
 
-    const registerSelectedApp = (origin?: string) => {
+    const registerSelectedApp = useCallback((origin?: string) => {
         if (typeof window !== "undefined") {
             const StoredSelectedAppKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
             // console.log({StoredSelectedAppKey})
@@ -82,9 +82,9 @@ export default function useCrossDomainOnboarding() {
                 setSelectedApp(allowedApp.find((x) => origin === x.origin))
             }
         }
-    }
+    }, [])
 
-    const cancelDomainReconnecitonInterval = () => {
+    const cancelDomainReconnecitonInterval = useCallback(() => {
         if (typeof isOnInterval !== "undefined" && isOnInterval.findIndex(x => x.key === intervalKeys.fromAnotherOrigin) > -1) {
             clearInterval(isOnInterval.find(x => x.key === intervalKeys.fromAnotherOrigin)?.interval as NodeJS.Timer)
             setIsOnInterval((prev) => {
@@ -92,9 +92,9 @@ export default function useCrossDomainOnboarding() {
                 return intervals?.filter(x => x.key !== intervalKeys.fromAnotherOrigin)
             })
         }
-    }
+    }, [])
 
-    const getSelectedApp = () => {
+    const getSelectedApp = useCallback(() => {
         // debugger
         const appKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
         // debugger
@@ -107,16 +107,16 @@ export default function useCrossDomainOnboarding() {
             registerSelectedApp()
             // allowedApp.find(x => x.key === appKey)
         }
-    }
+    }, [])
 
-    const reconnect = (origin?: string) => {
+    const reconnect = useCallback((origin?: string) => {
         // console.log({selectedApp})
         const appKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
         const a = allowedApp.find(x => x.key === appKey)
         if(a){
             setMessage({ "action": onboardingCrossDomain.reconnect })
         }
-    }
+    }, [])
 
     useCallback(() => {
         // debugger
@@ -187,7 +187,7 @@ export default function useCrossDomainOnboarding() {
             window.removeEventListener("message", readEventMsg)
         }
     }, [selectedApp, message])
-    const sendCreatedAccount = (data: any) => {
+    const sendCreatedAccount = useCallback((data: any) => {
         const appKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
         // debugger
         setMessage({ "action": onboardingCrossDomain.accountCreated, value: data })
@@ -199,7 +199,7 @@ export default function useCrossDomainOnboarding() {
             setSelectedApp(a)
 
         }
-    }
+    }, [])
     return {
         cantVew,
         isOnCrossDomain,

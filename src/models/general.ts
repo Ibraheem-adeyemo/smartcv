@@ -59,6 +59,7 @@ export interface apiUrlsv1Model {
     passportTokenUrl: string,
     pinChange: string,
     resendActivationMail: string,
+    requestReconnection: string,
     states: string,
     tenant: string,
     tenantAdmin: string,

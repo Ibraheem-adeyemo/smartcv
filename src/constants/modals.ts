@@ -5,7 +5,7 @@ export enum UserManagementModalNames {
     addNewUser = "Add New User",
     addNewBank = "Add New Bank",
     addNewRole = "Interchange Reconnection",
-    viewBank = "view Bank"
+    viewBank = "view Bank",
 
 }
 
@@ -16,6 +16,7 @@ export enum InterchangeReconnectionModalNames {
 export enum UserManagementTriggerButtons {
     addNewUser = "Create User",
     addNewBank = "Create Bank",
+    addNewBankAdmin = "Create UserbySuperAdmin",
     addNewRole = "Create Role",
     viewBank = "View",
     activateTenant = "Activate Bank",

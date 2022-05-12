@@ -2,7 +2,7 @@ import React, { FC, useCallback, useContext, useEffect, useRef, useState } from 
 import { Avatar, Button, Flex, FormControl, Text, FormLabel, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverHeader, PopoverTrigger, Select, useToast } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
 import { BankAdmin, ISWAdminView, PasswordChecker, RoleModel, tenantAdmin, UserManagementModal } from "../../models";
-import { notificationMesage, Roles, TickIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
+import { notificationMesage, Roles, superAdmin, TickIcon, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { AuthContext, UserManagementTabProviderContext } from "../../providers";
 import { comparePassword, validateEmail, validateLowercase, validateNumber, validateUppercase } from "../../lib";
 import _ from "lodash";
@@ -39,6 +39,7 @@ const AddNewUser: FC = () => {
     const [loading, changeLoading] = useLoading()
     const [isValidEmail, setIsValidEmail] = useState(false)
     const [passC, setPassC] = useState<PasswordChecker[]>()
+    const [tenantCode, setTenantCode] = useState('')
 
     const [isOpenPopOver, setIsOpenPopOver] = useState(false)
     const openPopOver = () => setIsOpenPopOver(true)
@@ -201,11 +202,11 @@ const AddNewUser: FC = () => {
     }, [])
 
     const saveUser = useCallback(async () => {
-
+        
         changeLoading(() => ({ isLoading: true, text: "Creating user" }))
         try {
             if (form) {
-                await createBankAdmin({ ...form, tenantCode: userDetail?.tenant.code } as unknown as tenantAdmin)
+                await createBankAdmin({ ...form, tenantCode: userDetail?.role.name === superAdmin ? tenantCode : userDetail?.tenant.code } as unknown as tenantAdmin)
                 refreshForm()
             }
             toast({
@@ -215,7 +216,6 @@ const AddNewUser: FC = () => {
                 variant: "left-accent"
             })
         } catch (error:any) {
-
                 toast({
                     status: "error",
                     title: error? error.message?error.message : error: `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`,
@@ -240,7 +240,6 @@ const AddNewUser: FC = () => {
     useEffect(() => {
         if (typeof form !== "undefined") {
             inputData(form)
-            // console.log({ validation })
         }
     }, [form])
 
@@ -279,6 +278,12 @@ const AddNewUser: FC = () => {
                                     {validation?.errors.mobileNo === "" && !isValidPhoneNumber(typeof form?.mobileNo !== "undefined" ? form?.mobileNo : "") && <MotionFormErrorMessage>Invalid number</MotionFormErrorMessage>}
 
                                 </FormControl>
+                                {
+                                    userDetail && userDetail.role.name === superAdmin && <FormControl isRequired id="tenantCode" sx={formControlInputSX} >
+                                    <MotionFormLabel>Tenant code</MotionFormLabel>
+                                    <Input placeholder="Enter tenant code" name="tenantCode" borderRadius="4px" value={tenantCode} onChange={(e)=> setTenantCode(e.target.value)} />
+                                </FormControl>
+                                }
                                 <Popover
                                     returnFocusOnClose={false}
                                     isOpen={isOpenPopOver}

@@ -52,6 +52,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     passportTokenUrl: `${NEXT_PUBLIC_PASSPORT_BASE_URL}oauth/token`,
     pinChange:`${API_BASE_URL}${CURRENT_API_VERSION}/monitor/transaction/pin-change/`,
     resendActivationMail: `${API_BASE_URL}${CURRENT_API_VERSION}/notification/activation/user/`,
+    requestReconnection: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange/open`,
     states: `${API_BASE_URL}${CURRENT_API_VERSION}/location/states`,
     tenant: `${API_BASE_URL}${CURRENT_API_VERSION}/tenant`,
     tenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/admins`,

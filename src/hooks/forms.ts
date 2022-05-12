@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { formType } from "../models"
 
 export default function useForm<T extends Record< keyof T, T[keyof T]>>(initialModel: T) {
@@ -17,17 +17,17 @@ export default function useForm<T extends Record< keyof T, T[keyof T]>>(initialM
     useEffect(() => {
         // console.log({ form })
     }, [form])
-    const formOnChange = (value: Record<keyof T & formType, any>) => {
+    const formOnChange = useCallback((value: Record<keyof T & formType, any>) => {
       
         setForm((prev) => ({
             ...prev as T & formType,
             ...value
         }))
-    }
+    }, [])
 
-    const refreshForm = () => {
+    const refreshForm = useCallback(() => {
         setRefresh(prev => !prev)
-    }
+    }, [])
 
     return { form, formOnChange, refreshForm }
 }
