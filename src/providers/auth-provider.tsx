@@ -12,8 +12,6 @@ export const AuthContext = createContext<ReturnType<typeof useAuthentication>>({
     signOut: () => (""),
     loginWithPassport: async (code: string) =>{},
     refreshAccessToken:async (refreshToken:string) => {},
-    loginWithCredentials: async (obj: LoginCredentialBody) => {},
-    forceUserToSetFromLocalStorage:  () => {},
 
 })
 

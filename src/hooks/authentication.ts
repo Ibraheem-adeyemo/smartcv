@@ -1,21 +1,14 @@
 import { useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 import { apiUrlsv1, appRoles, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, SECRET } from '../constants'
-import { clearUserFromLocalStorage, fetchJson, getCookie, getUserFromLocalStorage, setCookie, setUserToLocalStorage } from '../lib'
-import { APIResponse, AuthModel, CredAuthDataModel, CredentialsAuthModel, LoginCredentialBody, RefreshTokenRequestBody, tenantAdmin, TokenRequestBody, TokenResponsBody, UserModel } from '../models'
-
+import { fetchJson, getCookie, setCookie } from '../lib'
+import { AuthModel, RefreshTokenRequestBody, TokenRequestBody, TokenResponsBody, UserModel } from '../models'
 export default function useAuthentication() {
     // const url = "/api/passport"
     const url = apiUrlsv1.passporProfileUrl
-    const { mutate } = useSWRConfig();
-    const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie(cookieKeys.token) : "")
-    const [loginError, setloginError] = useState<unknown|any>();
-
-    const [userFromLocalStorage, setUserFromLocalStorage] = useState(getUserFromLocalStorage())
-    
-    const { data: user, mutate: _mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || !token ? null : userFromLocalStorage? null: url)
-    const { data: userDetail, mutate: _userDetailMutate, error:userDetailError } = useSWR<UserModel>(!user &&  !userFromLocalStorage? null: (!user &&  userFromLocalStorage ? null : `${apiUrlsv1.getUserDetail}/${user?.email}`))
-    
+    const { mutate } = useSWRConfig()
+    const { data: user, mutate: _mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie(cookieKeys.token) == "" ? null : url)
+    const { data: userDetail, mutate: _userDetailMutate, error:userDetailError } = useSWR<UserModel>(!user ? null : `${apiUrlsv1.getUserDetail}/${user.email}`)
     // const userDetail: any | undefined = {
     //     role: {
     //         name: appRoles.superAdmin
@@ -26,12 +19,8 @@ export default function useAuthentication() {
     // }
     // const userDetailError:any| undefined = undefined 
     // const [user, setUser] = useState<any>()
-    
+    const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie(cookieKeys.token) : "")
 
-    const forceUserToSetFromLocalStorage: any = () => {
-        setUserFromLocalStorage(getUserFromLocalStorage())
-        setToken(typeof window !== "undefined" ? getCookie(cookieKeys.token) : "")
-    }
     const postLoginAction = (token: string, refreshToken: string) => {
         setCookie(cookieKeys.token, token, cookiesTimeout.tokenTimeout)
         const tokenDate = new Date()
@@ -52,8 +41,6 @@ export default function useAuthentication() {
         const confirmToken = getCookie(cookieKeys.token)
         if (confirmToken === "") {
             setToken("")
-            clearUserFromLocalStorage();
-            setUserFromLocalStorage(undefined)
             window.location.href = links.login
         }
     }
@@ -70,10 +57,10 @@ export default function useAuthentication() {
                 setToken(cookieToken)
             }
         }
-    forceUserToSetFromLocalStorage()
     }, [])
 
     useEffect(() => {
+        // debugger
         if(typeof userDetailError !== "undefined" && window) {
             signOut()
         }
@@ -94,6 +81,8 @@ export default function useAuthentication() {
 
         if (typeof window !== "undefined") {
             if (!userDetail && userDetailError) {
+
+                // console.log({AuthenticatedPage})
                 const shouldRedirect = AuthenticatedPage.some(x => x === window.location.pathname)
 
 
@@ -106,34 +95,11 @@ export default function useAuthentication() {
         }
     }, [token])
 
-    const loginWithCredentials = async (obj: LoginCredentialBody) => {
-        
-        try {
 
-            const response = await fetchJson<CredAuthDataModel>(apiUrlsv1.loginWithCredential, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(obj)     
-            })
-
-
-
-            if (typeof response !== "undefined") {
-                setUserToLocalStorage(response)
-                forceUserToSetFromLocalStorage()
-                postLoginAction(response.passport.access_token, response.passport.refresh_token)
-            }
-
-        } catch (error) {
-            setloginError(error)
-            throw error
-        }
-    }
 
     const loginWithPassport = async (code: string) => {
 
+        // if (typeof code !== "undefined") {
         const body = {
             client_id: CLIENT_ID,
             redirect_uri: `${window.location.protocol}//${window.location.host}${links.oauthCallback}`,
@@ -154,9 +120,6 @@ export default function useAuthentication() {
                 body: urlencoded
             })
 
-            
-            
-
             if (typeof response !== "undefined") {
                 postLoginAction(response.access_token, response.refresh_token)
                 mutate(url)
@@ -164,6 +127,25 @@ export default function useAuthentication() {
         } catch (error) {
             throw error
         }
+        // } else {
+        //     try {
+        //         const response = await fetchJson<TokenResponsBody>("/api/passport-token", {
+        //             method: "POST",
+        //             headers: {
+        //                 Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
+        //                 "Content-Type": "application/x-www-form-urlencoded"
+        //             },
+        //         })
+        //       
+        //         if (typeof response !== "undefined") {
+        //             postLoginAction(response.access_token)
+        //             mutate(url)
+        //             window.location.href = links.dashboard
+        //         }
+        //     } catch (error) {
+        //         throw error
+        //     }
+        // }
 
     }
 
@@ -195,6 +177,6 @@ export default function useAuthentication() {
         }
     }
 
-    return { user: !user? {firstName: userFromLocalStorage?.passport.firstName, lastName: userFromLocalStorage?.passport.lastName, email: userFromLocalStorage?.passport.email,access_token: userFromLocalStorage?.passport.access_token, id: userFromLocalStorage?.userInfo.id.toString()} as AuthModel :user, userDetail: !userDetail?userFromLocalStorage?.userInfo:userDetail, token, error, userDetailError, signIn, signOut, loginWithPassport, refreshAccessToken, loginWithCredentials, forceUserToSetFromLocalStorage, loginError, setloginError }
+    return { user, userDetail, token, error, userDetailError, signIn, signOut, loginWithPassport, refreshAccessToken }
 }
 

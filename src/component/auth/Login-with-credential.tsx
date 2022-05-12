@@ -28,60 +28,60 @@ import { MotionBox, MotionFlex } from '../framer';
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const { user, userDetail, error, setloginError, loginError, userDetailError, loginWithCredentials } = useAuthentication()
+  //   const { user, userDetail, error, setloginError, loginError, userDetailError, loginWithCredentials } = useAuthentication()
 
-    const router = useRouter()
-    const toast = useToast()
+  //   const router = useRouter()
+  //   const toast = useToast()
 
-    const handleSubmit = () => {
-      setLoading({isLoading: true, text: "Redirecting..."})
-      loginWithCredentials({username:email, password})
-    }
+  //   const handleSubmit = () => {
+  //     setLoading({isLoading: true, text: "Redirecting..."})
+  //     loginWithCredentials({username:email, password})
+  //   }
 
 
   
-    useEffect(() => {
-      if(error || userDetailError || loginError) {
-          userDetailError? toast({
-              status: "error",
-              title: userDetailError.message,
-              variant: "left-accent",
-              isClosable: true
-          }) : "";
-          error? toast({
-              status: "error",
-              title: error.message,
-              variant: "left-accent",
-              isClosable: true
-          }) : "";
-          loginError? toast({
-            status: "error",
-            title: loginError,
-            variant: "left-accent",
-            isClosable: true
-        }) : "";
-        setloginError('')
-        setLoading({isLoading: false, text: ""})
-          router.push("/paas-login")
+  //   useEffect(() => {
+  //     if(error || userDetailError || loginError) {
+  //         userDetailError? toast({
+  //             status: "error",
+  //             title: userDetailError.message,
+  //             variant: "left-accent",
+  //             isClosable: true
+  //         }) : "";
+  //         error? toast({
+  //             status: "error",
+  //             title: error.message,
+  //             variant: "left-accent",
+  //             isClosable: true
+  //         }) : "";
+  //         loginError? toast({
+  //           status: "error",
+  //           title: loginError,
+  //           variant: "left-accent",
+  //           isClosable: true
+  //       }) : "";
+  //       setloginError('')
+  //       setLoading({isLoading: false, text: ""})
+  //         router.push("/paas-login")
           
-      }
-      // debugger
-      if(user && userDetail){
-          if (getCookie(cookieKeys.redirectUrl) !== "") {
-              const redirectUrl = getCookie(cookieKeys.redirectUrl)
-              setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
-              router.push(redirectUrl)
-          } else {
-              router.push(links.dashboard)
-          }
-      }
+  //     }
+  //     // debugger
+  //     if(user && userDetail){
+  //         if (getCookie(cookieKeys.redirectUrl) !== "") {
+  //             const redirectUrl = getCookie(cookieKeys.redirectUrl)
+  //             setCookie(cookieKeys.redirectUrl, "", cookiesTimeout.timeoutCookie)
+  //             router.push(redirectUrl)
+  //         } else {
+  //             router.push(links.dashboard)
+  //         }
+  //     }
       
-  }, [user, userDetail, error, userDetailError])
+  // }, [user, userDetail, error, userDetailError])
 
     return (        
       <form method="POST">
         
-        <MotionFlex sx={loginFormContainerSX}
+        {/* <MotionFlex sx={loginFormContainerSX}
             initial="hide"
             animate="show"
             variants={staggerChildrenWithDuration}
@@ -121,7 +121,7 @@ import { MotionBox, MotionFlex } from '../framer';
                             Login
                         </Button>
 
-                {/* <AppLink href={links.login} color="brand.primary-blue" >Login with passport</AppLink> */}
+                {/* <AppLink href={links.login} color="brand.primary-blue" >Login with passport</AppLink> *
               
                         <Stack
                   direction={{ base: 'column', sm: 'row' }}
@@ -131,7 +131,7 @@ import { MotionBox, MotionFlex } from '../framer';
                 </Stack>  
               </Stack>
           
-          </MotionFlex>
+          </MotionFlex> */}
           </form>
     );
   }
