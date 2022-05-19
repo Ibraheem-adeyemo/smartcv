@@ -63,8 +63,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                 })
                 const data = (await response.json()) as tenantAdmin
                 if (response.ok || response.status === 200 || response.status === 201) {
-                  
-                    props.setUserAuthority(data)
+                    props.setUserAuthority({...data, password: form?.password})
                 } else {
                     throw {
                         ...new Error(response.statusText),
