@@ -56,6 +56,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     states: `${API_BASE_URL}${CURRENT_API_VERSION}/location/states`,
     tenant: `${API_BASE_URL}${CURRENT_API_VERSION}/tenant`,
     tenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/admins`,
+    realTimeTransactionReport:`${API_BASE_URL}${CURRENT_API_VERSION}/transaction/real-time/`,
     user: `${API_BASE_URL}${CURRENT_API_VERSION}/user/`,
     loginWithCredential: `${API_BASE_URL}${CURRENT_API_VERSION}/user/login`
 }

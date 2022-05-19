@@ -63,6 +63,7 @@ export interface apiUrlsv1Model {
     states: string,
     tenant: string,
     tenantAdmin: string,
+    realTimeTransactionReport:string,
     user: string,
     loginWithCredential: string
 }

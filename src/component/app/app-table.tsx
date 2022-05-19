@@ -73,6 +73,7 @@ const TdSN = (props: { pageindex: number, pageNumber: number, countPerPage: numb
 
 const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false, showAllAction = false, ...props }: ApptableProps<T>) => {
 
+    console.log(props)
     const { totalPageNumber, pageNumber, countPerPage } = useContext(PaginatorContext)
     // console.log({rows: props.rows})
     const isActionAvailable = typeof props.actions !== "undefined" && props.actions.length > 0

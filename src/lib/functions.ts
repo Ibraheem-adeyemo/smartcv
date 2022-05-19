@@ -1,9 +1,10 @@
 import { dataAttr } from "@chakra-ui/utils";
 import _ from "lodash";
 import { NextApiResponse } from "next";
-import { getCookie } from ".";
-import { cookieKeys, months, notificationMesage, amountAbbrevications, apiUrlsv1 } from "../constants";
-import { APIResponse } from "../models";
+import { getCookie, getItemFromLocalStorage } from ".";
+import { cookieKeys, months, notificationMesage, amountAbbrevications, apiUrlsv1, localStorageKeys } from "../constants";
+import { APIResponse, formatedRealtimeObject, RealTimeObject, TransactionPropObject } from "../models";
+import axios from "axios";
 
 export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
@@ -80,11 +81,16 @@ export function appDate(dateStr: string, withTime = true) {
     return fullDate
 }
 
-export async function checkIfOnline():Promise<boolean> {
+export async function checkIfOnline():Promise<boolean> {    
     try {
-        const online = await fetch(apiUrlsv1.healthCheck);
-        return online.status >= 200 && online.status < 300; // either true or false
-
+        const authMode = getItemFromLocalStorage(localStorageKeys.authMode)
+        if(authMode === localStorageKeys.credential) {
+            return true
+        } else {
+            //console.log(authMode, localStorageKeys.credential, '=====2')
+            const online = await fetch(apiUrlsv1.healthCheck);
+            return online.status >= 200 && online.status < 300; // either true or false        
+        }
     } catch (error) {
         return false
     }
@@ -112,18 +118,17 @@ export function addHoursToDate (date:Date, num:number, type?:string):Date {
 export const formatTime = (tim: string) => {   
     const timeArr = tim.split('/') 
         const eqDate = new Date(`${timeArr[1]}/${timeArr[0]}/${timeArr[2]}`)
-console.log(eqDate, timeArr)
     if(!isNaN(eqDate.getFullYear())) {
         return `${eqDate.getFullYear()}/${addZero(eqDate.getMonth()+1)}/${addZero(eqDate.getDate())} ${addZero(eqDate.getHours())}:${addZero(eqDate.getMinutes())}:${addZero(eqDate.getSeconds())}`
     } 
     return ''
 }
+ 
 
 export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit & any): Promise<T> {
-
+    
     try {
         if (await checkIfOnline()) {
-
             let token = typeof window !== "undefined" ? getCookie(cookieKeys.token) : ""
             const response = token !== "" ? await fetch(input, typeof init === "undefined" ? {
                 method: "GET",
@@ -151,7 +156,6 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
                 throw `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`
             }
         } else {
-
             throw notificationMesage.offline
         }
 
@@ -159,4 +163,26 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
         throw error
     }
 
+}
+
+const getTimeFromDate = (dat:string):number => {
+    const dateFormat = new Date(dat)
+    return dateFormat.getMinutes()
+}
+
+export function formatRealTimeData(data:RealTimeObject[]):formatedRealtimeObject {
+    let responseDTOList:RealTimeObject[] = [],
+    transactionCountResponseList:TransactionPropObject[] = []
+    // const formatedData = []
+    data.map(dataObj => {
+        return {...dataObj, startDate:getTimeFromDate(dataObj.endDate)}
+    }).sort((a,b) => {
+        return a.startDate - b.startDate
+    }).forEach(item => {
+        responseDTOList.push(item)
+        item.transactionDetailsResponseDTOList.forEach(itm => {
+            transactionCountResponseList.push(itm)
+        })
+    })
+    return {responseDTOList, transactionCountResponseList}
 }

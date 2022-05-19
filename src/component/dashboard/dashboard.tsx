@@ -1,9 +1,10 @@
-import { Flex } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import dynamic from "next/dynamic"
 import { FC, useContext, useEffect, useMemo } from "react"
 import { appRoles, filterDates } from "../../constants"
 import { AuthContext, StatsContext } from "../../providers"
 import { dashboardContainerSX } from "../../sx"
+import { SimpleBarchart } from "../app-charts"
 
 const TerminalsPerformance = dynamic(() => import('./terminals-performance'), { ssr: false })
 const SuccessRate = dynamic(() => import('./success-rate'), { ssr: false })
@@ -14,6 +15,7 @@ const TopTransactionMetric = dynamic(() => import('./top-transaction-metric'), {
 const TransactionBreakdown = dynamic(() => import('./transaction-breakdown'), { ssr: false })
 const TransactionMetric = dynamic(() => import('./transaction-metric'), { ssr: false })
 const UsageMetric = dynamic(() => import('./usage-metric'), { ssr: false })
+// const SimpleBarchart = dynamic(() => import('../app-charts/simpleBarchart'), { ssr: false })
 const Dashboard: FC = () => {
   const { userDetail } = useContext(AuthContext)
   const { selectedTenantCode, setFiltersToShow } = useContext(StatsContext)
@@ -66,12 +68,13 @@ const Dashboard: FC = () => {
           height={["200px", "200px", "200px", "200px", "200px", "200px"]} />
       </Flex>
 
-      {/* <Flex flexGrow={4} width6="70%">
+      <Flex flexGrow={4} width="70%">
             <TopPerforminBanks />
-          </Flex> */}
-      {/* <Flex flexGrow={1} width="25%">
-            <TopTransactionMetric />
-          </Flex> */}
+          </Flex>
+      
+        {/* <Flex flexGrow={4} width="100%">
+            <SimpleBarchart />
+        </Flex> */}
     </Flex>
   )
 }

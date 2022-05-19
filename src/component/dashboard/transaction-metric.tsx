@@ -8,6 +8,7 @@ import { AuthContext, StatsContext } from "../../providers"
 import { useLoading } from "../../hooks"
 import { apiUrlsv1, appRoles, keysForArrayComponents, StatsName, upcomingFeature } from "../../constants"
 import useSWR from "swr"
+import { sumBy } from "lodash"
 
 interface TransactionMetricProps {
     width?: string | string [],
@@ -25,7 +26,21 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
     const [selectedHeaderName, setSelectedHeaderName] = useState<string>();
     const [loading, setLoading] = useLoading({isLoading:true, text:""})
     const [stats, setStats] = useState<StatsProps[]>()
-    const {userDetail} = useContext(AuthContext)
+    const {token, userDetail} = useContext(AuthContext)
+
+    let url = `${apiUrlsv1.realTimeTransactionReport}top-transaction`
+    if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
+    
+        if(userDetail.role.name !== appRoles.superAdmin){
+          url = `${url}/${userDetail.tenant.code}`
+        } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
+          url = `${url}/${selectedTenantCode}`
+        }
+      }
+    
+    url = token && userDetail? url:""
+    const { data: transactionData, mutate: _mutate, error: positionError } = useSWR<Paginate<any>>(token?url:null)
+// realtimeTransactionVolumeList
 
     useEffect(() => {
         // console.log("waiting")
@@ -38,11 +53,10 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
                 suffix:"",
                 comingSoon: false,
             }
-            // console.log("done waiting")
             return [{
                 ...boxSize,
                 headerName: StatsName.transactionAmount,
-                totalNumber: 0.00,
+                totalNumber: transactionData && transactionData?.realtimeTransactionVolumeList ? sumBy(transactionData?.realtimeTransactionVolumeList, (transaction) => transaction.value): 0.00,
                 status: "green",
                 percentage: "6.0%",
                 days: "Last 7 days",
@@ -51,7 +65,7 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
             }, {
                 ...boxSize,
                 headerName: StatsName.transactionCount,
-                totalNumber: 0,
+                totalNumber: transactionData && transactionData?.realtimeTransactionVolumeList ? sumBy(transactionData?.realtimeTransactionVolumeList, (transaction) => transaction.count): 0,
                 status: "green",
                 percentage: "6.0%",
                 days: "Last 7 days",
@@ -73,7 +87,7 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
           setLoading({ isLoading: false, text: "" })
         }*/
         setLoading({ isLoading: false, text: "" })
-    }, [institutions, institutionsError])
+    }, [transactionData, institutions, institutionsError])
     return (
         <AppCard topic={<Text variant="card-header" size="card-header">What Are our Transaction Metric</Text>} >
             {!loading.isLoading ?
