@@ -25,7 +25,7 @@ const RegisterForm: FC = () => {
             // debugger
             setLoading({ isLoading: true, text: "Confirming" })
             const data = await getInterchangeById(interChangeId as string)
-            if (typeof data.statusCondition !== "undefined" && +data.statusCondition === 1 && typeof interChangeId !== "undefined") {
+            if (typeof data.statusCondition !== "undefined" && typeof interChangeId !== "undefined") {
                 // debugger
                 setCookie(cookieKeys.interchangeId, interChangeId, cookiesTimeout.interchangeIdTimeout)
                 if (isOnCrossDomain) {
