@@ -4,8 +4,9 @@ import { FC, useContext, useEffect } from "react";
 import { AuditExport, AuditSearch } from ".";
 import { appear, staggerChildren } from "../../animations";
 import { appRoles } from "../../constants";
-import { AuthContext, StatsContext } from "../../providers";
+import { AuditContext, AuthContext, StatsContext } from "../../providers";
 import { MotionFlex } from "../framer";
+import { DateRangeSearch } from "../stats";
 import AppBarFilter from "../stats/app-bar-filter";
 
 const AuditTable = dynamic(() => import("./audit-table"), { ssr: false })
@@ -16,7 +17,7 @@ const Audit: FC = () => {
     useEffect(() => {
         setFiltersToShow({ showTenantFilter: true })
     }, [])
-
+    const { handleDaterangeSearch } = useContext(AuditContext)
     return (
         <>
             <MotionFlex flexDir="column" gap="24px" variants={staggerChildren}>
@@ -24,6 +25,7 @@ const Audit: FC = () => {
                     { userDetail && userDetail.role.name === appRoles.superAdmin && <AuditSearch />}
                     <Flex gap="20px">
                         <AppBarFilter />
+                        <DateRangeSearch handleDateSearch={handleDaterangeSearch} />
                         <AuditExport />
                     </Flex>
                 </MotionFlex>

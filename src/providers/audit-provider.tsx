@@ -36,10 +36,13 @@ export const AuditContext = createContext<AuditContextType & ReturnType<typeof u
     searchText: "",
     toggleDetailsModal: (_state: boolean) => { },
     handleSearchItem: debounce(() => { }, 500),
-    changeAuditView: () => { },
+    changeAuditView: () => {},
     changeAuditInfo:()=>{},
-    columns:columns
+    columns:columns,
+    handleDaterangeSearch: debounce((start:string, end:string)=>{}, 50),
+    dateRange:[]
 })
+
 interface AuditProviderProps extends ComponentWithChildren {
 }
 const AuditProvider: FC<AuditProviderProps> = (props: AuditProviderProps) => {

@@ -40,7 +40,6 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
   const toast = useToast()
 
   useEffect(() => {
-    // console.log("waiting")
     const getStats = (): StatsA[] => {
       const boxSize = {
         width: props.width,
@@ -90,7 +89,7 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
   }, [totalATMCount, totalATMCountError])
   return (
     <>
-    <AppCard topic={<Text variant="card-header" size="card-header">How are terminals performance</Text>} >
+    <AppCard topic={<Text variant="card-header" size="card-header">Our Terminal performance...</Text>} >
       {!loading.isLoading && stats ?
         <>{stats.map((x, i) => <Button  key={`${keysForArrayComponents.terminalsPerformance}-${i}`} cursor={showDetails? 'pointer': 'none'} onClick={()=> {
           if(showDetails){

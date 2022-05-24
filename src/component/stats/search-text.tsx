@@ -1,14 +1,15 @@
 import { HStack, InputGroup, InputLeftElement, Input } from "@chakra-ui/react";
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { SearchIcon } from "../../constants";
 
 interface SearchTextProps {
     searchText:string,
     handleSearchItem: (searchText:string) => void,
-    placeHolder:string
+    placeHolder:string,
 }
 const SearchText:FC<SearchTextProps> = (props:SearchTextProps) => {
-    const [text, setText] = useState("")
+    const [text, setText] = useState("");
+
     return (
         <HStack>
             <InputGroup>
@@ -21,6 +22,7 @@ const SearchText:FC<SearchTextProps> = (props:SearchTextProps) => {
                     setText(e.target.value); 
                     props.handleSearchItem(e.target.value)}} />
             </InputGroup>
+
         </HStack>
     )
 }

@@ -11,13 +11,14 @@ const ChannelsMonitoringStats:FC = () => {
       <Flex sx={formControlInputSX}>
         <ServiceStatus
           width={["200px", "200px", "200px", "220px", "220px", "250px"]}
-          height={["224px", "224px", "224px", "224px", "229px", "229px"]} />
+          height={["224px", "224px", "224px", "224px", "229px", "229px"]}
+          page='chanel-monitoring' />
       </Flex>
-      <Flex>
+      {/* <Flex>
         <TerminalsUnderWatch
           width={["224px", "224px", "224px", "224px", "229px", "229px"]}
           height={["200px", "200px", "200px", "200px", "200px", "200px"]} />
-      </Flex>
+      </Flex> */}
     </Flex>
   )
 }

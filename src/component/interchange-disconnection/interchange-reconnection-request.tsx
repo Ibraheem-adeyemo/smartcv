@@ -1,13 +1,13 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { Button, Flex, FormControl, HStack, Input, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Switch, useToast } from '@chakra-ui/react'
 import { useForm, useLoading, useValidator } from "../../hooks";
-import { CreateRoleModel, InterchangeDisconnectionStatus, InterchangeReconnectionModal, InterchangeReconnectionModel, Paginate, UserManagementModal } from "../../models";
+import { CreateRoleModel, InterchangeApiResponse, InterchangeDisconnectionStatus, InterchangeReconnectionModal, InterchangeReconnectionModel, Paginate, UserManagementModal } from "../../models";
 import { apiUrlsv1, appRoles, InterchangeDisconnectionModals, InterchangeReconnectionModalNames, keysForArrayComponents, notificationMesage, UserManagementModalNames, UserManagementModals } from "../../constants";
 import { AuthContext, InterchangeDisconnectionContext, StatsContext } from "../../providers";
 import _ from "lodash";
 import { MotionModal } from "../framer/motion-modal";
 import { AnimatePresence } from "framer-motion";
-import { createRole } from "../../services/v1";
+import { createRole, openReconnection } from "../../services/v1";
 import { MotionFormErrorMessage, MotionFormLabel } from "../framer";
 import { appear } from "../../animations";
 import { formControlInputSX } from "../../sx";
@@ -50,9 +50,9 @@ const InterchangeReconnectionRequest: FC = () => {
         changeLoading(() => ({ isLoading: true, text: "Creating role" }))
         try {
             if (form) {
-                // await createRole(null)
+                const data:InterchangeApiResponse = await openReconnection({...form})
                 toast({
-                    title: notificationMesage.SuccessfulRoleCreation,
+                    title: data.message,
                     variant: "left-accent",
                     isClosable: true,
                     status: "success"

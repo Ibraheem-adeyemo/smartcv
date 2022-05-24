@@ -8,6 +8,7 @@ import { APIResponse } from "../models";
 export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
 }
+
 export function shortenNumber(amount: number) {
     let t = { fractionAmount: Number.MAX_VALUE, abbrev: "" }
     if (!isNaN(amount)) {
@@ -108,10 +109,19 @@ export function addHoursToDate (date:Date, num:number, type?:string):Date {
     return new Date(new Date(date).setMinutes(date.getMinutes() + num));
 }
 
+export const formatTime = (tim: string) => {   
+    const timeArr = tim.split('/') 
+        const eqDate = new Date(`${timeArr[1]}/${timeArr[0]}/${timeArr[2]}`)
+console.log(eqDate, timeArr)
+    if(!isNaN(eqDate.getFullYear())) {
+        return `${eqDate.getFullYear()}/${addZero(eqDate.getMonth()+1)}/${addZero(eqDate.getDate())} ${addZero(eqDate.getHours())}:${addZero(eqDate.getMinutes())}:${addZero(eqDate.getSeconds())}`
+    } 
+    return ''
+}
+
 export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit & any): Promise<T> {
 
     try {
-        // console.log({init});
         if (await checkIfOnline()) {
 
             let token = typeof window !== "undefined" ? getCookie(cookieKeys.token) : ""
@@ -122,7 +132,6 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
                 }
             } : init) : await fetch(input, init);
             const data = await response.json() as APIResponse<T>
-            // debugger
             if (response.ok) {
                 if (typeof data.data !== "undefined") {
                     return data.data as T;
@@ -131,12 +140,9 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
                 }
             }
             else if (typeof data !== "undefined") {
-                // debugger
                 if (typeof data.message !== "undefined") {
-                    // debugger
                     throw data.message
                 } else if(typeof (data as any).error !== "undefined") {
-                    // debugger
                     throw (data as any).error
                 }else {
                     throw (data as unknown as any).error_description
@@ -150,8 +156,6 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
         }
 
     } catch (error: any) {
-        // debugger
-        // console.error({error})
         throw error
     }
 

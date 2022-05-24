@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { defaultCallback, defaultCallbackInitiator, Loading } from "../models";
 type  UseLoadingReturn = [Loading, defaultCallbackInitiator<Loading>]
 export default function useLoading(initialData?: Loading) : UseLoadingReturn {
@@ -14,9 +14,9 @@ export default function useLoading(initialData?: Loading) : UseLoadingReturn {
         }))
     },[])
 
-    const changeLoading = (callback:defaultCallback<Loading> | Loading) => {
+    const changeLoading = useCallback((callback:defaultCallback<Loading> | Loading) => {
       
         setLoading(callback)
-    }
+    }, [])
     return [loading, changeLoading]
 }

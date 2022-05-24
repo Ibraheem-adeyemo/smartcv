@@ -18,9 +18,9 @@ export enum links {
     transactionMonitoring = "/transaction-monitoring",
     audit = "/audit",
     interchangeDisconnection = "/interchange-disconnection",
-
-
+    paasLogin="/paas-login"
 }
+
 export const onboardingURL = "http://127.0.0.1:5500" /* (This is the current production url but may change in the future) */
 
 export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
@@ -52,8 +52,10 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     passportTokenUrl: `${NEXT_PUBLIC_PASSPORT_BASE_URL}oauth/token`,
     pinChange:`${API_BASE_URL}${CURRENT_API_VERSION}/monitor/transaction/pin-change/`,
     resendActivationMail: `${API_BASE_URL}${CURRENT_API_VERSION}/notification/activation/user/`,
+    requestReconnection: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange/open`,
     states: `${API_BASE_URL}${CURRENT_API_VERSION}/location/states`,
     tenant: `${API_BASE_URL}${CURRENT_API_VERSION}/tenant`,
     tenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/admins`,
-    user: `${API_BASE_URL}${CURRENT_API_VERSION}/user/`
+    user: `${API_BASE_URL}${CURRENT_API_VERSION}/user/`,
+    loginWithCredential: `${API_BASE_URL}${CURRENT_API_VERSION}/user/login`
 }

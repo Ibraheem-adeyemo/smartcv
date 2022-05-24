@@ -45,6 +45,7 @@ const OauthCallback: NextPage = () => {
     }, [])
 
     useEffect(() => {
+        console.log(error, userDetailError, 'error')
         if(error || userDetailError) {
             userDetailError? toast({
                 status: "error",

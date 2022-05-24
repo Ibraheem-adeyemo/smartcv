@@ -10,7 +10,8 @@ export enum cookieKeys {
     totalTenantAdmin = "total-tenant-admin",
     totalISWAdmin = "total-isw-admin",
     requestConnectionTimeout = "request-connection-timout",
-    refreshToken = "refresh-token"
+    refreshToken = "refresh-token",
+    userObj = "user-obj"
 }
 
 export enum cookiesTimeout {
@@ -41,6 +42,10 @@ export enum sessionStorageKeys {
 export enum sessionStorageTimeout {
     fromAnotherOriginTimeout = 15,
     interchangeIdTimeout=15,
+}
+
+export enum localStorageKeys {
+    user = "user"
 }
 
 export const a = "co"

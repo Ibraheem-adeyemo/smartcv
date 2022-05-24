@@ -16,6 +16,7 @@
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "chakra-ui-date-input": "^1.0.0",
     "chart.js": "^3.5.1",
     "cookie": "^0.4.2",
     "env-cmd": "^10.1.0",

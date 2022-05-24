@@ -4,7 +4,7 @@ import { SearchText } from "../stats";
 
 
 const AuditSearch:FC = () => {
-    const { handleSearchItem, searchText } = useContext(AuditContext)
+    const { handleSearchItem, searchText, handleDaterangeSearch, dateRange } = useContext(AuditContext)
     return <SearchText placeHolder="Search by username" searchText={searchText} handleSearchItem={handleSearchItem} />
 }
 

@@ -59,10 +59,12 @@ export interface apiUrlsv1Model {
     passportTokenUrl: string,
     pinChange: string,
     resendActivationMail: string,
+    requestReconnection: string,
     states: string,
     tenant: string,
     tenantAdmin: string,
-    user: string
+    user: string,
+    loginWithCredential: string
 }
 
 type performAction = <T extends Record<keyof T, T[keyof T]>>(x: T) => void

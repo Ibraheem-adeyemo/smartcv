@@ -1,3 +1,4 @@
+import LoginWithCredential from "../src/component/auth/Login-with-credential";
 import { Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import React, { } from "react"
@@ -16,8 +17,8 @@ const Login: NextPage = () => {
                 </Flex>
                 <Flex sx={loginContainerDivSX}
                 >
-                    <MissionStatement />
-                    <LoginForm />
+                    <MissionStatement />                    
+                    <LoginWithCredential />
                 </Flex>
             </Flex>
         </NonAuthenticated>)
