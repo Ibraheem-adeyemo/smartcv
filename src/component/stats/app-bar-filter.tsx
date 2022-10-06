@@ -22,18 +22,18 @@ const AppBarFilter: FC = () => {
             {showStartDate && <AppCalendar label="Start Date" selectedDate={startTime.split(" ")[0]} selectedTime={startTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={getSelectedStartDate} />}
             {showEndDate && <AppCalendar label="End Date" selectedDate={endTime.split(" ")[0]} selectedTime={endTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={getSelectedEndDate} />}
 
-            {/* <AppCalendar label="End Date" selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
+            {/* <AppCalendar label="End Date ==2" selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
                         // console.log({ date, time })
-                        setEndTime(`${date} ${time}`)
-                    }} /> 
-            {showCountInterval && <SelectedSearchFilter setEndTime={getSelectedEndTime} curEndDateTime={startTime} />}
-            {/* {showCountInterval && <SearchFilter
+                        // setEndTime(`${date} ${time}`)
+                    }} />  */}
+            {/* {showCountInterval && <SelectedSearchFilter setEndTime={getSelectedEndTime} curEndDateTime={startTime} />}
+            {showCountInterval && <SearchFilter
                 data={[
                     { label: "Hour", value: "hour", selected: countInterval == "hour" },
                     { label: "Minute", value: "minute", selected: countInterval == "minute" },
                 ]
-                } label="Interval" onSelected={onSelectedCountInterval} selected />}
-            {showDuration && <SearchFilter
+                } label="Interval" onSelected={onSelectedCountInterval} selected />} */}
+            {/* {showDuration && <SearchFilter
                 data={durationList}
                 label="Duration" onSelected={onSelectedDuration} selected />} */}
         </MotionFlex>

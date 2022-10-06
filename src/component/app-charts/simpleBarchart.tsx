@@ -6,7 +6,6 @@ import { apiUrlsv1 } from '../../constants';
 const SimpleBarchart = () => {
     const url = `${apiUrlsv1.realTimeTransactionReport}top-transaction`
     const { data: banksRealTimeData, mutate: _mutate, error } = useSWR(url === "" ? null : url)
-    // console.log(banksRealTimeData?.realtimeTransactionVolumeList)
     return (
         <div style={{ width: '100%', backgroundColor: 'white', borderRadius:10, padding: 10 }}>
       {/* <ResponsiveContainer > */}

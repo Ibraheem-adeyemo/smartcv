@@ -44,8 +44,6 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
   const toast = useToast()
 
   useEffect(() => {
-    // console.log("waiting")
-
     const getStats = () => {
 
       const boxSize = {

@@ -5,13 +5,14 @@ import { StatsA } from "../../models/stats-models";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
 import useSWR from "swr";
-import { apiUrlsv1, appRoles, keysForArrayComponents, StatsName, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, appRoles, cookieKeys, keysForArrayComponents, StatsName, UserManagementModalNames } from "../../constants";
 import { Paginate, ATMInService, ATMCount, ATMInSupervisor } from "../../models";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
 import { AuthContext, PaginatorProvider, StatsContext } from "../../providers";
 import { ChannelsMonitoringTableSetup } from "../channels-monitoring";
 import { GiComputing } from "react-icons/gi";
+import { getCookie } from "../../lib";
 
 interface ServiceStatusProps {
   title?: string,
@@ -19,6 +20,7 @@ interface ServiceStatusProps {
   height?: string | string[],
   showDetails?:boolean,
   page: string
+  dataDuration: string
 }
 
 interface  StatsProps extends StatsA {
@@ -31,6 +33,7 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
   const [selectedHeaderName, setSelectedHeaderName] = useState<string>();
   const { token, userDetail } = useContext(AuthContext)
   const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
+  const cokieToken = getCookie(cookieKeys.token)
   
   let atmInServiceurl = apiUrlsv1.atmInService
   let atmOutOfServiceurl = apiUrlsv1.atmOutOfService
@@ -51,8 +54,8 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
       atmInSupervisorUrl = `${apiUrlsv1.atmInSupervisor}/${selectedTenantCode}`
     }
   }
-  atmInServiceurl = token && userDetail ? atmInServiceurl : ""
-  atmOutOfServiceurl = token && userDetail ? atmOutOfServiceurl : ""
+  atmInServiceurl = token||cokieToken && userDetail ? atmInServiceurl : ""
+  atmOutOfServiceurl = token||cokieToken && userDetail ? atmOutOfServiceurl : ""
 
   const { data: totalATMInService, mutate: _totalATMInServiceMutate, error: totalATMInServiceError } = useSWR<Paginate<ATMInService>>(!atmInServiceurl ?  null : atmInServiceurl)
   const { data: totalATMOutOfService, mutate: _totalATMOutOfServiceMutate, error: totalATMOutOfServiceError } = useSWR<Paginate<ATMInService>>(!atmOutOfServiceurl? null : atmOutOfServiceurl)
@@ -60,7 +63,7 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
   const [stats, setStats] = useState<StatsProps[]>()
   const toast = useToast()
 
-  const { data: totalATMCount, mutate: _mutate, error: totalATMCountError } = useSWR<Paginate<ATMCount>>(token?atmCountUrl:null)
+  const { data: totalATMCount, mutate: _mutate, error: totalATMCountError } = useSWR<Paginate<ATMCount>>(token||cokieToken ? atmCountUrl:null)
 
   atmInSupervisorUrl = token && userDetail ? atmInSupervisorUrl : ""
   const { data: atmInSupervisor, error: atmInSupervisorError } = useSWR<Paginate<ATMInSupervisor>>(atmInSupervisorUrl ? atmInSupervisorUrl : null)
@@ -78,7 +81,8 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
         height: props.height,
         prefix: "",
         suffix: "",
-        commingSoon: false
+        commingSoon: false,
+        title: 'Total Count'
       }
 
       return [{
@@ -88,7 +92,7 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
         totalNumber: totalATMInService && totalATMInService.content ? sumBy(totalATMInService?.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
-        days: "Last 7 days",
+        days: props.dataDuration,
         url: apiUrlsv1.atmInService,
         commingSoon: false,
         page: ['dashboard', 'chanel-monitoring']
@@ -98,7 +102,7 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
         totalNumber: totalATMOutOfService && totalATMOutOfService.content ? sumBy(totalATMOutOfService?.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
-        days: "Last 7 days",
+        days: props.dataDuration, //"Last 7 days",
         url: apiUrlsv1.atmOutOfService,
         page: ['dashboard', 'chanel-monitoring']
       },{
@@ -107,7 +111,7 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
         totalNumber: atmCountValue,
         status: "green",
         percentage: "6.0%",
-        days: "Last 7 days",
+        days: props.dataDuration, //"Last 7 days",
         url: apiUrlsv1.atmCount,
         page: ['chanel-monitoring']
       },{
@@ -116,7 +120,7 @@ const ServiceStatus: FC<ServiceStatusProps> = ({ width = 'fit-content', showDeta
         totalNumber: atmInSupervisor && typeof atmInSupervisor.content !== "undefined" ? sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
-        days: "Last 7 days",
+        days: props.dataDuration, //"Last 7 days",
         url: apiUrlsv1.atmInSupervisor,
         page:['dashboard', 'chanel-monitoring']
       }]

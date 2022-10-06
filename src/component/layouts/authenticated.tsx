@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { FC, memo, useContext, useEffect } from "react";
-import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, AuthenticatedPage, menuNames, cookieKeys, keysForArrayComponents } from "../../constants";
+import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, ForwardQueue, AuthenticatedPage, menuNames, cookieKeys, keysForArrayComponents } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 import { Avatar, Button, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
@@ -27,8 +27,6 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
     const [firstLoad, setFirstLoad] = useState(0)
     const [openResend, setOpenResend] = useState(false)
     const handleOnIdle = (event: any) => {
-        // console.log('user is idle', event)
-        // console.log('last active', getLastActiveTime())
     }
     const isUserLoading = (typeof userDetail === "undefined" /*|| typeof user === "undefined"*/) && typeof error === "undefined"
     const isUserLoaded = typeof userDetail !== "undefined" /*&& typeof user !== "undefined"*/ && (typeof error !== "undefined" || authMode !== 'passport') 
@@ -55,7 +53,6 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
         onAction: handleOnAction,
         debounce: 500
     })
-    // console.log({ session })
 
     const MenuLists = memo(() => {
         
@@ -81,7 +78,12 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
             icon: InterchangeDisconnectionIcon,
             name: menuNames.interchangeDisconnection,
             link: AuthenticatedPage[3]
-        }, {
+        }, 
+        {
+            icon: ForwardQueue,
+            name: menuNames.forwardQueue,
+            link: AuthenticatedPage[6]
+        },{
             icon: userManagementIcon,
             name: menuNames.userManagement,
             link: AuthenticatedPage[4]

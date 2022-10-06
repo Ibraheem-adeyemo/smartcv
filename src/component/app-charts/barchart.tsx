@@ -35,7 +35,6 @@ const GroupedBarchart:FC<GroupedBarChartProps> = (props: GroupedBarChartProps) =
     }, [props.data, props.labels])
 
     useEffect(() => {
-        // console.log({ minMax })
         Chart.register(...registerables);
         const cv = canvasRef.current?.getContext('2d') as CanvasRenderingContext2D 
         const chart = new Chart(cv, {

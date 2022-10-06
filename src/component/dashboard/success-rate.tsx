@@ -10,13 +10,20 @@ import { AnimatedText } from "../framer";
 interface SuccessRateProps {
     width: string[] | string,
     height: string[] | string,
+    period: string
+    title: string
+    colorsArr: string[]
+    dataItmsArr: number[]
+    labelsArr: string[]
     showDetail?:boolean,
+    comingSoon?: boolean
 }
 interface InternaleSuccesRate extends StatsB {
     comingSoon?: boolean
     url?: string
 }
 const SuccessRate: FC<SuccessRateProps> = (props: SuccessRateProps) => {
+    const { title, period, colorsArr, dataItmsArr, labelsArr, comingSoon } = props
     const [stats, setStats] = useState<InternaleSuccesRate[]>()
     const getStats = useCallback(() => {
         const boxSize = {
@@ -28,17 +35,17 @@ const SuccessRate: FC<SuccessRateProps> = (props: SuccessRateProps) => {
         return [{
 
             ...boxSize,
-            data: [11, 89],
-            labels: ["failed", "success"],
-            backgroundColor: ["#096DD9", "#00B97F"],
+            data: dataItmsArr,
+            labels: labelsArr,
+            backgroundColor: colorsArr,
             chartTitle: "Success rate",
-            comingSoon:true
+            comingSoon
         }]
     }, [])
     useEffect(() => {
         setStats(getStats())
     }, [])
-    return (<AppCard topic={<><Text variant="card-header" size="card-header">What is our success rate?</Text><Text fontSize="12px" fontWeight={400}>Last 7 days</Text></>}>
+    return (<AppCard topic={<><Text variant="card-header" size="card-header">{title}</Text><Text fontSize="12px" fontWeight={400}>{period}</Text></>}>
         <>
             {stats && stats.map((x, i) => (
                 <Button position={x.comingSoon?"relative":"unset"} disabled={x.comingSoon} opacity={x.comingSoon? "0.4":"1"} key={`${keysForArrayComponents.successRateDonutChart}-${i}`}>

@@ -25,6 +25,7 @@ export const StatsContext = createContext<ReturnType<typeof useFilter>>({
     duration: 24,
     countInterval: "hour",
     durationList: [],
+    period: 0,
     changeSelectedTenantCode: (tenantCode:string) => {},
     handleSearchText:(tenantCode:string) => {},
     setFiltersToShow: (filtersToShow?:setFiltersToShowProps) => {},

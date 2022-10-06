@@ -2,7 +2,7 @@ import {Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, M
 import React, { FC, useContext, useEffect, useState } from "react"
 import { StatsA } from "../../models/stats-models";
 import useSWR from "swr";
-import { apiUrlsv1, appRoles, keysForArrayComponents, StatsName, UserManagementModalNames } from "../../constants";
+import { apiUrlsv1, appRoles, cookieKeys, keysForArrayComponents, StatsName, UserManagementModalNames } from "../../constants";
 import { useLoading } from "../../hooks";
 import _, { sumBy } from "lodash";
 import { ATMCount, Paginate } from "../../models";
@@ -11,11 +11,13 @@ import { AppCard } from "../app";
 import { SkeletonLoader } from "..";
 import { Stat } from "../stats";
 import { ChannelsMonitoringTableSetup } from '../channels-monitoring';
+import { getCookie } from '../../lib';
 
 interface TerminalsPerformanceProps {
   showDetails?:boolean,
   width?: string [] | string,
-  height?: string[] | string
+  height?: string[] | string,
+  dataDuration: string
 }
 
 const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = false ,...props}: TerminalsPerformanceProps) => {
@@ -33,8 +35,9 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
       url = `${apiUrlsv1.atmCount}/${selectedTenantCode}`
     }
   }
-  url = token && userDetail? url:""
-  const { data: totalATMCount, mutate: _mutate, error: totalATMCountError } = useSWR<Paginate<ATMCount>>(token?url:null)
+  const cokieToken = getCookie(cookieKeys.token)
+  url = token || cokieToken && userDetail? url:""
+  const { data: totalATMCount, mutate: _mutate, error: totalATMCountError } = useSWR<Paginate<ATMCount>>(token || cokieToken?url:null)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "Loading" })
   const [stats, setStats] = useState<StatsA[]>()
   const toast = useToast()
@@ -45,7 +48,8 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
         width: props.width,
         height: props.height,
         prefix: "",
-        suffix: ""
+        suffix: "",
+        title: 'Total Count'
       }
       
       //const atmCountValue = totalATMCount && totalATMCount.count ? 
@@ -58,7 +62,7 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
         totalNumber: atmCountValue,
         status: "green",
         percentage: "6.0%",
-        days: "Last 7 days",
+        days: props.dataDuration,
         url: apiUrlsv1.atmCount
       }, {
         ...boxSize,
@@ -66,7 +70,7 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
         totalNumber: atmLowCashValue,
         status: "green",
         percentage: "6.0%",
-        days: "Last 7 days",
+        days: props.dataDuration,
         url:""
       }]
     }
@@ -89,7 +93,7 @@ const TerminalsPerformance:FC<TerminalsPerformanceProps> = ({ showDetails = fals
   }, [totalATMCount, totalATMCountError])
   return (
     <>
-    <AppCard topic={<Text variant="card-header" size="card-header">Our Terminal performance...</Text>} >
+    <AppCard topic={<Text variant="card-header" size="card-header">Our Terminal performance</Text>} >
       {!loading.isLoading && stats ?
         <>{stats.map((x, i) => <Button  key={`${keysForArrayComponents.terminalsPerformance}-${i}`} cursor={showDetails? 'pointer': 'none'} onClick={()=> {
           if(showDetails){

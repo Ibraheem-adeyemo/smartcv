@@ -11,5 +11,6 @@ export interface DonutChartProps extends StatsB {
 
 export interface StatProps extends StatsA {
     width?: string[], 
-    height?: string[]
+    height?: string[],
+    title: string
   }

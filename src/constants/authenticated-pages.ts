@@ -8,4 +8,5 @@ export const AuthenticatedPage: Readonly<string[]> = typeof links !== "undefined
     links.interchangeDisconnection,
     links.userManagement,
     links.audit,
+    links.forwardQueue
 ]:[]
