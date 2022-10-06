@@ -13,6 +13,7 @@ export enum links {
     onboarding = "/onboarding",
     onboardingSuccessPage = "/onboarding/success-page",
     oauthCallback = "/oauth-callback",
+    forwardQueue = "/forward-queue",
     notFound = "/404",
     channelsMonitoring = "/channels-monitoring",
     transactionMonitoring = "/transaction-monitoring",
@@ -41,6 +42,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     createRole: `${API_BASE_URL}${CURRENT_API_VERSION}/roles/create`,
     createTenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/tenant-admin`,
     deactivateTenant: `${API_BASE_URL}${CURRENT_API_VERSION}/tenant/deactivate`,
+    forwardQueue: `${API_BASE_URL}${CURRENT_API_VERSION}/monitor/queue`,
     getUserDetail: `${API_BASE_URL}${CURRENT_API_VERSION}/user`,
     healthCheck: `${API_BASE_URL}${CURRENT_API_VERSION}/actuator/health`,
     interChange: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange/find`,
@@ -56,6 +58,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     states: `${API_BASE_URL}${CURRENT_API_VERSION}/location/states`,
     tenant: `${API_BASE_URL}${CURRENT_API_VERSION}/tenant`,
     tenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/admins`,
+    transactionDetails: `${API_BASE_URL}${CURRENT_API_VERSION}/monitor/transaction-details`,
     realTimeTransactionReport:`${API_BASE_URL}${CURRENT_API_VERSION}/transaction/real-time/`,
     user: `${API_BASE_URL}${CURRENT_API_VERSION}/user/`,
     loginWithCredential: `${API_BASE_URL}${CURRENT_API_VERSION}/user/login`

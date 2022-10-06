@@ -1,7 +1,10 @@
 import { Box, Flex } from "@chakra-ui/react"
 import dynamic from "next/dynamic"
 import { FC, useContext, useEffect, useMemo } from "react"
-import { appRoles, filterDates } from "../../constants"
+import useSWR from "swr"
+import { apiUrlsv1, appRoles, cookieKeys, filterDates } from "../../constants"
+import { fetchg, getCookie } from "../../lib"
+import { TransactionBreakdownType } from "../../models"
 import { AuthContext, StatsContext } from "../../providers"
 import { dashboardContainerSX } from "../../sx"
 import { SimpleBarchart } from "../app-charts"
@@ -18,11 +21,23 @@ const UsageMetric = dynamic(() => import('./usage-metric'), { ssr: false })
 // const SimpleBarchart = dynamic(() => import('../app-charts/simpleBarchart'), { ssr: false })
 const Dashboard: FC = () => {
   const { userDetail } = useContext(AuthContext)
-  const { selectedTenantCode, setFiltersToShow } = useContext(StatsContext)
+  const { selectedTenantCode, setFiltersToShow, period, startTime, countInterval, duration, endTime } = useContext(StatsContext)
+
+  const cokieToken = getCookie(cookieKeys.token)
+  const headerArray = [cokieToken, startTime, countInterval, duration, endTime] 
+
+  let topFailureApi = `${apiUrlsv1.realTimeTransactionReport}failure-analysis`
+
   let isTenantLoaded = false
   if (userDetail && (userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
     isTenantLoaded = true
+    topFailureApi = `${topFailureApi}/${userDetail.tenant.code}`
   }
+  const { data: topFailureResons, error: cashWithdrawerError } = useSWR<TransactionBreakdownType>(!topFailureApi ?  null : [topFailureApi+'/16', ...headerArray ], fetchg)
+  
+  console.log(topFailureResons)
+  const dataDuration = period > 1 ? `Last ${period} days`: 'Last 24 Hours'
+
   useEffect(() => {
     setFiltersToShow({ showTenantFilter: true, showCountIntervalFilter: true, showDurationFilter: true, showEndDateFilter: true, showStartDateFilter: true })
   }, [])
@@ -31,17 +46,25 @@ const Dashboard: FC = () => {
     <Flex sx={dashboardContainerSX} >
       <Flex>
         <TerminalsPerformance showDetails
+            dataDuration={dataDuration}
           width={["224px", "224px", "224px", "224px", "300px", "400px"]}
           height={["200px", "200px", "200px", "200px", "200px", "200px"]} />
       </Flex>
       <Flex>
         <SuccessRate
+            title="What is our success rate?"
+            period={dataDuration}
+            colorsArr={["#096DD9", "#00B97F"]}
+            dataItmsArr={[11, 89]}
+            labelsArr={["failed", "success"]}
+            comingSoon={true}
           width={["261px", "261px", "261px", "261px", "350px", "390px"]}
           height={["159px", "159px", "159px", "159px", "159px", "159px"]} />
       </Flex>
       <Flex >
         <ServiceStatus
           showDetails
+          dataDuration={dataDuration}
           width={["200px", "200px", "200px", "220px", "220px", "250px"]}
           height={["224px", "224px", "224px", "224px", "229px", "229px"]}
           page='dashboard' />
@@ -54,11 +77,13 @@ const Dashboard: FC = () => {
       </Flex> */}
       <Flex>
         <TransactionMetric
+            dataDuration={dataDuration}
           width={["224px", "224px", "224px", "224px", "229px", "229px"]}
           height={["200px", "200px", "200px", "200px", "200px", "200px"]} />
       </Flex>
       <Flex>
         <UsageMetric
+        dataDuration={dataDuration}
           width={["224px", "224px", "224px", "224px", "229px", "229px"]}
           height={["159px", "159px", "159px", "159px", "159px", "189px"]} />
       </Flex>
@@ -68,13 +93,23 @@ const Dashboard: FC = () => {
           height={["200px", "200px", "200px", "200px", "200px", "200px"]} />
       </Flex>
 
-      <Flex flexGrow={4} width="70%">
-            <TopPerforminBanks />
-          </Flex>
-      
-        {/* <Flex flexGrow={4} width="100%">
-            <SimpleBarchart />
-        </Flex> */}
+      <Flex>
+            <TopPerforminBanks 
+            // dataDuration={dataDuration}
+             />
+        </Flex>
+          
+        <Flex>
+        <SuccessRate
+            title="ATM Failure reasons analysis"
+            period={dataDuration}
+            colorsArr={["#1A4983", "#0275D8"]}
+            dataItmsArr={[11, 89]}
+            labelsArr={["Card Jam", "Cash Jam"]}
+            comingSoon={false}
+            width={["261px", "261px", "261px", "261px", "350px", "390px"]}
+            height={["159px", "159px", "159px", "159px", "159px", "159px"]} />
+        </Flex>
     </Flex>
   )
 }

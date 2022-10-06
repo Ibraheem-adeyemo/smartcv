@@ -29,6 +29,7 @@ export default function useFilter(user?: UserModel) {
     const completeEndTime = `${getCurrentTime()}`
     const [startTime, setStartTime] = useState(`${thisYear}-${thisMonth}-${yesterdayDate} ${getCurrentTime()}`)
     const [endTime, setEndTime] = useState(`${completeEndDate} ${completeEndTime}`)
+    const [period, SetPeriod] = useState(1)
     const [duration, setDuration] = useState(selectedDuration)
     const [countInterval, setCountInterval] = useState(selectedInterval)
     
@@ -55,20 +56,16 @@ export default function useFilter(user?: UserModel) {
         setShowDuration(filtersToshow.showDurationFilter as boolean)
     }, [])
     const getSelectedStartDate = useCallback(({ date, time }: {date: string, time:string}) => {
-        // console.log({ date, time })
         setStartTime(`${date} ${time}`)
     }, [])
     const getSelectedEndDate = useCallback(({date, time}:{date:string, time:string}) => {
-        // console.log({ date, time })
         setEndTime(`${date} ${time}`)
     }, [])
 
     const onSelectedCountInterval = useCallback((e: DropdownContent) => {
-        // console.log({ e })
         setCountInterval(e.value)
     }, [])
     const onSelectedDuration = useCallback((e: DropdownContent) => {
-        // console.log({ e })
         setDuration(e.value)
     }, [])
 
@@ -77,6 +74,10 @@ export default function useFilter(user?: UserModel) {
         setEndTime(`${completeEndDate} ${getCurrentTime(tim)}`)
     }, [])
 
+    useEffect(()=> {
+        const dayDifference = new Date(endTime).valueOf() - new Date(startTime).valueOf()
+        SetPeriod(dayDifference/1000/60/60/24)
+    })
     useEffect(() => {
         // debugger
         if (countInterval) {
@@ -114,6 +115,7 @@ export default function useFilter(user?: UserModel) {
         duration,
         countInterval,
         durationList,
+        period,
         changeSelectedTenantCode,
         handleSearchText,
         setFiltersToShow,

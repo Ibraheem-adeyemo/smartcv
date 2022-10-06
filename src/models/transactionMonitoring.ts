@@ -25,6 +25,7 @@ export type formatedRealtimeObject = {
     transactionCountResponseList:TransactionPropObject[]
 }
 type realtimeTransactionCount = {
+    interchangeName: string
     realtimeTransactionCountResponseList: RealTimeObject[],
 }
 
@@ -41,6 +42,11 @@ export type TransactionPropObject = {
     amount: number,
     pan: null | string|number,
     stan: null | string|number
+}
+export type ForwardQueuePropObject = {
+    cummulativeNoOfTransactions: number,
+    bank: string,
+    time:string|Date
 }
 export type TransactionPropType = {
     customerInducedFailureCount:number

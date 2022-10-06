@@ -6,15 +6,16 @@ import { Paginate, StatsA } from "../../models"
 import { AppCard } from "../app"
 import { AuthContext, StatsContext } from "../../providers"
 import { useLoading } from "../../hooks"
-import { apiUrlsv1, appRoles, keysForArrayComponents, StatsName, upcomingFeature } from "../../constants"
+import { apiUrlsv1, appRoles, cookieKeys, keysForArrayComponents, StatsName, upcomingFeature } from "../../constants"
 import useSWR from "swr"
 import { sumBy } from "lodash"
+import { getCookie } from "../../lib"
 
 interface TransactionMetricProps {
     width?: string | string [],
     height?: string | string [],
     showDetails?:boolean
-
+    dataDuration: string
 }
 
 interface StatsProps extends StatsA {
@@ -27,6 +28,7 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
     const [loading, setLoading] = useLoading({isLoading:true, text:""})
     const [stats, setStats] = useState<StatsProps[]>()
     const {token, userDetail} = useContext(AuthContext)
+    const cokieToken = getCookie(cookieKeys.token)
 
     let url = `${apiUrlsv1.realTimeTransactionReport}top-transaction`
     if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
@@ -38,13 +40,11 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
         }
       }
     
-    url = token && userDetail? url:""
-    const { data: transactionData, mutate: _mutate, error: positionError } = useSWR<Paginate<any>>(token?url:null)
+    url = token||cokieToken && userDetail? url:""
+    const { data: transactionData, mutate: _mutate, error: positionError } = useSWR<Paginate<any>>(token||cokieToken?url:null)
 // realtimeTransactionVolumeList
 
     useEffect(() => {
-        // console.log("waiting")
-
         const getStats = (): StatsProps[] => {
             const boxSize = {
                 width: props.width,
@@ -52,6 +52,7 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
                 prefix:"",
                 suffix:"",
                 comingSoon: false,
+                title: 'Total Amount'
             }
             return [{
                 ...boxSize,
@@ -59,7 +60,7 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
                 totalNumber: transactionData && transactionData?.realtimeTransactionVolumeList ? sumBy(transactionData?.realtimeTransactionVolumeList, (transaction) => transaction.value): 0.00,
                 status: "green",
                 percentage: "6.0%",
-                days: "Last 7 days",
+                days: props.dataDuration,
                 prefix:"N"
 
             }, {
@@ -68,15 +69,17 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
                 totalNumber: transactionData && transactionData?.realtimeTransactionVolumeList ? sumBy(transactionData?.realtimeTransactionVolumeList, (transaction) => transaction.count): 0,
                 status: "green",
                 percentage: "6.0%",
-                days: "Last 7 days",
+                days: props.dataDuration,
+                title: 'Total Count'
             }, {
                 ...boxSize,
                 headerName: "Your Position",
                 totalNumber: 0,
                 status: "green",
                 percentage: "6.0%",
-                days: "Last 7 days",
-                comingSoon: true
+                days: props.dataDuration,
+                comingSoon: true,
+                title: ''
             }]
         }
         setStats(getStats())
@@ -88,6 +91,7 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
         }*/
         setLoading({ isLoading: false, text: "" })
     }, [transactionData, institutions, institutionsError])
+
     return (
         <AppCard topic={<Text variant="card-header" size="card-header">What Are our Transaction Metric</Text>} >
             {!loading.isLoading ?

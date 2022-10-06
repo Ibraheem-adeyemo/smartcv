@@ -1,7 +1,7 @@
 import Barchart from './barchart'
 import Canvas from './canvas'
 import DonutChart from './donutchart'
-import LineChart from './linechart';
+import {GrpLineChart, IssuingLineChart, IssuingBarChart, IssuingBarChartHorizontal} from './linechart';
 import SimpleBarchart from './simpleBarchart';
 
-export { Barchart, Canvas, DonutChart, LineChart, SimpleBarchart }
+export { Barchart, Canvas, DonutChart, GrpLineChart, SimpleBarchart, IssuingLineChart, IssuingBarChart, IssuingBarChartHorizontal }

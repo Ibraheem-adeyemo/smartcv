@@ -12,7 +12,8 @@ import { fetchJson } from "../../lib"
 
 interface usageMetricsProps {
     width?: string | string [],
-    height?: string | string []
+    height?: string | string [],
+    dataDuration: string
 }
 
 const UsageMetric: React.FC<usageMetricsProps> = (props: usageMetricsProps) => {
@@ -66,23 +67,22 @@ const UsageMetric: React.FC<usageMetricsProps> = (props: usageMetricsProps) => {
         })
     }
     useEffect(() => {
-        // console.log("waiting")
 
         const getStats = () => {
             const boxSize = {
                 width: props.width,
                 height: props.height,
                 prefix: "",
-                suffix: ""
+                suffix: "",
+                title: "Total Amount"
             }
-            // console.log("done waiting")
             return [{
                 ...boxSize,
                 headerName: "Balance Enquiry",
                 totalNumber: balanceEnquiryCount && balanceEnquiryCount.totalElements ? balanceEnquiryCount.totalElements : 0,
                 status: "green",
                 percentage: "6.0%",
-                days: "Last 7 days",
+                days: props.dataDuration,
 
             }, {
                 ...boxSize,
@@ -90,7 +90,7 @@ const UsageMetric: React.FC<usageMetricsProps> = (props: usageMetricsProps) => {
                 totalNumber: pinChangeCount && pinChangeCount.totalElements ? pinChangeCount.totalElements : 0,
                 status: "green",
                 percentage: "6.0%",
-                days: "Last 7 days",
+                days: props.dataDuration,
             }]
         }
         setStats(getStats())

@@ -48,6 +48,7 @@ export interface apiUrlsv1Model {
     createRole: string,
     createTenantAdmin: string,
     deactivateTenant: string,
+    forwardQueue: string,
     getUserDetail: string,
     healthCheck: string,
     interChange: string,
@@ -63,6 +64,7 @@ export interface apiUrlsv1Model {
     states: string,
     tenant: string,
     tenantAdmin: string,
+    transactionDetails: string,
     realTimeTransactionReport:string,
     user: string,
     loginWithCredential: string

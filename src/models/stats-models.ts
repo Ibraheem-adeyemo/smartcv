@@ -7,8 +7,14 @@ export interface StatsA {
     days: string;
     prefix:string,
     suffix:string,
-    url?:string
+    url?:string,
+    title: string
 }
+
+
+export interface StatsProps extends StatsA {
+    comingSoon?: boolean
+  }
 
 export interface DropdownSearchFilterProps {
     data: DropdownContent[],

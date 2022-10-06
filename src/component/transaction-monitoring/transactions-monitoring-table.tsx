@@ -8,13 +8,12 @@ import { appRoles, appTableElements } from "../../constants";
 import { useToast } from "@chakra-ui/react";
 
 
-export const TransactionsMonitoringTableSetup: FC<TransactionMonitoringTableProps> = (props: TransactionMonitoringTableProps) => {
+export const TransactionsMonitoringTableSetup: FC<{records: TransactionPropObject[]|[]}> = (props: {records: TransactionPropObject[]|[]}) => {
     // console.log({pageNumber})
     const {token, userDetail} = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { selectedTenantCode } = useContext(StatsContext)
     const { tabs } = useContext(channelsMonitoringContext);
-    // console.log({tabs})
     // let url = props.url? props.url : (tabs.findIndex((x) => x.isSelected) > -1 ? tabs.find((x) => x.isSelected)?.url : "") as string
     // if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
     //     if(userDetail.role.name !== appRoles.superAdmin){
@@ -25,7 +24,7 @@ export const TransactionsMonitoringTableSetup: FC<TransactionMonitoringTableProp
     // }
     // url += `details/`
     // url = token && userDetail?`${url}?page=${(pageNumber - 1)}&size=${countPerPage}`: "";
-    const transactionMonitoringData = props
+    const transactionMonitoringData = props.records
     const toast = useToast()
     const data = useMemo(() => {
         return {
@@ -80,44 +79,15 @@ export const TransactionsMonitoringTableSetup: FC<TransactionMonitoringTableProp
     // }, [atmCountDetail])
 
 
-    return (<AppTable<TransactionPropObject> columns={data?.columns} rows={data.data.records as TransactionPropObject[]} showNumbering />)
+    return (<AppTable<TransactionPropObject> columns={data?.columns} rows={data.data as TransactionPropObject[]|[]} showNumbering />)
 
 }
 
 const TransactionsMonitoringTable = ({transactiondata}:{transactiondata:TransactionPropObject[]}) => {
-    console.log(transactiondata, 'cooooonsssssss=====ole')
-    const transactionMonitoringData = [
-        {
-            date: new Date().getDate().toLocaleString(),
-            MSSType: '02.00',
-            transactionType: '01',
-            pan: 'Lagos',
-            amount: 3000.00,
-            refCode: 'aproved',
-            stan: 'bills'
-        },
-        {
-            date: new Date().getDate().toLocaleString(),
-            MSSType: '02.00',
-            transactionType: '01',
-            pan: 'Lagos',
-            amount: 5000.00,
-            refCode: 'system failure',
-            stan: 'data'
-        },
-        {
-            date: new Date().getDate().toLocaleString(),
-            MSSType: '02.00',
-            transactionType: '01',
-            pan: 'Lagos',
-            amount: 6000.00,
-            refCode: 'user failure',
-            stan: 'bills'
-        },
-    ]
+    
     return (
         <PaginatorProvider>
-            <TransactionsMonitoringTableSetup records={transactionMonitoringData} />
+            <TransactionsMonitoringTableSetup records={transactiondata} />
         </PaginatorProvider>
     )
 }

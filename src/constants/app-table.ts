@@ -2,5 +2,6 @@ export enum appTableElements {
     image="image",
     status="status",
     dateTime="datetime",
-    date="date"
+    date="date",
+    function="function"
 }

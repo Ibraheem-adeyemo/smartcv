@@ -76,6 +76,7 @@ export function appDate(dateStr: string, withTime = true) {
         if (withTime) {
             fullDate += ` | ${hour === 0 ? 12 : hour}:${minuteString.length === 2 ? minute : 0 + minuteString}${d}`
         }
+
         return fullDate
     }
     return fullDate
@@ -87,7 +88,6 @@ export async function checkIfOnline():Promise<boolean> {
         if(authMode === localStorageKeys.credential) {
             return true
         } else {
-            //console.log(authMode, localStorageKeys.credential, '=====2')
             const online = await fetch(apiUrlsv1.healthCheck);
             return online.status >= 200 && online.status < 300; // either true or false        
         }
@@ -165,7 +165,12 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
 
 }
 
-const getTimeFromDate = (dat:string):number => {
+const getTimeFromDate = (dat:string):string => {
+    const dateFormat = new Date(dat)
+    return `${dateFormat.getHours()}:${dateFormat.getMinutes()}`
+}
+
+const getMinuteFromDate = (dat:string):number => {
     const dateFormat = new Date(dat)
     return dateFormat.getMinutes()
 }
@@ -175,9 +180,9 @@ export function formatRealTimeData(data:RealTimeObject[]):formatedRealtimeObject
     transactionCountResponseList:TransactionPropObject[] = []
     // const formatedData = []
     data.map(dataObj => {
-        return {...dataObj, startDate:getTimeFromDate(dataObj.endDate)}
+        return {...dataObj, minute:getMinuteFromDate(dataObj.endDate), startDate: getTimeFromDate(dataObj.endDate) }
     }).sort((a,b) => {
-        return a.startDate - b.startDate
+        return new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
     }).forEach(item => {
         responseDTOList.push(item)
         item.transactionDetailsResponseDTOList.forEach(itm => {
@@ -185,4 +190,18 @@ export function formatRealTimeData(data:RealTimeObject[]):formatedRealtimeObject
         })
     })
     return {responseDTOList, transactionCountResponseList}
+}
+
+export async function fetchg<T>(url: string, token:string, startTime:string, countInterval: number, duration:number, endTime:string ) {
+    const result = await fetchJson<T>(url, {
+        method: "GET",
+        headers: {
+            Authorization: `bearer ${token}`,
+            "TRAN-MON-START-DATETIME": startTime.split(".").length > 1 ? startTime.split(".")[0] +"."+ startTime.split(".")[1]  : startTime + '.000',
+            "TRAN-MON-INTERVAL": countInterval,
+            "TRAN-MON-DURATION": duration,
+            "TRAN-MON-END-DATETIME": endTime.split(".").length > 1 ? endTime.split(".")[0] +"."+ endTime.split(".")[1]  : endTime + '.000'
+        }
+    })
+    return result
 }

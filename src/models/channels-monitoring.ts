@@ -8,6 +8,14 @@ export interface ATM {
     tenantName: string,
     count: number
 }
+
+export interface TransactionBreakdownType {
+    amount:number
+    tenantCode:string
+    tranId:number
+    volume:number
+}
+
 export interface ATMStats extends ATM {
 
 }

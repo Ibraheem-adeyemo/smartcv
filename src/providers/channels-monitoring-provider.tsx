@@ -29,10 +29,6 @@ const ChannelsMonitoringProvider:FC<ComponentWithChildren> = (props: ComponentWi
         }
     }
 
-    // useEffect(() => {
-         // console.log({tabs})
-    // }, [tabs])
-
     return <channelsMonitoringContext.Provider value={{tabs, modifyTab}}>
         {props.children}
     </channelsMonitoringContext.Provider>
