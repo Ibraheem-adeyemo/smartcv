@@ -1,9 +1,9 @@
 
 export interface StatsA {
     headerName: string;
-    totalNumber: number;
-    status: string;
-    percentage: string;
+    totalNumber?: number;
+    status?: string;
+    percentage?: string;
     days: string;
     prefix:string,
     suffix:string,

@@ -1,5 +1,5 @@
 import { Chart, registerables } from "chart.js";
-import React, { FC, useEffect, useMemo, useRef, useState } from "react";
+import React, { FC, useEffect, useMemo, useRef,  } from "react";
 import { GroupedBarChartProps } from "../../models";
 import { Canvas } from ".";
 import { shortenNumber } from "../../lib";
