@@ -58,6 +58,7 @@ ARG NEXT_PUBLIC_ALLOWED_APPS
 ENV NEXT_PUBLIC_ALLOWED_APPS ${NEXT_PUBLIC_ALLOWED_APPS}
 
 # Build the project and copy the files
+RUN npm install --legacy-peer-deps
 RUN npm run build
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
