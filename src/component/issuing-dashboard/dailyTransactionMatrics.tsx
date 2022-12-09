@@ -54,7 +54,7 @@ export const DailyTransactionMatrics = () => {
     countInterval,
     period,
   } = useContext(StatsContext);
-  const { token, userDetail } = useContext(AuthContext);
+  const { userDetail } = useContext(AuthContext);
   const superAdminUrl = `${apiUrlsv1.issuingVolumeAdmin}?page=${page}&size=20&dateRange=DAILY`;
   const isSuperAdmin =
     userDetail?.role.name === appRoles.superAdmin &&

@@ -70,6 +70,8 @@ export interface apiUrlsv1Model {
     loginWithCredential: string,
     issuingVolumeAdmin: string,
     issuingVolume: string,
+    issuingVolumeStatus: string;
+    issuingVolumeStatusAdmin: string;
 }
 
 type performAction = <T extends Record<keyof T, T[keyof T]>>(x: T) => void

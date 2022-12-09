@@ -63,5 +63,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     user: `${API_BASE_URL}${CURRENT_API_VERSION}/user/`,
     loginWithCredential: `${API_BASE_URL}${CURRENT_API_VERSION}/user/login`,
     issuingVolumeAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/volume`,
-    issuingVolume: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/tenant/volume`
+    issuingVolume: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/tenant/volume`,
+    issuingVolumeStatus: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/tenant/volume/status`,
+    issuingVolumeStatusAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/volume/status`
 }
