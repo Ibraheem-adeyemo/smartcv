@@ -10,7 +10,7 @@ ARG https_proxy
 
 ENV http_proxy ${http_proxy}
 ENV https_proxy ${https_proxy}
-
+RUN npm config set legacy-peer-deps true
 COPY package.json package-lock.json ./ 
 RUN npm --proxy=${http_proxy} install --frozen-lockfile
 
@@ -58,7 +58,6 @@ ARG NEXT_PUBLIC_ALLOWED_APPS
 ENV NEXT_PUBLIC_ALLOWED_APPS ${NEXT_PUBLIC_ALLOWED_APPS}
 
 # Build the project and copy the files
-RUN npm config set legacy-peer-deps true
 RUN npm run build
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
