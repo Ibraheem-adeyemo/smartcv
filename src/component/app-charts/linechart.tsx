@@ -12,7 +12,7 @@ import {
   Bar,
   Cell,
 } from "recharts";
-import { Button, useDisclosure, Text } from "@chakra-ui/react";
+import { Button, useDisclosure, Text, Box } from "@chakra-ui/react";
 import BasicModal from "../transaction-monitoring/transactionMonitoringModal";
 // import TransactionMonitoringTable from '../tables/transactionMonitoringTable';
 import TransactionMonitoringTable from "../transaction-monitoring/transactions-monitoring-table";
@@ -179,31 +179,37 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
   const { lines, container, width, height, dataKey, stroke, data } = props;
 
   return (
-    //   <ResponsiveContainer width='100%' height='100%'>
-    <LineChart width={width} height={height} data={data}>
-      {/* <CartesianGrid strokeDasharray={stroke.strokeDasharray} /> */}
-      <XAxis
-        dataKey={dataKey}
-        padding={{ left: 30, right: 30 }}
-        tickLine={false}
-      />
-      <YAxis type="number" domain={[0, 10000]} tickLine={false} unit="m" />
-      <Tooltip />
-      <Legend />
-      {lines.map((line, i) => {
-        return (
-          <Line
-            key={i}
-            type={line.type}
-            dataKey={line.dataKey}
-            stroke={line.stroke}
-            strokeWidth={2}
-            {...line?.activeDot}
-          />
-        );
-      })}
-    </LineChart>
-    //   </ResponsiveContainer>
+    <ResponsiveContainer width="100%" height={500}>
+      <LineChart width={width} height={height} data={data}>
+        {/* <CartesianGrid strokeDasharray={stroke.strokeDasharray} /> */}
+        <XAxis
+          dataKey={dataKey}
+          padding={{ left: 30, right: 30 }}
+          tickLine={false}
+        />
+        <YAxis
+          type="number"
+          domain={[0, 100]}
+          tickLine={false}
+          unit="M"
+        />
+        <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
+        <Legend iconType="circle" />
+        {lines.map((line, i) => {
+          return (
+            <Line
+              dot={false}
+              key={i}
+              type={line.type}
+              dataKey={line.dataKey}
+              stroke={line.stroke}
+              strokeWidth={2}
+              activeDot={line.activeDot}
+            />
+          );
+        })}
+      </LineChart>
+    </ResponsiveContainer>
   );
 };
 

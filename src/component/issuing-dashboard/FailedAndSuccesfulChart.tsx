@@ -1,5 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Box, Flex, Heading, Text, useToast } from "@chakra-ui/react";
+import {
+  issuingFailedSuccessBoxSx,
+  issuingFailedSuccessContainerSx,
+} from "../../sx";
 import { IssuingAtmTransactionVolumeCount } from ".";
 import useSWR from "swr";
 import { AuthContext, StatsContext } from "../../providers";
@@ -67,67 +71,63 @@ export const FailedAndSuccesfulChart = () => {
     return value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   return (
-    <Box
-      width={600}
-      height="fit-content"
-      bg="white"
-      flexDir={"column"}
-      borderRadius={10}
-      shadow="xl"
-      p={50}
-    >
+    <Box sx={issuingFailedSuccessContainerSx}>
       <Flex mb={50}>
         <Heading as="h5" size="md">
           Total daily transaction
         </Heading>
       </Flex>
       <Flex mb={100} justifyContent="space-between" color="gray.600">
-        <Box>
-          <Heading as="h4" size="xs">
-            Failed transaction
-          </Heading>
-          {isSuperAdmin ? (
-            <>
-              <Heading as="h3" size="md" color={"#E05B50"}>
-                {`N${refactoredValue(totalFailedVal)}.00M`}
-              </Heading>
-              <small>{`Total volume:${refactoredValue(
-                totalFailedCount
-              )}`}</small>
-            </>
-          ) : (
-            <>
-              <Heading as="h3" size="md" color={"#E05B50"}>
-                {`N${refactoredValue(data?.response.failedValue)}.00M`}
-              </Heading>
-              <small>{`Total volume:${refactoredValue(
-                data?.response.failedCount
-              )}`}</small>
-            </>
-          )}
-        </Box>
-        <Box>
-          <Heading as="h4" size="xs">
-            Successful transaction
-          </Heading>
-          {isSuperAdmin ? (
-            <>
-              <Heading as="h3" size="md" color="#5DCC96">
-                {`N${refactoredValue(totalSuccVal)}.00M`}
-              </Heading>
-              <Text>{`Total volume:${refactoredValue(totalSuccCount)}`}</Text>
-            </>
-          ) : (
-            <>
-              <Heading as="h3" size="md" color="#5DCC96">
-                {`N${refactoredValue(data?.response.failedValue)}.00M`}
-              </Heading>
-              <Text>{`Total volume:${refactoredValue(
-                data?.response.successCount
-              )}`}</Text>
-            </>
-          )}
-        </Box>
+        <Flex sx={issuingFailedSuccessBoxSx}>
+          <Box m="auto">
+            <Heading as="h4" size="xs">
+              Failed transaction
+            </Heading>
+            {isSuperAdmin ? (
+              <>
+                <Heading as="h3" size="md" color={"#E05B50"}>
+                  {`N${refactoredValue(totalFailedVal)}.00M`}
+                </Heading>
+                <small>{`Total volume:${refactoredValue(
+                  totalFailedCount
+                )}`}</small>
+              </>
+            ) : (
+              <>
+                <Heading as="h3" size="md" color={"#E05B50"}>
+                  {`N${refactoredValue(data?.response.failedValue)}.00M`}
+                </Heading>
+                <small>{`Total volume:${refactoredValue(
+                  data?.response.failedCount
+                )}`}</small>
+              </>
+            )}
+          </Box>
+        </Flex>
+        <Flex sx={issuingFailedSuccessBoxSx}>
+          <Box m="auto">
+            <Heading as="h4" size="xs">
+              Successful transaction
+            </Heading>
+            {isSuperAdmin ? (
+              <>
+                <Heading as="h3" size="md" color="#5DCC96">
+                  {`N${refactoredValue(totalSuccVal)}.00M`}
+                </Heading>
+                <Text>{`Total volume:${refactoredValue(totalSuccCount)}`}</Text>
+              </>
+            ) : (
+              <>
+                <Heading as="h3" size="md" color="#5DCC96">
+                  {`N${refactoredValue(data?.response.failedValue)}.00M`}
+                </Heading>
+                <Text>{`Total volume:${refactoredValue(
+                  data?.response.successCount
+                )}`}</Text>
+              </>
+            )}
+          </Box>
+        </Flex>
       </Flex>
       <IssuingAtmTransactionVolumeCount />
     </Box>

@@ -8,45 +8,45 @@ import {
 
 const data = [
   {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
+    name: "1",
+    failed: 4000,
+    Successful: 2400,
     amt: 2400,
   },
   {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
+    name: "2",
+    failed: 3000,
+    Successful: 1398,
     amt: 2210,
   },
   {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
+    name: "3",
+    failed: 2000,
+    Successful: 9800,
     amt: 2290,
   },
   {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
+    name: "4",
+    failed: 2780,
+    Successful: 3908,
     amt: 2000,
   },
   {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
+    name: "5",
+    failed: 1890,
+    Successful: 4800,
     amt: 2181,
   },
   {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
+    name: "6",
+    failed: 2390,
+    Successful: 3800,
     amt: 2500,
   },
   {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
+    name: "7",
+    failed: 3490,
+    Successful: 4300,
     amt: 0,
   },
 ];
@@ -103,14 +103,15 @@ export const IssuingAtmTransactionVolumeCount = () => {
   const lines = [
     {
       type: "monotone",
-      dataKey: "pv",
+      dataKey: "Successful",
       stroke: "#C6F8DF",
       activeDot: { r: 8 },
     },
     {
       type: "monotone",
-      dataKey: "uv",
+      dataKey: "failed",
       stroke: "#DC4437",
+      activeDot: { r: 8 },
     },
   ];
   return (
@@ -138,7 +139,13 @@ export const TransactionTypeBarChart = () => {
 
 export const BarChartHorizontal = () => {
   return (
-    <Box bg="white" width="40%" ml={10} pl={5}>
+    <Box
+      bg="white"
+      width="50%"
+      pl={5}
+      borderRadius="8px"
+      boxShadow="md"
+    >
       <IssuingBarChartHorizontal data={data2} />
     </Box>
   );
