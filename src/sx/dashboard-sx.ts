@@ -15,8 +15,14 @@ export const issuingFailedSuccessContainerSx: CSSObject = {
 export const issuingFailedSuccessBoxSx: CSSObject = {
   width: "207px",
   height: "141px",
-  flexDirection:"column",
-  justifyContent:"center",
+  flexDirection: "column",
+  justifyContent: "center",
   background: "brand.grey.50",
   borderRadius: "4px",
+};
+export const issuingBreakdownTranBoxSx: CSSObject = {
+  alignItems: "flex-start",
+  gap: "20px",
+  p: 0,
+  width: "100%",
 };

@@ -1,11 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
-import { dashboardContainerSX, } from "../../sx";
-import {
-  DailyTransactionMatrics,
-  FailedAndSuccesfulChart,
-  IssuingAtmTransactionVolumeCount,
-} from ".";
+import { dashboardContainerSX, issuingBreakdownTranBoxSx } from "../../sx";
+import { DailyTransactionMatrics, FailedAndSuccesfulChart } from ".";
 import {
   BarChartHorizontal,
   TransactionTypeBarChart,

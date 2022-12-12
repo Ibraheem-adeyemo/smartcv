@@ -33,7 +33,7 @@ const data = [
   },
   {
     name: "5",
-    failed: 1890,
+    failed: 4890,
     Successful: 4800,
     amt: 2181,
   },
@@ -47,6 +47,24 @@ const data = [
     name: "7",
     failed: 3490,
     Successful: 4300,
+    amt: 0,
+  },
+  {
+    name: "8",
+    failed: 3590,
+    Successful: 3300,
+    amt: 0,
+  },
+  {
+    name: "9",
+    failed: 2490,
+    Successful: 1300,
+    amt: 0,
+  },
+  {
+    name: "10",
+    failed: 1290,
+    Successful: 2340,
     amt: 0,
   },
 ];
@@ -139,13 +157,7 @@ export const TransactionTypeBarChart = () => {
 
 export const BarChartHorizontal = () => {
   return (
-    <Box
-      bg="white"
-      width="50%"
-      pl={5}
-      borderRadius="8px"
-      boxShadow="md"
-    >
+    <Box bg="white" width="50%" pl={5} borderRadius="8px" boxShadow="md">
       <IssuingBarChartHorizontal data={data2} />
     </Box>
   );

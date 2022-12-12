@@ -151,7 +151,12 @@ type dataType = {
   pv: number;
   amt: number;
 };
-
+type Data = {
+  name: string;
+  failed: number;
+  Successful: number;
+  amt: number;
+};
 type ContainerType = {
   width: string;
   height: string;
@@ -187,12 +192,7 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
           padding={{ left: 30, right: 30 }}
           tickLine={false}
         />
-        <YAxis
-          type="number"
-          domain={[0, 100]}
-          tickLine={false}
-          unit="M"
-        />
+        <YAxis type="number" domain={[0, 100]} tickLine={false} unit="M" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
         <Legend iconType="circle" />
         {lines.map((line, i) => {
