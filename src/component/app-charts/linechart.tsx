@@ -1,4 +1,4 @@
-import React, { PureComponent, useState } from "react";
+import React, { FC, PureComponent, useState } from "react";
 import {
   LineChart,
   Line,
@@ -272,7 +272,6 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
     </ResponsiveContainer>
   );
 };
-
 // export const IssuingLineChart = (props) => {
 //     const { data } = props
 //     // console.log('issuing dashbo', props)
