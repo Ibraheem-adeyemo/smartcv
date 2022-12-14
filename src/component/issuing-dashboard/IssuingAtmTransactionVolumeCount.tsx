@@ -1,11 +1,13 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text, Flex, HStack, Tag } from "@chakra-ui/react";
 import React from "react";
 import {
   IssuingLineChart,
   IssuingBarChart,
   IssuingBarChartHorizontal,
+  IssuingBarLineChart,
+  IssuingLineChartSingle,
 } from "../app-charts";
-
+import { chartContainerSx } from "../../sx";
 const data = [
   {
     name: "1",
@@ -107,6 +109,99 @@ const data2 = [
     amt: 2500,
   },
 ];
+const data3 = [
+  {
+    name: "Invalid transaction",
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: "Insufficient funds",
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: "Insufficient funds",
+    uv: 2050,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Insufficient funds",
+    uv: 2240,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Insufficient funds",
+    uv: 3030,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Insufficient funds",
+    uv: 4100,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Insufficient funds",
+    uv:3100,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Insufficient funds",
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Insufficient funds",
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: "Issuer or switch inoperative",
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: "Issuer or switch inoperative",
+    uv: 1898,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: "Issuer or switch inoperative",
+    uv: 1790,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: "Quickteller bills payment",
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: "Quickteller bills payment",
+    uv: 2320,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: "Quickteller bills payment",
+    uv: 3390,
+    pv: 3800,
+    amt: 2500,
+  },
+  
+];
 
 const containerType = {
   width: "100%",
@@ -150,15 +245,49 @@ export const IssuingAtmTransactionVolumeCount = () => {
 export const TransactionTypeBarChart = () => {
   return (
     <>
-      <IssuingBarChart data={data2} />
+      <IssuingBarChart
+        labelY="Volume of each transaction types issuing"
+        labelX="Daily total ATM transaction metrics"
+        data={data2}
+      />
     </>
   );
 };
 
 export const BarChartHorizontal = () => {
   return (
-    <Box bg="white" width="50%" pl={5} borderRadius="8px" boxShadow="md">
-      <IssuingBarChartHorizontal data={data2} />
-    </Box>
+    <Flex width="50%" sx={chartContainerSx}>
+      <Text variant="chart-header">Daily transaction volume</Text>
+      <IssuingBarChartHorizontal
+        labelX="Transaction volume"
+        labelY="Top 15 transaction response codes"
+        data={data3}
+      />
+    </Flex>
+  );
+};
+
+export const IssuingTranValueChart = () => {
+  return (
+    <Flex height="100%" width="60%" sx={chartContainerSx}>
+      <Text variant="chart-header">
+        Daily breakdown of issuing transaction value
+      </Text>
+      <IssuingBarLineChart data={data} />
+    </Flex>
+  );
+};
+
+export const IssuingTranVolumeChart = () => {
+  return (
+    <Flex width="40%" sx={chartContainerSx}>
+      <HStack justifyContent="space-between">
+        <Text variant="chart-header">Daily count of Issued cards</Text>
+        <Tag>
+          Total: <strong>930</strong>
+        </Tag>
+      </HStack>
+      <IssuingLineChartSingle data={data} />
+    </Flex>
   );
 };

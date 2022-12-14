@@ -1,13 +1,17 @@
 import {
   IssuingAtmTransactionVolumeCount,
   BarChartHorizontal,
+  IssuingTranValueChart,
+  IssuingTranVolumeChart,
 } from "./IssuingAtmTransactionVolumeCount";
 import { DailyTransactionMatrics } from "./dailyTransactionMatrics";
-import { FailedAndSuccesfulChart } from "./FailedAndSuccesfulChart";
+import { FailedAndSuccessfulChart } from "./FailedAndSuccessfulChart";
 
 export {
   IssuingAtmTransactionVolumeCount,
   DailyTransactionMatrics,
-  FailedAndSuccesfulChart,
+  FailedAndSuccessfulChart,
   BarChartHorizontal,
+  IssuingTranValueChart,
+  IssuingTranVolumeChart,
 };

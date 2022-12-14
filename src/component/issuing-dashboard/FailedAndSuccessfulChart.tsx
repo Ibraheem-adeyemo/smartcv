@@ -22,7 +22,7 @@ type Payload = {
 };
 
 let defaultUrl = "";
-export const FailedAndSuccesfulChart = () => {
+export const FailedAndSuccessfulChart = () => {
   const { userDetail } = useContext(AuthContext);
   const [loading, setLoading] = useLoading({ isLoading: true, text: "" });
   const [page, setPage] = useState(0);
@@ -73,9 +73,7 @@ export const FailedAndSuccesfulChart = () => {
   return (
     <Box sx={issuingFailedSuccessContainerSx}>
       <Flex mb={50}>
-        <Heading as="h5" size="md">
-          Total daily transaction
-        </Heading>
+        <Text variant="chart-header">Total daily transaction</Text>
       </Flex>
       <Flex mb={100} justifyContent="space-between" color="gray.600">
         <Flex sx={issuingFailedSuccessBoxSx}>

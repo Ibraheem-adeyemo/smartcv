@@ -22,6 +22,7 @@ const colors = {
         "bg-button-color": "#EBF8FE", 
         success:"#11B01A",
         "grey.50": "#F9FAFB"
+        
     }
 }
 

@@ -1,20 +1,26 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
 import { dashboardContainerSX, issuingBreakdownTranBoxSx } from "../../sx";
-import { DailyTransactionMatrics, FailedAndSuccesfulChart } from ".";
+import { DailyTransactionMatrics, FailedAndSuccessfulChart } from ".";
 import {
   BarChartHorizontal,
   TransactionTypeBarChart,
+  IssuingTranValueChart,
+  IssuingTranVolumeChart,
 } from "./IssuingAtmTransactionVolumeCount";
 
 export const Dashboard = () => {
   return (
     <Flex sx={dashboardContainerSX}>
-      <Flex gap="20px" width="100%">
-        <FailedAndSuccesfulChart />
+      <Flex sx={issuingBreakdownTranBoxSx}>
+        <IssuingTranValueChart />
+        <IssuingTranVolumeChart />
+      </Flex>
+      <Flex sx={issuingBreakdownTranBoxSx}>
+        <FailedAndSuccessfulChart />
         <BarChartHorizontal />
       </Flex>
-      <Box width={"100%"} bg="white">
+      <Box width="100%" bg="white">
         <Box mb={20}>
           <DailyTransactionMatrics />
         </Box>

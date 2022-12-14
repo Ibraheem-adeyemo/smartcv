@@ -6,6 +6,8 @@ import {
   IssuingLineChart,
   IssuingBarChart,
   IssuingBarChartHorizontal,
+  IssuingBarLineChart,
+  IssuingLineChartSingle,
 } from "./linechart";
 import SimpleBarchart from "./simpleBarchart";
 
@@ -18,4 +20,6 @@ export {
   IssuingLineChart,
   IssuingBarChart,
   IssuingBarChartHorizontal,
+  IssuingBarLineChart,
+  IssuingLineChartSingle,
 };
