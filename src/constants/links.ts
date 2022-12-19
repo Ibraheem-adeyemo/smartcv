@@ -65,5 +65,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     issuingVolumeAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/volume`,
     issuingVolume: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/tenant/volume`,
     issuingVolumeStatus: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/tenant/volume/status`,
-    issuingVolumeStatusAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/volume/status`
+    issuingVolumeStatusAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/volume/status`,
+    issuingVolumeChannel: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/tenant/volume/channel`,
+    issuingVolumeChannelAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/volume/channel`
 }

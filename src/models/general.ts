@@ -72,6 +72,8 @@ export interface apiUrlsv1Model {
     issuingVolume: string,
     issuingVolumeStatus: string;
     issuingVolumeStatusAdmin: string;
+    issuingVolumeChannel: string;
+    issuingVolumeChannelAdmin: string
 }
 
 type performAction = <T extends Record<keyof T, T[keyof T]>>(x: T) => void
