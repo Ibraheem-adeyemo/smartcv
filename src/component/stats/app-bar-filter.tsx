@@ -1,5 +1,5 @@
 import { Flex, Tag, Text } from "@chakra-ui/react";
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { InstitutionFilter, CustomFilter, SearchFilter, SelectedSearchFilter  } from ".";
 import { delayChildren } from "../../animations";
 import { filterDates, selectionModeValues } from "../../constants";
@@ -8,8 +8,10 @@ import { AppCalendar } from "../app";
 import { MotionFlex } from "../framer";
 
 const AppBarFilter: FC = () => {
-    const { ShowTenant, showStartDate, showEndDate, showCountInterval, showDuration, startTime, endTime, countInterval, durationList, getSelectedEndDate, getSelectedEndTime, getSelectedStartDate, onSelectedCountInterval, onSelectedDuration } = useContext(StatsContext)
-    
+    const { ShowTenant, showStartDate, showEndDate, showCountInterval, showDuration, startTime, endTime, countInterval, durationList, getSelectedEndDate, getSelectedEndTime, getSelectedStartDate, onSelectedCountInterval } = useContext(StatsContext)
+
+    const intervals = ['Daily', 'Weekly', 'Yearly']
+
     return (
         <MotionFlex alignItems="center" gap="17px" sx={{
             flexWrap: "wrap"
@@ -17,13 +19,13 @@ const AppBarFilter: FC = () => {
             animate="show"
             initial="hide"
             variants={delayChildren}
+            width='90%'
         >
             {ShowTenant && <InstitutionFilter />}
-            {showStartDate && <AppCalendar label="Start Date" selectedDate={startTime.split(" ")[0]} selectedTime={startTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={getSelectedStartDate} />}
-            {showEndDate && <AppCalendar label="End Date" selectedDate={endTime.split(" ")[0]} selectedTime={endTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={getSelectedEndDate} />}
+            {/* {showStartDate && <AppCalendar label="Start Date" selectedDate={startTime.split(" ")[0]} selectedTime={startTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={getSelectedStartDate} />}
+            {showEndDate && <AppCalendar label="End Date" selectedDate={endTime.split(" ")[0]} selectedTime={endTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={getSelectedEndDate} />} */}
 
             {/* <AppCalendar label="End Date ==2" selectionMode={selectionModeValues.pickDateTime} getSelectedDate={({ date, time }) => {
-                        // console.log({ date, time })
                         // setEndTime(`${date} ${time}`)
                     }} />  */}
             {/* {showCountInterval && <SelectedSearchFilter setEndTime={getSelectedEndTime} curEndDateTime={startTime} />}
@@ -36,6 +38,13 @@ const AppBarFilter: FC = () => {
             {/* {showDuration && <SearchFilter
                 data={durationList}
                 label="Duration" onSelected={onSelectedDuration} selected />} */}
+            {showDuration && <SearchFilter
+                data={[
+                    { label: filterDates.today, value: 'Today', selected: countInterval == intervals[0], interval: intervals[0] },
+                    { label: filterDates.thisWeek, value: 'Week', selected: countInterval == intervals[1], interval: intervals[1] },
+                    { label: filterDates.thisYear, value: 'Year', selected: countInterval == intervals[2], interval: intervals[2] },
+                ]}
+                label="" onSelected={onSelectedCountInterval} showSearchInput={false} countInterval={countInterval} selected />}
         </MotionFlex>
     )
 }

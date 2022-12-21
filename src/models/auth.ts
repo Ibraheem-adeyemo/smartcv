@@ -8,6 +8,11 @@ export interface AuthModel {
     access_token: string
 }
 
+export interface userApiAuthModel {
+username:string
+password: string
+} 
+
 interface Tenant {
     name: string,
     image: string,

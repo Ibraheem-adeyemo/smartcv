@@ -29,7 +29,8 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
     const handleOnIdle = (event: any) => {
     }
     const isUserLoading = (typeof userDetail === "undefined" /*|| typeof user === "undefined"*/) && typeof error === "undefined"
-    const isUserLoaded = typeof userDetail !== "undefined" /*&& typeof user !== "undefined"*/ && (typeof error !== "undefined" || authMode !== 'passport') 
+
+    const isUserLoaded = typeof userDetail !== "undefined" /*&& typeof user !== "undefined"*/ && (typeof error !== "undefined" || authMode !== 'passport')
     const handleOnActive = () => {
         if (typeof window !== "undefined") {
             const timeLeft = (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60)

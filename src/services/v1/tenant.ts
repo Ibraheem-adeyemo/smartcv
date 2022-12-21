@@ -56,7 +56,6 @@ export const activateTenant =async (tenantId: string) => {
             throw new Error("You need to select a tenant")
         }
     } catch (error) {
-        console.error({error})
         const a  = error
         // debugger
         throw error

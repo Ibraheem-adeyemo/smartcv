@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 import { apiUrlsv1, appRoles, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, localStorageKeys, SECRET } from '../constants'
 import { fetchJson, getCookie, setCookie, setItemToLocalStorage, getItemFromLocalStorage } from '../lib'
-import { AuthModel, RefreshTokenRequestBody, TokenRequestBody, TokenResponsBody, UserModel } from '../models';
+import { AuthModel, RefreshTokenRequestBody, TokenRequestBody, TokenResponsBody, userApiAuthModel, UserModel } from '../models';
 import axios from 'axios';
 
 export default function useAuthentication() {
@@ -89,7 +89,7 @@ export default function useAuthentication() {
         }
     }, [token])
 
-    const apiLogin = useCallback(async (userObject) => {
+    const apiLogin = async (userObject:userApiAuthModel) => {
         try {
             return axios.post(apiUrlsv1.loginWithCredential, userObject).then(
                 (response) => {
@@ -101,7 +101,7 @@ export default function useAuthentication() {
             throw error;
             
         }
-    }, [])
+    }
 
 
     const loginWithPassport = useCallback(async (code: string) => {

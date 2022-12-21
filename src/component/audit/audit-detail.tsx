@@ -31,7 +31,6 @@ const mapData = function <T>(objString: string): T {
                 return returnValue
         }
     } catch (error) {
-        // console.error({error})
         throw error
     }
 }
@@ -44,7 +43,7 @@ const DataArrayView = <T extends Record<keyof T, T[keyof T]>>(props: DataArrayVi
         <Flex>
             {(props.data).map((x: T, i: number) =>
 
-                <Table>
+                <Table key={i}>
                     {
                         (() => {
                             let ui

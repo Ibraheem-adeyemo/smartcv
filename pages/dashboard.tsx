@@ -1,4 +1,4 @@
-import { Button, Flex } from "@chakra-ui/react"
+import { Box, Button, Flex } from "@chakra-ui/react"
 import { NextPage } from "next"
 import dynamic from 'next/dynamic'
 import React, { useState } from "react"
@@ -8,7 +8,7 @@ import { AnimatedText, MotionBox, MotionFlex } from "../src/component/framer"
 import { Authenticated } from "../src/component/layouts"
 import { filtersToShowDefaultValue } from "../src/constants"
 import { StatsProvider, StatsContext } from "../src/providers"
-import { loginButtonSX } from "../src/sx"
+import { loginButtonSM } from "../src/sx"
 import IssuingDashboard from '../src/component/issuing-dashboard/Dashboard'
 const AppBarFilter = dynamic(() => import('../src/component/stats/app-bar-filter'), {ssr:false})
 
@@ -21,11 +21,16 @@ const Dashboard:NextPage = () => {
     const [paymentType, setPaymentType] = useState<enumPaymentType>(enumPaymentType.acquiring)
     const TabButton = (props: {typeOfPayment: string; toggleTypeOfPayment: (t:enumPaymentType)=>void}) => {
         const { typeOfPayment, toggleTypeOfPayment } = props
+
+        const activeBoard = {
+            borderBottom: '2px solid #0275D8',
+            color: '#0275D8'}
+        
         return (
             <MotionBox
                     sx={{
                         overflow: "hidden",
-                        display: "inline-block"
+                        display: "inline-block",
                     }}
                     variants={staggerChildrenWithDuration}
                 >
@@ -36,13 +41,13 @@ const Dashboard:NextPage = () => {
                         initial="hide"
                         animate="show"
                         variants={verticalPosition}
-                    >
-                        <Button variant={typeOfPayment===enumPaymentType.acquiring?"primary-button":"outline"} sx={loginButtonSX} onClick={()=>toggleTypeOfPayment(enumPaymentType.acquiring)}>
+                    >   
+                        <Box bg='none' cursor={'pointer'} fontSize='16px' mr='50px' style={typeOfPayment===enumPaymentType.acquiring? activeBoard:{}} onClick={()=>toggleTypeOfPayment(enumPaymentType.acquiring)}>
                             Acquiring
-                        </Button>
-                        <Button variant={typeOfPayment===enumPaymentType.issuing?"primary-button":"outline"} sx={loginButtonSX} onClick={()=>toggleTypeOfPayment(enumPaymentType.issuing)}>
+                        </Box>
+                        <Box bg='none' cursor={'pointer'} fontSize='16px' style={typeOfPayment===enumPaymentType.issuing? activeBoard:{}} onClick={()=>toggleTypeOfPayment(enumPaymentType.issuing)}>
                             Issuing
-                        </Button>
+                        </Box>
                     </MotionFlex>
             </MotionBox>
         )
@@ -58,13 +63,17 @@ const Dashboard:NextPage = () => {
           <AnimatedText variant="page-header" size="page-header">{
             <TabButton typeOfPayment={paymentType} toggleTypeOfPayment={toggleTypeOfPayment} />
           }</AnimatedText>
-          <AppBarFilter  />
         </Flex>
       }>
-        {
-            paymentType === enumPaymentType.acquiring? <DashboardPage /> : <IssuingDashboard />
+        {/* <Box position={'relative'} zIndex={999}mb={100}>
+        <Flex position='fixed' height={100} width={'80%'}> */}
+        <AppBarFilter />
+        {/* </Flex>
+        </Box> */}
+
+        {          
+          paymentType === enumPaymentType.acquiring? <DashboardPage /> : <IssuingDashboard />
         }
-        
       </Authenticated>
     </StatsProvider>
   )

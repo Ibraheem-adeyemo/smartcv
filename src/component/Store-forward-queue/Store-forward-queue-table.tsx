@@ -11,7 +11,6 @@ import { getCookie } from "../../lib";
 
 
 export const StoreForwardQueueSetup: FC<{records: ForwardQueuePropObject[]|[]}> = (props: {records: ForwardQueuePropObject[]|[]}) => {
-    // console.log({pageNumber})
     const {token, userDetail} = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { selectedTenantCode } = useContext(StatsContext)
@@ -29,12 +28,7 @@ export const StoreForwardQueueSetup: FC<{records: ForwardQueuePropObject[]|[]}> 
           }
     }
 
-    console.log(userDetail)
-    // url += `details/`
-
     const { data: pendingTransations, isValidating , mutate: _mutate, error } = useSWR(!url ? null : url)
-
-    console.log(pendingTransations, url)
 
     const transactionMonitoringData = pendingTransations?.payload
     const toast = useToast()

@@ -25,13 +25,13 @@ interface StatsProps extends StatsA {
 const TransactionBreakdown: FC<TransactionBreakdownProps> = ({ showDetails = false, ...props }: TransactionBreakdownProps) => {
   const [selectedUrl, setSelectedUrl] = useState<string>();
   const [selectedHeaderName, setSelectedHeaderName] = useState<string>();
-  const { institutions, institutionsError, selectedTenantCode, startTime, endTime, duration, countInterval, period } = useContext(StatsContext)
+  const { institutions, institutionsError, selectedTenantCode, startTime, endTime, dataDuration, countInterval, period } = useContext(StatsContext)
   const [loading, setLoading] = useLoading({ isLoading: true, text: "" })
   const [stats, setStats] = useState<StatsProps[]>()
   const { token, userDetail } = useContext(AuthContext);
 
   const cokieToken = getCookie(cookieKeys.token)
-  const headerArray = [cokieToken, startTime, countInterval, duration, endTime] 
+  const headerArray = [cokieToken, startTime, countInterval, endTime] 
   let url = apiUrlsv1.transactionDetails
   let cashWithdrawalApi = `${url}/cash-withdrawal/`
 //   let quicktellerAirtimeApi = `${url}/quickteller-airtime`
@@ -65,8 +65,6 @@ const TransactionBreakdown: FC<TransactionBreakdownProps> = ({ showDetails = fal
 //   const { data: quicktellerAirtime, error: quicktellerAirtimeError } = useSWR<Paginate<ATMInService>>(!quicktellerAirtimeApi? null : [quicktellerAirtimeApi, ...headerArray ], fetchg)
   const { data: quicktellerBill, error: quickTellerBillError } = useSWR<TransactionBreakdownType>(!quicktellerApi ?  null : [quicktellerApi, ...headerArray ], fetchg)
   const { data: paycodeWithdrawal, error: payCodeWithdrawError } = useSWR<TransactionBreakdownType>(!payCodeWithdrwalApi? null : [payCodeWithdrwalApi, ...headerArray ], fetchg)
-
- const dataDuration = period > 1 ? `Last ${period} days`: 'Last 24 Hours'
 
   useEffect(() => {
     const getStats = (): StatsProps[] => {
@@ -123,7 +121,7 @@ const TransactionBreakdown: FC<TransactionBreakdownProps> = ({ showDetails = fal
     //   setLoading({ isLoading: false, text: "" })
     // }
     setLoading({ isLoading: false, text: "" })
-  }, [institutions, institutionsError])
+  }, [institutions, institutionsError, dataDuration])
   return (
     <AppCard topic={<Text variant="card-header" size="card-header">Transaction Breakdown</Text>} >
 
