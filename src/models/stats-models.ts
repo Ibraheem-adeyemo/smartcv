@@ -1,9 +1,9 @@
 
 export interface StatsA {
     headerName: string;
-    totalNumber: number;
-    status: string;
-    percentage: string;
+    totalNumber?: number;
+    status?: string;
+    percentage?: string;
     days: string;
     prefix:string,
     suffix:string,
@@ -20,6 +20,8 @@ export interface DropdownSearchFilterProps {
     data: DropdownContent[],
     label?: string,
     selected?: boolean,
+    showSearchInput?:boolean
+    countInterval?: string
     onSelected?: (selectedItem: DropdownContent) => void
 }
 

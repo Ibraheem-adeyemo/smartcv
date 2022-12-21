@@ -9,7 +9,6 @@ import { useToast } from "@chakra-ui/react";
 
 
 export const TransactionsMonitoringTableSetup: FC<{records: TransactionPropObject[]|[]}> = (props: {records: TransactionPropObject[]|[]}) => {
-    // console.log({pageNumber})
     const {token, userDetail} = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { selectedTenantCode } = useContext(StatsContext)
