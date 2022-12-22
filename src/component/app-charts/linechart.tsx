@@ -235,7 +235,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
         data={data}
         barCategoryGap={1}
         margin={{
-          left: 30,
+          left: 70,
           bottom: 50,
         }}
       >
@@ -246,7 +246,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
             position="left"
             fontWeight={600}
             dy={-100}
-            offset={15}
+            offset={40}
             fill="#364657"
           />
         </YAxis>
@@ -276,7 +276,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
         barGap={20}
         margin={{
           top: 5,
-          left: 50,
+          left: 70,
           bottom: 20,
         }}
       >
@@ -289,18 +289,31 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
             fill="#364657"
           />
         </XAxis>
-        <YAxis dataKey="name" type="category"  tickLine={false} axisLine={false}>
+        <YAxis
+          dataKey="name"
+          type="category"
+          fontSize={14}
+          tickLine={false}
+          axisLine={true}
+          width={70}
+        >
           <Label
             value={labelY}
             angle={-90}
-            offset={40}
+            offset={50}
             position="left"
             fontWeight={600}
             fill="#364657"
           />
         </YAxis>
         <CartesianGrid strokeDasharray="7" horizontal={false} />
-        <Bar dataKey="uv" minPointSize={5} fill="#096DD9" barSize={24} radius={4} />
+        <Bar
+          dataKey="uv"
+          minPointSize={5}
+          fill="#096DD9"
+          barSize={24}
+          radius={4}
+        />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -308,9 +321,14 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
 
 interface DataProps {
   data: Data[];
+  barSize?: number;
+tickCount?: number;
+  type?: "number" | "category";
+  domain?: string[] | number[];
+  interval?: number;
 }
 export const IssuingBarLineChart = (props: DataProps) => {
-  const { data } = props;
+  const { data, barSize } = props;
   return (
     <ResponsiveContainer width="100%" height={400}>
       <ComposedChart
@@ -319,27 +337,33 @@ export const IssuingBarLineChart = (props: DataProps) => {
           top: 20,
           right: 20,
           bottom: 20,
-          left: 20,
         }}
       >
-        <XAxis>
+        <XAxis type="category" dataKey="name">
           <Label fill="#364657" value="24hour distribution" position="bottom" />
         </XAxis>
-        <YAxis />
+        <YAxis type="number" />
         <Tooltip />
-        <Bar dataKey="Successful" barSize={20} fill="#E0E4EB" />
-        <Line dot={false} type="linear" dataKey="failed" stroke="#18A0FB" />
+        <Bar dataKey="Successful" barSize={barSize} fill="#E0E4EB" />
+        <Line dot={false} type="linear" dataKey="Successful" stroke="#18A0FB" />
       </ComposedChart>
     </ResponsiveContainer>
   );
 };
+
 export const IssuingLineChartSingle = (props: DataProps) => {
-  const { data } = props;
+  const { data, tickCount, interval, type } = props;
   return (
     <ResponsiveContainer width="100%" height={400}>
       <LineChart height={400} data={data}>
         <CartesianGrid strokeDasharray="7" vertical={false} horizontal={true} />
-        <XAxis padding={{ left: 30, right: 30 }} tickLine={false} />
+        <XAxis
+          type="category"
+          dataKey="name"
+          tickLine={false}
+          interval={interval}
+          tickCount={tickCount}
+        />
         <YAxis type="number" tickLine={false} unit="M" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
         <Line

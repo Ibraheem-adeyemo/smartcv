@@ -28,8 +28,8 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
     const [openResend, setOpenResend] = useState(false)
     const handleOnIdle = (event: any) => {
     }
-    const isUserLoading = false
-    const isUserLoaded = true
+    const isUserLoading = (typeof userDetail === "undefined" /*|| typeof user === "undefined"*/) && typeof error === "undefined"
+    const isUserLoaded = typeof userDetail !== "undefined" /*&& typeof user !== "undefined"*/ && (typeof error !== "undefined" || authMode !== 'passport')
     const handleOnActive = () => {
         if (typeof window !== "undefined") {
             const timeLeft = (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60)
@@ -231,9 +231,9 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                 <GridItem
                     sx={mainSX}
                 >
-                    {/* <ResendUserActivationMail isOpen={openResend} closeModal={function (): void {
+                    <ResendUserActivationMail isOpen={openResend} closeModal={function (): void {
                         setOpenResend(false)
-                    } } isLoggedIn={false} email={userDetail.email} /> */}
+                    } } isLoggedIn={false} email={userDetail.email} />
                     {props.children}
 
                 </GridItem>

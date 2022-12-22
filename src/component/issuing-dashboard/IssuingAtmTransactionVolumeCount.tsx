@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Box, Text, Flex, HStack, Tag } from "@chakra-ui/react";
-import useSWR from "swr";
-import { AuthContext, StatsContext } from "../../providers";
-import { apiUrlsv1, appRoles, notificationMesage } from "../../constants";
 import {
   IssuingLineChart,
   IssuingBarChart,
@@ -11,70 +8,9 @@ import {
   IssuingLineChartSingle,
 } from "../app-charts";
 import { chartContainerSx } from "../../sx";
+import { data, dataMonth, dataYear } from "../../dummyData/data";
 
-let defaultUrlVolChannel = ""
-const data = [
-  {
-    name: "1",
-    failed: 4000,
-    Successful: 2400,
-    amt: 2400,
-  },
-  {
-    name: "2",
-    failed: 3000,
-    Successful: 1398,
-    amt: 2210,
-  },
-  {
-    name: "3",
-    failed: 2000,
-    Successful: 9800,
-    amt: 2290,
-  },
-  {
-    name: "4",
-    failed: 2780,
-    Successful: 3908,
-    amt: 2000,
-  },
-  {
-    name: "5",
-    failed: 4890,
-    Successful: 4800,
-    amt: 2181,
-  },
-  {
-    name: "6",
-    failed: 2390,
-    Successful: 3800,
-    amt: 2500,
-  },
-  {
-    name: "7",
-    failed: 3490,
-    Successful: 4300,
-    amt: 0,
-  },
-  {
-    name: "8",
-    failed: 3590,
-    Successful: 3300,
-    amt: 0,
-  },
-  {
-    name: "9",
-    failed: 2490,
-    Successful: 1300,
-    amt: 0,
-  },
-  {
-    name: "10",
-    failed: 1290,
-    Successful: 2340,
-    amt: 0,
-  },
-];
+let defaultUrlVolChannel = "";
 
 const data2 = [
   {
@@ -153,7 +89,7 @@ const data3 = [
   },
   {
     name: "Insufficient funds",
-    uv:3100,
+    uv: 3100,
     pv: 9800,
     amt: 2290,
   },
@@ -205,7 +141,6 @@ const data3 = [
     pv: 3800,
     amt: 2500,
   },
-  
 ];
 
 const containerType = {
@@ -260,9 +195,17 @@ export const TransactionTypeBarChart = () => {
 };
 
 export const BarChartHorizontal = () => {
+  const isData = false;
+  const isDataYear = false;
   return (
     <Flex width="50%" sx={chartContainerSx}>
-      <Text variant="chart-header">Daily transaction volume</Text>
+      {isData ? (
+        <Text variant="chart-header">Daily transaction volume</Text>
+      ) : isDataYear ? (
+        <Text variant="chart-header">Monthly transaction volume</Text>
+      ) : (
+        <Text variant="chart-header">Weekly transaction volume</Text>
+      )}
       <IssuingBarChartHorizontal
         labelX="Transaction volume"
         labelY="Top 15 transaction response codes"
@@ -273,26 +216,57 @@ export const BarChartHorizontal = () => {
 };
 
 export const IssuingTranValueChart = () => {
+  const isData = false;
+  const isDataYear = false;
   return (
     <Flex height="100%" width="60%" sx={chartContainerSx}>
-      <Text variant="chart-header">
-        Daily breakdown of issuing transaction value
-      </Text>
-      <IssuingBarLineChart data={data} />
+      {isData ? (
+        <Text variant="chart-header">
+          Daily breakdown of issuing transaction value
+        </Text>
+      ) : isDataYear ? (
+        <Text variant="chart-header">
+          Monthly breakdown of issuing transaction value
+        </Text>
+      ) : (
+        <Text variant="chart-header">
+          Weekly breakdown of issuing transaction value
+        </Text>
+      )}
+
+      <IssuingBarLineChart
+        barSize={isData || isDataYear ? 20 : 63}
+        data={isData ? data : isDataYear ? dataYear : dataMonth}
+      />
     </Flex>
   );
 };
 
 export const IssuingTranVolumeChart = () => {
+  const isData = false;
+  const isDataYear = false;
+  const newDataMonth = dataMonth.map((result) => result.name.split("/")[0]);
+  console.log(newDataMonth);
   return (
     <Flex width="40%" sx={chartContainerSx}>
       <HStack justifyContent="space-between">
-        <Text variant="chart-header">Daily count of Issued cards</Text>
+        {isData ? (
+          <Text variant="chart-header">Daily count of Issued cards</Text>
+        ) : isDataYear ? (
+          <Text variant="chart-header">Monthly count of Issued cards</Text>
+        ) : (
+          <Text variant="chart-header">Weekly count of Issued cards</Text>
+        )}
         <Tag>
           Total: <strong>930</strong>
         </Tag>
       </HStack>
-      <IssuingLineChartSingle data={data} />
+      <IssuingLineChartSingle
+        data={isData ? data : isDataYear ? dataYear : dataMonth}
+        tickCount={isData ? 24 : isDataYear ? 6 : 7}
+        type={isData ? "number" : "category"}
+        interval={isDataYear || isData ? 1 : 0}
+      />
     </Flex>
   );
 };

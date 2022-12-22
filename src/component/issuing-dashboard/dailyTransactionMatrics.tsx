@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { AuthContext, StatsContext } from "../../providers";
 import { apiUrlsv1, appRoles, notificationMesage } from "../../constants";
 import { cookieKeys, StatsName } from "../../constants";
-import { useLoading } from "../../hooks";
+import { useLoading, useCheckAdmin } from "../../hooks";
 import { getCookie } from "../../lib";
 import { StatsProps } from "../../models";
 import { TextChart } from "../dashboard";
@@ -78,6 +78,7 @@ export const DailyTransactionMatrics = () => {
   const { isValidating, mutate, data, error } = useSWR(
     isSuperAdmin ? superAdminUrl : defaultUrl
   );
+
   const typeData = isSuperAdmin ? (data as DataSuperAdmin) : undefined;
   const position = data?.response?.position;
   const totalVolume = typeData?.payload.reduce((acc, obj) => {
