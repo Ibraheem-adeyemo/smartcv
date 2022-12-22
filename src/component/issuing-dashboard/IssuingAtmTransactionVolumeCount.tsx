@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Box, Text, Flex, HStack, Tag } from "@chakra-ui/react";
-import useSWR from "swr";
-import { AuthContext, StatsContext } from "../../providers";
-import { apiUrlsv1, appRoles, notificationMesage } from "../../constants";
 import {
   IssuingLineChart,
   IssuingBarChart,
@@ -14,6 +11,9 @@ import { chartContainerSx } from "../../sx";
 import { data, data2, data3, data4 } from '.'
 
 let defaultUrlVolChannel = ""
+
+import {dataMonth, dataYear } from "../../dummyData/data";
+import { StatsContext } from "../../providers";
 
 
 const containerType = {
@@ -82,26 +82,57 @@ export const BarChartHorizontal = () => {
 };
 
 export const IssuingTranValueChart = () => {
+  const isData = false;
+  const isDataYear = false;
   return (
     <Flex height="100%" width="60%" sx={chartContainerSx}>
-      <Text variant="chart-header">
-        Daily breakdown of issuing transaction value
-      </Text>
-      <IssuingBarLineChart data={data} />
+      {isData ? (
+        <Text variant="chart-header">
+          Daily breakdown of issuing transaction value
+        </Text>
+      ) : isDataYear ? (
+        <Text variant="chart-header">
+          Monthly breakdown of issuing transaction value
+        </Text>
+      ) : (
+        <Text variant="chart-header">
+          Weekly breakdown of issuing transaction value
+        </Text>
+      )}
+
+      <IssuingBarLineChart
+        barSize={isData || isDataYear ? 20 : 63}
+        data={isData ? data : isDataYear ? dataYear : dataMonth}
+      />
     </Flex>
   );
 };
 
 export const IssuingTranVolumeChart = () => {
+  const isData = false;
+  const isDataYear = false;
+  const newDataMonth = dataMonth.map((result) => result.name.split("/")[0]);
+  console.log(newDataMonth);
   return (
     <Flex width="40%" sx={chartContainerSx}>
       <HStack justifyContent="space-between">
-        <Text variant="chart-header">Daily count of Issued cards</Text>
+        {isData ? (
+          <Text variant="chart-header">Daily count of Issued cards</Text>
+        ) : isDataYear ? (
+          <Text variant="chart-header">Monthly count of Issued cards</Text>
+        ) : (
+          <Text variant="chart-header">Weekly count of Issued cards</Text>
+        )}
         <Tag>
           Total: <strong>930</strong>
         </Tag>
       </HStack>
-      <IssuingLineChartSingle data={data} />
+      <IssuingLineChartSingle
+        data={isData ? data : isDataYear ? dataYear : dataMonth}
+        tickCount={isData ? 24 : isDataYear ? 6 : 7}
+        type={isData ? "number" : "category"}
+        interval={isDataYear || isData ? 1 : 0}
+      />
     </Flex>
   );
 };

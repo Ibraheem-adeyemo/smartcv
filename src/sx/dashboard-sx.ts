@@ -26,12 +26,18 @@ export const issuingBreakdownTranBoxSx: CSSObject = {
   p: 0,
   width: "100%",
 };
+export const dashboardBoxSx: CSSObject = {
+  width: "100%",
+  flexDirection: "column",
+  gap: "32px",
+  alignItems: "flex-start",
+};
 export const chartContainerSx: CSSObject = {
   bg: "white",
   p: "30px",
   borderRadius: "8px",
   boxShadow: "md",
   flexDirection: "column",
-  gap:"30px",
-  height: "100%"
+  gap: "30px",
+  height: "100%",
 };
