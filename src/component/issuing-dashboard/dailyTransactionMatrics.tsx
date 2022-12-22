@@ -48,6 +48,7 @@ export const DailyTransactionMatrics = () => {
     institutionsError,
     selectedTenantCode,
     transactionPeriod,
+    dataDuration,
     setFiltersToShow,
     startTime,
     endTime,
@@ -79,14 +80,8 @@ export const DailyTransactionMatrics = () => {
     isSuperAdmin ? superAdminUrl : defaultUrl
   );
 
-  const typeData = isSuperAdmin ? (data as DataSuperAdmin) : undefined;
   const position = data?.response?.position;
-  const totalVolume = typeData?.payload.reduce((acc, obj) => {
-    return acc + obj.volume;
-  }, 0);
-  const totalAmount = typeData?.payload.reduce((acc, obj) => {
-    return acc + obj.amount;
-  }, 0);
+  
   useEffect(() => {
     if (isValidating && !data) {
       setLoading({ isLoading: true, text: "" });
@@ -133,11 +128,11 @@ export const DailyTransactionMatrics = () => {
         {
           ...boxSize,
           headerName: StatsName.totalTransactionVolume,
-          totalNumber: 0.0,
-          status: "green",
-          percentage: "6.0%",
+          totalNumber: data?.response?.volume,
+          status: data?.response?.percentage?.isIncrease === false ? "red" : "green",
+          percentage: `${data?.response?.percentage?.percent}%`,
           days: dataDuration,
-          prefix: "N",
+          prefix: "",
           comingSoon: false,
           title: "Total Volume",
         },
@@ -161,62 +156,19 @@ export const DailyTransactionMatrics = () => {
         },
       ];
     };
-    const getStatsSuperAdmin = (): StatsProps[] => {
-      const boxSize = {
-        // width: props.width,
-        // height: props.height,
-        prefix: "",
-        suffix: "",
-        comingSoon: false,
-        title: "Total Amount",
-      };
-      return [
-        {
-          ...boxSize,
-          headerName: StatsName.transactionAmount,
-          totalNumber: totalAmount,
-          status: "green",
-          days: dataDuration,
-          prefix: "N",
-        },
-        {
-          ...boxSize,
-          headerName: StatsName.totalTransactionVolume,
-          totalNumber: totalVolume,
-          status: "green",
-          days: dataDuration,
-          prefix: "N",
-          comingSoon: false,
-          title: "Total Volume",
-        },
-      ];
-    };
-    if (isSuperAdmin) {
-      setStats(getStatsSuperAdmin());
-    } else {
-      setStats(getStats());
-    }
-
-    // if ((typeof institutions === "undefined" && typeof institutionsError === "undefined")) {
-    //   setLoading({ isLoading: true, text: "" })
-    // } else {
-    //   setLoading({ isLoading: false, text: "" })
-    // }
-    // setLoading({ isLoading: false, text: "" });
+    
+    setStats(getStats());
   }, [
     institutions,
     institutionsError,
     isSuperAdmin,
     data,
-    error,
-    totalVolume,
-    totalAmount,
+    error
   ]);
 
   const cokieToken = getCookie(cookieKeys.token);
-  const headerArray = [cokieToken, startTime, countInterval, duration, endTime];
+  const headerArray = [cokieToken, startTime, countInterval, endTime];
 
-  const dataDuration = period > 1 ? `Last ${period} days` : "Last 24 Hours";
   return (
     <Box>
         <TextChart

@@ -46,6 +46,10 @@ export function validateNumber(str: string) {
     return /[0-9]/.test(str)
 }
 
+export function getUrlForSuperadminORBankAdmin(urlArr:string, tenantCode:number|string|undefined):string {
+    return tenantCode && tenantCode !== '0' ? `${urlArr}/tenant` : urlArr
+}
+
 
 export function validateEmail(email: string) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -65,11 +65,10 @@ const Dashboard:NextPage = () => {
           }</AnimatedText>
         </Flex>
       }>
-        {/* <Box position={'relative'} zIndex={999}mb={100}>
-        <Flex position='fixed' height={100} width={'80%'}> */}
+        <Box  mb={30}>
         <AppBarFilter />
-        {/* </Flex>
-        </Box> */}
+        {/* </Flex> */}
+        </Box>
 
         {          
           paymentType === enumPaymentType.acquiring? <DashboardPage /> : <IssuingDashboard />

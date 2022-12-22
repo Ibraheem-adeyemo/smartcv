@@ -10,12 +10,10 @@ import { MotionFlex } from "../framer";
 const AppBarFilter: FC = () => {
     const { ShowTenant, showStartDate, showEndDate, showCountInterval, showDuration, startTime, endTime, countInterval, durationList, getSelectedEndDate, getSelectedEndTime, getSelectedStartDate, onSelectedCountInterval } = useContext(StatsContext)
 
-    const intervals = ['Daily', 'Weekly', 'Yearly']
+    const intervals = ['Daily', 'Weekly', 'Monthly']
 
     return (
-        <MotionFlex alignItems="center" gap="17px" sx={{
-            flexWrap: "wrap"
-        }}
+        <MotionFlex alignItems="center" gap="17px" justifyContent='space-between'
             animate="show"
             initial="hide"
             variants={delayChildren}

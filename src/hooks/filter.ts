@@ -47,7 +47,7 @@ export default function useFilter(user?: UserModel) {
   const dateFrom = countInterval === 'Today'? 1: countInterval === 'Week'? 7 : 365
   const today = new Date();
   const thisYear = today.getFullYear();
-  const [ transactionPeriod, setTransactionPeriod] = useState("Today")
+  const [ transactionPeriod, setTransactionPeriod] = useState("Daily")
   const thisMonth =
     `${today.getMonth() + 1}`.length === 1
       ? `0${today.getMonth() + 1}`

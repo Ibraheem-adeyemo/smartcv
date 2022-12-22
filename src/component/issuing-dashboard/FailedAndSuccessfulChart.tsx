@@ -9,6 +9,8 @@ import useSWR from "swr";
 import { AuthContext, StatsContext } from "../../providers";
 import { useLoading } from "../../hooks";
 import { apiUrlsv1, appRoles, notificationMesage } from "../../constants";
+import { sumBy } from "lodash";
+import { getUrlForSuperadminORBankAdmin } from "../../lib";
 
 type DataSuperAdmin = {
   payload: Payload[];
@@ -27,53 +29,32 @@ export const FailedAndSuccessfulChart = () => {
   const [loading, setLoading] = useLoading({ isLoading: true, text: "" });
   const [page, setPage] = useState(0);
   const toast = useToast();
-
   const { selectedTenantCode, transactionPeriod } = useContext(StatsContext);
-  const superAdminUrl = `${apiUrlsv1.issuingVolumeStatusAdmin}?page=${page}&size=20&dateRange=${transactionPeriod.toUpperCase()}`;
 
-  const isSuperAdmin =
-    userDetail?.role.name === appRoles.superAdmin &&
-    (selectedTenantCode == "0" || selectedTenantCode == "undefined");
-  if (
-    userDetail &&
-    (userDetail.role.name !== appRoles.superAdmin ||
-      typeof selectedTenantCode !== "undefined") &&
-    (userDetail?.role.name !== appRoles.superAdmin ||
-      selectedTenantCode !== "0")
-  ) {
-    if (userDetail?.role.name !== appRoles.superAdmin) {
-      defaultUrl = `${apiUrlsv1.issuingVolumeStatus}?tenantCode=${userDetail.tenant.code}&dateRange=${transactionPeriod.toUpperCase()}`;
-    } else if (
-      userDetail?.role.name === appRoles.superAdmin &&
-      selectedTenantCode !== "0"
-    ) {
-      defaultUrl = `${apiUrlsv1.issuingVolumeStatus}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`;
-    }
-  }
+
+  let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
+//   const superAdminUrl = `${apiUrlsv1.issuingVolumeStatusAdmin}?page=${page}&size=20&dateRange=${transactionPeriod.toUpperCase()}`;
+    // transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume/status?page=${page}&size=20&dateRange=${transactionPeriod.toUpperCase()}`
+    const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
+
+    transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume/status`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`:`${transactionCountVolumeUrl}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+
+
   const { isValidating, mutate, data, error } = useSWR(
-    isSuperAdmin ? superAdminUrl : defaultUrl
+    userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
   );
-  const typeData = isSuperAdmin ? (data as DataSuperAdmin) : undefined;
 
-  const totalSuccCount = typeData?.payload.reduce((acc, obj) => {
-    return acc + obj.successCount;
-  }, 0);
-  const totalFailedCount = typeData?.payload.reduce((acc, obj) => {
-    return acc + obj.failedCount;
-  }, 0);
-  const totalSuccVal = typeData?.payload.reduce((acc, obj) => {
-    return acc + obj.successValue;
-  }, 0);
-  const totalFailedVal = typeData?.payload.reduce((acc, obj) => {
-    return acc + obj.failedValue;
-  }, 0);
-  const refactoredValue = (value?: number) => {
-    return value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+  const totalFailedTransaction = data && data.length > 0 ? sumBy(data?.failedValue, (transaction:number) => transaction):0.00;
+  const totalSuccessfulTransaction = data && data.length > 0 ? sumBy(data?.successValue, (transaction:number) => transaction):0.00;
+
+  const failedTransactionVolume = data && data.length > 0 ? sumBy(data?.failedValue, (transaction:number) => transaction):0;
+  const successfulTransactionVolume = data && data.length > 0 ? sumBy(data?.successValue, (transaction:number) => transaction):0;
+   
   return (
     <Box sx={issuingFailedSuccessContainerSx}>
       <Flex mb={50}>
-        <Text variant="chart-header">Total daily transaction</Text>
+        <Text variant="chart-header">Total {transactionPeriod} transaction</Text>
       </Flex>
       <Flex mb={100} justifyContent="space-between" color="gray.600">
         <Flex sx={issuingFailedSuccessBoxSx}>
@@ -81,53 +62,29 @@ export const FailedAndSuccessfulChart = () => {
             <Heading as="h4" size="xs">
               Failed transaction
             </Heading>
-            {isSuperAdmin ? (
               <>
                 <Heading as="h3" size="md" color={"#E05B50"}>
-                  {`N${refactoredValue(totalFailedVal)}.00M`}
+                  N{totalFailedTransaction > 0? totalFailedTransaction: `0.00`}
                 </Heading>
-                <small>{`Total volume:${refactoredValue(
-                  totalFailedCount
-                )}`}</small>
+                <small>{`Total volume:${failedTransactionVolume}`}</small>
               </>
-            ) : (
-              <>
-                <Heading as="h3" size="md" color={"#E05B50"}>
-                  {`N${refactoredValue(data?.response.failedValue)}.00M`}
-                </Heading>
-                <small>{`Total volume:${refactoredValue(
-                  data?.response.failedCount
-                )}`}</small>
-              </>
-            )}
           </Box>
         </Flex>
         <Flex sx={issuingFailedSuccessBoxSx}>
           <Box m="auto">
             <Heading as="h4" size="xs">
               Successful transaction
-            </Heading>
-            {isSuperAdmin ? (
+            </Heading>            
               <>
                 <Heading as="h3" size="md" color="#5DCC96">
-                  {`N${refactoredValue(totalSuccVal)}.00M`}
+                  N{totalSuccessfulTransaction > 0? totalSuccessfulTransaction:`0.00`}
                 </Heading>
-                <Text>{`Total volume:${refactoredValue(totalSuccCount)}`}</Text>
+                <Text>{`Total volume:${successfulTransactionVolume}`}</Text>
               </>
-            ) : (
-              <>
-                <Heading as="h3" size="md" color="#5DCC96">
-                  {`N${refactoredValue(data?.response.failedValue)}.00M`}
-                </Heading>
-                <Text>{`Total volume:${refactoredValue(
-                  data?.response.successCount
-                )}`}</Text>
-              </>
-            )}
           </Box>
         </Flex>
       </Flex>
-      <IssuingAtmTransactionVolumeCount />
+      <IssuingAtmTransactionVolumeCount data={data?.response?.transactionDetails} />
     </Box>
   );
 };

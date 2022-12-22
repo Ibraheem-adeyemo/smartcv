@@ -21,7 +21,7 @@ export const FailedAndSuccesfulChart = () => {
             <Text>Total volume:1009</Text>
         </Box>
     </Flex>
-    <IssuingAtmTransactionVolumeCount />
+    {/* <IssuingAtmTransactionVolumeCount /> */}
     </Box>
   )
 }

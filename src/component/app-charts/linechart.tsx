@@ -20,6 +20,8 @@ import BasicModal from "../transaction-monitoring/transactionMonitoringModal";
 import TransactionMonitoringTable from "../transaction-monitoring/transactions-monitoring-table";
 import { IRealTimeData, Record } from "../../models";
 import { formatRealTimeData } from "../../lib";
+import { DataProps, IssuingBarChartProps, IssuingLineChartProps } from "../../models/issuing-dashboard";
+import { Data } from "../../models/issuing-transactions";
 
 export const GrpLineChart = (chartProps: IRealTimeData) => {
   const { responseDTOList, transactionCountResponseList } = formatRealTimeData(
@@ -142,44 +144,6 @@ export const GrpLineChart = (chartProps: IRealTimeData) => {
   );
 };
 
-type StrokeType = {
-  hasStroke: boolean;
-  strokeDasharray: string;
-};
-
-type dataType = {
-  name: string;
-  uv: number;
-  pv: number;
-  amt: number;
-};
-type Data = {
-  name: string;
-  failed: number;
-  Successful: number;
-  amt: number;
-};
-type ContainerType = {
-  width: string;
-  height: string;
-};
-
-type LineObject = {
-  type: string;
-  dataKey: string;
-  stroke: string;
-  activeDot?: object;
-};
-interface IssuingLineChartProps {
-  lines: LineObject[];
-  width: number;
-  height: number;
-  dataKey: string;
-  stroke: StrokeType;
-  data: dataType[];
-  container: ContainerType;
-}
-
 export const IssuingLineChart = (props: IssuingLineChartProps) => {
 
   const { lines, container, width, height, dataKey, stroke, data } = props;
@@ -214,18 +178,6 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
   );
 };
 
-const CustomXaxisText = (props: any) => {
-  // const {payload } = props
-//   console.log(props);
-  return <Text color="red">payload.value</Text>;
-};
-
-interface IssuingBarChartProps {
-  data: dataType[];
-  labelY: string;
-  labelX: string;
-}
-
 export const IssuingBarChart = (props: IssuingBarChartProps) => {
   const { data, labelX, labelY } = props;
   return (
@@ -249,7 +201,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
             fill="#364657"
           />
         </YAxis>
-        <XAxis dataKey="name" tickLine={false} axisLine={false}>
+        <XAxis dataKey="channel" tickLine={false} axisLine={false}>
           <Label
             value={labelX}
             offset={5}
@@ -259,7 +211,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
           />
         </XAxis>
         <CartesianGrid strokeDasharray="7" vertical={false} />
-        <Bar dataKey="uv" fill="#096DD9" barSize={70} radius={7} />
+        <Bar dataKey="value" fill="#096DD9" barSize={70} radius={7} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -279,7 +231,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
           bottom: 20,
         }}
       >
-        <XAxis dataKey="uv" type="number">
+        <XAxis dataKey="count" type="number">
           <Label
             value={labelX}
             offset={5}
@@ -289,7 +241,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
           />
         </XAxis>
         <YAxis
-          dataKey="name"
+          dataKey="responseMessage"
           type="category"
           fontSize={14}
           tickLine={false}
@@ -307,7 +259,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
         </YAxis>
         <CartesianGrid strokeDasharray="7" horizontal={false} />
         <Bar
-          dataKey="uv"
+          dataKey="count"
           minPointSize={5}
           fill="#096DD9"
           barSize={24}
@@ -318,14 +270,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
   );
 };
 
-interface DataProps {
-  data: Data[];
-  barSize?: number;
-tickCount?: number;
-  type?: "number" | "category";
-  domain?: string[] | number[];
-  interval?: number;
-}
+
 export const IssuingBarLineChart = (props: DataProps) => {
   const { data, barSize } = props;
   return (
@@ -338,18 +283,22 @@ export const IssuingBarLineChart = (props: DataProps) => {
           bottom: 20,
         }}
       >
-        <XAxis type="category" dataKey="name">
+        <XAxis type="category" dataKey="duration">
           <Label fill="#364657" value="24hour distribution" position="bottom" />
         </XAxis>
         <YAxis type="number" />
         <Tooltip />
         <Bar dataKey="Successful" barSize={barSize} fill="#E0E4EB" />
-        <Line dot={false} type="linear" dataKey="Successful" stroke="#18A0FB" />
+        <Line dot={false} type="linear" dataKey="value" stroke="#18A0FB" />
       </ComposedChart>
     </ResponsiveContainer>
   );
 };
 
+  const formatTick = (value:string) => {
+    const val = value && value.length > 3 ? value.slice(0,3):value
+    return val
+  }
 export const IssuingLineChartSingle = (props: DataProps) => {
   const { data, tickCount, interval, type } = props;
   return (
@@ -357,18 +306,20 @@ export const IssuingLineChartSingle = (props: DataProps) => {
       <LineChart height={400} data={data}>
         <CartesianGrid strokeDasharray="7" vertical={false} horizontal={true} />
         <XAxis
-          type="category"
-          dataKey="name"
+        //   type="category"
+          dataKey="duration"
+        //   type="number"
           tickLine={false}
           interval={interval}
           tickCount={tickCount}
+          tickFormatter={formatTick}
         />
         <YAxis type="number" tickLine={false} unit="M" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
         <Line
           dot={false}
           type="monotone"
-          dataKey="failed"
+          dataKey="count"
           stroke="#0275D8"
           strokeWidth={3}
         />
@@ -377,36 +328,4 @@ export const IssuingLineChartSingle = (props: DataProps) => {
   );
 };
 
-// export const IssuingLineChart = (props) => {
-//     const { data } = props
-// tick={<CustomXaxisText />}
-//     return (
-//         // <ResponsiveContainer width="100%" height="100%">
-//         <LineChart width={500} height={300} data={data}>
-//           <CartesianGrid strokeDasharray="3 3" />
-//           <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
-//           <YAxis />
-//           <Tooltip />
-//           <Legend />
-//           <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-//           <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-//         </LineChart>
-//     //   </ResponsiveContainer>
-//     );
-// }
 
-//  default GrpLineChart
-
-{
-  /* <ResponsiveContainer width="100%" height="100%">
-        <LineChart width={500} height={300} data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-        </LineChart>
-      </ResponsiveContainer> */
-}

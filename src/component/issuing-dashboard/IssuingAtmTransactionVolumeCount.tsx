@@ -8,13 +8,13 @@ import {
   IssuingLineChartSingle,
 } from "../app-charts";
 import { chartContainerSx } from "../../sx";
-import { data, data2, data3, data4 } from '.'
-
-let defaultUrlVolChannel = ""
-
-import {dataMonth, dataYear } from "../../dummyData/data";
-import { StatsContext } from "../../providers";
-
+import { AuthContext, StatsContext } from "../../providers";
+import { getUrlForSuperadminORBankAdmin } from "../../lib";
+import { apiUrlsv1, appRoles } from "../../constants";
+import useSWR from "swr";
+import { IssuingFaileSuccessProps } from "../../models/issuing-dashboard";
+import { data2 } from ".";
+import { sumBy } from "lodash";
 
 const containerType = {
   width: "100%",
@@ -25,17 +25,18 @@ const dashStroke = {
   hasStroke: true,
   strokeDasharray: "3 3",
 };
-export const IssuingAtmTransactionVolumeCount = () => {
+
+export const IssuingAtmTransactionVolumeCount = ({data}:IssuingFaileSuccessProps) => {
   const lines = [
     {
       type: "monotone",
-      dataKey: "Successful",
+      dataKey: "successValue",
       stroke: "#C6F8DF",
       activeDot: { r: 8 },
     },
     {
       type: "monotone",
-      dataKey: "failed",
+      dataKey: "failedValue",
       stroke: "#DC4437",
       activeDot: { r: 8 },
     },
@@ -46,7 +47,7 @@ export const IssuingAtmTransactionVolumeCount = () => {
         lines={lines}
         width={500}
         height={300}
-        dataKey="name"
+        dataKey="duration"
         data={data}
         container={containerType}
         stroke={dashStroke}
@@ -56,82 +57,114 @@ export const IssuingAtmTransactionVolumeCount = () => {
 };
 
 export const TransactionTypeBarChart = () => {
+    const { userDetail } = useContext(AuthContext);
+    const { transactionPeriod, selectedTenantCode } = useContext(StatsContext);
+
+    const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
+
+    let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
+
+    transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume/channel`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}` :`${transactionCountVolumeUrl}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+    const { isValidating, mutate, data, error } = useSWR(
+        userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
+      );
+
   return (
     <>
       <IssuingBarChart
         labelY="Volume of each transaction types issuing"
-        labelX="Daily total ATM transaction metrics"
-        data={data2}
+        labelX={`${transactionPeriod} total ATM transaction metrics`}
+        data={data?.response[0]}
       />
     </>
   );
 };
 
 export const BarChartHorizontal = () => {
-    const { transactionPeriod } = useContext(StatsContext)
+    const { userDetail } = useContext(AuthContext);
+    const { transactionPeriod, selectedTenantCode } = useContext(StatsContext)
+    const tenantTopFailuredResons = apiUrlsv1.issuingFailedReasonsTenant
+    let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
+    const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
+
+    transactionCountVolumeUrl = `${transactionCountVolumeUrl}/failed-transaction`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`:`${tenantTopFailuredResons}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+    const { isValidating, mutate, data, error } = useSWR(
+        userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
+      );
+      
   return (
     <Flex width="50%" sx={chartContainerSx}>
-      <Text variant="chart-header">`${transactionPeriod}` transaction volume</Text>
+      <Text variant="chart-header">{transactionPeriod} transaction failure reasons</Text>
       <IssuingBarChartHorizontal
         labelX="Transaction volume"
         labelY="Top 15 transaction response codes"
-        data={data3}
+        data={data?.response}
       />
     </Flex>
   );
 };
 
 export const IssuingTranValueChart = () => {
-  const isData = false;
-  const isDataYear = false;
+    const { userDetail } = useContext(AuthContext);
+    const { transactionPeriod, selectedTenantCode } = useContext(StatsContext)
+    let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
+
+    const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
+
+    transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`:`${transactionCountVolumeUrl}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+
+    // transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`
+    const { isValidating, mutate, data, error } = useSWR(
+        userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
+      );
+
   return (
-    <Flex height="100%" width="60%" sx={chartContainerSx}>
-      {isData ? (
-        <Text variant="chart-header">
-          Daily breakdown of issuing transaction value
+    <Flex height="100%" width="50%" sx={chartContainerSx}>
+      <Text variant="chart-header">
+          {transactionPeriod} breakdown of issuing transaction value
         </Text>
-      ) : isDataYear ? (
-        <Text variant="chart-header">
-          Monthly breakdown of issuing transaction value
-        </Text>
-      ) : (
-        <Text variant="chart-header">
-          Weekly breakdown of issuing transaction value
-        </Text>
-      )}
 
       <IssuingBarLineChart
-        barSize={isData || isDataYear ? 20 : 63}
-        data={isData ? data : isDataYear ? dataYear : dataMonth}
+        barSize={20}
+        data={data?.response?.transactionDetails}
       />
     </Flex>
   );
 };
 
 export const IssuingTranVolumeChart = () => {
-  const isData = false;
-  const isDataYear = false;
-  const newDataMonth = dataMonth.map((result) => result.name.split("/")[0]);
-  console.log(newDataMonth);
+    const { userDetail } = useContext(AuthContext);
+    const { transactionPeriod, selectedTenantCode } = useContext(StatsContext)
+    let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode );
+
+    const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
+
+    transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`:`${transactionCountVolumeUrl}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+
+    // transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`
+    const { isValidating, mutate, data, error } = useSWR(
+        userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
+      );
+
+      const totalFailedTransaction = data && data.length > 0 ? sumBy(data?.response?.transactionDetails, (count:number) => count):0
+
   return (
-    <Flex width="40%" sx={chartContainerSx}>
+    <Flex width="50%" sx={chartContainerSx}>
       <HStack justifyContent="space-between">
-        {isData ? (
-          <Text variant="chart-header">Daily count of Issued cards</Text>
-        ) : isDataYear ? (
-          <Text variant="chart-header">Monthly count of Issued cards</Text>
-        ) : (
-          <Text variant="chart-header">Weekly count of Issued cards</Text>
-        )}
+      <Text variant="chart-header">{transactionPeriod} count of Issued cards</Text>
         <Tag>
-          Total: <strong>930</strong>
+          Total: <strong>{totalFailedTransaction}</strong>
         </Tag>
       </HStack>
       <IssuingLineChartSingle
-        data={isData ? data : isDataYear ? dataYear : dataMonth}
-        tickCount={isData ? 24 : isDataYear ? 6 : 7}
-        type={isData ? "number" : "category"}
-        interval={isDataYear || isData ? 1 : 0}
+        data={data?.response?.transactionDetails}
+        tickCount={6}
+        type="number"
+        interval={0}
       />
     </Flex>
   );

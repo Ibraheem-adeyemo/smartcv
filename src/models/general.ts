@@ -66,6 +66,7 @@ export interface apiUrlsv1Model {
     tenant: string,
     tenantAdmin: string,
     transactionDetails: string,
+    transactionVolume:string
     realTimeTransactionReport:string,
     user: string,
     loginWithCredential: string,
@@ -73,6 +74,7 @@ export interface apiUrlsv1Model {
     issuingVolume: string,
     issuingVolumeStatus: string;
     issuingVolumeStatusAdmin: string;
+    issuingFailedReasonsTenant:string
     issuingVolumeChannel: string;
     issuingVolumeChannelAdmin: string
 }
