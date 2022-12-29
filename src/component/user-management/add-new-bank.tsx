@@ -119,7 +119,6 @@ const AddNewBank:FC = () => {
           })
       }
         handleToggleModal({ ...selectedModal, isSubmitted: !selectedModal.isSubmitted })
-        // console.log()
         changeLoading((prev) => ({ isLoading: false, text: "" }))
     }, [form])
     useEffect(() => {

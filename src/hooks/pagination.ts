@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function usePagination<T extends Record<keyof T, T[keyof T]>>(initialCountPerPage: number) {
-    // console.log({totalNumber, initialCountPerPage})
-  
+export default function usePagination<T extends Record<keyof T, T[keyof T]>>(initialCountPerPage: number) {  
 
     const initialIndex = 1
     const [pageNumber, setPageNumber] = useState(initialIndex)

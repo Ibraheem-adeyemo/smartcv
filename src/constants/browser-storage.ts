@@ -45,7 +45,9 @@ export enum sessionStorageTimeout {
 }
 
 export enum localStorageKeys {
-    user = "user"
+    user = "user",
+    authMode= "authMode",
+    credential='credentials'
 }
 
 export const a = "co"

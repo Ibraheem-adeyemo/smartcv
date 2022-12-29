@@ -1,24 +1,19 @@
 import { useCallback, useEffect, useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiUrlsv1, appRoles, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, SECRET } from '../constants'
-import { fetchJson, getCookie, setCookie } from '../lib'
-import { AuthModel, RefreshTokenRequestBody, TokenRequestBody, TokenResponsBody, UserModel } from '../models'
+import { apiUrlsv1, appRoles, AuthenticatedPage, CLIENT_ID, cookieKeys, cookiesTimeout, grantTypes, links, localStorageKeys, SECRET } from '../constants'
+import { fetchJson, getCookie, setCookie, setItemToLocalStorage, getItemFromLocalStorage } from '../lib'
+import { AuthModel, RefreshTokenRequestBody, TokenRequestBody, TokenResponsBody, userApiAuthModel, UserModel } from '../models';
+import axios from 'axios';
+
 export default function useAuthentication() {
-    // const url = "/api/passport"
     const url = apiUrlsv1.passporProfileUrl
+    const authMode = getCookie(localStorageKeys.authMode)
+    const userObjectFromLocalstorage = getItemFromLocalStorage(localStorageKeys.user)
     const { mutate } = useSWRConfig()
     const { data: user, mutate: _mutate, error } = useSWR<AuthModel>(typeof window === "undefined" || getCookie(cookieKeys.token) == "" ? null : url)
-    const { data: userDetail, mutate: _userDetailMutate, error:userDetailError } = useSWR<UserModel>(!user ? null : `${apiUrlsv1.getUserDetail}/${user.email}`)
-    // const userDetail: any | undefined = {
-    //     role: {
-    //         name: appRoles.superAdmin
-    //     },
-    //     tenant: {
-    //         code: "787"
-    //     }
-    // }
-    // const userDetailError:any| undefined = undefined 
-    // const [user, setUser] = useState<any>()
+    const userEmail = userObjectFromLocalstorage?.email
+    const { data: userDetail, mutate: _userDetailMutate, error:userDetailError } = useSWR<UserModel>(!user && !userEmail? null : `${apiUrlsv1.getUserDetail}/${userEmail}`)
+    
     const [token, setToken] = useState<string>(typeof window !== "undefined" ? getCookie(cookieKeys.token) : "")
 
     const postLoginAction = useCallback((token: string, refreshToken: string) => {
@@ -94,6 +89,19 @@ export default function useAuthentication() {
         }
     }, [token])
 
+    const apiLogin = async (userObject:userApiAuthModel) => {
+        try {
+            return axios.post(apiUrlsv1.loginWithCredential, userObject).then(
+                (response) => {
+                    setItemToLocalStorage(localStorageKeys.user, response.data.data.passport)
+                    postLoginAction(response.data.data.passport.access_token, response.data.data.passport.refresh_token)
+                }
+            )
+        } catch (error) {
+            throw error;
+            
+        }
+    }
 
 
     const loginWithPassport = useCallback(async (code: string) => {
@@ -116,7 +124,7 @@ export default function useAuthentication() {
                     Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body: urlencoded
+                body //: urlencoded
             })
 
             if (typeof response !== "undefined") {
@@ -126,25 +134,7 @@ export default function useAuthentication() {
         } catch (error) {
             throw error
         }
-        // } else {
-        //     try {
-        //         const response = await fetchJson<TokenResponsBody>("/api/passport-token", {
-        //             method: "POST",
-        //             headers: {
-        //                 Authorization: `Basic ${btoa(CLIENT_ID + ':' + SECRET)}`,
-        //                 "Content-Type": "application/x-www-form-urlencoded"
-        //             },
-        //         })
-        //       
-        //         if (typeof response !== "undefined") {
-        //             postLoginAction(response.access_token)
-        //             mutate(url)
-        //             window.location.href = links.dashboard
-        //         }
-        //     } catch (error) {
-        //         throw error
-        //     }
-        // }
+        
 
     }, [])
 
@@ -176,6 +166,6 @@ export default function useAuthentication() {
         }
     },[])
 
-    return { user, userDetail, token, error, userDetailError, signIn, signOut, loginWithPassport, refreshAccessToken }
+    return { user, userDetail, token, error, userDetailError, authMode, signIn, signOut, loginWithPassport, apiLogin, refreshAccessToken }
 }
 

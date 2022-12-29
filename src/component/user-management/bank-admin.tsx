@@ -12,7 +12,6 @@ import AddNewRole from "./add-new-role";
 
 
 const BankAdminTable:FC = () => {
-    // console.log({pageNumber})
 
     const { token, userDetail } = useContext(AuthContext)
     const { selectedTenantCode } = useContext(StatsContext)

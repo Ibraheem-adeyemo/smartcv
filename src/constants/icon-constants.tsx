@@ -4,7 +4,7 @@ import { FiUsers } from "react-icons/fi"
 import { HiOutlineClipboardList, HiChevronDown } from 'react-icons/hi'
 import { AiOutlineAudit, AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
 import { FaRegCalendarAlt } from 'react-icons/fa'
-import { TiTick } from 'react-icons/ti'
+import { TiTick, TiArrowDownThick } from 'react-icons/ti'
 import { MdOutlineInvertColors } from 'react-icons/md'
 import { BsGear } from 'react-icons/bs'
 import { GiCapitol } from 'react-icons/gi'
@@ -20,6 +20,8 @@ export const transactionMonitoringIcon = forwardRef((props, ref) => <Icon as={Fi
 export const channelsMonitoringIcon = forwardRef((props, ref) => <Icon as={IoNewspaperOutline} {...props} ref={ref} />)
 
 export const InterchangeDisconnectionIcon = forwardRef((props, ref) => <Icon as={HiOutlineClipboardList} {...props} ref={ref} />)
+
+export const ForwardQueue = forwardRef((props, ref) => <Icon as={TiArrowDownThick} {...props} ref={ref} />)
 
 export const userManagementIcon = forwardRef((props, ref) => <Icon as={HiOutlineClipboardList} {...props} ref={ref} />)
 

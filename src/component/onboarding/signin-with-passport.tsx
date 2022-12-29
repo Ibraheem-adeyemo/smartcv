@@ -63,8 +63,7 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
                 })
                 const data = (await response.json()) as tenantAdmin
                 if (response.ok || response.status === 200 || response.status === 201) {
-                  
-                    props.setUserAuthority(data)
+                    props.setUserAuthority({...data, password: form?.password})
                 } else {
                     throw {
                         ...new Error(response.statusText),
@@ -79,7 +78,6 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
             })
         } catch (error: any) {
           
-            // console.log({error})
             if (typeof error.data !== "undefined") {
                 toast({
                     title: error.data.error_description,
@@ -113,8 +111,6 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
     useEffect(() => {
         if (typeof canNotSubmit !== "undefined") {
             if (!canNotSubmit) {
-                // debbuger
-                // console.log({ PASSPORT_TOKEN_URL })
                 setForm({
                     postUrl: apiUrlsv1.passportTokenUrl,
                     completed: true

@@ -178,8 +178,6 @@ const CreateSuperAdminWithoutExistingSuperAdminAccount:React.FC = () => {
 
     }, [onboarding?.tenantAdmin])
 
-    // useEffect(() => console.log({ canNotSubmit }), [canNotSubmit])
-
     useEffect(() => {
         refresh("tenantAdmin", 1)
     }, [ ])

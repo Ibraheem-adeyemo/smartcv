@@ -48,12 +48,14 @@ export interface apiUrlsv1Model {
     createRole: string,
     createTenantAdmin: string,
     deactivateTenant: string,
+    forwardQueue: string,
     getUserDetail: string,
     healthCheck: string,
     interChange: string,
     interchangeDisconnectionRequest: string,
     interchangeDisconnectionStatus: string,
     iswAdmin: string,
+    issuingTransactionMetrics: string,
     passporProfileUrl: string,
     passportUrl: string,
     passportTokenUrl: string,
@@ -63,8 +65,18 @@ export interface apiUrlsv1Model {
     states: string,
     tenant: string,
     tenantAdmin: string,
+    transactionDetails: string,
+    transactionVolume:string
+    realTimeTransactionReport:string,
     user: string,
-    loginWithCredential: string
+    loginWithCredential: string,
+    issuingVolumeAdmin: string,
+    issuingVolume: string,
+    issuingVolumeStatus: string;
+    issuingVolumeStatusAdmin: string;
+    issuingFailedReasonsTenant:string
+    issuingVolumeChannel: string;
+    issuingVolumeChannelAdmin: string
 }
 
 type performAction = <T extends Record<keyof T, T[keyof T]>>(x: T) => void

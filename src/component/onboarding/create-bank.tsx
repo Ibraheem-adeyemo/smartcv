@@ -59,15 +59,9 @@ const CreateBank:React.FC<CreateBankProps> = (props: CreateBankProps) => {
         addInfo("tenant", ele.id as keyof Tenant, value)
     }, [onboarding?.tenant])
 
-    // useEffect(() => console.log({ canNotSubmit }), [canNotSubmit])
-
     useEffect(() => {
         refresh("tenant", 0)
     }, [])
-
-    useEffect(() => {
-        // console.error({stateError: error})
-    }, [error])
 
     useEffect(() => {
       

@@ -3,6 +3,7 @@ import React, { FC, memo, useMemo } from "react"
 import { keysForArrayComponents, TickIcon } from "../constants"
 import { MotionFlex, MotionList, MotionListItem, MotionText } from "./framer"
 
+// eslint-disable-next-line react/display-name
 const MissionStatement: FC = memo(() => {
     const missionStatement = [{
         missionHead: "ATM & Transaction monitoring",

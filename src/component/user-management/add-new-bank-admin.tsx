@@ -87,7 +87,6 @@ interface AddNewBankAdminProps {
 
         changeLoading(() => ({ isLoading: true, text: "Creating user" }))
         try {
-            console.log(form)
             if (form) {
                 await createBankAdmin({ ...form } as unknown as bankAdmin)
                 refreshForm()
@@ -136,7 +135,6 @@ interface AddNewBankAdminProps {
     }, [form])
 
     useEffect(() => {
-      console.log(otherValidations, canNotSubmit)
         if (typeof otherValidations !== "undefined") {
           
             if (otherValidations) {

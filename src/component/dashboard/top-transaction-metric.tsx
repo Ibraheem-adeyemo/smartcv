@@ -14,7 +14,6 @@ const TopTransactionMetri:FC = () => {
     const [loading, setLoading] = useState(true)
     const [stats, setStats] = useState<StatsCMore[]>()
     useEffect(() => {
-        // console.log("waiting")
         const getStats = () => {
 
             setLoading(prev => !prev)

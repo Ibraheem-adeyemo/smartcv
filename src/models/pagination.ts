@@ -26,6 +26,6 @@ export interface Paginate<T extends Record<keyof T, T[keyof T]>>{
     size?: number,
     number?: number,
     empty?: boolean,
-    content?: T[]
-
+    content?: T[],
+    realtimeTransactionVolumeList?: T[]
 }

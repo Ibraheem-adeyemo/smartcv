@@ -20,7 +20,6 @@ const ActivateAccount: FC<ActivateAccountProps> = (props: ActivateAccountProps) 
     const { data, error } = useSWR<APIResponse<any>>(url)
     const [extraMessage, setExtraMessage] = useState("")
     useEffect(() => {
-        console.error({error})
         if(error && typeof error === "string" && error.toLowerCase() === "token is expired" ) {
             setExtraMessage("login to resend activation mail")
         } else {

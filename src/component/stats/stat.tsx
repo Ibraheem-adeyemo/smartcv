@@ -1,5 +1,6 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Icon, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
+import { BsArrowUpCircle } from "react-icons/bs";
 import { appear, delayChildren } from "../../animations";
 import { shortenNumber } from "../../lib";
 import { StatProps } from "../../models";
@@ -25,13 +26,13 @@ const Stat:FC<StatProps> = (props: StatProps) => {
         <Flex mt="auto" flexDir="column">
           <Flex color="#353F50" flexDir="column">
             <AnimatedText sx={statsTotalNumberTextSX}>
-              Total Number
+              {props.title}
             </AnimatedText>
             <AnimatedText sx={statsTotalNumberValueSX}>
               {props.prefix}{val}{props.suffix}
             </AnimatedText>
           </Flex>
-          {/* <Flex w="100%" justifyContent="flex-start" gap="6.4px" >
+          <Flex w="100%" justifyContent="flex-start" gap="6.4px" >
             <Icon as={BsArrowUpCircle} fill={props.status} flexGrow={1} />
             <Text fontSize="13px" flexGrow={2}>
               {props.percentage}
@@ -39,7 +40,7 @@ const Stat:FC<StatProps> = (props: StatProps) => {
             <Text fontSize="11px" color="brand.muted" flexGrow={3}>
               {props.days}
             </Text>
-          </Flex> */}
+          </Flex>
         </Flex>
       </MotionFlex>
     </MotionFlex>
