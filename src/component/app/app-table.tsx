@@ -1,4 +1,4 @@
-import { Icon, Menu, MenuButton, MenuItem, MenuList, Tfoot, Button, HStack, Text } from "@chakra-ui/react";
+import { Icon, Menu, MenuButton, MenuItem, MenuList, Tfoot, Button, HStack, Text, Flex } from "@chakra-ui/react";
 import { Td, Tr } from "@chakra-ui/table";
 import _, { get, map, range, reduce } from "lodash";
 import dynamic from "next/dynamic";
@@ -54,8 +54,14 @@ const TdElement = <T extends Record<keyof T, T[keyof T]>>(tdElementProps: TdElem
                 return <AnimatedText>{appDate(tdElementProps.data)}</AnimatedText>
             case appTableElements.date:
                 return <AnimatedText>{appDate(tdElementProps.data, false)}</AnimatedText>
+            //case typeof tdElementProps.column.ele === 'function':
             default:
-                return <AnimatedText>{tdElementProps.data}</AnimatedText>
+                // typeof tdElementProps.column.ele === 'function'?
+                return <Flex>
+                    <AnimatedText>{tdElementProps.data} </AnimatedText>
+                    { typeof tdElementProps.column.ele === 'function'? tdElementProps.column.ele(tdElementProps.data) : ''}
+
+                    </Flex>
         }
     }
     return tdElementProps.data ? <>{tdElementProps.data}</> : <></>
@@ -74,7 +80,6 @@ const TdSN = (props: { pageindex: number, pageNumber: number, countPerPage: numb
 const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false, showAllAction = false, ...props }: ApptableProps<T>) => {
 
     const { totalPageNumber, pageNumber, countPerPage } = useContext(PaginatorContext)
-    // console.log({rows: props.rows})
     const isActionAvailable = typeof props.actions !== "undefined" && props.actions.length > 0
     const ifPrefixExists = (column: Column) => typeof column.prefix !== "undefined" && column.prefix !== ""
     const ifSuffixExists = (column: Column) => typeof column.suffix !== "undefined" && column.suffix !== ""
@@ -106,7 +111,7 @@ const AppTable = <T extends Record<keyof T, T[keyof T]>>({ showNumbering = false
                     {showNumbering && <MotionTd sx={showNumberColumnSX}>#</MotionTd>}
                     {map(props.columns, (x, i, arr) => <MotionTd
                         key={`${keysForArrayComponents.tableColumn}-${i}`}
-                        sx={columnSX({ columnArray: arr, columnIndex: i, showNumbering, isActionUnavailable })}  >{x.name}</MotionTd>)}
+                        sx={columnSX({ columnArray: arr, columnIndex: i, showNumbering, isActionUnavailable })}>{x.name}</MotionTd>)}
                     {isActionAvailable &&
                         <MotionTd
                             sx={{

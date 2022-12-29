@@ -14,7 +14,6 @@ const AppTableFooter: FC = () => {
         gotoPage
     } = useContext(PaginatorContext)
 
-    // console.log({ pageNumber, totalPageNumber })
     return (<>
         {typeof totalPageNumber !== "undefined" &&
             <HStack spacing="8px" justifyContent="right">

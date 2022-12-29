@@ -27,7 +27,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
   const [selectedUrl, setSelectedUrl] = useState<string>();
   const [selectedHeaderName, setSelectedHeaderName] = useState<string>();
   const { token, userDetail } = useContext(AuthContext)
-  const { selectedTenantCode, institutions, institutionsError } = useContext(StatsContext)
+  const { selectedTenantCode, institutions, institutionsError, dataDuration } = useContext(StatsContext)
   let atmInSupervisorUrl = apiUrlsv1.atmInSupervisor
   if (userDetail && (userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
 
@@ -44,8 +44,6 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
   const toast = useToast()
 
   useEffect(() => {
-    // console.log("waiting")
-
     const getStats = () => {
 
       const boxSize = {
@@ -61,7 +59,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
         totalNumber: atmInSupervisor && typeof atmInSupervisor.content !== "undefined" ? sumBy(atmInSupervisor.content, (atm) => atm.count) : 0,
         status: "green",
         percentage: "6.0%",
-        days: "Last 7 days",
+        days: dataDuration,
         url: apiUrlsv1.atmInSupervisor
       }, {
         ...boxSize,
@@ -69,7 +67,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
         totalNumber: 0,
         status: "green",
         percentage: "6.0%",
-        days: "Last 7 days",
+        days: dataDuration,
         url: ""
       }, {
         ...boxSize,
@@ -77,7 +75,7 @@ const TerminalsUnderWatch: FC<TerminalsUnderWatchProps> = ({ showDetails = false
         totalNumber: 0,
         status: "red",
         percentage: "6.0%",
-        days: "Last 7 days",
+        days: dataDuration,
         url: "",
         comingSoon: true
       }]

@@ -1,9 +1,10 @@
 import { dataAttr } from "@chakra-ui/utils";
 import _ from "lodash";
 import { NextApiResponse } from "next";
-import { getCookie } from ".";
-import { cookieKeys, months, notificationMesage, amountAbbrevications, apiUrlsv1 } from "../constants";
-import { APIResponse } from "../models";
+import { getCookie, getItemFromLocalStorage } from ".";
+import { cookieKeys, months, notificationMesage, amountAbbrevications, apiUrlsv1, localStorageKeys } from "../constants";
+import { APIResponse, formatedRealtimeObject, RealTimeObject, TransactionPropObject } from "../models";
+import axios from "axios";
 
 export function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
@@ -45,6 +46,10 @@ export function validateNumber(str: string) {
     return /[0-9]/.test(str)
 }
 
+export function getUrlForSuperadminORBankAdmin(urlArr:string, tenantCode:number|string|undefined):string {
+    return tenantCode && tenantCode !== '0' ? `${urlArr}/tenant` : urlArr
+}
+
 
 export function validateEmail(email: string) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -75,16 +80,21 @@ export function appDate(dateStr: string, withTime = true) {
         if (withTime) {
             fullDate += ` | ${hour === 0 ? 12 : hour}:${minuteString.length === 2 ? minute : 0 + minuteString}${d}`
         }
+
         return fullDate
     }
     return fullDate
 }
 
-export async function checkIfOnline():Promise<boolean> {
+export async function checkIfOnline():Promise<boolean> {    
     try {
-        const online = await fetch(apiUrlsv1.healthCheck);
-        return online.status >= 200 && online.status < 300; // either true or false
-
+        const authMode = getItemFromLocalStorage(localStorageKeys.authMode)
+        if(authMode === localStorageKeys.credential) {
+            return true
+        } else {
+            const online = await fetch(apiUrlsv1.healthCheck);
+            return online.status >= 200 && online.status < 300; // either true or false        
+        }
     } catch (error) {
         return false
     }
@@ -112,18 +122,17 @@ export function addHoursToDate (date:Date, num:number, type?:string):Date {
 export const formatTime = (tim: string) => {   
     const timeArr = tim.split('/') 
         const eqDate = new Date(`${timeArr[1]}/${timeArr[0]}/${timeArr[2]}`)
-console.log(eqDate, timeArr)
     if(!isNaN(eqDate.getFullYear())) {
         return `${eqDate.getFullYear()}/${addZero(eqDate.getMonth()+1)}/${addZero(eqDate.getDate())} ${addZero(eqDate.getHours())}:${addZero(eqDate.getMinutes())}:${addZero(eqDate.getSeconds())}`
     } 
     return ''
 }
+ 
 
 export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: RequestInfo, init?: RequestInit & any): Promise<T> {
-
+    
     try {
         if (await checkIfOnline()) {
-
             let token = typeof window !== "undefined" ? getCookie(cookieKeys.token) : ""
             const response = token !== "" ? await fetch(input, typeof init === "undefined" ? {
                 method: "GET",
@@ -151,7 +160,6 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
                 throw `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`
             }
         } else {
-
             throw notificationMesage.offline
         }
 
@@ -159,4 +167,45 @@ export async function fetchJson<T extends Record<keyof T, T[keyof T]>>(input: Re
         throw error
     }
 
+}
+
+const getTimeFromDate = (dat:string):string => {
+    const dateFormat = new Date(dat)
+    return `${dateFormat.getHours()}:${dateFormat.getMinutes()}`
+}
+
+const getMinuteFromDate = (dat:string):number => {
+    const dateFormat = new Date(dat)
+    return dateFormat.getMinutes()
+}
+
+export function formatRealTimeData(data:RealTimeObject[]):formatedRealtimeObject {
+    let responseDTOList:RealTimeObject[] = [],
+    transactionCountResponseList:TransactionPropObject[] = []
+    // const formatedData = []
+    data.map(dataObj => {
+        return {...dataObj, minute:getMinuteFromDate(dataObj.endDate), startDate: getTimeFromDate(dataObj.endDate) }
+    }).sort((a,b) => {
+        return new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    }).forEach(item => {
+        responseDTOList.push(item)
+        item.transactionDetailsResponseDTOList.forEach(itm => {
+            transactionCountResponseList.push(itm)
+        })
+    })
+    return {responseDTOList, transactionCountResponseList}
+}
+
+export async function fetchg<T>(url: string, token:string, startTime:string, countInterval: number, duration:number, endTime:string ) {
+    const result = await fetchJson<T>(url, {
+        method: "GET",
+        headers: {
+            Authorization: `bearer ${token}`,
+            "TRAN-MON-START-DATETIME": startTime.split(".").length > 1 ? startTime.split(".")[0] +"."+ startTime.split(".")[1]  : startTime + '.000',
+            "TRAN-MON-INTERVAL": countInterval,
+            "TRAN-MON-DURATION": duration,
+            "TRAN-MON-END-DATETIME": endTime.split(".").length > 1 ? endTime.split(".")[0] +"."+ endTime.split(".")[1]  : endTime + '.000'
+        }
+    })
+    return result
 }

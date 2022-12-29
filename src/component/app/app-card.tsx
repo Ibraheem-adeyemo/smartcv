@@ -12,7 +12,7 @@ interface AppCardProps extends ComponentWithChildren {
 
 const AppCard: FC<AppCardProps> = (props: AppCardProps) => {
     return (
-        <MotionFlex variants={delayChildren} sx={appCardMainSX({ width: props.width })}>
+        <MotionFlex variants={delayChildren} height='100%' sx={appCardMainSX({ width: props.width })}>
             <Box w="100%">{props.topic}</Box>
             <Flex gap="19px">
                 {props.children}

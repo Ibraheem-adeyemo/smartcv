@@ -71,9 +71,7 @@ const LoadAvatar: FC<LoadAvatarProps> = (props: LoadAvatarProps) => {
 const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
     const { cantVew, getSelectedApp, sendCreatedAccount, isOnCrossDomain } = useContext(CrossDomainOnboardingContext)
     const { steps, onboarding, startLoading, stopLoading } = useContext(OnboardingContext)
-    // useEffect(() => console.log({ c: onboarding }))
     const router = useRouter()
-    // console.log({ router })
     const { step } = router.query
     const toast = useToast()
 
@@ -86,7 +84,6 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
 
     const createAccount = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // console.log({ isOnCrossDomain })
         startLoading()
         try {
             if (typeof onboarding !== "undefined") {
@@ -123,7 +120,6 @@ const Onboarding: FC<OnboardingProps> = (props: OnboardingProps) => {
                     variant: "left-accent"
                 })
             }
-            // console.error({ createAccountError: error })
             stopLoading()
         }
     }, [onboarding])

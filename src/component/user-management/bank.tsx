@@ -16,7 +16,6 @@ import AddNewBankAdmin from "./add-new-bank-admin";
 const AddNewBank = dynamic(() => import('./add-new-bank'), { ssr: false })
 
 const BankTable: FC = () => {
-    // console.log({pageNumber})
     const toast = useToast()
     const { token } = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)

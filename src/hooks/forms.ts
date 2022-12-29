@@ -14,9 +14,6 @@ export default function useForm<T extends Record< keyof T, T[keyof T]>>(initialM
 
     }, [refresh])
 
-    useEffect(() => {
-        // console.log({ form })
-    }, [form])
     const formOnChange = useCallback((value: Record<keyof T & formType, any>) => {
       
         setForm((prev) => ({

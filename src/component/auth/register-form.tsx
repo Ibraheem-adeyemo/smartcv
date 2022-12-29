@@ -25,7 +25,7 @@ const RegisterForm: FC = () => {
             // debugger
             setLoading({ isLoading: true, text: "Confirming" })
             const data = await getInterchangeById(interChangeId as string)
-            if (typeof data.statusCondition !== "undefined" && +data.statusCondition === 1 && typeof interChangeId !== "undefined") {
+            if (typeof data.statusCondition !== "undefined" && typeof interChangeId !== "undefined") {
                 // debugger
                 setCookie(cookieKeys.interchangeId, interChangeId, cookiesTimeout.interchangeIdTimeout)
                 if (isOnCrossDomain) {
@@ -47,8 +47,6 @@ const RegisterForm: FC = () => {
                 throw new Error(`${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`)
             }
         } catch (error: any) {
-            // console.error({ getInterChangebyInterchangeIdError: error })
-
                 toast({
                     status: "error",
                     title: error? error.message?error.message : error: `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`,
@@ -133,7 +131,7 @@ const RegisterForm: FC = () => {
                     </MotionFlex>
                 </MotionFlex>
             </form>)}
-            {cantVew && <Flex flexDir="column" gap="36px" px="66px" bg="white" borderRadius="6px" alignItems="center" w="633px" py="36px"><Text variant="card-header" size="page-header">You can't view This page</Text></Flex>}
+            {cantVew && <Flex flexDir="column" gap="36px" px="66px" bg="white" borderRadius="6px" alignItems="center" w="633px" py="36px"><Text variant="card-header" size="page-header">You can not view This page</Text></Flex>}
         </>
     )
 }

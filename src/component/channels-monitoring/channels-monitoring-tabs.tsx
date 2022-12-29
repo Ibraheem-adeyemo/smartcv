@@ -10,9 +10,7 @@ const ChannelsMonitoringTabs: FC = () => {
 
     modifyTab({ ...tabs[i], isSelected: true }, i)
   }
-  useEffect(() => {
-    // console.log({tabs})
-  }, [tabs])
+ 
   return (
     <MotionButtonGroup spacing="0" animate="show" initial="hide" variants={appear(1)}>
       {tabs.map((x, i, arr) => x.url && (

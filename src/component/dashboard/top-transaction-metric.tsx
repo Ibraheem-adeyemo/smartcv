@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
 import { StatsCMore } from "../../models";
-import { Barchart } from "../app-charts";
+import { Barchart, SimpleBarchart, TotalTransactionBarChart } from "../app-charts";
 import { Flex, Text } from "@chakra-ui/react";
 import DropdownSearchFilter from "../stats/search-filters";
 import { months } from "../../constants";
@@ -13,8 +13,20 @@ const TopTransactionMetri:FC = () => {
 
     const [loading, setLoading] = useState(true)
     const [stats, setStats] = useState<StatsCMore[]>()
+
+    const dumData = [
+        {
+            value:0,
+            // volume:4005,
+            name:  'volume'
+        },
+        {
+            // value:6005487654,
+            volume:0,
+            name:  'value'
+        }
+    ]
     useEffect(() => {
-        // console.log("waiting")
         const getStats = () => {
 
             setLoading(prev => !prev)
@@ -46,6 +58,8 @@ const TopTransactionMetri:FC = () => {
         }
         setStats(getStats())
     }, [])
+
+   
     return <AppCard topic={
         <Flex>
             <AnimatedText variant="card-header" size="card-header">Total Transction Metric</AnimatedText>
@@ -55,12 +69,15 @@ const TopTransactionMetri:FC = () => {
         </Flex>}
 
     >
-        {!loading ?
+        <TotalTransactionBarChart data={dumData} />
+        {/* <SimpleBarchart data={stats} dataKey={dataKeys}  /> */}
+        {/* {!loading ?
             <>
-                {stats?.map((x, i) => <Barchart key={i} {...x} />)}
+                <SimpleBarchart data={stats} dataKey={dataKeys}  />
+                {/* {stats?.map((x, i) => <Barchart key={i} {...x} />)} 
             </> : <SkeletonLoader rows={1} columns={2} width="10px" height="200px" gap="30px" loaderKey="top-transaction-metric-app-card" />
 
-        }
+        } */}
     </AppCard>
 }
 

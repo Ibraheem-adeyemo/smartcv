@@ -32,8 +32,6 @@ const ActivateTenant:FC<ActivateTenantProps> = (props: ActivateTenantProps) => {
             mutate(apiUrlsv1.tenant)
             props.reload(true)
         } catch (error: any) {
-            // debugger
-            // console.log({error})
             toast({
               status: "error",
               title: typeof error !== "undefined" ? (typeof error.message !== "undefined"? error.message: error): notificationMesage.AnErrorOccurred,

@@ -1,5 +1,6 @@
+/* eslint-disable react/display-name */
 import React, { FC, memo, useContext, useEffect } from "react";
-import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, AuthenticatedPage, menuNames, cookieKeys, keysForArrayComponents } from "../../constants";
+import { dashboardIcon, userManagementIcon, auditIcon, systemSettingsIcon, transactionMonitoringIcon, channelsMonitoringIcon, InterchangeDisconnectionIcon, ForwardQueue, AuthenticatedPage, menuNames, cookieKeys, keysForArrayComponents } from "../../constants";
 import { InterswitchLogo } from "../custom-component";
 import { Avatar, Button, Flex, Grid, GridItem, Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList, SkeletonCircle, Text } from "@chakra-ui/react";
 import { SkeletonLoader } from "..";
@@ -20,17 +21,15 @@ interface AuthenticatedLayoutProps extends ComponentWithChildren {
 }
 
 const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedLayoutProps) => {
-    const { userDetail, user, signOut, error, refreshAccessToken } = useContext(AuthContext)
+    const { userDetail, user, authMode, signOut, error, refreshAccessToken } = useContext(AuthContext)
     const [animationCount, setAnmationCount] = useState(true)
     const router = useRouter()
     const [firstLoad, setFirstLoad] = useState(0)
     const [openResend, setOpenResend] = useState(false)
     const handleOnIdle = (event: any) => {
-        // console.log('user is idle', event)
-        // console.log('last active', getLastActiveTime())
     }
-    const isUserLoading = (typeof userDetail === "undefined" || typeof user === "undefined") && typeof error === "undefined"
-    const isUserLoaded = typeof userDetail !== "undefined" && typeof user !== "undefined" && typeof error === "undefined"
+    const isUserLoading = (typeof userDetail === "undefined" /*|| typeof user === "undefined"*/) && typeof error === "undefined"
+    const isUserLoaded = typeof userDetail !== "undefined" /*&& typeof user !== "undefined"*/ && (typeof error !== "undefined" || authMode !== 'passport')
     const handleOnActive = () => {
         if (typeof window !== "undefined") {
             const timeLeft = (new Date()).getTime() - (+getCookie(cookieKeys.tokenDurationDate) * 1000 * 60 * 60)
@@ -54,7 +53,6 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
         onAction: handleOnAction,
         debounce: 500
     })
-    // console.log({ session })
 
     const MenuLists = memo(() => {
         
@@ -67,11 +65,11 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
             name: menuNames.dashboard,
             link: AuthenticatedPage[0]
         },
-        /*{
+        {
             icon: transactionMonitoringIcon,
             name: menuNames.transactionMonitoring,
             link: AuthenticatedPage[1]
-        }, */
+        }, 
         {
             icon: channelsMonitoringIcon,
             name: menuNames.channelsMonitoring,
@@ -80,7 +78,12 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
             icon: InterchangeDisconnectionIcon,
             name: menuNames.interchangeDisconnection,
             link: AuthenticatedPage[3]
-        }, {
+        }, 
+        {
+            icon: ForwardQueue,
+            name: menuNames.forwardQueue,
+            link: AuthenticatedPage[6]
+        },{
             icon: userManagementIcon,
             name: menuNames.userManagement,
             link: AuthenticatedPage[4]
@@ -185,7 +188,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                                         </>
                                     }
 
-                                    {!user && !error && <SkeletonLoader rows={2} width="100px" height="15px" columns={1} loaderKey="menu-email" />}
+                                    {/*!user && */!error && <SkeletonLoader rows={2} width="100px" height="15px" columns={1} loaderKey="menu-email" />}
 
                                 </Flex>
                             </MenuItem>
@@ -197,7 +200,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                             </MenuItem>
                             <MenuDivider />
                             <MenuItem onClick={() => signOut()}>
-                                {!user && typeof error === "undefined" && <SkeletonLoader rows={1} width="100px" height="15px" columns={1} loaderKey="sign-out" />}
+                                {/*!user &&*/ typeof error === "undefined" && <SkeletonLoader rows={1} width="100px" height="15px" columns={1} loaderKey="sign-out" />}
                                 {isUserLoaded && <Text size="dropdown-tes">Signout</Text>}
                             </MenuItem>
                             <MenuDivider />

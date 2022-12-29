@@ -8,6 +8,11 @@ export interface AuthModel {
     access_token: string
 }
 
+export interface userApiAuthModel {
+username:string
+password: string
+} 
+
 interface Tenant {
     name: string,
     image: string,
@@ -85,7 +90,7 @@ export interface UserModel {
 
 export interface TokenRequestBody {
     client_id: string,
-    redirect_uri: string,
+    redirect_uri?: string,
     grant_type: string,
     code: string
 }
