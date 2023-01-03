@@ -156,6 +156,7 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
           dataKey={dataKey}
           padding={{ left: 30, right: 30 }}
           tickLine={false}
+          tickFormatter={formatTick}
         />
         <YAxis type="number" tickLine={false} unit="M" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
@@ -201,7 +202,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
             fill="#364657"
           />
         </YAxis>
-        <XAxis dataKey="channel" tickLine={false} axisLine={false}>
+        <XAxis dataKey="channel" tickLine={false} axisLine={false} tickFormatter={formatTick}>
           <Label
             value={labelX}
             offset={5}
@@ -231,7 +232,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
           bottom: 20,
         }}
       >
-        <XAxis dataKey="count" type="number">
+        <XAxis dataKey="count" type="number" tickFormatter={formatTick}>
           <Label
             value={labelX}
             offset={5}
@@ -283,7 +284,7 @@ export const IssuingBarLineChart = (props: DataProps) => {
           bottom: 20,
         }}
       >
-        <XAxis type="category" dataKey="duration">
+        <XAxis type="category" dataKey="duration" tickFormatter={formatTick}>
           <Label fill="#364657" value="24hour distribution" position="bottom" />
         </XAxis>
         <YAxis type="number" />
@@ -309,6 +310,7 @@ export const IssuingLineChartSingle = (props: DataProps) => {
         //   type="category"
           dataKey="duration"
         //   type="number"
+          padding={{ left: 30, right: 30 }}
           tickLine={false}
           interval={interval}
           tickCount={tickCount}

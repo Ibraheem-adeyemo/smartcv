@@ -150,7 +150,7 @@ export const IssuingTranVolumeChart = () => {
         userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
       );
 
-      const totalFailedTransaction = data && data.length > 0 ? sumBy(data?.response?.transactionDetails, (count:number) => count):0
+      const totalFailedTransaction = data && data?.response?.transactionDetails.length > 0 ? sumBy(data?.response?.transactionDetails,(count:any) => count?.count):0
 
   return (
     <Flex width="50%" sx={chartContainerSx}>

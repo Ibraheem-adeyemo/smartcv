@@ -1,4 +1,4 @@
-import { Flex, Tag, Text } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { InstitutionFilter, CustomFilter, SearchFilter, SelectedSearchFilter  } from ".";
 import { delayChildren } from "../../animations";
@@ -11,13 +11,13 @@ const AppBarFilter: FC = () => {
     const { ShowTenant, showStartDate, showEndDate, showCountInterval, showDuration, startTime, endTime, countInterval, durationList, getSelectedEndDate, getSelectedEndTime, getSelectedStartDate, onSelectedCountInterval } = useContext(StatsContext)
 
     const intervals = ['Daily', 'Weekly', 'Monthly']
-
+    
     return (
         <MotionFlex alignItems="center" gap="17px" justifyContent='space-between'
             animate="show"
             initial="hide"
             variants={delayChildren}
-            width='90%'
+            width='100%'
         >
             {ShowTenant && <InstitutionFilter />}
             {/* {showStartDate && <AppCalendar label="Start Date" selectedDate={startTime.split(" ")[0]} selectedTime={startTime.split(" ")[1]} selectionMode={selectionModeValues.pickDateTime} getSelectedDate={getSelectedStartDate} />}
