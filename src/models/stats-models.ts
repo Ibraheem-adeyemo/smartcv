@@ -1,19 +1,27 @@
 
 export interface StatsA {
     headerName: string;
-    totalNumber: number;
-    status: string;
-    percentage: string;
+    totalNumber?: number;
+    status?: string;
+    percentage?: string;
     days: string;
     prefix:string,
     suffix:string,
-    url?:string
+    url?:string,
+    title: string
 }
+
+
+export interface StatsProps extends StatsA {
+    comingSoon?: boolean
+  }
 
 export interface DropdownSearchFilterProps {
     data: DropdownContent[],
     label?: string,
     selected?: boolean,
+    showSearchInput?:boolean
+    countInterval?: string
     onSelected?: (selectedItem: DropdownContent) => void
 }
 
@@ -27,6 +35,7 @@ export interface SelectedSearchProps {
 export interface DropdownContent {
     label: any,
     value: any,
+    interval?:string,
     selected: boolean
 }
 export type ResultFromSearch = (items?: DropdownContent[]) => void

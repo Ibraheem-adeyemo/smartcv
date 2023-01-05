@@ -98,7 +98,6 @@ const AddNewRole: FC = () => {
     useEffect(() => {
         if (typeof form !== "undefined") {
             inputData(form)
-            // console.log({ validation })
         }
     }, [form])
     useEffect(() => {

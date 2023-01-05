@@ -13,11 +13,9 @@ import ResendUserActivationMail from "./resend-user-activation-mail";
 
 const AddNewUser = dynamic(() => import("./add-new-user"), { ssr: false })
 const ISWAdminTable: FC = () => {
-    // console.log({pageNumber})
     const { token, userDetail } = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { mutate } = useSWRConfig()
-    // debugger
     const url = userDetail && userDetail.role.name === appRoles.superAdmin && token ? `${apiUrlsv1.iswAdmin}?page=${pageNumber - 1}&countPerPage=${countPerPage}` : null
     const { data: iswAdmin, mutate: _mutate, error } = useSWR<Paginate<ISWAdmView>>(url)
     const toast = useToast()
@@ -25,7 +23,6 @@ const ISWAdminTable: FC = () => {
     const [openModal, setOpenModal] = useState(false)
     const { modals, handleToggleModal, mutateData } = useContext(UserManagementTabProviderContext)
     const data = useMemo(() => {
-        // debugger
         const isIswAdminIsLoading = typeof iswAdmin === "undefined" && typeof error === "undefined"
         const isIswAdminIsLoaded = typeof iswAdmin !== "undefined" && typeof error === "undefined"
         return {

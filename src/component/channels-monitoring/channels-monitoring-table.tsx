@@ -12,12 +12,10 @@ interface ChannelsMonitoringTableSetupProps {
 }
 
 export const ChannelsMonitoringTableSetup: FC<ChannelsMonitoringTableSetupProps> = (props: ChannelsMonitoringTableSetupProps) => {
-    // console.log({pageNumber})
     const {token, userDetail} = useContext(AuthContext)
     const { pageNumber, countPerPage, setPaginationProps } = useContext(PaginatorContext)
     const { selectedTenantCode } = useContext(StatsContext)
     const { tabs } = useContext(channelsMonitoringContext)
-    // console.log({tabs})
     let url = props.url? props.url : (tabs.findIndex((x) => x.isSelected) > -1 ? tabs.find((x) => x.isSelected)?.url : "") as string
     if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
         if(userDetail.role.name !== appRoles.superAdmin){

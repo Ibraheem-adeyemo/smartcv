@@ -78,7 +78,6 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
             })
         } catch (error: any) {
           
-            // console.log({error})
             if (typeof error.data !== "undefined") {
                 toast({
                     title: error.data.error_description,
@@ -112,8 +111,6 @@ const SigninWithPassport:FC<SigninWithPassportProps> = (props: SigninWithPasspor
     useEffect(() => {
         if (typeof canNotSubmit !== "undefined") {
             if (!canNotSubmit) {
-                // debbuger
-                // console.log({ PASSPORT_TOKEN_URL })
                 setForm({
                     postUrl: apiUrlsv1.passportTokenUrl,
                     completed: true

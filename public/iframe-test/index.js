@@ -43,7 +43,6 @@ function readEventMsg(ev) {
 
         /** @type {MessageObject} */
         const message = JSON.parse(ev.data)
-        // console.log({parentmessage: message})
         switch (message.action) {
             case "Loaded":
                 iFrame.contentWindow.postMessage(JSON.stringify(applicationSecret), "http://localhost:3000")

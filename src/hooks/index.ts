@@ -8,5 +8,5 @@ import usePagination from "./pagination";
 import useValidator from "./validatoin";
 import useInterchangeDisconnection from "./interchange-disconnection";
 import useCrossDomainOnboarding from "./cross-domain-onboarding";
-
-export { useAudit, useAuthentication, useFilter, useForm , useLoading, useOnboarding, initialOnboardingData, usePagination, useValidator, useInterchangeDisconnection, useCrossDomainOnboarding }
+import useCheckAdmin from "./check-admin"
+export { useAudit, useAuthentication, useFilter, useForm , useLoading, useOnboarding, initialOnboardingData, usePagination, useValidator, useInterchangeDisconnection, useCrossDomainOnboarding, useCheckAdmin }

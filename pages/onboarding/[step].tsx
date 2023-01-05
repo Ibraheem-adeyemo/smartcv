@@ -51,9 +51,7 @@ export default function Step1(props: any) {
         }
     }, [steps, step])
 
-    useEffect(() => {
-        // console.log({stepNumber})
-      
+    useEffect(() => {      
         if (typeof window !== "undefined") {
           
             const interchange1 = getCookie(cookieKeys.interchangeId)

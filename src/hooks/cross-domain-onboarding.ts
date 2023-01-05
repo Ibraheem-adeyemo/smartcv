@@ -75,7 +75,6 @@ export default function useCrossDomainOnboarding() {
     const registerSelectedApp = useCallback((origin?: string) => {
         if (typeof window !== "undefined") {
             const StoredSelectedAppKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
-            // console.log({StoredSelectedAppKey})
             if(StoredSelectedAppKey){
                 setSelectedApp(allowedApp.find((x) => StoredSelectedAppKey === x.key))
             } else {
@@ -95,13 +94,9 @@ export default function useCrossDomainOnboarding() {
     }, [])
 
     const getSelectedApp = useCallback(() => {
-        // debugger
         const appKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
-        // debugger
         if(appKey){
-            // console.log({appKey})
             const a = allowedApp.find(x => x.key === appKey)
-            // console.log({a})
             setSelectedApp(a)
             reconnect()
             registerSelectedApp()
@@ -110,7 +105,6 @@ export default function useCrossDomainOnboarding() {
     }, [])
 
     const reconnect = useCallback((origin?: string) => {
-        // console.log({selectedApp})
         const appKey = window.sessionStorage.getItem(sessionStorageKeys.fromAnotherOrigin)
         const a = allowedApp.find(x => x.key === appKey)
         if(a){
@@ -131,16 +125,11 @@ export default function useCrossDomainOnboarding() {
 
 
     useEffect(() => {
-        // console.log({message, selectedApp})
         if (typeof message !== "undefined" && typeof selectedApp !== "undefined") {
-            // debugger
-                // console.log({message, selectedApp})
             if (message.action === onboardingCrossDomain.loading) {
                 setMessage({ "action": onboardingCrossDomain.loaded })
                 
-                // console.log(message.payload) /* Do something with the data from onboarding portal */
             } else if (message.action === onboardingCrossDomain.confirmKey) {
-                // debugger
                 validateKeyAndSetData()
                 setisOnCrossDomain(true)
                 setIsOnInterval((prev) => {
@@ -160,14 +149,12 @@ export default function useCrossDomainOnboarding() {
                     return intervals
                 })
             } else if(message.action === onboardingCrossDomain.loaded || message.action === onboardingCrossDomain.reconnect || message.action === onboardingCrossDomain.accountCreated) {
-                // console.log({message})
-                
+                             
                 window.parent.postMessage(JSON.stringify(message), selectedApp.origin)
             }
         }
         
         const readEventMsg = (ev: MessageEvent<any>) => {
-            // debugger
             setisOnCrossDomain(false)
 
             if (ev.data && allowedApp.some((x) => x.origin === ev.origin)) {
@@ -179,7 +166,6 @@ export default function useCrossDomainOnboarding() {
 
 
         if (typeof window !== "undefined") {
-            // debugger
             window.addEventListener("message", readEventMsg)
         }
         // getSelectedApp()
@@ -192,9 +178,7 @@ export default function useCrossDomainOnboarding() {
         // debugger
         setMessage({ "action": onboardingCrossDomain.accountCreated, value: data })
         if(appKey){
-            // console.log({appKey})
             const a = allowedApp.find(x => x.key === appKey)
-            // console.log({a})
             setMessage(undefined)
             setSelectedApp(a)
 

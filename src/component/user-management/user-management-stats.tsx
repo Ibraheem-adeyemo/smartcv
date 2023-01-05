@@ -50,11 +50,6 @@ const UserManagementStats: FC = () => {
     }, [])
 
     useEffect(() => {
-        // console.log({tenant, tenantError, tenantAdmin, tenantAdminError, iswAdmin, iswAdminError})
-        // console.log({tenantV:getCookie(cookieKeys.totalTenant) !== "" ? getCookie(cookieKeys.totalTenant) : typeof tenant === "undefined" && typeof tenantError === "undefined" ? "" : typeof tenant !== "undefined" && typeof tenantError === "undefined" ? `${tenant?.length}` : "0"})
-        // console.log({tenantAdminV:getCookie(cookieKeys.totalTenantAdmin) !== "" ? getCookie(cookieKeys.totalTenantAdmin) : typeof tenantAdmin === "undefined" && typeof tenantAdminError === "undefined" ? "" : typeof tenantAdmin !== "undefined" && typeof tenantAdminError === "undefined" ? `${tenantAdmin?.totalElements}` : "0"})
-        // console.log({iswAdminV:getCookie(cookieKeys.totalISWAdmin) !== "" ? getCookie(cookieKeys.totalISWAdmin) : (typeof iswAdmin === "undefined" && typeof iswAdminError === "undefined") ? "" : (typeof iswAdmin !== "undefined" && typeof iswAdminError === "undefined") ? `${iswAdmin?.totalElements}` : "0"})
-        
         setUserManagementStats([{
             name: StatsName.createdBanks,
             totalCount: typeof window !== "undefined" && getCookie(cookieKeys.totalTenant) !== "" ? getCookie(cookieKeys.totalTenant) : typeof tenant === "undefined" && typeof tenantError === "undefined" ? "" : typeof tenant !== "undefined" && typeof tenantError === "undefined" ? `${tenant?.totalElements}` : "0"

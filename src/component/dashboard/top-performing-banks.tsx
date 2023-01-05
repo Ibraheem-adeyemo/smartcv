@@ -2,13 +2,18 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { StatsCMore } from "../../models";
 import { Barchart } from "../app-charts";
 import { Flex, Text, Tag } from "@chakra-ui/react";
-import { DropdownIcon } from "../../constants";
+import { apiUrlsv1, DropdownIcon } from "../../constants";
 import { SkeletonLoader } from "..";
 import { AppCard } from "../app";
+import { SimpleBarchart } from "../app-charts"
+import useSWR from "swr";
 
 const TopPerforminBanks :FC= ()  => {
     const [loading, setLoading] = useState(true)
     const [stats, setStats] = useState<StatsCMore[]>()
+
+    const url = `${apiUrlsv1.realTimeTransactionReport}top-transaction`
+    const { data: banksRealTimeData, mutate: _mutate, error } = useSWR(url === "" ? null : url)
 
     const getStats = useCallback(() => {
 
@@ -50,7 +55,7 @@ const TopPerforminBanks :FC= ()  => {
     return <AppCard topic={
         <Flex justifyContent="space-between" textAlign="center">
             <Flex flexDir="column" justifySelf="flex-start">
-                <Text variant="card-header" size="card-header">What are the top performing 5 banks</Text>
+                <Text variant="card-header" size="card-header">Top 5 performing banks</Text>
                 <Text variant="small-muted-text" textAlign="left">By Transaction Volume and Value</Text>
             </Flex>
             <Flex gap="17px" h="26px" alignSelf="center">
@@ -62,7 +67,8 @@ const TopPerforminBanks :FC= ()  => {
         </Flex>}>
         {!loading ?
             <>
-                {stats?.map((x, i) => <Barchart key={i} {...x} />)}
+                {/* {stats?.map((x, i) => <Barchart key={i} {...x} />)} */}
+                <SimpleBarchart data={banksRealTimeData?.realtimeTransactionVolumeList} />
             </> : <SkeletonLoader rows={1} columns={5} width="10px" height="200px" gap="30px" loaderKey="terminals-permforming-banks-app-cards" />}
     </AppCard>
 }

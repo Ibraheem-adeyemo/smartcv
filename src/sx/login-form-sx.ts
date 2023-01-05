@@ -23,3 +23,9 @@ export const loginButtonSX: CSSObject = {
     px: "131.5px",
     py: "12px"
 }
+
+export const loginButtonSM: CSSObject = {
+    w: "50%",
+    px: "50.5px",
+    py: "6px"
+}

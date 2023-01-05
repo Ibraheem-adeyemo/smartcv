@@ -47,8 +47,6 @@ const RegisterForm: FC = () => {
                 throw new Error(`${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`)
             }
         } catch (error: any) {
-            // console.error({ getInterChangebyInterchangeIdError: error })
-
                 toast({
                     status: "error",
                     title: error? error.message?error.message : error: `${notificationMesage.Oops} ${notificationMesage.AnErrorOccurred}`,
@@ -133,7 +131,7 @@ const RegisterForm: FC = () => {
                     </MotionFlex>
                 </MotionFlex>
             </form>)}
-            {cantVew && <Flex flexDir="column" gap="36px" px="66px" bg="white" borderRadius="6px" alignItems="center" w="633px" py="36px"><Text variant="card-header" size="page-header">You can't view This page</Text></Flex>}
+            {cantVew && <Flex flexDir="column" gap="36px" px="66px" bg="white" borderRadius="6px" alignItems="center" w="633px" py="36px"><Text variant="card-header" size="page-header">You can not view This page</Text></Flex>}
         </>
     )
 }

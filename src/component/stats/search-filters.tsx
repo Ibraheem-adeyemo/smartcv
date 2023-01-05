@@ -34,11 +34,8 @@ export const SelectedSearchFilter: FC<SelectedSearchProps> = ( props: SelectedSe
     const handleSetEndTime = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, filterby:string) => {
         let endTime:Date = new Date();
         if((e.target as HTMLSelectElement).value) {
-            if(filterby === 'hours') {
+            if(filterby === 'hours' || filterby === 'minutes') {
 
-                endTime = addHoursToDate(new Date(curEndDateTime), parseInt((e.target as HTMLSelectElement).value), filterby )
-            }
-            if(filterby === 'minutes') {
                 endTime = addHoursToDate(new Date(curEndDateTime), parseInt((e.target as HTMLSelectElement).value), filterby )
             }
         } else {
@@ -79,35 +76,45 @@ export const SelectedSearchFilter: FC<SelectedSearchProps> = ( props: SelectedSe
 }
 
 const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false, ...props }: DropdownSearchFilterProps) => {
+    const { showSearchInput, countInterval } = props;
+
     const [dropdownContent, setDropdownContent] = useState<DropdownContent[]>()
     const [query, setQuery] = useState<string>()
+    const [selectedPeriod, setSelectedPeriod] = useState<DropdownContent | string | undefined>(countInterval)
     useEffect(() => {
 
+        // setSelectedPeriod(props.data[0])
         setDropdownContent(props.data.map((x, i) => {
             // debugger
+            // i === 0 ? : ''
+
             const selected = i === 0 ? true : false
+
             return typeof x === "string" ? {
                 label: x,
                 value: x,
+                interval:x,
                 selected
             } : x
         }))
     }, [props.data])
 
     const pickItem = useCallback((selectedItem: DropdownContent) => {
-
+        setSelectedPeriod(selectedItem)
         setDropdownContent(prev => props.data?.map(x => {
             const v = typeof x === "string" ? x : x.value
             if (v === selectedItem.value) {
                 return {
                     label: typeof x === "string" ? x : x.label,
                     value: v,
+                    interval: typeof x === "string" ? x : x.interval,
                     selected: true
                 }
             }
             return {
                 label: typeof x === "string" ? x : x.label,
                 value: v,
+                interval: typeof x === "string" ? x : x.interval,
                 selected: false
             }
         }))
@@ -129,11 +136,11 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
     }, [dropdownContent])
     return (
         <Menu >
-            <MenuButton as={Button} h="26px" p="12px" rightIcon={<DropdownIcon />} borderWidth={selected ? '1px' : '0px'} borderStyle={selected ? 'bold' : ''} borderColor={selected ? 'var(--chakra-colors-brand-primary-blue)' : ''}  >
-                <AnimatedText size="dropdown-text" variant="dropdown-text-header" color={selected ? 'brand.primary-blue' : ''}>{props.label}: {dropdownContent?.find(x => x.selected)?.label}</AnimatedText>
+            <MenuButton as={Button} h="36px" p="12px" rightIcon={<DropdownIcon />} borderWidth={selected ? '1px' : '0px'} borderStyle={selected ? 'bold' : ''} borderColor={selected ? 'var(--chakra-colors-brand-primary-blue)' : ''}  >
+                <AnimatedText variant="dropdown-text-header" color={selected ? 'brand.primary-blue' : ''}>{props.label ?`${props.label}:`:null} {typeof selectedPeriod !== 'undefined' ? typeof selectedPeriod === 'string'? selectedPeriod : selectedPeriod?.label : ''}</AnimatedText>
             </MenuButton>
             <MenuList maxH="334px" overflowY="auto" maxW="204px">
-                <MenuItem closeOnSelect={false} as={Box}>
+                {showSearchInput && <MenuItem closeOnSelect={false} as={Box}>
                     <Input placeholder="search here" size="sm" onFocus={(e) => {
                         e.stopPropagation()
                         const a = e.target as HTMLInputElement
@@ -152,11 +159,14 @@ const DropdownSearchFilter: FC<DropdownSearchFilterProps> = ({ selected = false,
                                 return typeof x === "string" ? {
                                     label: x,
                                     value: x,
+                                    interval:x,
                                     selected: i === 0 ? true : false
                                 } : x
                             }))
-                        }} /></MenuItem>
-                {dropdownContent?.map((x, i) => <MenuItem key={`add-new-list-${x.value}-${i}`} onClick={(e) => pickItem(x)}>
+                        }} /></MenuItem>}
+                {dropdownContent?.map((x, i) => <MenuItem key={`add-new-list-${x.value}-${i}`} onClick={(e) =>{
+                    pickItem(x)
+                }}>
                     <AnimatedText size="dropdown-text">{x.label}</AnimatedText>
                 </MenuItem>)}
             </MenuList>

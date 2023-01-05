@@ -18,7 +18,9 @@ export enum StatsName {
     quicktellerBill = "Quickteller Bill",
     paycodeWithdrawal = "Paycode Withdrawal",
     totalInService = "Total in Service",
-    totalOutOfService = "Total Out of Service"
+    totalOutOfService = "Total Out of Service",
+    totalTransactionVolume = "Transaction Volume",
+    yourPosition = "Your Position"
 }
 
 export enum upcomingFeature {

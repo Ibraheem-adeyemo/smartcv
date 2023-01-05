@@ -10,7 +10,7 @@ ARG https_proxy
 
 ENV http_proxy ${http_proxy}
 ENV https_proxy ${https_proxy}
-
+RUN npm config set legacy-peer-deps true
 COPY package.json package-lock.json ./ 
 RUN npm --proxy=${http_proxy} install --frozen-lockfile
 
