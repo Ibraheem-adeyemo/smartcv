@@ -45,11 +45,12 @@ export const FailedAndSuccessfulChart = () => {
     userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
   );
 
-  const totalFailedTransaction = data && data.length > 0 ? sumBy(data?.failedValue, (transaction:number) => transaction):0.00;
-  const totalSuccessfulTransaction = data && data.length > 0 ? sumBy(data?.successValue, (transaction:number) => transaction):0.00;
+  const totalFailedTransaction = data && data?.response ? data?.response?.failedValue :0.00;
+  const totalSuccessfulTransaction = data && data?.response?.successValue > 0 ? data?.response?.successValue:0.00;
 
-  const failedTransactionVolume = data && data.length > 0 ? sumBy(data?.failedValue, (transaction:number) => transaction):0;
-  const successfulTransactionVolume = data && data.length > 0 ? sumBy(data?.successValue, (transaction:number) => transaction):0;
+  const failedTransactionVolume = data && data?.response?.failedCount > 0 ? data?.response?.failedCount:0;
+  const successfulTransactionVolume = data && data?.response?.successCount > 0 ? data?.response?.successCount:0;
+
    
   return (
     <Box sx={issuingFailedSuccessContainerSx}>
@@ -84,7 +85,7 @@ export const FailedAndSuccessfulChart = () => {
           </Box>
         </Flex>
       </Flex>
-      <IssuingAtmTransactionVolumeCount data={data?.response?.transactionDetails} />
+      <IssuingAtmTransactionVolumeCount data={data?.response?.transactionDetails.slice(0,24)} />
     </Box>
   );
 };

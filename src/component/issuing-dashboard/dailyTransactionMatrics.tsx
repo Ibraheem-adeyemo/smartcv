@@ -118,7 +118,7 @@ export const DailyTransactionMatrics = () => {
         {
           ...boxSize,
           headerName: StatsName.transactionAmount,
-          totalNumber: data?.response?.amount,
+          totalNumber: data?.response ? data?.response?.amount : 0,
           status:
             data?.response?.percentage?.isIncrease === false ? "red" : "green",
           percentage: `${data?.response?.percentage?.percent}%`,
@@ -128,8 +128,8 @@ export const DailyTransactionMatrics = () => {
         {
           ...boxSize,
           headerName: StatsName.totalTransactionVolume,
-          totalNumber: data?.response?.volume,
-          status: data?.response?.percentage?.isIncrease === false ? "red" : "green",
+          totalNumber: data?.response ? data?.response?.volume: 0,
+          status: data?.response ? data?.response?.percentage?.isIncrease === false ? "red" : "green": "",
           percentage: `${data?.response?.percentage?.percent}%`,
           days: dataDuration,
           prefix: "",
@@ -139,19 +139,19 @@ export const DailyTransactionMatrics = () => {
         {
           ...boxSize,
           headerName: StatsName.yourPosition,
-          totalNumber: position,
+          totalNumber: position ? position : 0,
           // status: "red",
           // percentage: "",
           days: dataDuration,
           comingSoon: false,
-          suffix:
+          suffix: position ?
             position === 2
               ? "nd"
               : position === 3
               ? "rd"
               : position === 1
               ? "st"
-              : "th",
+              : "th":"",
           title: "Compared to others",
         },
       ];

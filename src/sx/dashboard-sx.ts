@@ -5,7 +5,7 @@ export const dashboardContainerSX: CSSObject = {
   flexWrap: "wrap",
 };
 export const issuingFailedSuccessContainerSx: CSSObject = {
-  width: "50%",
+  width: {base:'100%', lg:"50%"},
   height: "100%",
   bg: "white",
   borderRadius: "8px",
@@ -34,7 +34,7 @@ export const dashboardBoxSx: CSSObject = {
 };
 export const chartContainerSx: CSSObject = {
   bg: "white",
-  p: "30px",
+  p: {base:'5px', md:'15px', lg:"30px"},
   borderRadius: "8px",
   boxShadow: "md",
   flexDirection: "column",

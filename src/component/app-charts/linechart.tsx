@@ -14,7 +14,7 @@ import {
   Label,
   ComposedChart,
 } from "recharts";
-import { Button, useDisclosure, Text, Box } from "@chakra-ui/react";
+import { Button, useDisclosure, Text, Box, Flex } from "@chakra-ui/react";
 import BasicModal from "../transaction-monitoring/transactionMonitoringModal";
 // import TransactionMonitoringTable from '../tables/transactionMonitoringTable';
 import TransactionMonitoringTable from "../transaction-monitoring/transactions-monitoring-table";
@@ -160,12 +160,13 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
         />
         <YAxis type="number" tickLine={false} unit="M" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
-        <Legend iconType="circle" />
+        <Legend iconType="circle" stroke="red" content={<CustomLegend />} />
         {lines.map((line, i) => {
           return (
             <Line
               dot={false}
               key={i}
+              name={line.name}
               type={line.type}
               dataKey={line.dataKey}
               stroke={line.stroke}
@@ -178,6 +179,28 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
     </ResponsiveContainer>
   );
 };
+
+const CustomLegend = (props:any) => {
+    const { payload } = props;
+    console.log(payload, props)
+    return (
+      <Flex justifyContent={'center'}>
+        {
+          payload.map((entry:any, index:number) => (
+            <Flex key={`item-${index}`} mr={7} alignItems='center'>
+                <div style={{
+                    width:'0.7rem',
+                    height:'0.7rem',
+                    backgroundColor:entry.color,
+                    borderRadius:'50%',
+                    display:'inline-flex',
+                    marginRight:'6px'
+                }}></div>{entry.value}</Flex>
+          ))
+        }
+      </Flex>
+    );
+  }
 
 export const IssuingBarChart = (props: IssuingBarChartProps) => {
   const { data, labelX, labelY } = props;
@@ -289,7 +312,7 @@ export const IssuingBarLineChart = (props: DataProps) => {
         </XAxis>
         <YAxis type="number" />
         <Tooltip />
-        <Bar dataKey="Successful" barSize={barSize} fill="#E0E4EB" />
+        <Bar dataKey="value" barSize={barSize} fill="#E0E4EB" />
         <Line dot={false} type="linear" dataKey="value" stroke="#18A0FB" />
       </ComposedChart>
     </ResponsiveContainer>

@@ -12,22 +12,22 @@ import {
 export const Dashboard = () => {
   return (
     <Flex sx={dashboardContainerSX}>
-      <Flex sx={issuingBreakdownTranBoxSx}>
+      <Flex flexDir={{base:'column',md:'column', lg:'row'}} sx={issuingBreakdownTranBoxSx}>
         <IssuingTranValueChart />
         <IssuingTranVolumeChart />
       </Flex>
-      <Flex sx={issuingBreakdownTranBoxSx}>
+      <Flex sx={issuingBreakdownTranBoxSx} flexDir={{base:'column', lg:'row'}}>
         <FailedAndSuccessfulChart />
         <BarChartHorizontal />
       </Flex>
-      <Box width="100%" bg="white">
+      <Flex width="100%" bg="white" flexDir='column'>
         <Box mb={20}>
           <DailyTransactionMatrics />
         </Box>
         <Box height={600} shadow="xl" padding={30} borderRadius={10}>
           <TransactionTypeBarChart />
         </Box>
-      </Box>
+      </Flex>
     </Flex>
   );
 };
