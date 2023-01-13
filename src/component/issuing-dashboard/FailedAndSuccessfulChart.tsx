@@ -10,7 +10,7 @@ import { AuthContext, StatsContext } from "../../providers";
 import { useLoading } from "../../hooks";
 import { apiUrlsv1, appRoles, notificationMesage } from "../../constants";
 import { sumBy } from "lodash";
-import { getUrlForSuperadminORBankAdmin } from "../../lib";
+import { getUrlForSuperadminORBankAdmin, numberWithCommas } from "../../lib";
 
 type DataSuperAdmin = {
   payload: Payload[];
@@ -45,11 +45,11 @@ export const FailedAndSuccessfulChart = () => {
     userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
   );
 
-  const totalFailedTransaction = data && data?.response ? data?.response?.failedValue :0.00;
-  const totalSuccessfulTransaction = data && data?.response?.successValue > 0 ? data?.response?.successValue:0.00;
+  const totalFailedTransaction = data && data?.response ? numberWithCommas(data?.response?.failedValue) :0.00;
+  const totalSuccessfulTransaction = data && data?.response?.successValue > 0 ? numberWithCommas(data?.response?.successValue):0.00;
 
-  const failedTransactionVolume = data && data?.response?.failedCount > 0 ? data?.response?.failedCount:0;
-  const successfulTransactionVolume = data && data?.response?.successCount > 0 ? data?.response?.successCount:0;
+  const failedTransactionVolume = data && data?.response?.failedCount > 0 ? numberWithCommas(data?.response?.failedCount):0;
+  const successfulTransactionVolume = data && data?.response?.successCount > 0 ? numberWithCommas(data?.response?.successCount):0;
 
    
   return (
