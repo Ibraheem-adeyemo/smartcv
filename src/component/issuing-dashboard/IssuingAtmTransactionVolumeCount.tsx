@@ -9,7 +9,7 @@ import {
 } from "../app-charts";
 import { chartContainerSx } from "../../sx";
 import { AuthContext, StatsContext } from "../../providers";
-import { getUrlForSuperadminORBankAdmin } from "../../lib";
+import { getUrlForSuperadminORBankAdmin, numberWithCommas } from "../../lib";
 import { apiUrlsv1, appRoles, keysForArrayComponents } from "../../constants";
 import useSWR from "swr";
 import { IssuingFaileSuccessProps } from "../../models/issuing-dashboard";
@@ -175,7 +175,7 @@ export const IssuingTranVolumeChart = () => {
       <HStack justifyContent="space-between">
       <Text variant="chart-header">{transactionPeriod} count of active cards</Text>
         <Tag>
-          Total: <strong>{totalFailedTransaction}</strong>
+          Total: <strong>{numberWithCommas(totalFailedTransaction)}</strong>
         </Tag>
       </HStack>
       <IssuingLineChartSingle
