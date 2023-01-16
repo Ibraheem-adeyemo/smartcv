@@ -10,11 +10,12 @@ import {
 import { chartContainerSx } from "../../sx";
 import { AuthContext, StatsContext } from "../../providers";
 import { getUrlForSuperadminORBankAdmin } from "../../lib";
-import { apiUrlsv1, appRoles } from "../../constants";
+import { apiUrlsv1, appRoles, keysForArrayComponents } from "../../constants";
 import useSWR from "swr";
 import { IssuingFaileSuccessProps } from "../../models/issuing-dashboard";
 import { data2 } from ".";
 import { sumBy } from "lodash";
+import SkeletonLoader from "../skeleton-loader";
 
 const containerType = {
   width: "100%",
@@ -31,14 +32,16 @@ export const IssuingAtmTransactionVolumeCount = ({data}:IssuingFaileSuccessProps
     {
       type: "monotone",
       dataKey: "successValue",
-      stroke: "#C6F8DF",
+      stroke: "#5DCC96",
       activeDot: { r: 8 },
+      name: "Successful transactions"
     },
     {
       type: "monotone",
       dataKey: "failedValue",
       stroke: "#DC4437",
       activeDot: { r: 8 },
+      name: "Failed transactions"
     },
   ];
   return (
@@ -95,7 +98,7 @@ export const BarChartHorizontal = () => {
       );
       
   return (
-    <Flex width="50%" sx={chartContainerSx}>
+    <Flex width={{base:'100%', lg:"50%"}} sx={chartContainerSx}>
       <Text variant="chart-header">{transactionPeriod} transaction failure reasons</Text>
       <IssuingBarChartHorizontal
         labelX="Transaction volume"
@@ -121,15 +124,30 @@ export const IssuingTranValueChart = () => {
         userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
       );
 
+      
+
+      if(isValidating || !data?.response?.transactionDetails && !error ) {
+        return (
+            <SkeletonLoader
+              rows={1}
+              columns={6}
+              width={'2rem'}
+              height={'30rem'}
+              gap="10px"
+              loaderKey={keysForArrayComponents.transactionBreakdownAppCard}
+            />
+          )
+      }  
+
   return (
-    <Flex height="100%" width="50%" sx={chartContainerSx}>
+    <Flex height="100%" width={{base:'100%', md:'100%', lg:"60%"}} sx={chartContainerSx}>
       <Text variant="chart-header">
           {transactionPeriod} breakdown of issuing transaction value
         </Text>
 
       <IssuingBarLineChart
         barSize={20}
-        data={data?.response?.transactionDetails}
+        data={data?.response?.transactionDetails.slice(0,24)}
       />
     </Flex>
   );
@@ -150,21 +168,21 @@ export const IssuingTranVolumeChart = () => {
         userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
       );
 
-      const totalFailedTransaction = data && data.length > 0 ? sumBy(data?.response?.transactionDetails, (count:number) => count):0
+      const totalFailedTransaction = data && data?.response?.transactionDetails.length > 0 ? sumBy(data?.response?.transactionDetails,(count:any) => count?.count):0
 
   return (
-    <Flex width="50%" sx={chartContainerSx}>
+    <Flex width={{base:'100%',md:'100%', lg:"40%"}} sx={chartContainerSx}>
       <HStack justifyContent="space-between">
-      <Text variant="chart-header">{transactionPeriod} count of Issued cards</Text>
+      <Text variant="chart-header">{transactionPeriod} count of active cards</Text>
         <Tag>
           Total: <strong>{totalFailedTransaction}</strong>
         </Tag>
       </HStack>
       <IssuingLineChartSingle
-        data={data?.response?.transactionDetails}
+        data={data?.response?.transactionDetails.slice(0,24)}
         tickCount={6}
         type="number"
-        interval={0}
+        interval={1}
       />
     </Flex>
   );

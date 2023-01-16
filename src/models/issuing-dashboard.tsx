@@ -27,6 +27,7 @@ type StrokeType = {
   type LineObject = {
     type: string;
     dataKey: string;
+    name:string
     stroke: string;
     activeDot?: object;
   };

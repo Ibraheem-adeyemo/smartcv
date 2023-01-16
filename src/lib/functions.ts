@@ -64,6 +64,10 @@ export function validateHexColor(color: string) {
     return /^#[0-9A-F]{6}$/i.test(color) || /^#([0-9A-F]{3}){1,2}$/i.test(color)
 }
 
+export function numberWithCommas(x:number|string) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export function appDate(dateStr: string, withTime = true) {
     let fullDate = ""
     if (typeof dateStr !== "undefined" && dateStr !== null) {
