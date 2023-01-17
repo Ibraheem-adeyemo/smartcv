@@ -11,17 +11,19 @@ export function getRandomInt(max: number) {
 }
 
 export function shortenNumber(amount: number) {
-    let t = { fractionAmount: Number.MAX_VALUE, abbrev: "" }
+    let t = { fractionAmount: Number.MAX_VALUE|| '', abbrev: "" }
+    const commaSeperatedDigit = numberWithCommas(amount)
     if (!isNaN(amount)) {
         const length = String(amount).length
         t = _.reduce(amountAbbrevications, (prev, curr) => {
 
             const fractionAmount = amount / curr.value
+            
             const sp = String(fractionAmount).split(".")
             if (String(sp[0]).length <= 3) {
 
 
-                return { ...curr, fractionAmount }
+                return { ...curr, fractionAmount:commaSeperatedDigit }
             }
             return prev
         }, { fractionAmount: Number.MAX_VALUE, abbrev: "" })

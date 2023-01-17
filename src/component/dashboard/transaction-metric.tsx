@@ -47,7 +47,7 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
     useEffect(() => {
         const getStats = (): StatsProps[] => {
             const boxSize = {
-                width: props.width,
+                width: '100%',
                 height: props.height,
                 prefix:"",
                 suffix:"",

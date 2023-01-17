@@ -45,11 +45,16 @@ export const FailedAndSuccessfulChart = () => {
     userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
   );
 
-  const totalFailedTransaction = data && data?.response ? numberWithCommas(data?.response?.failedValue) :0.00;
-  const totalSuccessfulTransaction = data && data?.response?.successValue > 0 ? numberWithCommas(data?.response?.successValue):0.00;
+  const failedValue = data?.response?.failedValue;
+  const successValue = data?.response?.successValue
+  const failedCount = data?.response?.failedCount;
+  const successCount = data?.response?.successCount
 
-  const failedTransactionVolume = data && data?.response?.failedCount > 0 ? numberWithCommas(data?.response?.failedCount):0;
-  const successfulTransactionVolume = data && data?.response?.successCount > 0 ? numberWithCommas(data?.response?.successCount):0;
+  const totalFailedTransaction = data && data?.response ? numberWithCommas(failedValue) :0.00;
+  const totalSuccessfulTransaction = data && data?.response?.successValue > 0 ? numberWithCommas(successValue):0.00;
+
+  const failedTransactionVolume = data && data?.response?.failedCount > 0 ? numberWithCommas(failedCount):0;
+  const successfulTransactionVolume = data && data?.response?.successCount > 0 ? numberWithCommas(successCount):0;
 
    
   return (
@@ -65,9 +70,9 @@ export const FailedAndSuccessfulChart = () => {
             </Heading>
               <>
                 <Heading as="h3" size="md" color={"#E05B50"}>
-                  N{totalFailedTransaction > 0? totalFailedTransaction: `0.00`}
+                  N{failedValue > 0? totalFailedTransaction: `0.00`}
                 </Heading>
-                <small>{`Total volume:${failedTransactionVolume}`}</small>
+                <small>{`Total volume:${failedCount > 0 ?failedTransactionVolume:0}`}</small>
               </>
           </Box>
         </Flex>
@@ -78,9 +83,9 @@ export const FailedAndSuccessfulChart = () => {
             </Heading>            
               <>
                 <Heading as="h3" size="md" color="#5DCC96">
-                  N{totalSuccessfulTransaction > 0? totalSuccessfulTransaction:`0.00`}
+                  N{successValue > 0? totalSuccessfulTransaction:`0.00`}
                 </Heading>
-                <Text>{`Total volume:${successfulTransactionVolume}`}</Text>
+                <Text>{`Total volume:${successCount >0 ? successfulTransactionVolume: 0}`}</Text>
               </>
           </Box>
         </Flex>
