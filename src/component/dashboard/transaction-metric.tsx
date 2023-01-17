@@ -30,7 +30,7 @@ const TransactionMetric:FC<TransactionMetricProps> = ({ showDetails=false,...pro
     const {token, userDetail} = useContext(AuthContext)
     const cokieToken = getCookie(cookieKeys.token)
 
-    let url = `${apiUrlsv1.realTimeTransactionReport}top-transaction`
+    let url = `${apiUrlsv1.acquiringTransaction}top-transaction`
     if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
     
         if(userDetail.role.name !== appRoles.superAdmin){

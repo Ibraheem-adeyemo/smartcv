@@ -13,7 +13,6 @@ import { getUrlForSuperadminORBankAdmin, numberWithCommas } from "../../lib";
 import { apiUrlsv1, appRoles, keysForArrayComponents } from "../../constants";
 import useSWR from "swr";
 import { IssuingFaileSuccessProps } from "../../models/issuing-dashboard";
-import { data2 } from ".";
 import { sumBy } from "lodash";
 import SkeletonLoader from "../skeleton-loader";
 
@@ -65,10 +64,10 @@ export const TransactionTypeBarChart = () => {
 
     const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
 
-    let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
+    // let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
 
-    transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume/channel`
-    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}` :`${transactionCountVolumeUrl}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+    let transactionCountVolumeUrl = `${apiUrlsv1.issuingVolumeStatus}/volume/channel`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}` :`${transactionCountVolumeUrl}/${selectedTenantCode}?dateRange=${transactionPeriod.toUpperCase()}`
     const { isValidating, mutate, data, error } = useSWR(
         userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
       );
@@ -87,14 +86,14 @@ export const TransactionTypeBarChart = () => {
 export const BarChartHorizontal = () => {
     const { userDetail } = useContext(AuthContext);
     const { transactionPeriod, selectedTenantCode } = useContext(StatsContext)
-    const tenantTopFailuredResons = apiUrlsv1.issuingFailedReasonsTenant
-    let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
+    let tenantTopFailuredResons = apiUrlsv1.issuingFailedReasons
+    // let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
     const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
 
-    transactionCountVolumeUrl = `${transactionCountVolumeUrl}/failed-transaction`
-    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`:`${tenantTopFailuredResons}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+    // let transactionCountVolumeUrl = `${apiUrlsv1.issuingVolumeStatus}/failed-transaction`
+    tenantTopFailuredResons = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${tenantTopFailuredResons}?dateRange=${transactionPeriod.toUpperCase()}`:`${tenantTopFailuredResons}/${selectedTenantCode}?dateRange=${transactionPeriod.toUpperCase()}`
     const { isValidating, mutate, data, error } = useSWR(
-        userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
+        userDetail ? tenantTopFailuredResons : ''
       );
       
   return (
@@ -112,18 +111,20 @@ export const BarChartHorizontal = () => {
 export const IssuingTranValueChart = () => {
     const { userDetail } = useContext(AuthContext);
     const { transactionPeriod, selectedTenantCode } = useContext(StatsContext)
-    let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
+    // let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
+    const changedTransactionPeriod = transactionPeriod == 'Monthly'?'Yearly': transactionPeriod
 
     const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
 
-    transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume`
-    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`:`${transactionCountVolumeUrl}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+    let transactionCountVolumeUrl = `${apiUrlsv1.issuingVolumeStatus}/volume`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${changedTransactionPeriod.toUpperCase()}`:`${transactionCountVolumeUrl}/${selectedTenantCode}?dateRange=${changedTransactionPeriod.toUpperCase()}`
 
     // transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`
     const { isValidating, mutate, data, error } = useSWR(
         userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
       );
 
+      const distribution = transactionPeriod === 'Daily'?'24 hour distribution':`${transactionPeriod} distribution`
       
 
       if(isValidating || !data?.response?.transactionDetails && !error ) {
@@ -148,6 +149,7 @@ export const IssuingTranValueChart = () => {
       <IssuingBarLineChart
         barSize={20}
         data={data?.response?.transactionDetails.slice(0,24)}
+        distribution={distribution}
       />
     </Flex>
   );
@@ -156,12 +158,13 @@ export const IssuingTranValueChart = () => {
 export const IssuingTranVolumeChart = () => {
     const { userDetail } = useContext(AuthContext);
     const { transactionPeriod, selectedTenantCode } = useContext(StatsContext)
-    let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode );
+    // let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode );
 
+    const changedTransactionPeriod = transactionPeriod == 'Monthly'?'Yearly': transactionPeriod
     const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
 
-    transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume`
-    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`:`${transactionCountVolumeUrl}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+    let transactionCountVolumeUrl = `${apiUrlsv1.issuingVolumeStatus}/volume`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${changedTransactionPeriod.toUpperCase()}`:`${transactionCountVolumeUrl}/${selectedTenantCode}?dateRange=${changedTransactionPeriod.toUpperCase()}`
 
     // transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`
     const { isValidating, mutate, data, error } = useSWR(
@@ -182,7 +185,7 @@ export const IssuingTranVolumeChart = () => {
         data={data?.response?.transactionDetails.slice(0,24)}
         tickCount={6}
         type="number"
-        interval={1}
+        interval={transactionPeriod === 'Weekly'?0 :1}
       />
     </Flex>
   );

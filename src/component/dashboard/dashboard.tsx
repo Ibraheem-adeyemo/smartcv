@@ -54,7 +54,7 @@ const Dashboard: FC = () => {
   const cokieToken = getCookie(cookieKeys.token);
   const headerArray = [cokieToken, startTime, countInterval, endTime];
 
-  let topFailureApi = `${apiUrlsv1.realTimeTransactionReport}failure-analysis`;
+  let topFailureApi = `${apiUrlsv1.acquiringTransaction}failure-analysis`;
 
   let isTenantLoaded = false;
   if (

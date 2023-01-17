@@ -21,7 +21,7 @@ import TransactionMonitoringTable from "../transaction-monitoring/transactions-m
 import { IRealTimeData, Record } from "../../models";
 import { formatRealTimeData } from "../../lib";
 import { DataProps, IssuingBarChartProps, IssuingLineChartProps } from "../../models/issuing-dashboard";
-import { Data } from "../../models/issuing-transactions";
+
 
 export const GrpLineChart = (chartProps: IRealTimeData) => {
   const { responseDTOList, transactionCountResponseList } = formatRealTimeData(
@@ -34,13 +34,13 @@ export const GrpLineChart = (chartProps: IRealTimeData) => {
     },
   });
 
-  const [lineShow, setLineShow] = useState({
+  const [lineShowObj, setLineShowObj] = useState({
     lineShow: false,
     failedCount: false,
     successCount: false,
   });
   const handleClick = (e) => {
-    setLineShow({ ...lineShow, [e.value]: !lineShow[e.value] });
+    setLineShowObj({ ...lineShowObj, [e.value]: !lineShowObj[e.value] });
   };
 
   const handleMouseEnter = (o) => {
@@ -84,8 +84,8 @@ export const GrpLineChart = (chartProps: IRealTimeData) => {
           bottom: 5,
         }}
       >
-        {/* <CartesianGrid strokeDasharray="3 " /> */}
-        <XAxis dataKey="startDate" axisLine={false} />
+        <CartesianGrid strokeDasharray="1" />
+        <XAxis dataKey="startDate" interval={2} axisLine={true} />
         <YAxis axisLine={false} />
         <Tooltip />
         <Legend
@@ -97,19 +97,27 @@ export const GrpLineChart = (chartProps: IRealTimeData) => {
         <Line
           type="monotone"
           name="Approved"
-          hide={lineShow.successCount}
-          dataKey="Approved"
-          strokeOpacity={opacity.pv}
-          stroke="#8884d8"
+          hide={lineShowObj.successCount}
+          dataKey="successCount"
+          //strokeOpacity={opacity.pv}
+          stroke="#5DCC96"
           activeDot={{ r: 8 }}
         />
         <Line
           type="monotone"
-          name="USers failure"
+          name="Users failure"
           dataKey="failedCount"
-          hide={lineShow.failedCount}
-          strokeOpacity={opacity.uv}
-          stroke="#82ca9d"
+          hide={lineShowObj.failedCount}
+          //strokeOpacity={opacity.uv}
+          stroke="#EC9B40"
+        />
+        <Line
+          type="monotone"
+          name="System failure"
+          dataKey="customerInducedFailureCount"
+          hide={lineShowObj.failedCount}
+          //strokeOpacity={opacity.uv}
+          stroke="#DC4437"
         />
         {/* <Line type="monotone" dataKey="failedCount" hide={lineShow.failedCount} strokeOpacity={opacity.uv} stroke="red" /> */}
         <text
@@ -158,7 +166,7 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
           tickLine={false}
           tickFormatter={formatTick}
         />
-        <YAxis type="number" tickLine={false} unit="M" />
+        <YAxis type="number" tickLine={false} width={100} unit="M" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
         <Legend iconType="circle" stroke="red" content={<CustomLegend />} />
         {lines.map((line, i) => {
@@ -182,7 +190,6 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
 
 const CustomLegend = (props:any) => {
     const { payload } = props;
-    console.log(payload, props)
     return (
       <Flex justifyContent={'center'}>
         {
@@ -214,7 +221,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
           bottom: 50,
         }}
       >
-        <YAxis type="number" tickLine={false} unit="M" axisLine={false}>
+        <YAxis type="number" tickLine={false} unit="M" axisLine={false} width={90}>
           <Label
             value={labelY}
             angle={-90}
@@ -225,7 +232,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
             fill="#364657"
           />
         </YAxis>
-        <XAxis dataKey="channel" tickLine={false} axisLine={false} tickFormatter={formatTick}>
+        <XAxis dataKey="channel" tickLine={false} axisLine={false} /*tickFormatter={formatTick}*/>
           <Label
             value={labelX}
             offset={5}
@@ -270,7 +277,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
           fontSize={14}
           tickLine={false}
           axisLine={true}
-          width={70}
+          width={90}
         >
           <Label
             value={labelY}
@@ -296,7 +303,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
 
 
 export const IssuingBarLineChart = (props: DataProps) => {
-  const { data, barSize } = props;
+  const { data, barSize, distribution } = props;
   return (
     <ResponsiveContainer width="100%" height={400}>
       <ComposedChart
@@ -308,9 +315,9 @@ export const IssuingBarLineChart = (props: DataProps) => {
         }}
       >
         <XAxis type="category" dataKey="duration" tickFormatter={formatTick}>
-          <Label fill="#364657" value="24hour distribution" position="bottom" />
+          <Label fill="#364657" value={distribution} position="bottom" />
         </XAxis>
-        <YAxis type="number" />
+        <YAxis type="number" width={100}/>
         <Tooltip />
         <Bar dataKey="value" barSize={barSize} fill="#E0E4EB" />
         <Line dot={false} type="linear" dataKey="value" stroke="#18A0FB" />
@@ -339,7 +346,7 @@ export const IssuingLineChartSingle = (props: DataProps) => {
           tickCount={tickCount}
           tickFormatter={formatTick}
         />
-        <YAxis type="number" tickLine={false} unit="M" />
+        <YAxis type="number" tickLine={false} unit="" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
         <Line
           dot={false}
