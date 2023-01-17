@@ -30,13 +30,14 @@ const dataKeys = [
 ]
 
 export const SimpleBarchart = (props:SimpleBarchartProps) => {
-    const {dataKey=dataKeys, data} = props
+    const {data} = props
+
     return (
        
         <BarChart
           width={800}
           height={400}
-          data={data}
+          data={data?.slice(0,5)}
           margin={{
             top: 5,
             right: 30,
@@ -49,18 +50,18 @@ export const SimpleBarchart = (props:SimpleBarchartProps) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          {
-            dataKey.length > 0 && dataKey.map(item => {
+          {/* {
+            data.length > 0 && data.slice(0,5).map(item => {
                 return (
                 <React.Fragment key={item.dataKeyName}>
                     <Bar dataKey={item.dataKeyName} barSize={item.dataKeyBarSize} fill={item.dataKeyFillColor} />
                 </React.Fragment>
                 )
             })
-          }
-          {/* <Bar dataKey="count" barSize={20} fill="#69C6A6" />
-          {/* <Bar dataKey="position" barSize={20} fill="#62C6A6" /> *
-          <Bar dataKey="value" barSize={20} fill="#096DD9" /> */}
+          } */}
+          <Bar dataKey="count" barSize={20} fill="#69C6A6" />
+          {/* <Bar dataKey="position" barSize={20} fill="#62C6A6" /> */}
+          <Bar dataKey="value" barSize={20} fill="#096DD9" />
         </BarChart>
     );
 }

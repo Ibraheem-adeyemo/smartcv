@@ -9,7 +9,7 @@ import { GrpLineChart } from "../app-charts";
 import SkeletonLoader from "../skeleton-loader";
 import TransactionMonitoringHeader from "./transactionHeader";
 
-let defaultUrl = `${apiUrlsv1.realTimeTransactionReport}banks/analysis`;
+let defaultUrl = `${apiUrlsv1.acquiringTransaction}analysis`;
 const TransactionMonitoring: FC = () => {
   const { setFiltersToShow, selectedTenantCode } = useContext(StatsContext);
   const { token, userDetail } = useContext(AuthContext);
@@ -29,12 +29,12 @@ const TransactionMonitoring: FC = () => {
     (userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")
   ) {
     if (userDetail.role.name !== appRoles.superAdmin) {
-      defaultUrl = `${apiUrlsv1.realTimeTransactionReport}transaction-metric?tenantCode=${userDetail.tenant.code}`;
+      defaultUrl = `${defaultUrl}/${userDetail.tenant.code}`;
     } else if (
       userDetail.role.name === appRoles.superAdmin &&
       selectedTenantCode !== "0"
     ) {
-      defaultUrl = `${apiUrlsv1.realTimeTransactionReport}transaction-metric?tenantCode=${selectedTenantCode}`;
+      defaultUrl = `${defaultUrl}/${selectedTenantCode}`;
     }
   }
 
@@ -57,7 +57,7 @@ const TransactionMonitoring: FC = () => {
         setPage(page + 1);
         setThisUrl(`${defaultUrl}?page=${page}&size=${2}`);
       }
-    }, 60 * 60 * 10);
+    }, 5 * 60 * 60 * 10);
 
     return () => {
       clearTimeout(GetNextChart);

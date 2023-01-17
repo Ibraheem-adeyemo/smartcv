@@ -12,7 +12,7 @@ const TopPerforminBanks :FC= ()  => {
     const [loading, setLoading] = useState(true)
     const [stats, setStats] = useState<StatsCMore[]>()
 
-    const url = `${apiUrlsv1.realTimeTransactionReport}top-transaction`
+    const url = `${apiUrlsv1.acquiringTransaction}top-transaction`
     const { data: banksRealTimeData, mutate: _mutate, error } = useSWR(url === "" ? null : url)
 
     const getStats = useCallback(() => {

@@ -9,14 +9,14 @@ import { AnimatedText, MotionFlex } from "../framer";
 
 
 const Stat:FC<StatProps> = (props: StatProps) => {
-  let val = props.prefix === "N" && props.totalNumber === 0 ?`${props.totalNumber}.00`:`${props.totalNumber}`
-  if(val.length > 5){
+  let val = props.totalNumber === 0 ?`${props.totalNumber}.00`:`${props.totalNumber}`
+  if(val.length >= 5){
+
      const shortenedVal = shortenNumber(props.totalNumber)
      if(shortenedVal.fractionAmount !== Number.MAX_VALUE) {
        val = `${shortenedVal.fractionAmount}${shortenedVal.abbrev}`
      }
   }
-  
   return (
     <MotionFlex sx={statsContainerSX(props)} animate="show" initial="hide" variants={appear()}>
       <MotionFlex sx={statsContainerBodySX} animate="show" initial="hide" variants={delayChildren}>

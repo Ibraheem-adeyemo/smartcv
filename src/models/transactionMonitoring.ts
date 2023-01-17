@@ -30,7 +30,7 @@ type realtimeTransactionCount = {
 }
 
 export interface IRealTimeData {   
-    tenantCode: string
+    //tenantCode: string
     realTime:realtimeTransactionCount
 }
 

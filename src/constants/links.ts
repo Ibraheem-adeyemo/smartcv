@@ -42,7 +42,7 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     createRole: `${API_BASE_URL}${CURRENT_API_VERSION}/roles/create`,
     createTenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/tenant-admin`,
     deactivateTenant: `${API_BASE_URL}${CURRENT_API_VERSION}/tenant/deactivate`,
-    forwardQueue: `${API_BASE_URL}${CURRENT_API_VERSION}/monitor/queue`,
+    forwardQueue: `${API_BASE_URL}${CURRENT_API_VERSION}/monitor/transaction/queue`,
     getUserDetail: `${API_BASE_URL}${CURRENT_API_VERSION}/user`,
     healthCheck: `${API_BASE_URL}${CURRENT_API_VERSION}/actuator/health`,
     interChange: `${API_BASE_URL}${CURRENT_API_VERSION}/interchange/find`,
@@ -60,15 +60,11 @@ export const apiUrlsv1: Readonly<apiUrlsv1Model> = {
     tenant: `${API_BASE_URL}${CURRENT_API_VERSION}/tenant`,
     tenantAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/user/admins`,
     transactionDetails: `${API_BASE_URL}${CURRENT_API_VERSION}/monitor/transaction-details`,
-    transactionVolume: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/`,
-    realTimeTransactionReport:`${API_BASE_URL}${CURRENT_API_VERSION}/transaction/real-time/`,
+    acquiringTransaction:`${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/acquiring/`,//realTimeTransactionReport
     user: `${API_BASE_URL}${CURRENT_API_VERSION}/user/`,
     loginWithCredential: `${API_BASE_URL}${CURRENT_API_VERSION}/user/login`,
     issuingVolumeAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/volume`,
     issuingVolume: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/tenant/volume`,
     issuingVolumeStatus: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing`,
-    issuingFailedReasonsTenant: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/failed-transaction/tenant`,
-    issuingVolumeStatusAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/volume/status`,
-    issuingVolumeChannel: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/tenant/volume/channel`,
-    issuingVolumeChannelAdmin: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/volume/channel`
+    issuingFailedReasons: `${API_BASE_URL}${CURRENT_API_VERSION}/monitoring/transaction/issuing/failed-transaction`
 }

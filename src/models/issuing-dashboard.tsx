@@ -12,6 +12,7 @@ type StrokeType = {
 
   export interface DataProps {
     data: IssuingFaileSuccessPropsData[];
+    distribution?:string
     barSize?: number;
   tickCount?: number;
     type?: "number" | "category";
