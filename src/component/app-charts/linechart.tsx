@@ -158,7 +158,7 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
           tickLine={false}
           tickFormatter={formatTick}
         />
-        <YAxis type="number" tickLine={false} unit="M" />
+        <YAxis type="number" tickLine={false} width={100} unit="M" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
         <Legend iconType="circle" stroke="red" content={<CustomLegend />} />
         {lines.map((line, i) => {
@@ -182,7 +182,6 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
 
 const CustomLegend = (props:any) => {
     const { payload } = props;
-    console.log(payload, props)
     return (
       <Flex justifyContent={'center'}>
         {
@@ -214,7 +213,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
           bottom: 50,
         }}
       >
-        <YAxis type="number" tickLine={false} unit="M" axisLine={false}>
+        <YAxis type="number" tickLine={false} unit="M" axisLine={false} width={90}>
           <Label
             value={labelY}
             angle={-90}
@@ -225,7 +224,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
             fill="#364657"
           />
         </YAxis>
-        <XAxis dataKey="channel" tickLine={false} axisLine={false} tickFormatter={formatTick}>
+        <XAxis dataKey="channel" tickLine={false} axisLine={false} /*tickFormatter={formatTick}*/>
           <Label
             value={labelX}
             offset={5}
@@ -270,7 +269,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
           fontSize={14}
           tickLine={false}
           axisLine={true}
-          width={70}
+          width={90}
         >
           <Label
             value={labelY}
@@ -296,7 +295,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
 
 
 export const IssuingBarLineChart = (props: DataProps) => {
-  const { data, barSize } = props;
+  const { data, barSize, distribution } = props;
   return (
     <ResponsiveContainer width="100%" height={400}>
       <ComposedChart
@@ -308,9 +307,9 @@ export const IssuingBarLineChart = (props: DataProps) => {
         }}
       >
         <XAxis type="category" dataKey="duration" tickFormatter={formatTick}>
-          <Label fill="#364657" value="24hour distribution" position="bottom" />
+          <Label fill="#364657" value={distribution} position="bottom" />
         </XAxis>
-        <YAxis type="number" />
+        <YAxis type="number" width={100}/>
         <Tooltip />
         <Bar dataKey="value" barSize={barSize} fill="#E0E4EB" />
         <Line dot={false} type="linear" dataKey="value" stroke="#18A0FB" />
@@ -339,7 +338,7 @@ export const IssuingLineChartSingle = (props: DataProps) => {
           tickCount={tickCount}
           tickFormatter={formatTick}
         />
-        <YAxis type="number" tickLine={false} unit="M" />
+        <YAxis type="number" tickLine={false} unit="" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
         <Line
           dot={false}

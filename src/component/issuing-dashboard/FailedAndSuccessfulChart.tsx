@@ -4,13 +4,14 @@ import {
   issuingFailedSuccessBoxSx,
   issuingFailedSuccessContainerSx,
 } from "../../sx";
-import { IssuingAtmTransactionVolumeCount } from ".";
+// import { IssuingAtmTransactionVolumeCount } from ".";
 import useSWR from "swr";
 import { AuthContext, StatsContext } from "../../providers";
 import { useLoading } from "../../hooks";
 import { apiUrlsv1, appRoles, notificationMesage } from "../../constants";
 import { sumBy } from "lodash";
 import { getUrlForSuperadminORBankAdmin, numberWithCommas } from "../../lib";
+import { IssuingAtmTransactionVolumeCount } from "./IssuingAtmTransactionVolumeCount";
 
 type DataSuperAdmin = {
   payload: Payload[];
@@ -33,12 +34,11 @@ export const FailedAndSuccessfulChart = () => {
 
 
   let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
-//   const superAdminUrl = `${apiUrlsv1.issuingVolumeStatusAdmin}?page=${page}&size=20&dateRange=${transactionPeriod.toUpperCase()}`;
-    // transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume/status?page=${page}&size=20&dateRange=${transactionPeriod.toUpperCase()}`
+
     const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
 
     transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume/status`
-    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`:`${transactionCountVolumeUrl}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}`:`${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}`
 
 
   const { isValidating, mutate, data, error } = useSWR(

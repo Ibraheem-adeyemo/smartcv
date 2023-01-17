@@ -13,7 +13,6 @@ import { getUrlForSuperadminORBankAdmin, numberWithCommas } from "../../lib";
 import { apiUrlsv1, appRoles, keysForArrayComponents } from "../../constants";
 import useSWR from "swr";
 import { IssuingFaileSuccessProps } from "../../models/issuing-dashboard";
-import { data2 } from ".";
 import { sumBy } from "lodash";
 import SkeletonLoader from "../skeleton-loader";
 
@@ -124,6 +123,7 @@ export const IssuingTranValueChart = () => {
         userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
       );
 
+      const distribution = transactionPeriod === 'Daily'?'24 hour distribution':`${transactionPeriod} distribution`
       
 
       if(isValidating || !data?.response?.transactionDetails && !error ) {
@@ -148,6 +148,7 @@ export const IssuingTranValueChart = () => {
       <IssuingBarLineChart
         barSize={20}
         data={data?.response?.transactionDetails.slice(0,24)}
+        distribution={distribution}
       />
     </Flex>
   );
@@ -182,7 +183,7 @@ export const IssuingTranVolumeChart = () => {
         data={data?.response?.transactionDetails.slice(0,24)}
         tickCount={6}
         type="number"
-        interval={1}
+        interval={transactionPeriod === 'Weekly'?0 :1}
       />
     </Flex>
   );
