@@ -225,7 +225,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
             fill="#364657"
           />
         </YAxis>
-        <XAxis dataKey="channel" tickLine={false} axisLine={false} tickFormatter={formatTick}>
+        <XAxis dataKey="channel" tickLine={false} axisLine={false} /*tickFormatter={formatTick}*/>
           <Label
             value={labelX}
             offset={5}

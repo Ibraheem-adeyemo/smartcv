@@ -4,13 +4,14 @@ import {
   issuingFailedSuccessBoxSx,
   issuingFailedSuccessContainerSx,
 } from "../../sx";
-import { IssuingAtmTransactionVolumeCount } from ".";
+// import { IssuingAtmTransactionVolumeCount } from ".";
 import useSWR from "swr";
 import { AuthContext, StatsContext } from "../../providers";
 import { useLoading } from "../../hooks";
 import { apiUrlsv1, appRoles, notificationMesage } from "../../constants";
 import { sumBy } from "lodash";
 import { getUrlForSuperadminORBankAdmin, numberWithCommas } from "../../lib";
+import { IssuingAtmTransactionVolumeCount } from "./IssuingAtmTransactionVolumeCount";
 
 type DataSuperAdmin = {
   payload: Payload[];

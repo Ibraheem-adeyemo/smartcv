@@ -121,7 +121,7 @@ export const DailyTransactionMatrics = () => {
           totalNumber: data?.response ? data?.response?.amount : 0,
           status:
             data?.response?.percentage?.isIncrease === false ? "red" : "green",
-          percentage: `${data?.response?.percentage?.percent}%`,
+          percentage: `${data?.response ? data?.response?.percentage?.percent:0}%`,
           days: dataDuration,
           prefix: "N",
         },
@@ -130,7 +130,7 @@ export const DailyTransactionMatrics = () => {
           headerName: StatsName.totalTransactionVolume,
           totalNumber: data?.response ? data?.response?.volume: 0,
           status: data?.response ? data?.response?.percentage?.isIncrease === false ? "red" : "green": "",
-          percentage: `${data?.response?.percentage?.percent}%`,
+          percentage: `${data?.response ? data?.response?.percentage?.percent:0}%`,
           days: dataDuration,
           prefix: "",
           comingSoon: false,

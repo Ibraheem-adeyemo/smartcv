@@ -13,7 +13,6 @@ import { getUrlForSuperadminORBankAdmin, numberWithCommas } from "../../lib";
 import { apiUrlsv1, appRoles, keysForArrayComponents } from "../../constants";
 import useSWR from "swr";
 import { IssuingFaileSuccessProps } from "../../models/issuing-dashboard";
-import { data2 } from ".";
 import { sumBy } from "lodash";
 import SkeletonLoader from "../skeleton-loader";
 
