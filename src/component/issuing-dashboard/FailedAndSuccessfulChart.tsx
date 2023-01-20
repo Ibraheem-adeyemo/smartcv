@@ -34,12 +34,11 @@ export const FailedAndSuccessfulChart = () => {
 
 
   let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
-//   const superAdminUrl = `${apiUrlsv1.issuingVolumeStatusAdmin}?page=${page}&size=20&dateRange=${transactionPeriod.toUpperCase()}`;
-    // transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume/status?page=${page}&size=20&dateRange=${transactionPeriod.toUpperCase()}`
+
     const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
 
     transactionCountVolumeUrl = `${transactionCountVolumeUrl}/volume/status`
-    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}&page=${0}&size=${20}`:`${transactionCountVolumeUrl}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`
+    transactionCountVolumeUrl = isSuperAdmin && (selectedTenantCode == '0'|| typeof selectedTenantCode === 'undefined')? `${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}`:`${transactionCountVolumeUrl}?dateRange=${transactionPeriod.toUpperCase()}`
 
 
   const { isValidating, mutate, data, error } = useSWR(

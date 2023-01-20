@@ -123,6 +123,7 @@ export const IssuingTranValueChart = () => {
         userDetail && userDetail?.role.name ? transactionCountVolumeUrl : ''
       );
 
+      const distribution = transactionPeriod === 'Daily'?'24 hour distribution':`${transactionPeriod} distribution`
       
 
       if(isValidating || !data?.response?.transactionDetails && !error ) {
@@ -147,6 +148,7 @@ export const IssuingTranValueChart = () => {
       <IssuingBarLineChart
         barSize={20}
         data={data?.response?.transactionDetails.slice(0,24)}
+        distribution={distribution}
       />
     </Flex>
   );
@@ -181,7 +183,7 @@ export const IssuingTranVolumeChart = () => {
         data={data?.response?.transactionDetails.slice(0,24)}
         tickCount={6}
         type="number"
-        interval={1}
+        interval={transactionPeriod === 'Weekly'?0 :1}
       />
     </Flex>
   );

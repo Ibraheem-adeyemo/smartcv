@@ -56,7 +56,7 @@ export const DailyTransactionMatrics = () => {
     period,
   } = useContext(StatsContext);
   const { userDetail } = useContext(AuthContext);
-  const superAdminUrl = `${apiUrlsv1.issuingVolumeAdmin}?page=${page}&size=20&dateRange=${transactionPeriod.toUpperCase()}`;
+  const superAdminUrl = `${apiUrlsv1.issuingVolumeAdmin}?dateRange=${transactionPeriod.toUpperCase()}`;
   const isSuperAdmin =
     userDetail?.role.name === appRoles.superAdmin &&
     (selectedTenantCode == "0" || selectedTenantCode == "undefined");
