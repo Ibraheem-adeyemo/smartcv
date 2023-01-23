@@ -10,7 +10,7 @@ import { MotionFlex } from "../framer";
 const AppBarFilter: FC = () => {
     const { ShowTenant, showStartDate, showEndDate, showCountInterval, showDuration, startTime, endTime, countInterval, durationList, getSelectedEndDate, getSelectedEndTime, getSelectedStartDate, onSelectedCountInterval } = useContext(StatsContext)
 
-    const intervals = ['Daily', 'Weekly', 'Monthly']
+    const intervals = ['Daily', 'Weekly', 'Monthly', 'Yearly']
     
     return (
         <MotionFlex alignItems="center" gap="17px" justifyContent='space-between'
@@ -40,7 +40,8 @@ const AppBarFilter: FC = () => {
                 data={[
                     { label: filterDates.today, value: 'Today', selected: countInterval == intervals[0], interval: intervals[0] },
                     { label: filterDates.thisWeek, value: 'Week', selected: countInterval == intervals[1], interval: intervals[1] },
-                    { label: filterDates.thisYear, value: 'Year', selected: countInterval == intervals[2], interval: intervals[2] },
+                    { label: filterDates.thisMonth, value: 'Month', selected: countInterval == intervals[2], interval: intervals[2] },
+                    { label: filterDates.thisYear, value: 'Year', selected: countInterval == intervals[3], interval: intervals[3] },
                 ]}
                 label="" onSelected={onSelectedCountInterval} showSearchInput={false} countInterval={countInterval} selected />}
         </MotionFlex>

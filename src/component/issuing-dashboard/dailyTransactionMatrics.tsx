@@ -56,7 +56,7 @@ export const DailyTransactionMatrics = () => {
     period,
   } = useContext(StatsContext);
   const { userDetail } = useContext(AuthContext);
-  const superAdminUrl = `${apiUrlsv1.issuingVolumeAdmin}?page=${page}&size=20&dateRange=${transactionPeriod.toUpperCase()}`;
+  const superAdminUrl = `${apiUrlsv1.issuingVolumeAdmin}?dateRange=${transactionPeriod.toUpperCase()}`;
   const isSuperAdmin =
     userDetail?.role.name === appRoles.superAdmin &&
     (selectedTenantCode == "0" || selectedTenantCode == "undefined");
@@ -121,7 +121,7 @@ export const DailyTransactionMatrics = () => {
           totalNumber: data?.response ? data?.response?.amount : 0,
           status:
             data?.response?.percentage?.isIncrease === false ? "red" : "green",
-          percentage: `${data?.response?.percentage?.percent}%`,
+          percentage: `${data?.response ? data?.response?.percentage?.percent:0}%`,
           days: dataDuration,
           prefix: "N",
         },
@@ -130,7 +130,7 @@ export const DailyTransactionMatrics = () => {
           headerName: StatsName.totalTransactionVolume,
           totalNumber: data?.response ? data?.response?.volume: 0,
           status: data?.response ? data?.response?.percentage?.isIncrease === false ? "red" : "green": "",
-          percentage: `${data?.response?.percentage?.percent}%`,
+          percentage: `${data?.response ? data?.response?.percentage?.percent:0}%`,
           days: dataDuration,
           prefix: "",
           comingSoon: false,

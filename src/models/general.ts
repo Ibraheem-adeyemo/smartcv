@@ -66,17 +66,13 @@ export interface apiUrlsv1Model {
     tenant: string,
     tenantAdmin: string,
     transactionDetails: string,
-    transactionVolume:string
-    realTimeTransactionReport:string,
+    acquiringTransaction:string
     user: string,
     loginWithCredential: string,
     issuingVolumeAdmin: string,
     issuingVolume: string,
     issuingVolumeStatus: string;
-    issuingVolumeStatusAdmin: string;
-    issuingFailedReasonsTenant:string
-    issuingVolumeChannel: string;
-    issuingVolumeChannelAdmin: string
+    issuingFailedReasons:string
 }
 
 type performAction = <T extends Record<keyof T, T[keyof T]>>(x: T) => void

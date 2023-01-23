@@ -59,7 +59,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
         setInterval(() => {
             refreshAccessToken(getCookie(cookieKeys.refreshToken))
             setFirstLoad(1)
-        }, 3600000)
+        }, 20*3600000)
         const menuList: MenuListItem[] = [{
             icon: dashboardIcon,
             name: menuNames.dashboard,
