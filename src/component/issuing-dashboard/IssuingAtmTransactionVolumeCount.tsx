@@ -63,6 +63,7 @@ export const TransactionTypeBarChart = () => {
     const { transactionPeriod, selectedTenantCode } = useContext(StatsContext);
 
     const isSuperAdmin = userDetail?.role.name === appRoles.superAdmin
+    const changedTransactionPeriod = transactionPeriod == 'Monthly'?'Yearly': transactionPeriod
 
     // let transactionCountVolumeUrl = getUrlForSuperadminORBankAdmin(apiUrlsv1.issuingVolumeStatus, selectedTenantCode )
 
