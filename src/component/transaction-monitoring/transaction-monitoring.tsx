@@ -9,8 +9,8 @@ import { GrpLineChart } from "../app-charts";
 import SkeletonLoader from "../skeleton-loader";
 import TransactionMonitoringHeader from "./transactionHeader";
 
-let defaultUrl = `${apiUrlsv1.acquiringTransaction}analysis`;
 const TransactionMonitoring: FC = () => {
+    let defaultUrl = `${apiUrlsv1.acquiringTransaction}analysis`;  
   const { setFiltersToShow, selectedTenantCode } = useContext(StatsContext);
   const { token, userDetail } = useContext(AuthContext);
   const [page, setPage] = useState(1);

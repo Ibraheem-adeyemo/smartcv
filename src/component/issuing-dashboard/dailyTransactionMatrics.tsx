@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { AuthContext, StatsContext } from "../../providers";
 import { apiUrlsv1, appRoles, notificationMesage } from "../../constants";
 import { cookieKeys, StatsName } from "../../constants";
-import { useLoading, useCheckAdmin } from "../../hooks";
+import { useLoading } from "../../hooks";
 import { getCookie } from "../../lib";
 import { StatsProps } from "../../models";
 import { TextChart } from "../dashboard";
