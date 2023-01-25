@@ -47,7 +47,8 @@ const TransactionMonitoring: FC = () => {
   const realTimeData = banksRealTimeData?.realtimeTransactionVolumeResponseList;
   
   useEffect(() => {
-    setFiltersToShow({ showTenantFilter: true });
+    if(isSuperAdmin) {
+        setFiltersToShow({ showTenantFilter: true });
     const GetNextChart = setTimeout(() => {
       setPage(page + 1);
       if (!banksRealTimeData || banksRealTimeData?.interchanges?.last) {
@@ -62,6 +63,7 @@ const TransactionMonitoring: FC = () => {
     return () => {
       clearTimeout(GetNextChart);
     };
+    }
   }, [page, thisUrl]);
 
   if (typeof error !== "undefined") {
