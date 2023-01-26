@@ -233,7 +233,7 @@ const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = (props: AuthenticatedL
                 >
                     <ResendUserActivationMail isOpen={openResend} closeModal={function (): void {
                         setOpenResend(false)
-                    } } isLoggedIn={false} email={userDetail.email} />
+                    } } isLoggedIn={false} email={userDetail?.email} />
                     {props.children}
 
                 </GridItem>

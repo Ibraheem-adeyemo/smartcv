@@ -22,9 +22,9 @@ export const StoreForwardQueueSetup: FC<{records: ForwardQueuePropObject[]|[]}> 
 
     if (userDetail && ( userDetail.role.name !== appRoles.superAdmin || typeof selectedTenantCode !== "undefined") && ( userDetail.role.name !== appRoles.superAdmin || selectedTenantCode !== "0")) {
         if(userDetail.role.name !== appRoles.superAdmin){
-            url = `${apiUrlsv1.forwardQueue}/tenant/${userDetail.tenant.code}`
+            url = `${apiUrlsv1.forwardQueue}/${userDetail.tenant.code}`
           } else if(userDetail.role.name === appRoles.superAdmin && selectedTenantCode !== "0")  {
-            url = `${apiUrlsv1.forwardQueue}/tenant/${selectedTenantCode}`
+            url = `${apiUrlsv1.forwardQueue}/${selectedTenantCode}`
           }
     }
 
