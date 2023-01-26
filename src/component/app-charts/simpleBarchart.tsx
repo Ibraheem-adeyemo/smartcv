@@ -33,15 +33,15 @@ export const SimpleBarchart = (props:SimpleBarchartProps) => {
     const {data} = props
 
     return (
-       
+        <ResponsiveContainer width="100%" aspect={2}>
         <BarChart
-          width={800}
-          height={400}
+          //width={400}
+          //height={400}
           data={data?.slice(0,5)}
           margin={{
             top: 5,
             right: 30,
-            left: 20,
+            left: 5,
             bottom: 5,
           }}
         >
@@ -63,6 +63,7 @@ export const SimpleBarchart = (props:SimpleBarchartProps) => {
           {/* <Bar dataKey="position" barSize={20} fill="#62C6A6" /> */}
           <Bar dataKey="value" barSize={20} fill="#096DD9" />
         </BarChart>
+        </ResponsiveContainer>
     );
 }
 

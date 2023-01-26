@@ -53,7 +53,7 @@ const Text = {
     },
     "chart-header": {
       color: "brand.stat_header",
-      fontWeight: 800,
+      fontWeight: 700,
       fontSize: "16px",
       lineHeight: "24px",
     },

@@ -47,8 +47,7 @@ export const IssuingAtmTransactionVolumeCount = ({data}:IssuingFaileSuccessProps
     <>
       <IssuingLineChart
         lines={lines}
-        width={500}
-        height={300}
+        //width={'50px'}
         dataKey="duration"
         data={data}
         container={containerType}
@@ -142,7 +141,7 @@ export const IssuingTranValueChart = () => {
       }  
 
   return (
-    <Flex height="100%" width={{base:'100%', md:'100%', lg:"60%"}} sx={chartContainerSx}>
+    <Flex height="100%" width={{base:'100%', md:'100%', lg:"57%"}} sx={chartContainerSx}>
       <Text variant="chart-header">
           {transactionPeriod} breakdown of issuing transaction value
         </Text>
@@ -175,7 +174,7 @@ export const IssuingTranVolumeChart = () => {
       const totalFailedTransaction = data && data?.response?.transactionDetails.length > 0 ? sumBy(data?.response?.transactionDetails,(count:any) => count?.count):0
 
   return (
-    <Flex width={{base:'100%',md:'100%', lg:"40%"}} sx={chartContainerSx}>
+    <Flex width={{base:'100%',md:'100%', lg:"43%"}} sx={chartContainerSx}>
       <HStack justifyContent="space-between">
       <Text variant="chart-header">{transactionPeriod} count of active cards</Text>
         <Tag>

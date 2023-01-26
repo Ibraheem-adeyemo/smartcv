@@ -154,11 +154,11 @@ export const GrpLineChart = (chartProps: IRealTimeData) => {
 
 export const IssuingLineChart = (props: IssuingLineChartProps) => {
 
-  const { lines, container, width, height, dataKey, stroke, data } = props;
+  const { lines, container, width=250, height, dataKey, stroke, data } = props;
 
   return (
-    <ResponsiveContainer width="100%" height={600}>
-      <LineChart width={width} height={height} data={data}>
+    <ResponsiveContainer width="100%" height={400}>
+      <LineChart data={data}>
         {/* <CartesianGrid strokeDasharray={stroke.strokeDasharray} /> */}
         <XAxis
           dataKey={dataKey}
@@ -166,7 +166,7 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
           tickLine={false}
           tickFormatter={formatTick}
         />
-        <YAxis type="number" tickLine={false} width={100} unit="M" />
+        <YAxis type="number" tickLine={false} width={70} unit="M" />
         <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
         <Legend iconType="circle" stroke="red" content={<CustomLegend />} />
         {lines.map((line, i) => {
@@ -191,10 +191,10 @@ export const IssuingLineChart = (props: IssuingLineChartProps) => {
 const CustomLegend = (props:any) => {
     const { payload } = props;
     return (
-      <Flex justifyContent={'center'}>
+      <Flex justifyContent={'center'} px={'10px'}>
         {
           payload.map((entry:any, index:number) => (
-            <Flex key={`item-${index}`} mr={7} alignItems='center'>
+            <Flex key={`item-${index}`} mr={5} fontSize={{base:'10px', md:'12px'}} alignItems='center'>
                 <div style={{
                     width:'0.7rem',
                     height:'0.7rem',
@@ -212,7 +212,7 @@ const CustomLegend = (props:any) => {
 export const IssuingBarChart = (props: IssuingBarChartProps) => {
   const { data, labelX, labelY } = props;
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" aspect={2}>
       <BarChart
         data={data}
         barCategoryGap={1}
@@ -221,7 +221,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
           bottom: 50,
         }}
       >
-        <YAxis type="number" tickLine={false} unit="M" axisLine={false} width={90}>
+        <YAxis type="number" tickLine={false} unit="M" axisLine={false} width={50}>
           <Label
             value={labelY}
             angle={-90}
@@ -238,7 +238,7 @@ export const IssuingBarChart = (props: IssuingBarChartProps) => {
             offset={5}
             position="bottom"
             fontWeight={600}
-            fill="#364657"
+            //fill="#364657"
           />
         </XAxis>
         <CartesianGrid strokeDasharray="7" vertical={false} />
@@ -277,7 +277,7 @@ export const IssuingBarChartHorizontal = (props: IssuingBarChartProps) => {
           fontSize={14}
           tickLine={false}
           axisLine={true}
-          width={90}
+          width={30}
         >
           <Label
             value={labelY}
@@ -317,7 +317,7 @@ export const IssuingBarLineChart = (props: DataProps) => {
         <XAxis type="category" dataKey="duration" tickFormatter={formatTick}>
           <Label fill="#364657" value={distribution} position="bottom" />
         </XAxis>
-        <YAxis type="number" width={100}/>
+        <YAxis type="number" tick={false} />
         <Tooltip />
         <Bar dataKey="value" barSize={barSize} fill="#E0E4EB" />
         <Line dot={false} type="linear" dataKey="value" stroke="#18A0FB" />
@@ -340,14 +340,14 @@ export const IssuingLineChartSingle = (props: DataProps) => {
         //   type="category"
           dataKey="duration"
         //   type="number"
-          padding={{ left: 30, right: 30 }}
+          padding={{right: 10 }}
           tickLine={false}
           interval={interval}
           tickCount={tickCount}
           tickFormatter={formatTick}
         />
         <YAxis type="number" tickLine={false} unit="" />
-        <Tooltip wrapperStyle={{ width: "180px", height: "53px" }} />
+        <Tooltip wrapperStyle={{ width: "100px", height: "20px" }} />
         <Line
           dot={false}
           type="monotone"

@@ -28,16 +28,8 @@ export const appLinkTextSX =
     textAlign: "left"
 }
 
-export const appLayoutSX = {
-    gridTemplateRows: [
-        "[row1-start] 11vh [row1-end row2-start] 9vh [row2-end row3-start] 80vh [row3-end] ",
-        "[row1-start] 11vh [row1-end row2-start] 9vh [row2-end row3-start] 80vh [row3-end] ",
-        "[row1-start] 11vh [row1-end row2-start] 9vh [row2-end row3-start] 80vh [row3-end] ",
-        "[row1-start] 11vh [row1-end row2-start] 9vh [row2-end row3-start] 80vh [row3-end] ",
-        "[row1-start] 11vh [row1-end row2-start] 11vh [row2-end row3-start] 78vh [row3-end] ",
-        "[row1-start] 11vh [row1-end row2-start] 11vh [row2-end row3-start] 78vh [row3-end] "
-    ],
-    gridTemplateColumns: ["11vw 89vw", "11vw 89vw", "11vw 89vw", "274px auto", "356px auto", "374px auto"],
+export const appLayoutSX = {   
+    //gridTemplateColumns: ["11vw 89vw", "11vw 89vw", "11vw 89vw", "274px auto", "356px auto", "374px auto"],
     transition: "gridTemplateColumns 0.5s",
     gridTemplateAreas: `
     "header header" 
@@ -86,7 +78,7 @@ export const sidebarSX = {
 
 export const mainSX = {
     gridArea: "main",
-    px: ["20px", "20px", "20px", "30px", "50px", "50px"],
+    px: ["20px", "20px", "20px", "30px", "20px", "50px"],
     py: "30px",
     bgColor: "brand.main_page",
     overflowY: "auto"

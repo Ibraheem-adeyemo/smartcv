@@ -68,12 +68,12 @@ export const DailyTransactionMatrics = () => {
       selectedTenantCode !== "0")
   ) {
     if (userDetail?.role.name !== appRoles.superAdmin) {
-      defaultUrl = `${apiUrlsv1.issuingVolume}?tenantCode=${userDetail.tenant.code}&dateRange=${transactionPeriod.toUpperCase()}`;
+      defaultUrl = `${apiUrlsv1.issuingVolume}/${userDetail.tenant.code}?dateRange=${transactionPeriod.toUpperCase()}`;
     } else if (
       userDetail?.role.name === appRoles.superAdmin &&
       selectedTenantCode !== "0"
     ) {
-      defaultUrl = `${apiUrlsv1.issuingVolume}?tenantCode=${selectedTenantCode}&dateRange=${transactionPeriod.toUpperCase()}`;
+      defaultUrl = `${apiUrlsv1.issuingVolume}/${selectedTenantCode}?dateRange=${transactionPeriod.toUpperCase()}`;
     }
   }
   const { isValidating, mutate, data, error } = useSWR(
