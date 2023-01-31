@@ -34,8 +34,8 @@ type StrokeType = {
   };
   export interface IssuingLineChartProps {
     lines: LineObject[];
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
     dataKey: string;
     stroke: StrokeType;
     data: IssuingFaileSuccessPropsData[];

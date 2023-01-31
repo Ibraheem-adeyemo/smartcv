@@ -20,11 +20,11 @@ export const Dashboard = () => {
         <FailedAndSuccessfulChart />
         <BarChartHorizontal />
       </Flex>
-      <Flex width="100%" bg="white" flexDir='column'>
+      <Flex width="100%" bg="white" flexDir='column' borderRadius={10}>
         <Box mb={20}>
           <DailyTransactionMatrics />
         </Box>
-        <Box height={600} shadow="xl" padding={30} borderRadius={10}>
+        <Box height={450} shadow="xl" py={30} pr={4}>
           <TransactionTypeBarChart />
         </Box>
       </Flex>

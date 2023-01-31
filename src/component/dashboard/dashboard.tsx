@@ -138,19 +138,23 @@ const Dashboard: FC = () => {
         />
       </Flex>
 
-      <Box >
-        <Flex my={20}>
-        <Box width={400} mr={30}>
-            <SuccessRate
-            title="ATM Failure reasons analysis"
-            colorsArr={["#1A4983", "#0275D8"]}
-            dataItmsArr={[11, 89]}
-            labelsArr={["Card Jam", "Cash Jam"]}
-            comingSoon={false}
-            
-            />
-        </Box>
-        <TopPerforminBanks/>
+      <Box width='100%'>
+        <Flex height='550px'>
+            <Box height={'100%'} width={{base:'100%', md:'40%'}} pr={'5px'}>
+                <SuccessRate
+                title="ATM Failure reasons analysis"
+                colorsArr={["#1A4983", "#0275D8"]}
+                dataItmsArr={[11, 89]}
+                labelsArr={["Card Jam", "Cash Jam"]}
+                comingSoon={false}   
+                width={["100%", "100%", "100%", "100%",]}
+                //height={["159px", "159px", "159px", "159px", "159px", "159px"]} 
+                height='100%'        
+                />
+            </Box>
+            <Box width={{base:'100%', md:'65%'}}>
+                <TopPerforminBanks/>
+            </Box>
         </Flex>
         <Box my={10} width={700}><TopTransactionMetri /></Box>
 
