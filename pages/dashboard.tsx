@@ -59,7 +59,7 @@ const Dashboard:NextPage = () => {
   return (
     <StatsProvider>
       <Authenticated pageHeader={
-        <Flex w="100%" flexWrap="wrap" justifyContent="space-between" px="50px" alignItems="center">
+        <Flex w="100%" flexWrap="wrap" justifyContent="space-between" px="50px" py='10px' alignItems="center">
           <AnimatedText variant="page-header" size="page-header">{
             <TabButton typeOfPayment={paymentType} toggleTypeOfPayment={toggleTypeOfPayment} />
           }</AnimatedText>
