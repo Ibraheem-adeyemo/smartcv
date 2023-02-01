@@ -62,12 +62,12 @@ export const FailedAndSuccessfulChart = () => {
     <Box sx={{backgroundColor: 'white', borderRadius: "8px", shadow: "md", width:{base:'100%', lg:"50%"}}}>
     <Box sx={issuingFailedSuccessContainerSx}>
       <Flex mb={50}>
-        <Text variant="chart-header">Total {changedTransactionPeriod} transaction</Text>
+        <Text variant="chart-header" className='totalTrans' >Total {changedTransactionPeriod} transaction</Text>
       </Flex>
       <Flex mb={'40px'} justifyContent="space-between" color="gray.600">
         <Flex sx={issuingFailedSuccessBoxSx}>
           <Box m="auto">
-            <Heading as="h4" size="xs">
+            <Heading className="failedTransaction" as="h4" size="xs">
               Failed transaction
             </Heading>
               <>
@@ -80,7 +80,7 @@ export const FailedAndSuccessfulChart = () => {
         </Flex>
         <Flex sx={issuingFailedSuccessBoxSx}>
           <Box m="auto">
-            <Heading as="h4" size="xs">
+            <Heading className="successTransaction" as="h4" size="xs">
               Successful transaction
             </Heading>            
               <>

@@ -176,7 +176,7 @@ export const IssuingTranVolumeChart = () => {
   return (
     <Flex width={{base:'100%',md:'100%', lg:"43%"}} sx={chartContainerSx}>
       <HStack justifyContent="space-between">
-      <Text variant="chart-header">{transactionPeriod} count of active cards</Text>
+      <Text variant="chart-header" className="text">{transactionPeriod} count of active cards</Text>
         <Tag>
           Total: <strong>{numberWithCommas(totalFailedTransaction)}</strong>
         </Tag>

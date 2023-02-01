@@ -30,17 +30,20 @@ export const TransactionsMonitoringTableSetup: FC<{records: TransactionPropObjec
             columns: [
                 {
                     name: "Date",
-                    key: '',
+                    key: 'dateTime',
                     ele: appTableElements.dateTime
                 }, {
                     name: "Pan",
                     key: "pan"
                 }, {
                     name: "Transaction type",
-                    key: "transactionType"
+                    key: "tranType"
                 }, {
                     name: "Ref code",
                     key: "refCode"
+                },{
+                    name: "Status",
+                    key: "status"
                 }, {
                     name: "Stan",
                     key: "stan"
